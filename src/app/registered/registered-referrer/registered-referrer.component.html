@@ -1,0 +1,16 @@
+<app-header></app-header>
+<div class="container-box">
+  <article class="input">
+    <input class="weui-input" type="number"  name="qq" pattern="[0-9]*" placeholder="请输入qq号">
+  </article>
+  <article class="scan-it">
+    <weui-actionsheet #ios [menus]="menus" [config]="config"></weui-actionsheet>
+    <button weui-button weui-type="default" (click)="onShow('ios')">iOS ActionSheet</button>
+  </article>
+  <article class="camera">
+
+  </article>
+  <footer>
+    <button weui-button weui-type="primary">下一步</button>
+  </footer>
+</div>
