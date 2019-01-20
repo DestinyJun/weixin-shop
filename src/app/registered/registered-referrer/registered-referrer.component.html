@@ -1,0 +1,16 @@
+<div class="container-box">
+  <app-header (headerRightClick)="onShow('ios',photo)" style="background: #000;"></app-header>
+  <article class="input">
+    <input class="weui-input" type="number"  name="qq" pattern="[0-9]*" placeholder="请填写推荐人工号">
+  </article>
+  <article class="scan-it">
+    <weui-actionsheet #ios [menus]="alertMenus" [config]="config"></weui-actionsheet>
+  </article>
+  <article class="camera">
+    <!--获取摄像头-->
+    <input #photo type="file" accept="image/*" style="display: none">
+  </article>
+  <footer class="weui-footer weui-footer_fixed-bottom">
+    <button weui-button weui-type="primary">下一步</button>
+  </footer>
+</div>

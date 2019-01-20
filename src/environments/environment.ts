@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  dev_env: '环境：开发中.........................',
+  dev_url: '192.168.0.1'
 };
 
 /*

@@ -1,0 +1,5 @@
+<header class="header">
+  <span *ngIf="leftShow" class="fa fa-chevron-left pull-left" aria-hidden="true" (click)="leftClick()"></span>
+  <span (click)="centerClick()">填写推荐人</span>
+  <span *ngIf="rightShow" class="pull-right" (click)="rightClick()">扫一扫</span>
+</header>
