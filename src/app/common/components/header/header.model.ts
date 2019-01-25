@@ -1,11 +1,11 @@
 export class HeaderContent {
-  title: string;
+  title?: string;
   leftContent: {
-    title: string;
-    icon: string;
+    title?: string;
+    icon?: string;
   };
   rightContent: {
-    title: string;
-    icon: string;
+    title?: string;
+    icon?: string;
   };
 }

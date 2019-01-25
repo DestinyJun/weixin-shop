@@ -1,21 +1,31 @@
 @import "../../../styles";
-@full-screen: 100vh;
-.container-box{
-  height: @full-screen;
-  background: #EDEDED;
+.registered-container-box{
+  background: #F1F1F1;
   position: relative;
-  input {
-    height: 50px;
-    background: white;
-    .weui-input{
+  .registered-input{
+    position: relative;
+    .weui-input {
+      height: 50px;
+      background: white;
       color: @weui-btn-color-info;
       padding: 1vh 0.5vw;
     }
+    i{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 3vw;
+      color: #99D188;
+      font-min-size: 1.5rem;
+    }
   }
-  footer{
-  /*  position: absolute;
-    bottom: 10px;
-    width: 90%;*/
+  .registered-footer{
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    button{
+      width: 90%;
+    }
   }
 }
 

@@ -36,23 +36,13 @@ export class RegisteredCameraComponent implements OnInit {
       window.navigator.mediaDevices.getUserMedia(constrains)
         .then(success)
         .catch(error);
-    } else if ( window.navigator.webkitGetUserMedia) {
-      // webkit内核浏览器
-      window.navigator.webkitGetUserMedia(constrains)
-        .then(success)
-        .catch(error);
-    } else if (window.navigator.mozGetUserMedia) {
-      // Firefox浏览器
-      window.navigator.mozGetUserMedia(constrains)
-        .then(success)
-        .catch(error);
     }
   }
 
   // 成功的回调函数
   public success(stream) {
     // 兼容webkit内核浏览器
-    const CompatibleURL = window.URL || window.webkitURL;
+    const CompatibleURL = window.URL;
     // 将视频流设置为video元素的源
     this.el.nativeElement.childNodes[0].childNodes[0].src = CompatibleURL.createObjectURL(stream);
     // 播放视频
