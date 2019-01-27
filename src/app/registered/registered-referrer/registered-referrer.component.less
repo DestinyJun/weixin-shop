@@ -1,5 +1,6 @@
 @import "../../../styles";
 .registered-container-box{
+  height: 100vh;
   background: #F1F1F1;
   position: relative;
   .registered-input{
@@ -8,8 +9,9 @@
       height: 50px;
       background: white;
       color: @weui-btn-color-info;
-      padding: 1vh 0.5vw;
+      text-indent: 15px;
     }
+    ::placeholder{}
     i{
       position: absolute;
       top: 50%;
@@ -20,12 +22,15 @@
     }
   }
   .registered-footer{
-    margin-top: 5vh;
+    margin-top: 2vh;
     display: flex;
     justify-content: center;
     button{
       width: 90%;
     }
+  }
+  .registered-dialog .weui-dialog{
+    //background: red;
   }
 }
 

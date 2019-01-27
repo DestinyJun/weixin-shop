@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ActionSheetComponent, ActionSheetConfig, ActionSheetService, SkinType} from 'ngx-weui';
+import {ActionSheetComponent, ActionSheetConfig, ActionSheetService, DialogComponent, DialogConfig, SkinType, ToastService} from 'ngx-weui';
 import {Router} from '@angular/router';
 import {HeaderContent} from '../../common/components/header/header.model';
 
@@ -10,14 +10,18 @@ import {HeaderContent} from '../../common/components/header/header.model';
   encapsulation: ViewEncapsulation.None
 })
 export class RegisteredReferrerComponent implements OnInit, OnDestroy {
-  @ViewChild('ios') iosAS: ActionSheetComponent;
-  public alertMenus: any[] = [
+  // ActionSheet组件
+  @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
+  public actionSheetMenus: any[] = [
     { text: '扫描二维码', value: 'camera'},
     { text: '从手机相册选择', value: 'photo'},
   ];
-  public config: ActionSheetConfig = <ActionSheetConfig>{};
+  public configActionSheet: ActionSheetConfig = <ActionSheetConfig>{};
+  // Dialog组件
+  @ViewChild('iosDialog') iosDialog: DialogComponent;
+  public configDialog: DialogConfig = {};
 
-
+  // 基础数据
   public referrerNumber: number;
   public headerOption: HeaderContent = {
     title: '填写推荐人',
@@ -30,19 +34,20 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private srv: ActionSheetService,
+    private actionSheetService: ActionSheetService,
+    private toastService: ToastService,
     private router: Router
   ) { }
 
   ngOnInit() {}
   ngOnDestroy() {
-    this.srv.destroyAll();
+    this.actionSheetService.destroyAll();
   }
   public actionSheetShow(type: SkinType, element): void {
-    this.config.skin = type;
-    this.config = Object.assign({}, this.config);
+    this.configActionSheet.skin = type;
+    this.configActionSheet = Object.assign({}, this.configActionSheet);
     setTimeout(() => {
-      (<ActionSheetComponent>this[`${type}AS`]).show().subscribe((res: any) => {
+      (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {
         if (res.value === 'photo') {
           element.click();
           return;
@@ -54,10 +59,25 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       });
     }, 10);
   }
+  public dialogShow(type: SkinType, style: 1 | 2 | 3) {
+    this.configDialog = Object.assign({}, <DialogConfig>{
+      cancel: null,
+      confirm: '确定',
+      content: '请填写推荐人工号'
+    });
+    setTimeout(() => {
+      (<DialogComponent>this[`${type}Dialog`]).show().subscribe((res: any) => {
+        console.log('type', res);
+      });
+    }, 10);
+    return false;
+  }
   public referrerClick(): void {
       if (this.referrerNumber) {
         this.router.navigate(['/registered/submit', {referrerNumber: this.referrerNumber}]);
+        return;
       }
+    this.dialogShow('ios', 2);
   }
 
 }

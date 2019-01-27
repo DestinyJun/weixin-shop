@@ -1,20 +1,20 @@
 <div class="registered-container-box">
-  <app-header [option]="headerOption" style="background: #000;"></app-header>
-  <!--<article class="registered-input">
+  <app-header [option]="headerOption"></app-header>
+  <article class="registered-input">
     <input class="weui-input" type="number"  name="qq" pattern="[0-9]*" placeholder="请填写推荐人工号" [(ngModel)]="referrerNumber">
     <i class="fa fa-bars" aria-hidden="true" (click)="actionSheetShow('ios', photo)"></i>
-  </article>-->
-  <!--<article class="registered-scan">
-    <weui-actionsheet [menus]="alertMenus" [config]="config"></weui-actionsheet>
-  </article>-->
-  <!--<article class="registered-camera">
-    &lt;!&ndash;获取摄像头&ndash;&gt;
+  </article>
+  <article class="registered-scan">
+    <weui-actionsheet #iosActionSheet [menus]="actionSheetMenus" [config]="configActionSheet"></weui-actionsheet>
+  </article>
+  <article class="registered-camera">
+    <!--获取摄像头-->
     <input #photo type="file" accept="image/*" style="display: none">
-  </article>-->
-  <!--<article class="registered-dialog">
-
-  </article>-->
-  <!--<footer class="registered-footer">
-    <button weui-button weui-type="primary" class="referrerClick()">下一步</button>
-  </footer>-->
+  </article>
+  <footer class="registered-footer">
+    <button weui-button weui-type="primary" (click)="referrerClick()">下一步</button>
+  </footer>
+  <article class="registered-dialog">
+    <weui-dialog #iosDialog [config]="configDialog"></weui-dialog>
+  </article>
 </div>
