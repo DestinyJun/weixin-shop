@@ -1,3 +1,21 @@
-<p>
-  registered-submit works!
-</p>
+<div class="registered-submit">
+  <app-header [option]="headerOption"></app-header>
+  <div class="registered-submit-phone">
+    <input class="weui-input" type="number"  name="qq" pattern="[0-9]*" placeholder="请填写手机号码" [(ngModel)]="submitPhone">
+  </div>
+  <div class="registered-submit-vcode">
+    <div class="weui-cell weui-cell_vcode">
+      <div class="weui-cell__bd">
+        <input class="weui-input" type="tel" [(ngModel)]="submitCode" name="mobile" placeholder="请输入手机号"
+               weui-input="mobile" weui-required>
+      </div>
+      <div class="weui-cell__ft">
+        <button class="weui-vcode-btn"
+                [weui-vcode]="onSendCode"
+                weui-seconds="3"
+                weui-tpl="${num}s"
+                weui-error="再次获取验证码">获取验证码</button>
+      </div>
+    </div>
+  </div>
+</div>

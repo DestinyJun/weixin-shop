@@ -59,7 +59,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       });
     }, 10);
   }
-  public dialogShow(type: SkinType, style: 1 | 2 | 3) {
+  public dialogShow(type: SkinType) {
     this.configDialog = Object.assign({}, <DialogConfig>{
       cancel: null,
       confirm: '确定',
@@ -77,7 +77,6 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
         this.router.navigate(['/registered/submit', {referrerNumber: this.referrerNumber}]);
         return;
       }
-    this.dialogShow('ios', 2);
+    this.dialogShow('ios');
   }
-
 }
