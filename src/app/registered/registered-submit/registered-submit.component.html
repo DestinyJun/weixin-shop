@@ -1,21 +1,37 @@
 <div class="registered-submit">
   <app-header [option]="headerOption"></app-header>
-  <div class="registered-submit-phone">
-    <input class="weui-input" type="number"  name="qq" pattern="[0-9]*" placeholder="请填写手机号码" [(ngModel)]="submitPhone">
-  </div>
-  <div class="registered-submit-vcode">
+  <div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+      <div class="weui-cell__bd">
+        <input class="weui-input" type="tel" name="mobile" placeholder="请输入手机号" weui-input="mobile" weui-required [(ngModel)]="submitPhone">
+      </div>
+    </div>
     <div class="weui-cell weui-cell_vcode">
       <div class="weui-cell__bd">
-        <input class="weui-input" type="tel" [(ngModel)]="submitCode" name="mobile" placeholder="请输入手机号"
-               weui-input="mobile" weui-required>
+        <input class="weui-input" type="tel" placeholder="请输入验证码">
       </div>
       <div class="weui-cell__ft">
         <button class="weui-vcode-btn"
                 [weui-vcode]="onSendCode"
-                weui-seconds="3"
+                weui-seconds="10"
                 weui-tpl="${num}s"
-                weui-error="再次获取验证码">获取验证码</button>
+                weui-error="重新发送">获取验证码</button>
       </div>
     </div>
+  </div>
+  <label for="weuiAgree" class="weui-agree">
+    <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
+    <span class="weui-agree__text">
+                注册既代表服务条款 和 <a (click)="dialogAgreeShow('ios')">隐私条款</a>
+            </span>
+  </label>
+  <div class="weui-dialog-agree">
+    <weui-dialog #agreeDialog [config]="configDialog"></weui-dialog>
+  </div>
+  <div class="weui-dialog-pay">
+    <app-dialog-pay></app-dialog-pay>
+  </div>
+  <div class="weui-submit">
+    <button class="weui-btn weui-btn_primary">注册</button>
   </div>
 </div>

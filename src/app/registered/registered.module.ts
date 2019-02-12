@@ -10,6 +10,7 @@ import { RegisteredCameraComponent } from './registered-camera/registered-camera
 import {SharedModule} from '../common/shared.module';
 import { RegisteredSuccessComponent } from './registered-success/registered-success.component';
 import {FormsModule} from '@angular/forms';
+import {DialogPayModule} from '../common/components/dialog-pay/dialog-pay.module';
 
 @NgModule({
   declarations: [RegisteredReferrerComponent, RegisteredSubmitComponent, RegisteredCameraComponent, RegisteredSuccessComponent],
@@ -20,6 +21,7 @@ import {FormsModule} from '@angular/forms';
     HeaderModule,
     NgxQRCodeModule,
     FormsModule,
+    DialogPayModule
   ]
 })
 export class RegisteredModule { }
