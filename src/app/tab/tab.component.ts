@@ -12,13 +12,16 @@ export class TabComponent implements OnInit {
   constructor(
     private router: Router,
     private location: Location,
-    private titleServices: Title
+    private titleServices: Title,
   ) {
-    this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationEnd) {
-        this.tabActive = this.location.path().split('/')[2];
-      }
-    });
+     router.events.subscribe(
+       (event) => {
+         if (event instanceof NavigationEnd) {
+           this.tabActive = event.url.split('/')[2];
+           console.log(this.tabActive);
+         }
+       }
+     );
   }
 
   ngOnInit() {

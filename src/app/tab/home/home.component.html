@@ -8,30 +8,27 @@
     </div>
   </div>
   <div class="weui-grids">
-    <div class="weui-grid">
-      <div class="weui-flex">
-        <div class="weui-flex__item"><div class="placeholder">weui</div></div>
-        <div class="weui-flex__item"><div class="placeholder">weui</div></div>
+    <div class="weui-grid" *ngFor="let item of tradeStatistics;let i = index">
+      <div class="weui-flex top">
+        <div class="weui-flex__item">
+          <div class="time" [ngStyle]="{'background': item.bgColor}">{{item.timeTag}}</div>
+        </div>
+        <div class="weui-flex__item">
+          <div class="amount">{{item.amount}}笔</div>
+        </div>
       </div>
-      <div class="weui-flex">
-        <div class="weui-flex__item"><div class="placeholder">weui</div></div>
+      <div class="weui-flex center">
+        <div class="weui-flex__item">
+          <div class="placeholder">￥{{item.money}}0</div>
+        </div>
       </div>
-      <div class="weui-flex">
-        <div class="weui-flex__item"><div class="placeholder">weui</div></div>
+      <div class="weui-flex bottom">
+        <div class="weui-flex__item" [ngStyle]="{'padding-top': !item.dateEnd?'1vh':''}">
+          <div class="placeholder time">{{item.dateStart}}</div>
+          <div class="placeholder time">{{item.dateEnd}}</div>
+        </div>
       </div>
     </div>
-    <a href="javascript:;" class="weui-grid">
-      <div class="weui-grid__icon">
-        <img src="./images/icon_tabbar.png" alt="">
-      </div>
-      <p class="weui-grid__label">Grid</p>
-    </a>
-    <a href="javascript:;" class="weui-grid">
-      <div class="weui-grid__icon">
-        <img src="./images/icon_tabbar.png" alt="">
-      </div>
-      <p class="weui-grid__label">Grid</p>
-    </a>
   </div>
   <div class="weui-flex">
     <div class="weui-flex__item"><div class="placeholder">下单</div></div>
