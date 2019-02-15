@@ -2,7 +2,9 @@ import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angul
 import {HeaderContent} from '../../common/components/header/header.model';
 import {Observable, timer} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {DialogComponent, DialogConfig, SkinType, InputType, DialogService, ToastService} from 'ngx-weui';
+import {DialogComponent, DialogConfig, SkinType, DialogService, ToastService} from 'ngx-weui';
+import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-registered-submit',
@@ -11,6 +13,13 @@ import {DialogComponent, DialogConfig, SkinType, InputType, DialogService, Toast
   encapsulation: ViewEncapsulation.None
 })
 export class RegisteredSubmitComponent implements OnInit, OnDestroy {
+  // agreeDialog组件
+  @ViewChild('agreeDialog') iosAgreeDialog: DialogComponent;
+  public configAgreeDialog: DialogConfig = {};
+
+  // dialogPay组件
+  public dialogPayShow = false;
+
   public submitStatus: boolean;
   public headerOption: HeaderContent = {
     title: '注册',
@@ -21,39 +30,13 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
       icon: 'fa fa-ellipsis-h'
     }
   };
-  public submitPhone: number;
-  public submitCode: number;
-
-  private DEFCONFIG: DialogConfig = <DialogConfig>{
-    title: '弹窗标题',
-    content: '弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内',
-    cancel: '辅助操作',
-    confirm: '主操作',
-    inputPlaceholder: '必填项',
-    inputError: '请填写或选择项',
-    inputRequired: true,
-    inputAttributes: {
-      maxlength: 140,
-      cn: 2
-    },
-    inputOptions: [
-      { text: '请选择' },
-      { text: '杜蕾斯', value: 'durex', other: 1 },
-      { text: '杰士邦', value: 'jissbon' },
-      { text: '多乐士', value: 'donless' },
-      { text: '处男', value: 'first' }
-    ]
-  };
-
-  // agreeDialog组件
-  @ViewChild('agreeDialog') iosAgreeDialog: DialogComponent;
-  public configAgreeDialog: DialogConfig = {};
-
-  // payDialog组件
-  @ViewChild('payDialog') iosPayDialog: DialogComponent;
-  public configPayDialog: DialogConfig = {};
-
-  constructor(private srv: DialogService, private toastService: ToastService) {}
+  public submitPhone: any;
+  public submitCode: any;
+  public submitAgree = false;
+  public submitPayPassword: any;
+  public buttonDisabled = false;
+  public dialogPayConfig = new DialogPay(true, ['', '', '', '', '', ''], false);
+  constructor(private srv: DialogService, private toastService: ToastService, private router: Router) {}
 
   ngOnInit() {}
   ngOnDestroy() {
@@ -85,5 +68,24 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
       });
     }, 10);
     return false;
+  }
+  public onDialogPayClick(event): void {
+    this.dialogPayShow = event.show;
+    if (event.password === 'destroy') {
+      return;
+    }
+    if (event.password === '123456') {
+      this.router.navigate(['/registered/success']);
+    }
+  }
+  public onsubmit(): void {
+    this.dialogPayShow = true;
+  }
+  public onForm() {
+    this.buttonDisabled = false;
+    if ((this.submitPhone !== undefined) && (this.submitCode !== undefined) && this.submitAgree) {
+      this.buttonDisabled = true;
+      return;
+    }
   }
 }

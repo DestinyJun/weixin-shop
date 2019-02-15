@@ -1,6 +1,33 @@
+@keyframes mymove
+{
+  from {top:100%;}
+  to {top:50%;}
+}
+
+@-moz-keyframes mymove /* Firefox */
+{
+  from {top:100%;}
+  to {top:50%;}
+}
+
+@-webkit-keyframes mymove /* Safari and Chrome */
+{
+  from {top:100%;}
+  to {top:50%;}
+}
+
+@-o-keyframes mymove /* Opera */
+{
+  from {top:100%;}
+  to {top:50%;}
+}
 .dialog-pay{
   .weui-mask{
     .weui-dialog{
+      animation:mymove 0.2s ease-in-out forwards ;
+      -moz-animation:mymove 0.2s ease-in-out forwards; /* Firefox */
+      -webkit-animation:mymove 0.2s ease-in-out forwards; /* Safari and Chrome */
+      -o-animation:mymove 0.2s ease-in-out forwards; /* Opera */
       .weui-dialog-title{
         .t-float{
           cursor: pointer;
@@ -9,18 +36,28 @@
       .weui-dialog-content{
         padding-top: 2.5vh;
         padding-bottom: 2.5vh;
+        position: relative;
         .c-n{
           display: inline-block;
           height: 14vw;
           width: 14vw;
           line-height: 14vw;
+          vertical-align: top;
           border-left: 1px solid #CECECE;
           border-top: 1px solid #CECECE;
           border-bottom: 1px solid #CECECE;
-          font-weight: bold;
         }
         :last-child{
           border-right: 1px solid #CECECE;
+        }
+        #password{
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          opacity: 0;
+          border: 0;
         }
       }
     }

@@ -1,5 +1,5 @@
 .registered-submit{
-  height: 100vh;
+  min-height: 100vh;
   background: #F1F1F1;
   position: relative;
   .registered-submit-phone{
@@ -12,8 +12,12 @@
     }
   }
   .weui-cells_form{
+    background: none;
     padding: 0 4vw;
     margin-top: 2vh;
+    :nth-child(2){
+      margin-top: 1vh;
+    }
     .weui-cell_vcode{
       background: white;
     }

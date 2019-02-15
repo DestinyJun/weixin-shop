@@ -1,14 +1,17 @@
-<div class="registered-submit">
+<div class="registered-submit" (input)="onForm()">
   <app-header [option]="headerOption"></app-header>
   <div class="weui-cells weui-cells_form">
-    <div class="weui-cell">
+    <div class="weui-cell weui-cell_vcode">
       <div class="weui-cell__bd">
         <input class="weui-input" type="tel" name="mobile" placeholder="请输入手机号" weui-input="mobile" weui-required [(ngModel)]="submitPhone">
+      </div>
+      <div class="weui-cell__ft">
+        <i class="weui-icon-"></i>
       </div>
     </div>
     <div class="weui-cell weui-cell_vcode">
       <div class="weui-cell__bd">
-        <input class="weui-input" type="tel" placeholder="请输入验证码">
+        <input class="weui-input" type="tel" placeholder="请输入验证码" [(ngModel)]="submitCode">
       </div>
       <div class="weui-cell__ft">
         <button class="weui-vcode-btn"
@@ -20,18 +23,17 @@
     </div>
   </div>
   <label for="weuiAgree" class="weui-agree">
-    <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox">
+    <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox" [(ngModel)]="submitAgree" (change)="onForm()">
     <span class="weui-agree__text">
                 注册既代表服务条款 和 <a (click)="dialogAgreeShow('ios')">隐私条款</a>
             </span>
-  </label>
-  <div class="weui-dialog-agree">
+  </label>  <div class="weui-dialog-agree">
     <weui-dialog #agreeDialog [config]="configDialog"></weui-dialog>
   </div>
   <div class="weui-dialog-pay">
-    <app-dialog-pay></app-dialog-pay>
+    <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayClick)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>
   </div>
   <div class="weui-submit">
-    <button class="weui-btn weui-btn_primary">注册</button>
+    <button class="weui-btn weui-btn_primary" [ngClass]="!buttonDisabled?'weui-btn_disabled': ''" (click)="onsubmit()" [disabled]="!buttonDisabled">注册</button>
   </div>
 </div>

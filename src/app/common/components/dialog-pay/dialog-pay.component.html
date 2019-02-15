@@ -3,15 +3,17 @@
     <div class="weui-dialog">
       <div class="weui-dialog-title">
         请设置支付密码
-        <div class="t-float pull-right">
+        <div class="t-float pull-right" (click)="onSelfDestroy()">
           <i class="fa fa-times"></i>
         </div>
       </div>
-      <div class="weui-dialog-content">
-        <span class="c-n" *ngFor="let item of [1,2,1,1,1,1]">5</span>
+      <div class="weui-dialog-content" (input)="onInput($event)">
+        <label for="password"></label>
+        <input id="password" #password type="number" name="password" maxlength="6" pattern="[0-9]*" [hidden]="inputShow" autofocus>
+        <span class="c-n" *ngFor="let item of config.value">{{item}}</span>
       </div>
       <div class="weui-dialog-footer">
-        <button class="weui-btn weui-btn_primary">确认</button>
+        <button class="weui-btn weui-btn_primary" [ngClass]="!config.inputDisabled?'weui-btn_disabled': ''" (click)="onSubmit()" [disabled]="!config.inputDisabled">确认</button>
       </div>
     </div>
   </div>

@@ -1,0 +1,16 @@
+<div class="tab">
+  <weui-tabbar>
+    <weui-tab heading="首页" [active]="tabActive === 'home'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('home')">
+      <app-home></app-home>
+    </weui-tab>
+    <weui-tab heading="客户" [active]="tabActive === 'client'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('client')">
+      <h3>客户</h3>
+      <app-client></app-client>
+    </weui-tab>
+    <weui-tab heading="我的" [active]="tabActive === 'mine'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('mine')">
+      <h3>我的</h3>
+      <app-tab-mine></app-tab-mine>
+    </weui-tab>
+  </weui-tabbar>
+</div>
+
