@@ -17,8 +17,7 @@ export class TabComponent implements OnInit {
      router.events.subscribe(
        (event) => {
          if (event instanceof NavigationEnd) {
-           this.tabActive = event.url.split('/')[2];
-           console.log(this.tabActive);
+           this.tabActive = event.urlAfterRedirects.split('/')[2];
          }
        }
      );

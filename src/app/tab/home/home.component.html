@@ -30,9 +30,49 @@
       </div>
     </div>
   </div>
-  <div class="weui-flex">
-    <div class="weui-flex__item"><div class="placeholder">下单</div></div>
-    <div class="weui-flex__item"><div class="placeholder">提现</div></div>
+  <div class="weui-flex card">
+    <div class="weui-flex__item" [routerLink]="['/order']">
+      <div class="weui-cell">
+        <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+          <i class="fa fa-address-card" aria-hidden="true" style="font-size: 10vw"></i>
+        </div>
+        <div class="weui-cell__bd">
+          <p style="">下单</p>
+          <p style="font-size: 12px;">客户下达</p>
+        </div>
+      </div>
+    </div>
+    <div class="weui-flex__item">
+      <div class="weui-cell">
+        <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+          <i class="fa fa-desktop" aria-hidden="true" style="font-size: 10vw"></i>
+        </div>
+        <div class="weui-cell__bd">
+          <p style="">提现</p>
+          <p style="font-size: 12px;">收款提现</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="weui-scroll">
+    <div class="weui-cells__title title">销售排行榜</div>
+    <div class="weui-mine">
+      <div class="weui-cell">
+        <div class="weui-cell__hd">NO.257</div>
+        <div class="weui-cell__bd">我的姓名</div>
+        <div class="weui-cell__ft">￥15484</div>
+      </div>
+    </div>
+    <weui-infiniteloader (loadmore)="onLoadMore($event)" #comp [config]="infiniteloaderConfig">
+      <div class="weui-cells" style="margin-top: 0 ">
+        <div *ngFor="let i of items" class="weui-cell">
+          <div class="weui-cell__hd">NO.{{i}}</div>
+          <div class="weui-cell__bd">王小花</div>
+          <div class="weui-cell__ft">￥15484</div>
+        </div>
+      </div>
+      <weui-button *ngIf="restartBtn" (click)="restart()">重新开始</weui-button>
+    </weui-infiniteloader>
   </div>
 </div>
 

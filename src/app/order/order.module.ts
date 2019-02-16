@@ -5,6 +5,8 @@ import {WeUiModule} from 'ngx-weui';
 import { OrderPlaceComponent } from './order-place/order-place.component';
 import { OrderClientComponent } from './order-client/order-client.component';
 import { OrderInvoiceComponent } from './order-invoice/order-invoice.component';
+import {HeaderModule} from '../common/components/header/header.module';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [OrderPlaceComponent, OrderClientComponent, OrderInvoiceComponent],
@@ -12,6 +14,8 @@ import { OrderInvoiceComponent } from './order-invoice/order-invoice.component';
     CommonModule,
     OrderRoutingModule,
     WeUiModule.forRoot(),
+    HeaderModule,
+    FormsModule,
   ]
 })
 export class OrderModule { }
