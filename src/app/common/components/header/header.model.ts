@@ -3,9 +3,11 @@ export class HeaderContent {
   leftContent: {
     title?: string;
     icon?: string;
+    color?: string;
   };
   rightContent: {
     title?: string;
     icon?: string;
+    color?: string;
   };
 }

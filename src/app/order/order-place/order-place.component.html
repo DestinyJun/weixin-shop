@@ -1,6 +1,6 @@
 <div class="order-place">
   <app-header [option]="headerOption"></app-header>
-  <div class="weui-cells adress">
+  <div class="weui-cells adress" [routerLink]="['./orclient']">
     <div class="weui-cell">
       <div class="weui-cell__bd">请选择一个收获地址</div>
     </div>
@@ -25,6 +25,27 @@
         </div>
       </div>
     </weui-infiniteloader>
+  </div>
+  <div class="weui-bill">
+    <div class="weui-cells">
+      <div class="weui-cell weui-cell_access">
+        <div class="weui-cell__bd">
+          <span style="vertical-align: middle">发票</span>
+        </div>
+        <div class="weui-cell__ft">
+          <span>不需要发票</span>
+          <i></i>
+        </div>
+      </div>
+      <div class="weui-cell weui-cell_access">
+        <div class="weui-cell__hd">
+          <span style="vertical-align: middle">备注：</span>
+        </div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="点击添加备注" name="txt">
+        </div>
+      </div>
+    </div>
   </div>
   <div class="weui-footer weui-footer_fixed-bottom" *ngIf="totalPrice">
     <div class="weui-flex">
