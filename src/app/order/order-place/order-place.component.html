@@ -53,9 +53,13 @@
         <span style="color: #2A2A2A;font-size: 1.5rem">共计</span>
         <span style="color: #FF3535;font-size: 1.5rem">￥{{totalPrice}}</span>
       </div>
-      <div class="weui-flex__item">
+      <div class="weui-flex__item" (click)="onToastShow('success')">
         <span style="color: white;font-size: 1.5rem">提交订单</span>
       </div>
     </div>
   </div>
 </div>
+<div class="order-toast">
+  <weui-toast #success [text]="'请先填写收货地址'" [icon]="''" [time]="1000"></weui-toast>
+</div>
+

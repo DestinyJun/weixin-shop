@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
+import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
 
 @Component({
   selector: 'app-order-place',
@@ -9,6 +9,8 @@ import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
   encapsulation: ViewEncapsulation.None
 })
 export class OrderPlaceComponent implements OnInit {
+  // toast
+  @ViewChild('success') successToast: ToastComponent;
   // scroll
   infiniteloaderConfig: InfiniteLoaderConfig = {
     height: 'auto'
@@ -32,8 +34,7 @@ export class OrderPlaceComponent implements OnInit {
   ];
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
   public goodsTotalCount (event, i): void {
     this.totalPrice = 0;
     this.goodsInfo[i].amount = event;
@@ -41,4 +42,8 @@ export class OrderPlaceComponent implements OnInit {
       this.totalPrice += item.goodsPrice * item.amount;
     });
   }
+  public  onToastShow(type: 'success' | 'loading') {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
+  }
+
 }
