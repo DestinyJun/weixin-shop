@@ -23,6 +23,37 @@ export class OrderClientComponent implements OnInit {
   // search
   items: Observable<string[]>;
   value: string;
+  // client
+  public clientList = [
+    {
+      className: '最近7天交易客户',
+      value: [
+        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
+        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
+      ]
+    },
+    {
+      className: 'A',
+      value: [
+      {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
+      {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
+      ]
+    },
+    {
+      className: 'E',
+      value: [
+      {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
+      {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
+    ]
+    },
+    {
+      className: 'F',
+      value: [
+        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
+        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
+      ]
+    }
+  ];
   constructor() { }
 
   ngOnInit() {
