@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-order-place',
@@ -32,7 +33,9 @@ export class OrderPlaceComponent implements OnInit {
     {imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（一锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 100.00, amount: 0},
     {imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（二锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 200.00, amount: 0},
   ];
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {}
   public goodsTotalCount (event, i): void {
@@ -42,8 +45,12 @@ export class OrderPlaceComponent implements OnInit {
       this.totalPrice += item.goodsPrice * item.amount;
     });
   }
-  public  onToastShow(type: 'success' | 'loading') {
+  public onToastShow(type: 'success' | 'loading') {
     (<ToastComponent>this[`${type}Toast`]).onShow();
+  }
+  public submitOrder() {
+    this.onToastShow('success');
+    this.router.navigate(['/pay']);
   }
 
 }

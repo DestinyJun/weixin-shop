@@ -1,3 +1,67 @@
-<p>
-  order-invoice works!
-</p>
+<div class="order-invoice">
+  <app-header [option]="headerOption"></app-header>
+  <div class="invoice">
+    <div class="weui-cells weui-cells_checkbox">
+      <label class="weui-cell weui-check__label" for="s11">
+        <div class="weui-cell__hd">
+          <input type="radio" class="weui-check" name="checkbox" id="s11" value="noinvoice" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+          <i class="weui-icon-checked"></i>
+        </div>
+        <div class="weui-cell__bd">
+          <p>不需要发票</p>
+        </div>
+      </label>
+    </div>
+    <div class="weui-cells weui-cells_checkbox">
+      <div class="weui-cell">
+        <label class="weui-cell__hd weui-check__label" for="s12" style="margin-right: 20px">
+          <input type="radio" class="weui-check" name="checkbox" id="s12" value="personal" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+          <i class="weui-icon-checked"></i>
+          <span>个人</span>
+        </label>
+        <label class="weui-cell__bd weui-check__label" for="s13">
+          <input type="radio" class="weui-check" name="checkbox" id="s13" value="company" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+          <i class="weui-icon-checked"></i>
+          <span>公司</span>
+        </label>
+      </div>
+      <div class="weui-cell personal-input" *ngIf="radioRes.radio === 'personal'">
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请填写发票抬头" [(ngModel)]="radioRes.txt" name="txt" (change)="radioResChanges()">
+        </div>
+      </div>
+      <div class="company-input" *ngIf="radioRes.radio === 'company'">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请填写发票抬头" [(ngModel)]="radioRes.txt" name="txt" (change)="radioResChanges()">
+          </div>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请填写纳税人识别号" [(ngModel)]="radioRes.txtNum" name="txt" (change)="radioResChanges()">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="history-invoice">
+    <div class="weui-cells__title">已有发票信息</div>
+    <div class="weui-cells weui-cells_radio">
+      <label class="weui-cell weui-check__label">
+        <div class="weui-cell__hd">
+          <p>发票抬头</p>
+          <p>税<span class="pull-right">号</span></p>
+        </div>
+        <div class="weui-cell__bd">
+          <p>贵州四季常青药业</p>
+          <p>544554545478798798</p>
+        </div>
+        <div class="weui-cell__ft">
+          <input type="checkbox" class="weui-check" [(ngModel)]="radioRes.hisRadio" name="hisRadio" value="hisRadio1" id="radio1" (change)="radioResChanges()">
+          <span class="weui-icon-checked"></span>
+        </div>
+      </label>
+    </div>
+  </div>
+</div>
