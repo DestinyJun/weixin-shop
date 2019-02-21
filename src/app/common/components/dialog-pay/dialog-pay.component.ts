@@ -3,10 +3,14 @@ export class DialogPay {
   show: boolean;
   value: Array<string>;
   inputDisabled: boolean;
-  constructor(_show: boolean, _value: Array<string>, _inputDisabled: boolean) {
+  btnShow: boolean;
+  pwdShow: boolean;
+  constructor(_show: boolean, _value: Array<string>, _inputDisabled: boolean, _btnShow: boolean, _pwdShow: boolean) {
     this.show = _show;
     this.value = _value;
     this.inputDisabled = _inputDisabled;
+    this.btnShow = _btnShow;
+    this.pwdShow = _pwdShow;
   }
 }
 @Component({
@@ -16,7 +20,7 @@ export class DialogPay {
 })
 
 export class DialogPayComponent implements OnInit {
-  @Input() config = new DialogPay(true, ['', '', '', '', '', ''], true);
+  @Input() config = new DialogPay(true, ['', '', '', '', '', ''], true, false, false);
   @Output() dialogPayClick: EventEmitter<{}> = new EventEmitter();
   @Output() dialogPayDestroy: EventEmitter<{}> = new EventEmitter();
   @ViewChild('password') passwordInput: ElementRef;

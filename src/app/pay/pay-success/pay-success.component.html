@@ -1,3 +1,20 @@
-<p>
-  pay-success works!
-</p>
+<div class="pay-success">
+  <app-header [option]="headerOption"></app-header>
+  <div class="weui-msg">
+    <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+    <div class="weui-msg__text-area">
+      <h2 class="weui-msg__title" style="color: #09BB07;">注册成功</h2>
+    </div>
+  </div>
+  <div class="weui-msg__opr-area">
+    <p class="weui-btn-area">
+      <button class="weui-btn weui-btn_primary" [routerLink]="['/tab/home']">查看订单</button>
+    </p>
+    <p class="weui-btn-area">
+      <button class="weui-btn weui-btn_default" [routerLink]="['/order']">再来一单</button>
+    </p>
+    <p class="weui-btn-area">
+      <button class="weui-btn weui-btn_default" [routerLink]="['/tab/home']">返回首页</button>
+    </p>
+  </div>
+</div>

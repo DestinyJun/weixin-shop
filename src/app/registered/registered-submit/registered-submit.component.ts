@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {DialogComponent, DialogConfig, SkinType, DialogService, ToastService} from 'ngx-weui';
 import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
 import {Router} from '@angular/router';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-registered-submit',
@@ -21,24 +22,22 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   public dialogPayShow = false;
 
   public submitStatus: boolean;
-  public headerOption: HeaderContent = {
-    title: '注册',
-    leftContent: {
-      icon: 'fa fa-times'
-    },
-    rightContent: {
-      icon: 'fa fa-ellipsis-h'
-    }
-  };
   public submitPhone: any;
   public submitCode: any;
   public submitAgree = false;
   public submitPayPassword: any;
   public buttonDisabled = false;
-  public dialogPayConfig = new DialogPay(true, ['', '', '', '', '', ''], false);
-  constructor(private srv: DialogService, private toastService: ToastService, private router: Router) {}
+  public dialogPayConfig = new DialogPay(true, ['', '', '', '', '', ''], false, true, false);
+  constructor(
+    private srv: DialogService,
+    private toastService: ToastService,
+    private router: Router,
+    public titleService: Title
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.titleService.setTitle('注册');
+  }
   ngOnDestroy() {
     this.srv.destroyAll();
   }

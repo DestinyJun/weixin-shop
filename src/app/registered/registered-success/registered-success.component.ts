@@ -8,15 +8,6 @@ import {HeaderContent} from '../../common/components/header/header.model';
 })
 export class RegisteredSuccessComponent implements OnInit {
   public user = '100101';
-  public headerOption: HeaderContent = {
-    title: '注册成功',
-    leftContent: {
-      icon: 'fa fa-times'
-    },
-    rightContent: {
-      icon: 'fa fa-ellipsis-h'
-    }
-  };
   constructor() { }
 
   ngOnInit() {

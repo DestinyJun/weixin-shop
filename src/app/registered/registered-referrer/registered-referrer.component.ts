@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angul
 import {ActionSheetComponent, ActionSheetConfig, ActionSheetService, DialogComponent, DialogConfig, SkinType, ToastService} from 'ngx-weui';
 import {Router} from '@angular/router';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-registered-referrer',
@@ -36,10 +37,13 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   constructor(
     private actionSheetService: ActionSheetService,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    public titleService: Title
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.titleService.setTitle('请填写推荐人');
+  }
   ngOnDestroy() {
     this.actionSheetService.destroyAll();
   }

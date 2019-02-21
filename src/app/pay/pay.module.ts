@@ -5,6 +5,8 @@ import { PaySuccessComponent } from './pay-success/pay-success.component';
 import { PayPasswordComponent } from './pay-password/pay-password.component';
 import {PayRoutingModule} from './pay-routing.module';
 import {HeaderModule} from '../common/components/header/header.module';
+import {FormsModule} from '@angular/forms';
+import {DialogPayModule} from '../common/components/dialog-pay/dialog-pay.module';
 
 @NgModule({
   declarations: [PayWayComponent, PaySuccessComponent, PayPasswordComponent],
@@ -12,6 +14,8 @@ import {HeaderModule} from '../common/components/header/header.module';
     CommonModule,
     PayRoutingModule,
     HeaderModule,
+    FormsModule,
+    DialogPayModule
   ]
 })
 export class PayModule { }

@@ -1,6 +1,5 @@
 <div class="registered-submit" (input)="onForm()">
-  <app-header [option]="headerOption"></app-header>
-  <div class="weui-cells weui-cells_form">
+  <div class="weui-cells weui-cells_form" style="">
     <div class="weui-cell weui-cell_vcode">
       <div class="weui-cell__bd">
         <input class="weui-input" type="tel" name="mobile" placeholder="请输入手机号" weui-input="mobile" weui-required [(ngModel)]="submitPhone">
@@ -27,7 +26,8 @@
     <span class="weui-agree__text">
                 注册既代表服务条款 和 <a (click)="dialogAgreeShow('ios')">隐私条款</a>
             </span>
-  </label>  <div class="weui-dialog-agree">
+  </label>
+  <div class="weui-dialog-agree">
     <weui-dialog #agreeDialog [config]="configDialog"></weui-dialog>
   </div>
   <div class="weui-dialog-pay">

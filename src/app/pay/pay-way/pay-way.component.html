@@ -1,3 +1,53 @@
 <div class="pay-way">
   <app-header [option]="headerOption"></app-header>
+  <div class="cash">
+    <div class="weui-cells">
+        <p style="font-size: 1.2rem">订单编号 475415487545</p>
+        <p style="color: #FF2525;font-size:1.5rem;">￥100.00</p>
+        <p style="color: #CDCDCD;font-size: 1rem;">剩余时间：15:00</p>
+    </div>
+  </div>
+  <div class="way">
+    <div class="weui-cells">
+      <div class="weui-panel">
+        <div class="weui-panel__hd" style="font-size: 1.4rem;color: #000;">选择支付方式</div>
+        <div class="weui-panel__bd">
+          <div class="weui-media-box weui-media-box_small-appmsg">
+            <div class="weui-cells">
+              <label class="weui-cell weui-cells_checkbox" for="s12">
+                  <div class="weui-cell__hd">
+                    <i class="fa fa-imdb" style="width:20px;margin-right:5px;display:block;color: #4DCB6B;"></i>
+                  </div>
+                  <div class="weui-cell__bd weui-cell_primary">
+                    <p>钱包支付</p>
+                  </div>
+                  <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" name="radio" id="s12" value="wallet" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+                    <i class="weui-icon-checked"></i>
+                  </div>
+              </label>
+              <label class="weui-cell weui-cells_checkbox"  for="s13">
+                <div class="weui-cell__hd">
+                  <i class="fa fa-weixin" style="width:20px;margin-right:5px;display:block;color: #4DCB6B;"></i>
+                </div>
+                <div class="weui-cell__bd weui-cell_primary">
+                  <p>微信支付</p>
+                </div>
+                <div class="weui-cell__ft">
+                  <input type="radio" class="weui-check" name="radio" id="s13" value="wexin" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+                  <i class="weui-icon-checked"></i>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="weui-dialog-pay">
+    <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayClick)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>
+  </div>
+  <div class="pay">
+    <button class="weui-btn weui-btn_primary" (click)="dialogPayShow = true">注册</button>
+  </div>
 </div>
