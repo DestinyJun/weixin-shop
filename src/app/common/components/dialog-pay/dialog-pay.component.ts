@@ -1,11 +1,11 @@
 import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ComponentRef} from '@angular/core';
 export class DialogPay {
-  show: boolean;
-  value: Array<string>;
-  inputDisabled: boolean;
-  btnShow: boolean;
-  pwdShow: boolean;
-  constructor(_show: boolean, _value: Array<string>, _inputDisabled: boolean, _btnShow: boolean, _pwdShow: boolean) {
+  show?: boolean;
+  value?: Array<string>;
+  inputDisabled?: boolean;
+  btnShow?: boolean;
+  pwdShow?: boolean;
+  constructor(_show?: boolean, _value?: Array<string>, _inputDisabled?: boolean, _btnShow?: boolean, _pwdShow?: boolean) {
     this.show = _show;
     this.value = _value;
     this.inputDisabled = _inputDisabled;
