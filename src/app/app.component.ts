@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'weixin-shop';
+  constructor( private router: Router,) {
+    router.events.subscribe(
+      (event) => {
+        if (event instanceof NavigationEnd) {
+          console.log(event.urlAfterRedirects);
+        }
+      }
+    );
+  }
 }

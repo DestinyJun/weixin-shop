@@ -3,8 +3,7 @@
     <weui-tab heading="首页" [active]="tabActive === 'home'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('home')">
       <app-home></app-home>
     </weui-tab>
-    <weui-tab heading="客户" [active]="tabActive === 'client'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('client')">
-      <h3>客户</h3>
+    <weui-tab style="height: 100%" heading="客户" [active]="tabActive === 'client'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('client')">
       <app-client></app-client>
     </weui-tab>
     <weui-tab heading="我的" [active]="tabActive === 'mine'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('mine')">

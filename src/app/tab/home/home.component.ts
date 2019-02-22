@@ -9,6 +9,7 @@ import {timer} from 'rxjs';
   encapsulation: ViewEncapsulation.None,
 })
 export class HomeComponent implements OnInit {
+  // scroll
   infiniteloaderConfig: InfiniteLoaderConfig = {
     height: '48vh'
   };
@@ -17,8 +18,7 @@ export class HomeComponent implements OnInit {
   items: any[] = Array(20)
     .fill(0)
     .map((v: any, i: number) => i);
-
-
+  // card
   public tradeStatistics = [
     {bgColor: '#FF6565', timeTag: '今天', amount: '7', money: '1,762.00', dateStart: '2018年12月25日', dateEnd: null},
     {bgColor: '#65D2FF', timeTag: '本月', amount: '23', money: '69,762.00', dateStart: '2018年1月1日', dateEnd: '2018年1月30日'},
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
       console.log('1');
     }
   }
-  onLoadMore(comp: InfiniteLoaderComponent) {
+  public onLoadMore(comp: InfiniteLoaderComponent): void {
     this.restartBtn = false;
     timer(1500).subscribe(() => {
       this.items.push(
@@ -48,8 +48,7 @@ export class HomeComponent implements OnInit {
       comp.resolveLoading();
     });
   }
-
-  restart() {
+  public restart(): void {
     this.items.length = 0;
     this.il.restart();
   }

@@ -1,0 +1,68 @@
+.client{
+  position: relative;
+  height: 100%;
+  .search{
+    margin-top:15px;
+    .weui-search-bar{
+      background: #FFFFFF;
+      .weui-search-bar__form{
+        height: 40px;
+        line-height: 40px;
+        .weui-search-bar__label{}
+      }
+    }
+  }
+  .client-list{
+    .weui-cells{
+      .weui-cell{
+        padding: 0;
+        .weui-cell__bd{
+          padding-left: 15px;
+          font-size: 1.5rem;
+        }
+        .weui-cell__ft{
+          .weui-btn{
+            border-radius: 0;
+            padding-left: 20px;
+            padding-right: 20px;
+            //padding-top: 10px;
+            //padding-bottom: 10px;
+            &:after{
+              border: none;
+            }
+          }
+          .weui-btn_default{
+            background-color: #fff;
+          }
+          .weui-btn_warn{
+            background-color: #FF6464;
+          }
+        }
+      }
+    }
+  }
+  .alphabet{
+    position: fixed;
+    top:160px;
+    right: 0;
+    width: 1.5rem;
+    z-index: 99;
+    text-align: center;
+    color: #5B5B5B;
+    font-size: 1.5rem;
+    ul{
+      list-style: none;
+    }
+  }
+  .scroll{
+    width: 100%;
+    position: absolute;
+    top:127px;
+    left: 0;
+    bottom: 0;
+    .weui-infiniteloader__content{
+      //padding-top: 127px;
+    }
+  }
+}
+
