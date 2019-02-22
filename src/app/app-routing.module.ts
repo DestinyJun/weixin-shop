@@ -7,6 +7,7 @@ const routes: Routes = [
   {path: 'tab', loadChildren: './tab/tab.module#TabModule'},
   {path: 'order', loadChildren: './order/order.module#OrderModule'},
   {path: 'pay', loadChildren: './pay/pay.module#PayModule'},
+  {path: 'mine', loadChildren: './mine/mine.module#MineModule'},
 ];
 
 @NgModule({

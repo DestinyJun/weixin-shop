@@ -8,7 +8,7 @@
       (clear)="onBarCancel()"
       (submit)="onBarSubmit($event)">
     </weui-searchbar>
-    <div class="weui-panel" style="margin-top: 0px;" *ngIf="value">
+    <div class="weui-panel" style="margin-top: 0;" *ngIf="value">
       <div class="weui-panel__hd">查询{{value}}</div>
       <div class="weui-panel__bd" *ngIf="items | async; let items; else loading">
         <div class="weui-cell weui-cell_access" *ngFor="let item of items">
@@ -23,12 +23,12 @@
           <div class="weui-media-box weui-media-box_text">Loading...</div>
         </div>
       </ng-template>
-    <!--  <a class="weui-panel__ft" href="javascript:void(0);">
-        <div class="weui-cell weui-cell_access weui-cell_link">
-          <div class="weui-cell__bd">More</div>
-          <div class="weui-cell__ft"></div>
-        </div>
-      </a>-->
+      <!--  <a class="weui-panel__ft" href="javascript:void(0);">
+          <div class="weui-cell weui-cell_access weui-cell_link">
+            <div class="weui-cell__bd">More</div>
+            <div class="weui-cell__ft"></div>
+          </div>
+        </a>-->
     </div>
   </div>
   <div class="alphabet">

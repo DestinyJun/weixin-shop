@@ -6,8 +6,7 @@
     <weui-tab style="height: 100%" heading="客户" [active]="tabActive === 'client'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('client')">
       <app-client></app-client>
     </weui-tab>
-    <weui-tab heading="我的" [active]="tabActive === 'mine'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('mine')">
-      <h3>我的</h3>
+    <weui-tab style="height: 100%" heading="我的" [active]="tabActive === 'mine'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('mine')">
       <app-tab-mine></app-tab-mine>
     </weui-tab>
   </weui-tabbar>

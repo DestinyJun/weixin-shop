@@ -65,6 +65,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   }
   public dialogShow(type: SkinType) {
     this.configDialog = Object.assign({}, <DialogConfig>{
+      skin: type,
       cancel: null,
       confirm: '确定',
       content: '请填写推荐人工号'
