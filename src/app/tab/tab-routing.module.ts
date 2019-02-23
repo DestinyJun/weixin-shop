@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {TabComponent} from './tab.component';
-import {HomeComponent} from './home/home.component';
-import {ClientComponent} from './client/client.component';
+import {TabHomeComponent} from './tab-home/tab-home.component';
+import {TabClientComponent} from './tab-client/tab-client.component';
 import {TabMineComponent} from './tab-mine/tab-mine.component';
 const tabRoutes: Routes = [
   {
@@ -10,8 +10,8 @@ const tabRoutes: Routes = [
     component: TabComponent,
     children: [
       {path: '', redirectTo: 'home', pathMatch: 'full'},
-      {path: 'home', component: HomeComponent},
-      {path: 'client', component: ClientComponent},
+      {path: 'home', component: TabHomeComponent},
+      {path: 'client', component: TabClientComponent},
       {path: 'mine', component: TabMineComponent},
     ]
   },

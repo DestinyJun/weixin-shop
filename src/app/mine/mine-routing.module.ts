@@ -2,14 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {MineUserComponent} from './mine-user/mine-user.component';
 import {MineSharedComponent} from './mine-shared/mine-shared.component';
-import {MineTeamComponent} from './mine-team/mine-team.component';
-import {MineSettingComponent} from './mine-setting/mine-setting.component';
-import {MineWalletComponent} from './mine-wallet/mine-wallet.component';
 const tabRoutes: Routes = [
-  {path: 'wallet', component: MineWalletComponent},
+  {path: 'order', loadChildren: './mine-order/mine-order.module#MineOrderModule'},
+  {path: 'setting', loadChildren: './mine-setting/mine-setting.module#MineSettingModule'},
   {path: 'shared', component: MineSharedComponent},
-  {path: 'team', component: MineTeamComponent},
-  {path: 'setting', component: MineSettingComponent},
+  {path: 'team', loadChildren: './mine-team/mine-team.module#MineTeamModule'},
+  {path: 'profile', component: MineUserComponent},
+  {path: 'wallet', loadChildren: './mine-wallet/mine-wallet.module#MineWalletModule'},
 ];
 @NgModule({
   imports: [RouterModule.forChild(tabRoutes)],

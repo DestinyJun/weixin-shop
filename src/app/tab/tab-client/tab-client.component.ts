@@ -2,14 +2,15 @@ import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {Observable, timer} from 'rxjs';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: 'app-client',
-  templateUrl: './client.component.html',
-  styleUrls: ['./client.component.less'],
+  selector: 'app-tab-client',
+  templateUrl: './tab-client.component.html',
+  styleUrls: ['./tab-client.component.less'],
   encapsulation: ViewEncapsulation.None
 })
-export class ClientComponent implements OnInit {
+export class TabClientComponent implements OnInit {
   // header
   public headerOption: HeaderContent = {
     title: '客户',
@@ -37,34 +38,6 @@ export class ClientComponent implements OnInit {
         {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
       ]
     },
-    {
-      className: 'E',
-      value: [
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
-      ]
-    },
-    {
-      className: 'F',
-      value: [
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
-      ]
-    },
-    {
-      className: 'G',
-      value: [
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
-      ]
-    },
-    {
-      className: 'H',
-      value: [
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
-      ]
-    }
   ];
   // search
   public searchItems: Observable<string[]>;
@@ -78,7 +51,9 @@ export class ClientComponent implements OnInit {
   public items: any[] = Array(20)
     .fill(0)
     .map((v: any, i: number) => i);
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
@@ -107,14 +82,17 @@ export class ClientComponent implements OnInit {
     this.value = term;
     // if (term) this.items = this.tbService.search(term);
   }
-  public onBarCancel() {
+  public onBarCancel(): void {
     console.log('onCancel');
   }
-  public onBarClear() {
+  public onBarClear(): void {
     console.log('onCancel');
   }
-  public onBarSubmit(value: string) {
+  public onBarSubmit(value: string): void {
     console.log('onSubmit', value);
   }
+  public onHeaderRightClick(): void {
+    this.router.navigate(['/client/add']);
+}
 
 }

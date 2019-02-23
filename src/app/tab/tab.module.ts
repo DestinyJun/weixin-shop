@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TabComponent } from './tab.component';
-import { HomeComponent } from './home/home.component';
+import { TabHomeComponent } from './tab-home/tab-home.component';
 import {TabRoutingModule} from './tab-routing.module';
 import {WeUiModule} from 'ngx-weui';
-import { ClientComponent } from './client/client.component';
+import { TabClientComponent } from './tab-client/tab-client.component';
 import { TabMineComponent } from './tab-mine/tab-mine.component';
-import { ClientAddComponent } from './client-add/client-add.component';
-import { ClientEditComponent } from './client-edit/client-edit.component';
 import {HeaderModule} from '../common/components/header/header.module';
 
 @NgModule({
-  declarations: [TabComponent, HomeComponent, ClientComponent, TabMineComponent, ClientAddComponent, ClientEditComponent],
+  declarations: [TabComponent, TabHomeComponent, TabClientComponent, TabMineComponent],
   imports: [
     CommonModule,
     WeUiModule.forRoot(),

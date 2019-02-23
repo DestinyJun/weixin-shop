@@ -1,5 +1,5 @@
 <div class="client">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerRightClick)="onHeaderRightClick()"></app-header>
   <div class="search">
     <weui-searchbar
       [placeholder]="'请输入你想输入的内容'"

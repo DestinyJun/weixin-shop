@@ -3,12 +3,12 @@ import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
 import {timer} from 'rxjs';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.less'],
+  selector: 'app-tab-home',
+  templateUrl: './tab-home.component.html',
+  styleUrls: ['./tab-home.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class HomeComponent implements OnInit {
+export class TabHomeComponent implements OnInit {
   // scroll
   infiniteloaderConfig: InfiniteLoaderConfig = {
     height: '48vh'
