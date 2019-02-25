@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {Observable, timer} from 'rxjs';
-import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
+import {ActionSheetComponent, ActionSheetConfig, InfiniteLoaderComponent, InfiniteLoaderConfig, SkinType} from 'ngx-weui';
 import {Router} from '@angular/router';
 
 @Component({
@@ -11,6 +11,11 @@ import {Router} from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class TabClientComponent implements OnInit {
+  public a = `<p>1</p><p>2</p><p>3</p>`;
+  // ActionSheet组件
+  @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
+  public actionSheetMenus: any[] = [];
+  public configActionSheet: ActionSheetConfig = <ActionSheetConfig>{};
   // header
   public headerOption: HeaderContent = {
     title: '客户',
@@ -94,5 +99,18 @@ export class TabClientComponent implements OnInit {
   public onHeaderRightClick(): void {
     this.router.navigate(['/client/add']);
 }
-
+  public actionSheetShow(type: SkinType, item): void {
+    console.log();
+    this.actionSheetMenus = [
+      { text: '凉凉', value: 'camera', team: '22222'},
+      { text: '从手机相册选择', value: 'photo'},
+    ];
+    this.configActionSheet.title = item.name;
+    this.configActionSheet.skin = type;
+    this.configActionSheet.cancel = '关闭';
+    this.configActionSheet = Object.assign({}, this.configActionSheet);
+    setTimeout(() => {
+      (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {});
+    }, 10);
+  }
 }

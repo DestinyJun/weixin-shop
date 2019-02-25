@@ -43,7 +43,7 @@
        <div class="client-list" *ngFor="let item of clientList">
          <div class="weui-cells__title">{{item.className}}</div>
          <div class="weui-cells">
-           <div class="weui-cell" *ngFor="let list of item.value">
+           <div class="weui-cell" *ngFor="let list of item.value" (click)="actionSheetShow('ios', list)">
              <div class="weui-cell__bd">
                <p><span>{{list.name}}</span><span>{{list.phone}}</span></p>
                <p style="font-size: 1.2rem;color: #888888;">{{list.address}}</p>
@@ -57,6 +57,13 @@
        </div>
        <weui-button *ngIf="restartBtn" (click)="restart()">重新开始</weui-button>
      </weui-infiniteloader>
+  </div>
+  <div class="client-actionsheet">
+    <weui-actionsheet #iosActionSheet [menus]="actionSheetMenus" [config]="configActionSheet">
+      <p>1</p>
+      <p>1</p>
+      <p>1</p>
+    </weui-actionsheet>
   </div>
 </div>
 
