@@ -3,7 +3,8 @@ import {HeaderContent} from '../../common/components/header/header.model';
 import {Observable, timer} from 'rxjs';
 import {ActionSheetComponent, ActionSheetConfig, InfiniteLoaderComponent, InfiniteLoaderConfig, SkinType} from 'ngx-weui';
 import {Router} from '@angular/router';
-
+import {TabService} from '../../common/services/tab.service';
+import {HttpClient} from '@angular/common/http';
 @Component({
   selector: 'app-tab-client',
   templateUrl: './tab-client.component.html',
@@ -56,12 +57,28 @@ export class TabClientComponent implements OnInit {
   public items: any[] = Array(20)
     .fill(0)
     .map((v: any, i: number) => i);
+
   constructor(
-    private router: Router
-  ) { }
+    private router: Router,
+    private tabService: TabService,
+    private http: HttpClient
+  ) {
+  }
 
   ngOnInit() {
+    this.http.post('http://1785s28l17.iask.in:13009/contacts/list', {}).subscribe(
+      (val) => {
+        console.log(val);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        console.log('完成');
+      }
+    );
   }
+
   public onLoadMore(comp: InfiniteLoaderComponent): void {
     this.restartBtn = false;
     timer(1500).subscribe(() => {
@@ -79,38 +96,46 @@ export class TabClientComponent implements OnInit {
       comp.resolveLoading();
     });
   }
+
   public restart(): void {
     this.items.length = 0;
     this.il.restart();
   }
+
   public onBarSearch(term: string) {
     this.value = term;
     // if (term) this.items = this.tbService.search(term);
   }
+
   public onBarCancel(): void {
     console.log('onCancel');
   }
+
   public onBarClear(): void {
     console.log('onCancel');
   }
+
   public onBarSubmit(value: string): void {
     console.log('onSubmit', value);
   }
+
   public onHeaderRightClick(): void {
     this.router.navigate(['/client/add']);
-}
+  }
+
   public actionSheetShow(type: SkinType, item): void {
     console.log();
     this.actionSheetMenus = [
-      { text: '凉凉', value: 'camera', team: '22222'},
-      { text: '从手机相册选择', value: 'photo'},
+      {text: '凉凉', value: 'camera', team: '22222'},
+      {text: '从手机相册选择', value: 'photo'},
     ];
     this.configActionSheet.title = item.name;
     this.configActionSheet.skin = type;
     this.configActionSheet.cancel = '关闭';
     this.configActionSheet = Object.assign({}, this.configActionSheet);
     setTimeout(() => {
-      (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {});
+      (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {
+      });
     }, 10);
   }
 }

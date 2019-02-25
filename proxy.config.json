@@ -1,0 +1,9 @@
+{
+  "/contacts": {
+    "target": "http://1785s28l17.iask.in:13009",
+    "secure": "false",
+    "pathRewrite": {
+      "^/contacts": ""
+    }
+  }
+}

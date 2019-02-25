@@ -18,7 +18,6 @@ import {DialogPayModule} from '../common/components/dialog-pay/dialog-pay.module
     RegisteredRoutingModule,
     WeUiModule.forRoot(),
     HeaderModule,
-    NgxQRCodeModule,
     FormsModule,
     DialogPayModule
   ]

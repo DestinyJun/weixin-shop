@@ -7,6 +7,7 @@ import {WeUiModule} from 'ngx-weui';
 import { TabClientComponent } from './tab-client/tab-client.component';
 import { TabMineComponent } from './tab-mine/tab-mine.component';
 import {HeaderModule} from '../common/components/header/header.module';
+import {TabService} from '../common/services/tab.service';
 
 @NgModule({
   declarations: [TabComponent, TabHomeComponent, TabClientComponent, TabMineComponent],
@@ -16,6 +17,6 @@ import {HeaderModule} from '../common/components/header/header.module';
     TabRoutingModule,
     HeaderModule,
   ],
-  providers: []
+  providers: [TabService]
 })
 export class TabModule { }

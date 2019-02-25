@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  dev_env: '环境：开发中.........................',
-  dev_url: '192.168.0.1'
+  env: '开发环境中.........................',
+  // dev_test_url: 'http://1785s28l17.iask.in:19568',
+  dev_test_url: 'http://1785s28l17.iask.in:13009',
 };
 
 /*

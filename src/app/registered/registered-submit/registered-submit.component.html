@@ -28,7 +28,7 @@
             </span>
   </label>
   <div class="weui-dialog-agree">
-    <weui-dialog #agreeDialog [config]="configDialog"></weui-dialog>
+    <weui-dialog #agreeDialog [config]="configAgreeDialog"></weui-dialog>
   </div>
   <div class="weui-dialog-pay">
     <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayClick)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>

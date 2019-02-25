@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
-
+import {environment} from '../environments/environment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,7 +8,8 @@ import {NavigationEnd, Router} from '@angular/router';
 })
 export class AppComponent {
   title = 'weixin-shop';
-  constructor( private router: Router,) {
+  constructor( private router: Router) {
+    console.log(environment.env);
     router.events.subscribe(
       (event) => {
         if (event instanceof NavigationEnd) {
