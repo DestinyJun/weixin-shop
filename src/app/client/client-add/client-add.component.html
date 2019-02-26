@@ -1,3 +1,42 @@
 <div class="client-add">
   <app-header [option]="headerOption"></app-header>
+  <div class="client-username">
+    <div class="weui-cells weui-cells_form">
+      <div class="weui-cell">
+        <div class="weui-cell__hd"><label class="weui-label" for="cliuser">客户</label></div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" id="cliuser" type="text" name="cliuser" placeholder="请输入姓名" [(ngModel)]="inputRes.name">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="client-tab">
+    <weui-navbar>
+      <weui-tab heading="地址" (select)="onSelect()">
+        <article class="weui-article">
+          <h3 style="text-align: center;color: #B4B4B4;">暂无收货人信息</h3>
+          <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <p>收货人：王明</p>
+              <p>联系电话：18788888888</p>
+              <p>收获地址：贵州省贵阳市花果园</p>
+            </div>
+            <div class="weui-cell__ft">
+              <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
+            </div>
+          </div>
+        </article>
+      </weui-tab>
+      <weui-tab heading="发票" (select)="onSelect()">
+        <article class="weui-article">
+          <h3 style="text-align: center;color: #B4B4B4;">暂无收货人信息</h3>
+        </article>
+      </weui-tab>
+    </weui-navbar>
+  </div>
+  <div class="add-userinfo">
+    <div class="weui-footer weui-footer_fixed-bottom">
+      <button class="weui-btn weui-btn_primary" weui-button>新增客户收获地址</button>
+    </div>
+  </div>
 </div>

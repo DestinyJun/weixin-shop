@@ -13,6 +13,11 @@ import {HttpClient} from '@angular/common/http';
   encapsulation: ViewEncapsulation.None
 })
 export class TabClientComponent implements OnInit {
+  // swipt
+  public touchStartX: number;
+  public touchMoveX: number;
+  public touchStartPageY: number;
+  public touchMovePageY: number;
   // ActionSheet组件
   @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
   public actionSheetMenus: any[] = [];
@@ -69,8 +74,11 @@ export class TabClientComponent implements OnInit {
     this.http.post('http://1785s28l17.iask.in:13009/contacts/list', {})
       .subscribe(
         (value) => {
-          this.clientList = value.datas;
-          console.log(value.datas);
+          value['datas'].map((val) => {
+            val.editState = false;
+          });
+          this.clientList = value['datas'];
+          console.log(this.clientList);
         },
         (error) => {
           console.log(error);
@@ -138,5 +146,29 @@ export class TabClientComponent implements OnInit {
       (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {
       });
     }, 10);
+  }
+  public onTouchstart (event): void {
+    this.touchStartX = event.touches[0].pageX;
+    this.touchStartPageY = event.touches[0].pageY;
+  }
+  public onTouchMove (event, item): void {
+    this.touchMoveX = event.touches[0].pageX;
+    this.touchMovePageY = event.touches[0].pageY;
+    if (this.touchMoveX > this.touchStartX) {
+      if (Math.abs(this.touchStartPageY - this.touchMovePageY) < 5 ) {
+        if (Math.abs(this.touchMoveX - this.touchStartX) > 10) {
+          item.editState = false;
+        }
+      }
+      console.log('右滑呀');
+      return;
+    } else {
+      if (Math.abs(this.touchStartPageY - this.touchMovePageY) < 5 ) {
+        if (Math.abs(this.touchMoveX - this.touchStartX) > 10) {
+          item.editState = true;
+        }
+      }
+      console.log('左滑呀');
+    }
   }
 }

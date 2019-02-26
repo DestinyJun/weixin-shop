@@ -55,13 +55,13 @@
            </div>
          </div>-->
          <div class="weui-cells">
-           <div class="weui-cell" (click)="actionSheetShow('ios', item)">
-             <div class="weui-cell__bd">
+           <div class="weui-cell" (touchmove)="onTouchMove($event, item)" (touchstart)="onTouchstart($event)">
+             <div class="weui-cell__bd" (click)="actionSheetShow('ios', item)">
                <p><span>{{item.name}}</span></p>
              </div>
              <div class="weui-cell__ft">
-               <!--<button *ngIf="list.editState" class="weui-btn weui-btn_warn" (click)="list.editState=false">删除</button>
-               <button *ngIf="!list.editState" class="weui-btn weui-btn_default" style="color: #7FB56E;" (click)="list.editState=true">编辑</button>-->
+               <button *ngIf="item.editState" class="weui-btn weui-btn_warn">删除</button>
+               <button *ngIf="!item.editState" class="weui-btn weui-btn_default" style="color: #7FB56E;">编辑</button>
              </div>
            </div>
          </div>
