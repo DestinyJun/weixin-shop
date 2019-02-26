@@ -5,6 +5,7 @@ import {ActionSheetComponent, ActionSheetConfig, InfiniteLoaderComponent, Infini
 import {Router} from '@angular/router';
 import {TabService} from '../../common/services/tab.service';
 import {HttpClient} from '@angular/common/http';
+
 @Component({
   selector: 'app-tab-client',
   templateUrl: './tab-client.component.html',
@@ -12,7 +13,6 @@ import {HttpClient} from '@angular/common/http';
   encapsulation: ViewEncapsulation.None
 })
 export class TabClientComponent implements OnInit {
-  public a = `<p>1</p><p>2</p><p>3</p>`;
   // ActionSheet组件
   @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
   public actionSheetMenus: any[] = [];
@@ -30,7 +30,7 @@ export class TabClientComponent implements OnInit {
   };
   // client
   public clientList = [
-    {
+    /*{
       className: '最近7天交易客户',
       value: [
         {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
@@ -43,7 +43,7 @@ export class TabClientComponent implements OnInit {
         {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
         {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
       ]
-    },
+    },*/
   ];
   // search
   public searchItems: Observable<string[]>;
@@ -66,17 +66,19 @@ export class TabClientComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post('http://1785s28l17.iask.in:13009/contacts/list', {}).subscribe(
-      (val) => {
-        console.log(val);
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        console.log('完成');
-      }
-    );
+    this.http.post('http://1785s28l17.iask.in:13009/contacts/list', {})
+      .subscribe(
+        (value) => {
+          this.clientList = value.datas;
+          console.log(value.datas);
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          console.log('完成');
+        }
+      );
   }
 
   public onLoadMore(comp: InfiniteLoaderComponent): void {
@@ -124,7 +126,6 @@ export class TabClientComponent implements OnInit {
   }
 
   public actionSheetShow(type: SkinType, item): void {
-    console.log();
     this.actionSheetMenus = [
       {text: '凉凉', value: 'camera', team: '22222'},
       {text: '从手机相册选择', value: 'photo'},
