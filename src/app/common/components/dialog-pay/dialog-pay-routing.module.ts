@@ -8,4 +8,4 @@ const tabRoutes: Routes = [
   imports: [RouterModule.forChild(tabRoutes)],
   exports: [RouterModule]
 })
-export class DiaPayRoutingModule {}
+export class DialogPayRoutingModule {}

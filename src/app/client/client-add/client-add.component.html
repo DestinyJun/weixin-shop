@@ -21,7 +21,7 @@
               <p>联系电话：18788888888</p>
               <p>收获地址：贵州省贵阳市花果园</p>
             </div>
-            <div class="weui-cell__ft">
+            <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前收货人信息')">
               <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
             </div>
           </div>
@@ -30,13 +30,35 @@
       <weui-tab heading="发票" (select)="onSelect()">
         <article class="weui-article">
           <h3 style="text-align: center;color: #B4B4B4;">暂无收货人信息</h3>
+          <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <p><span>发票抬头：</span><span>贵州四季常青药业</span></p>
+              <p><span>税号：</span><span>54564564564564654</span></p>
+            </div>
+            <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前发票信息')">
+              <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
+            </div>
+          </div>
         </article>
       </weui-tab>
     </weui-navbar>
   </div>
-  <div class="add-userinfo">
+  <div class="add-userinfo" (click)="addAddressClick()">
     <div class="weui-footer weui-footer_fixed-bottom">
       <button class="weui-btn weui-btn_primary" weui-button>新增客户收获地址</button>
     </div>
+  </div>
+  <div class="client-toast">
+    <weui-toast #success [text]="'请先填写客户姓名'" [icon]="''" [time]="2000"></weui-toast>
+  </div>
+  <div class="client-dialog">
+    <weui-dialog #iosDialog [config]="configDialog"></weui-dialog>
+  </div>
+  <div class="add-client-info">
+    <app-wj-dialog *ngIf="addDialogShow" [config]="addDialogConfig" (dialogPayClick)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)">
+      <div class="dialog-content">
+        <h1>计划的封建时代</h1>
+      </div>
+    </app-wj-dialog>
   </div>
 </div>

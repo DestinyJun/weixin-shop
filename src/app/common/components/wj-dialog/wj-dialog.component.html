@@ -1,0 +1,21 @@
+<div class="wj-dialog">
+  <div class="weui-mask">
+    <div class="weui-dialog">
+      <div class="weui-dialog-title">
+        {{config.title}}
+        <div class="t-float pull-right" (click)="onSelfDestroy()">
+          <i class="fa fa-times"></i>
+        </div>
+      </div>
+      <div class="weui-dialog-content">
+        <ng-content select=".dialog-content"></ng-content>
+      </div>
+      <div class="weui-dialog-footer" *ngIf="config.btnShow">
+        <button class="weui-btn weui-btn_primary" [ngClass]="!config.btnDisabled?'weui-btn_disabled': ''" (click)="onSubmit()" [disabled]="!config.btnDisabled">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

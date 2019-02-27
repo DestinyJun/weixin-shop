@@ -1,0 +1,47 @@
+@keyframes mymove
+{
+  from {top:100%;}
+  to {top:50%;}
+}
+
+@-moz-keyframes mymove /* Firefox */
+{
+  from {top:100%;}
+  to {top:50%;}
+}
+
+@-webkit-keyframes mymove /* Safari and Chrome */
+{
+  from {top:100%;}
+  to {top:50%;}
+}
+
+@-o-keyframes mymove /* Opera */
+{
+  from {top:100%;}
+  to {top:50%;}
+}
+.wj-dialog{
+  .weui-mask{
+    .weui-dialog{
+      max-width: 86vw;
+      width: 86vw;
+      padding: 1vh 3vw 3vh 3vw;
+      animation:mymove 0.2s ease-in-out forwards ;
+      -moz-animation:mymove 0.2s ease-in-out forwards; /* Firefox */
+      -webkit-animation:mymove 0.2s ease-in-out forwards; /* Safari and Chrome */
+      -o-animation:mymove 0.2s ease-in-out forwards; /* Opera */
+      .weui-dialog-title{
+        font-size: 1.3rem;
+        .t-float{
+          cursor: pointer;
+        }
+      }
+      .weui-dialog-content{
+        padding-top: 2.5vh;
+        padding-bottom: 2.5vh;
+        position: relative;
+      }
+    }
+  }
+}

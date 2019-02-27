@@ -74,11 +74,14 @@ export class TabClientComponent implements OnInit {
     this.http.post('http://1785s28l17.iask.in:13009/contacts/list', {})
       .subscribe(
         (value) => {
-          value['datas'].map((val) => {
-            val.editState = false;
-          });
-          this.clientList = value['datas'];
-          console.log(this.clientList);
+          if (value['status'] === 200) {
+            value['datas'].map((val) => {
+              val.editState = false;
+            });
+            this.clientList = value['datas'];
+          } else {
+            console.log(value['status']);
+          }
         },
         (error) => {
           console.log(error);
