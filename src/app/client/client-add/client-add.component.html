@@ -57,7 +57,20 @@
   <div class="add-client-info">
     <app-wj-dialog *ngIf="addDialogShow" [config]="addDialogConfig" (dialogPayClick)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)">
       <div class="dialog-content">
-        <h1>计划的封建时代</h1>
+        <div class="weui-cells weui-cells_form">
+          <div class="weui-cells">
+            <div class="weui-cell">
+              <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入文本" [(ngModel)]="addRes.phone" name="txt">
+              </div>
+            </div>
+            <div class="weui-cell">
+              <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入文本" [(ngModel)]="addRes.phone" name="txt">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </app-wj-dialog>
   </div>

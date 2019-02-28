@@ -23,6 +23,10 @@ export class ClientAddComponent implements OnInit {
   @ViewChild('iosAddInfo') iosAddInfo: DialogComponent;
   public configDialog: DialogConfig = {};
   public configAddInfo: DialogConfig = {};
+  // add
+  public addRes: any = {
+    phone: null,
+  };
   // header
   public headerOption: HeaderContent = {
     title: '新增客户收货地址',

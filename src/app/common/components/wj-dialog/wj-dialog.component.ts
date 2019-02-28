@@ -38,9 +38,4 @@ export class WjDialogComponent implements OnInit {
       show: false,
     });
   }
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }
