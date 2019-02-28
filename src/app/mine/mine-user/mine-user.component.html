@@ -1,3 +1,51 @@
-<p>
-  mine-user works!
-</p>
+<div class="mine-user">
+  <app-header [option]="headerOption"></app-header>
+  <div class="mine-user-info">
+    <div class="weui-cells">
+      <div class="weui-cell weui-cell_access" (click)="actionSheetShow('ios', photo)">
+        <div class="weui-cell__bd">头像</div>
+        <div class="weui-cell__ft">
+          <img class="weui-media-box__thumb" style="width: auto;height:50px;display: block;border-radius: 50%" [src]="'assets/images/weui-img.png'" alt="">
+        </div>
+      </div>
+      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/proname']">
+        <div class="weui-cell__bd">用户名</div>
+        <div class="weui-cell__ft">
+          <span style="vertical-align:middle;">王明</span>
+        </div>
+      </div>
+      <div class="weui-cell weui-cell_access" (click)="onShow('ios')">
+        <div class="weui-cell__bd">性别</div>
+        <div class="weui-cell__ft">
+          <span style="vertical-align:middle;">男</span>
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd">手机号</div>
+        <div class="weui-cell__ft">
+          <span style="vertical-align:middle;color: #CBCBCB;">13888888888</span>
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd">工号</div>
+        <div class="weui-cell__ft">
+          <span style="vertical-align:middle;color: #CBCBCB;">100001</span>
+        </div>
+      </div>
+      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/proaddress']">
+        <div class="weui-cell__bd">地区</div>
+        <div class="weui-cell__ft">
+          <span style="vertical-align:middle;">贵州贵阳</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mine-user-photo">
+    <weui-actionsheet #iosActionSheet [menus]="actionSheetMenus" [config]="configActionSheet"></weui-actionsheet>
+    <!--获取摄像头-->
+    <input #photo type="file" accept="image/*" style="display: none">
+  </div>
+  <div class="mine-user-gender">
+    <weui-dialog #ios [config]="config"></weui-dialog>
+  </div>
+</div>

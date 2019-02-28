@@ -25,7 +25,10 @@ export class ClientAddComponent implements OnInit {
   public configAddInfo: DialogConfig = {};
   // add
   public addRes: any = {
+    name: null,
     phone: null,
+    address: null,
+    description: null
   };
   // header
   public headerOption: HeaderContent = {

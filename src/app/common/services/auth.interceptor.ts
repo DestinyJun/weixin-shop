@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const clonedRequest = req.clone({
       headers: req.headers.set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MTM2NDMwNn0.ABMhnlgWtAVDIVB3LoeCPCVstStZzPepsVA5NQ1LQwPi9lm9AWJggA4hEJLbhqO7NWng8Dykr-Rhf72NKJ-cxA')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MTQ1NTUxNn0.Drq58-iFLuHyKL52quVWC4O9AzH7A-kKSwx4hE-A8iyg9dCswheKnNLl2bzBMTH8NCtEPlTC3wLErAfB_Fx3dA')
     });
     console.log(clonedRequest.headers.get('token'));
     return next.handle(clonedRequest);

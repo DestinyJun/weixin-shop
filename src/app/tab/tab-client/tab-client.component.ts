@@ -1,10 +1,18 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {Observable, timer} from 'rxjs';
-import {ActionSheetComponent, ActionSheetConfig, InfiniteLoaderComponent, InfiniteLoaderConfig, SkinType} from 'ngx-weui';
+import {
+  ActionSheetComponent,
+  ActionSheetConfig,
+  DialogComponent,
+  DialogConfig,
+  InfiniteLoaderComponent,
+  InfiniteLoaderConfig,
+  SkinType
+} from 'ngx-weui';
 import {Router} from '@angular/router';
 import {TabService} from '../../common/services/tab.service';
-import {HttpClient} from '@angular/common/http';
+import {GlobalService} from '../../common/services/global.service';
 
 @Component({
   selector: 'app-tab-client',
@@ -18,6 +26,9 @@ export class TabClientComponent implements OnInit {
   public touchMoveX: number;
   public touchStartPageY: number;
   public touchMovePageY: number;
+  // Dialog
+  @ViewChild('iosDelDialog') iosDelDialog: DialogComponent;
+  public configDelDialog: DialogConfig = {};
   // ActionSheet组件
   @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
   public actionSheetMenus: any[] = [];
@@ -66,13 +77,12 @@ export class TabClientComponent implements OnInit {
   constructor(
     private router: Router,
     private tabService: TabService,
-    private http: HttpClient
+    private globalService: GlobalService
   ) {
   }
 
   ngOnInit() {
-    this.http.post('http://1785s28l17.iask.in:13009/contacts/list', {})
-      .subscribe(
+    this.tabService.tabGetClientList().subscribe(
         (value) => {
           if (value['status'] === 200) {
             value['datas'].map((val) => {
@@ -173,5 +183,32 @@ export class TabClientComponent implements OnInit {
       }
       console.log('左滑呀');
     }
+  }
+  public clientDeleteClick (id): void {
+    this.dialogDelShow('ios', {id: id, msg: '你确定删除当前客户吗？'});
+  }
+  public dialogDelShow(type: SkinType, item: any) {
+    console.log(item);
+    this.configDelDialog = Object.assign({}, <DialogConfig>{
+      skin: type,
+      confirm: '是',
+      cancel: '否',
+      content: item.msg
+    });
+    setTimeout(() => {
+      (<DialogComponent>this[`${type}DelDialog`]).show().subscribe((res: any) => {
+        console.log(res);
+        if (res.value) {
+          this.tabService.tabDeleteClient(item.id).subscribe(
+            (value) => {},
+            error => console.log(error),
+            () => {
+              this.globalService.remindEvent.next({msg: '删除成功', type: 'success'});
+            }
+          );
+        }
+      });
+    }, 10);
+    return false;
   }
 }

@@ -58,16 +58,12 @@
     <app-wj-dialog *ngIf="addDialogShow" [config]="addDialogConfig" (dialogPayClick)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)">
       <div class="dialog-content">
         <div class="weui-cells weui-cells_form">
-          <div class="weui-cells">
-            <div class="weui-cell">
-              <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入文本" [(ngModel)]="addRes.phone" name="txt">
-              </div>
-            </div>
-            <div class="weui-cell">
-              <div class="weui-cell__bd">
-                <input class="weui-input" type="text" placeholder="请输入文本" [(ngModel)]="addRes.phone" name="txt">
-              </div>
+          <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <input class="weui-input" type="text" placeholder="请输入收货人姓名" [(ngModel)]="addRes.name" name="name">
+              <input class="weui-input" type="text" placeholder="请输入文本" [(ngModel)]="addRes.phone" name="phone">
+              <input class="weui-input" type="text" placeholder="请输入文本" [(ngModel)]="addRes.address" name="address">
+              <input class="weui-input" type="text" placeholder="请输入文本" [(ngModel)]="addRes.description" name="description">
             </div>
           </div>
         </div>
