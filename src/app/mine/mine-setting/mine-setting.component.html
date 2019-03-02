@@ -1,1 +1,21 @@
-<h1>设置</h1>
+<div class="mine-setting">
+  <app-header [option]="headerOption" (headerRightClick)="balapayClick()"></app-header>
+  <div class="number">
+    <div class="weui-cells">
+      <div class="weui-cell weui-cell_access" (click)="dialogPayShow=true">
+        <div class="weui-cell__bd">修改支付密码</div>
+        <div class="weui-cell__ft"></div>
+      </div>
+      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/setting/mobile']">
+        <div class="weui-cell__bd">更换绑定手机号</div>
+        <div class="weui-cell__ft"></div>
+      </div>
+    </div>
+  </div>
+  <div class="mine-setting-pay">
+    <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayOnchange)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>
+  </div>
+  <div class="wallet-withdrawal-dialog">
+    <weui-dialog #iosSetting [config]="settingConfig"></weui-dialog>
+  </div>
+</div>

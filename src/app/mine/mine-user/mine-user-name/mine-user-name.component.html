@@ -1,3 +1,14 @@
-<p>
-  mine-user-name works!
-</p>
+<div class="mine-user-name">
+  <app-header [option]="headerOption" (headerRightClick)="saveAddClient()"></app-header>
+  <div class="weui-cells weui-cells_form">
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请输入新的名称">
+        </div>
+      </div>
+    </div>
+  </div>
+  <p style="color: #7B7B7B;margin-top: 10px">一个好的名字更容易让人记住你</p>
+</div>
+

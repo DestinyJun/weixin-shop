@@ -1,5 +1,5 @@
 <div class="mine-wallet">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerRightClick)="balapayClick()"></app-header>
   <div class="balance">
     <div class="weui-cells">
       <div class="weui-cell">
@@ -23,11 +23,11 @@
   <div class="mine-btns">
     <div class="weui-cells">
       <div class="weui-flex">
-        <div class="weui-flex__item">
+        <div class="weui-flex__item" [routerLink]="['/mine/wallet/withdrawal']">
           <i class="fa fa-eercast"></i>
           <span>提现</span>
         </div>
-        <div class="weui-flex__item" style="color: #99C38C;">
+        <div class="weui-flex__item" style="color: #99C38C;" [routerLink]="['/mine/wallet/recharge']">
           <i class="fa fa-address-card-o"></i>
           <span>充值</span>
         </div>

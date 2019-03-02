@@ -1,10 +1,7 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {Title} from '@angular/platform-browser';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
-import {Router} from '@angular/router';
 import {ToastComponent} from 'ngx-weui';
-
+import {PwdDialogPay} from '../../mine/mine-setting/setting-paypwd/setting-paypwd.component';
 @Component({
   selector: 'app-pay-password',
   templateUrl: './pay-password.component.html',
@@ -28,20 +25,15 @@ export class PayPasswordComponent implements OnInit {
   public errorShow = false;
   public inputPws: any;
   public inputFirePws: any;
-  public passwordConfig = new DialogPay(true, ['', '', '', '', '', '']);
-  public firpasswordConfig = new DialogPay(true, ['', '', '', '', '', '']);
+  public passwordConfig = new PwdDialogPay(true, ['', '', '', '', '', '']);
+  public firpasswordConfig = new PwdDialogPay(true, ['', '', '', '', '', '']);
   public password: any = {
     password: '',
     firpassword: ''
   };
-  constructor(
-    private titleService: Title,
-    private router: Router
-  ) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.titleService.setTitle('忘记支付密码');
-  }
+  ngOnInit() {}
   public onPsswordInput(event): void {
     this.errorShow = false;
     if (event.target.value.length > 6) {

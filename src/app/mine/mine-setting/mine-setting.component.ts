@@ -1,15 +1,66 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {HeaderContent} from '../../common/components/header/header.model';
+import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
+import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-mine-setting',
   templateUrl: './mine-setting.component.html',
-  styleUrls: ['./mine-setting.component.less']
+  styleUrls: ['./mine-setting.component.less'],
+  encapsulation: ViewEncapsulation.None
 })
 export class MineSettingComponent implements OnInit {
-
-  constructor() { }
+  // dialogPay组件
+  public dialogPayShow = false;
+  public dialogPayConfig = new DialogPay('修改支付密码', true, ['', '', '', '', '', ''], false, false, true);
+  // dialog
+  @ViewChild('iosSetting') iosSetting: DialogComponent;
+  public settingConfig: DialogConfig = {};
+  // header
+  public headerOption: HeaderContent = {
+    title: '设置',
+    leftContent: {
+      icon: 'fa fa-chevron-left'
+    },
+    rightContent: {
+      color: '#86B876'
+    }
+  };
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
-
+  public onDialogPayClick(event): void {
+    this.dialogPayShow = event.show;
+    if (event.status) {
+      return;
+    }
+    if (event.password === '123456') {
+      this.router.navigate(['/mine/setting/paypwd']);
+      return;
+    }
+    this.onShow('ios');
+  }
+  public onShow(type: SkinType) {
+    this.settingConfig = Object.assign({}, <DialogConfig>{
+      skin: type,
+      cancel: '重试',
+      confirm: '忘记密码',
+      btns: null,
+      content: '支付密码错误，请重试'
+    });
+    setTimeout(() => {
+      (<DialogComponent>this[`${type}Setting`]).show().subscribe((res: any) => {
+        if (!res.value) {
+          this.dialogPayShow = true;
+        } else {
+          this.router.navigate(['/pay/resetpwd']);
+        }
+      });
+    }, 10);
+    return false;
+  }
 }

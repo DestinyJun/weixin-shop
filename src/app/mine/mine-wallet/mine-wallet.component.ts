@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-mine-wallet',
@@ -18,9 +19,13 @@ export class MineWalletComponent implements OnInit {
       color: '#86B876'
     }
   };
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit() {
   }
-
+  public balapayClick(): void {
+    this.router.navigate(['/mine/wallet/balapay']);
+  }
 }

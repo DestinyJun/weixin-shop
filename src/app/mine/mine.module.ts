@@ -14,7 +14,7 @@ import { MineUserAddressComponent } from './mine-user/mine-user-address/mine-use
     CommonModule,
     MineRoutingModule,
     HeaderModule,
-    WeUiModule.forRoot()
+    WeUiModule.forRoot(),
   ]
 })
 export class MineModule { }

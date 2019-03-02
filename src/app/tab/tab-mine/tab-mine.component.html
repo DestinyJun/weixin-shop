@@ -67,7 +67,7 @@
           <!--<span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>-->
         </div>
       </div>
-      <div class="weui-cell weui-cell_access">
+      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/setting']">
         <div class="weui-cell__bd">设置</div>
         <div class="weui-cell__ft" style="font-size: 0">
           <!--<span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>-->
@@ -76,7 +76,7 @@
     </div>
   </div>
   <div class="contact-dialog">
-    <a #tel href="tel:10010" [hidden]="true"></a>
+    <a #tel href="tel:400-8485-5577" [hidden]="true"></a>
     <weui-dialog #iosDialog [config]="configDialog"></weui-dialog>
   </div>
 </div>

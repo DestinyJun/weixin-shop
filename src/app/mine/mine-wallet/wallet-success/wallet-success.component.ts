@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-wallet-success',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wallet-success.component.less']
 })
 export class WalletSuccessComponent implements OnInit {
-
-  constructor() { }
+  public successStatus: number;
+  constructor(
+    private routeInfo: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.routeInfo.params.subscribe(
+      (val) => {
+        this.successStatus = val.status;
+      }
+    );
   }
 
 }

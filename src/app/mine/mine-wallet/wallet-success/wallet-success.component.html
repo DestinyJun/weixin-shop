@@ -1,1 +1,13 @@
-<h1>成功与失败</h1>
+<div class="wallet-success">
+  <div class="weui-msg">
+    <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+    <div class="weui-msg__text-area">
+      <h2 class="weui-msg__title" style="color: #444444;">{{successStatus==1?'充值成功':'提交成功'}}</h2>
+    </div>
+  </div>
+  <div class="weui-msg__opr-area">
+    <p class="weui-btn-area">
+      <button class="weui-btn weui-btn_primary" [routerLink]="['/mine/wallet']">返回钱包</button>
+    </p>
+  </div>
+</div>

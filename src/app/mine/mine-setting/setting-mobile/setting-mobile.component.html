@@ -1,1 +1,60 @@
-<h1>修改手机号</h1>
+<div class="setting-mobile">
+  <app-header [option]="headerOption"></app-header>
+  <div *ngIf="inputToggle" class="setting-mobile-old">
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__hd">
+          <label class="weui-label">当前手机号</label></div>
+        <div class="weui-cell__bd">
+          <span>187****7845</span>
+        </div>
+      </div>
+    </div>
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="tel" placeholder="请输入验证码" [(ngModel)]="oldPhoneCode">
+        </div>
+        <div class="weui-cell__ft">
+          <button class="weui-vcode-btn"
+                  [weui-vcode]="onSendCode"
+                  weui-seconds="10"
+                  weui-tpl="${num}s"
+                  weui-error="重新发送">获取验证码
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!inputToggle" class="setting-mobile-new" >
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="tel" placeholder="请输入新手机号码" [(ngModel)]="newPhoneNumber">
+        </div>
+      </div>
+    </div>
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="tel" placeholder="请输入验证码" [(ngModel)]="newPhoneCode">
+        </div>
+        <div class="weui-cell__ft">
+          <button class="weui-vcode-btn"
+                  [weui-vcode]="onSendCode"
+                  weui-seconds="10"
+                  weui-tpl="${num}s"
+                  weui-error="重新发送">获取验证码
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="setting-mobile-toast">
+    <weui-toast #success [text]="'修改成功'" [icon]="''" [time]="2000"></weui-toast>
+  </div>
+  <div class="setting-mobile-button">
+    <button *ngIf="inputToggle" class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled':!oldPhoneCode}" [disabled]="!oldPhoneCode" (click)="inputToggleClick(1)">下一步</button>
+    <button *ngIf="!inputToggle" class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled':!newPhoneCode}" [disabled]="!newPhoneCode" (click)="inputToggleClick(2)">立即绑定</button>
+  </div>
+</div>

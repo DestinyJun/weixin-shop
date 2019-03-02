@@ -20,9 +20,7 @@ export class ClientAddComponent implements OnInit {
   @ViewChild('success') successToast: ToastComponent;
   // Dialog
   @ViewChild('iosDialog') iosDialog: DialogComponent;
-  @ViewChild('iosAddInfo') iosAddInfo: DialogComponent;
   public configDialog: DialogConfig = {};
-  public configAddInfo: DialogConfig = {};
   // add
   public addRes: any = {
     name: null,
@@ -46,15 +44,6 @@ export class ClientAddComponent implements OnInit {
   ngOnInit() {
   }
   public onSelect() {}
-  public addAddressClick (): void {
-    this.addDialogShow = true;
-    /*if (!this.inputRes.name) {
-      this.onToastShow('success');
-    }*/
-  }
-  public onToastShow(type: 'success' | 'loading') {
-    (<ToastComponent>this[`${type}Toast`]).onShow();
-  }
   public dialogDelShow(type: SkinType, msg: string) {
     console.log(type);
     this.configDialog = Object.assign({}, <DialogConfig>{
@@ -76,4 +65,5 @@ export class ClientAddComponent implements OnInit {
   public onDialogPayClick(event): void {
     this.addDialogShow = event.show;
   }
+  public saveAddClient() {}
 }

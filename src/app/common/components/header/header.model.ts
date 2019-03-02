@@ -1,11 +1,11 @@
 export class HeaderContent {
   title?: string;
-  leftContent: {
+  leftContent?: {
     title?: string;
     icon?: string;
     color?: string;
   };
-  rightContent: {
+  rightContent?: {
     title?: string;
     icon?: string;
     color?: string;

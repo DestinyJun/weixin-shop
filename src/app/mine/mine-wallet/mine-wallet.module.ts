@@ -7,6 +7,9 @@ import { WalletBalapayComponent } from './wallet-balapay/wallet-balapay.componen
 import { WalletRechargeComponent } from './wallet-recharge/wallet-recharge.component';
 import { WalletSuccessComponent } from './wallet-success/wallet-success.component';
 import { WalletWithdrawalComponent } from './wallet-withdrawal/wallet-withdrawal.component';
+import {WeUiModule} from 'ngx-weui';
+import {FormsModule} from '@angular/forms';
+import {DialogPayModule} from '../../common/components/dialog-pay/dialog-pay.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import { WalletWithdrawalComponent } from './wallet-withdrawal/wallet-withdrawal
     CommonModule,
     MineWalletRoutingModule,
     HeaderModule,
+    WeUiModule.forRoot(),
+    FormsModule,
+    DialogPayModule,
   ]
 })
 export class MineWalletModule { }

@@ -1,1 +1,26 @@
-<h1>收支明细</h1>
+<div class="wallet-balapay">
+  <div class="wallet-balapay-header">
+    <app-header [option]="headerOption" (headerRightClick)="walletBalaPayTimeClick()"></app-header>
+  </div>
+  <div class="wallet-balapay-list">
+    <div class="weui-cells">
+      <div class="weui-cells__title">
+        <p style="font-size: 1.5rem">本月</p>
+        <span>支出￥5410</span><span>收入￥15481</span>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p>支付订单454545446</p>
+          <p style="font-size: 1.2rem;color: #888888;">
+            <span>2019-03-01</span>
+            <span>19:58:43</span>
+          </p>
+        </div>
+        <div class="weui-cell__ft">-￥250.00</div>
+      </div>
+    </div>
+  </div>
+  <div class="wallet-balapay-remind">
+    <p>暂无收支明细</p>
+  </div>
+</div>

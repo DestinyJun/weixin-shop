@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
 
-  constructor() { }
+  constructor(
+    public http: HttpClient
+  ) { }
+  public addClient(param): Observable<any> {
+    return this.http.post(`${environment.dev_test_url}/contacts/add`, param);
+  }
 }

@@ -1,0 +1,44 @@
+.wallet-balapay{
+  min-height: 100vh;
+  background-color: #F1F1F1;
+  position: relative;
+  .wallet-balapay-header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    height: 50px;
+  }
+  .wallet-balapay-list{
+    overflow: hidden;
+    .weui-cells__title{
+      p{
+        font-size: 1.5rem;
+        color: #000;
+        span{
+          font-size: 1.2rem;
+          color: #888888;
+        }
+      }
+    }
+    .weui-cells{
+      margin-top: 65px;
+      font-size: 1.4rem;
+    }
+  }
+  .wallet-balapay-remind{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    left: 0;
+    color: #888888;
+    font-size: 1.5rem;
+    transform: translateY(-60%);
+  }
+}
+body .weui-picker {
+  top: 50px;
+  bottom: unset;
+}
