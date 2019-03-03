@@ -27,7 +27,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   public submitAgree = false;
   public submitPayPassword: any;
   public buttonDisabled = false;
-  public dialogPayConfig = new DialogPay(true, ['', '', '', '', '', ''], false, true, false);
+  public dialogPayConfig = new DialogPay('请输入六位数密码', true, ['', '', '', '', '', ''], false, true, false);
   constructor(
     private srv: DialogService,
     private toastService: ToastService,
