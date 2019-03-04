@@ -52,7 +52,7 @@ export class MineTeamComponent implements OnInit, AfterViewInit {
         }
       },
       grid: {
-        top: '10%',
+        top: '1%',
         left: '-10%',
         right: '-5%',
         containLabel: true
