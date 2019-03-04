@@ -8,12 +8,12 @@
   </div>
   <div class="mine-team-tab">
     <weui-navbar>
-      <weui-tab heading="地址" (select)="onSelect()">
+      <weui-tab heading="月度" (select)="onSelect()">
         <article class="weui-article">
           <weui-infiniteloader [config]="infiniteloaderConfig">
             <div class="weui-cells">
               <div class="weui-cell">
-                <div class="weui-cell__bd">
+                <div class="weui-cell__bd" (click)="selectMonthClick()">
                   <span>按月选择</span>
                 </div>
                 <div class="weui-cell__ft">
@@ -27,16 +27,19 @@
           </weui-infiniteloader>
         </article>
       </weui-tab>
-      <weui-tab heading="发票" (select)="onSelect()">
+      <weui-tab heading="年度" (select)="onSelect()">
         <article class="weui-article">
-          <h3 style="text-align: center;color: #B4B4B4;">暂无收货人信息</h3>
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <p><span>发票抬头：</span><span>贵州四季常青药业</span></p>
-              <p><span>税号：</span><span>54564564564564654</span></p>
+          <div class="weui-cells">
+            <div class="weui-cell">
+              <div class="weui-cell__bd" (click)="selectYearClick()">
+                <span>按年选择</span>
+              </div>
+              <div class="weui-cell__ft">
+                <span>本年收益：￥5487.00</span>
+              </div>
             </div>
-            <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前发票信息')">
-              <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
+            <div class="weui-cell">
+              <div class="echarts-bar" echarts [options]="options" style="min-height: 500px;width: 100vw"></div>
             </div>
           </div>
         </article>
