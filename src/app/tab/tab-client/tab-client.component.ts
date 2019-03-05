@@ -7,7 +7,7 @@ import {
   DialogComponent,
   DialogConfig,
   InfiniteLoaderComponent,
-  InfiniteLoaderConfig,
+  InfiniteLoaderConfig, MaskComponent,
   SkinType
 } from 'ngx-weui';
 import {Router} from '@angular/router';
@@ -29,10 +29,9 @@ export class TabClientComponent implements OnInit {
   // Dialog
   @ViewChild('iosDelDialog') iosDelDialog: DialogComponent;
   public configDelDialog: DialogConfig = {};
-  // ActionSheet组件
-  @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
-  public actionSheetMenus: any[] = [];
-  public configActionSheet: ActionSheetConfig = <ActionSheetConfig>{};
+  // mask
+  // mask
+  @ViewChild('rechargeMask') rechargeMask: MaskComponent;
   // header
   public headerOption: HeaderContent = {
     title: '客户',
@@ -119,46 +118,25 @@ export class TabClientComponent implements OnInit {
       comp.resolveLoading();
     });
   }
-
   public restart(): void {
     this.items.length = 0;
     this.il.restart();
   }
-
   public onBarSearch(term: string) {
     this.value = term;
     // if (term) this.items = this.tbService.search(term);
   }
-
   public onBarCancel(): void {
     console.log('onCancel');
   }
-
   public onBarClear(): void {
     console.log('onCancel');
   }
-
   public onBarSubmit(value: string): void {
     console.log('onSubmit', value);
   }
-
   public onHeaderRightClick(): void {
     this.router.navigate(['/client/add']);
-  }
-
-  public actionSheetShow(type: SkinType, item): void {
-    this.actionSheetMenus = [
-      {text: '凉凉', value: 'camera', team: '22222'},
-      {text: '从手机相册选择', value: 'photo'},
-    ];
-    this.configActionSheet.title = item.name;
-    this.configActionSheet.skin = type;
-    this.configActionSheet.cancel = '关闭';
-    this.configActionSheet = Object.assign({}, this.configActionSheet);
-    setTimeout(() => {
-      (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {
-      });
-    }, 10);
   }
   public onTouchstart (event): void {
     this.touchStartX = event.touches[0].pageX;

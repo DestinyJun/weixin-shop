@@ -1,8 +1,8 @@
-.client{
+.tab-client{
   background-color: #F1F1F1;
   position: relative;
   height: 100%;
-  .search{
+  .tab-client-search{
     margin-top:15px;
     .weui-search-bar{
       background: #FFFFFF;
@@ -13,36 +13,7 @@
       }
     }
   }
-  .client-list{
-    .weui-cells{
-      .weui-cell{
-        padding: 0;
-        .weui-cell__bd{
-          padding-left: 15px;
-          font-size: 1.5rem;
-        }
-        .weui-cell__ft{
-          .weui-btn{
-            border-radius: 0;
-            padding-left: 20px;
-            padding-right: 20px;
-            //padding-top: 10px;
-            //padding-bottom: 10px;
-            &:after{
-              border: none;
-            }
-          }
-          .weui-btn_default{
-            background-color: #fff;
-          }
-          .weui-btn_warn{
-            background-color: #FF6464;
-          }
-        }
-      }
-    }
-  }
-  .alphabet{
+  .tab-client-alphabet{
     position: fixed;
     top:160px;
     right: 0;
@@ -55,42 +26,58 @@
       list-style: none;
     }
   }
-  .scroll{
+  .tab-client-scroll{
     width: 100%;
     position: absolute;
     top:127px;
     left: 0;
     bottom: 0;
-    .weui-infiniteloader__content{
-      //padding-top: 127px;
+    .client-list{
+      .weui-cells{
+        .weui-cell{
+          padding: 0;
+          .weui-cell__bd{
+            padding-left: 15px;
+            font-size: 1.5rem;
+          }
+          .weui-cell__ft{
+            .weui-btn{
+              border-radius: 0;
+              padding-left: 20px;
+              padding-right: 20px;
+              //padding-top: 10px;
+              //padding-bottom: 10px;
+              &:after{
+                border: none;
+              }
+            }
+            .weui-btn_default{
+              background-color: #fff;
+            }
+            .weui-btn_warn{
+              background-color: #FF6464;
+            }
+          }
+        }
+      }
     }
   }
-  .client-actionsheet{
-    .weui-actionsheet{
-      .weui-actionsheet__title{
-        .weui-actionsheet__title-text{
-          display: block;
-          color: #000;
-          font-size: 1.5rem;
-        }
-      }
-      .weui-actionsheet__menu{
-        .weui-actionsheet__cell {
-          position: relative;
-          padding: 10px 10px;
+  .tab-client-mask{
+    .weui-mask{
+      .weui-mask__content{
+        .weui-cells{
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
           font-size: 1.3rem;
-          color: #838383;
-          text-align: left;
-        }
-      }
-      .weui-actionsheet__action{
-        .weui-actionsheet__cell {
-          font-size: 1.3rem;
+          color: #A1A1A1;
+          padding-bottom: 50px;
         }
       }
     }
   }
-  .client-del-remind{
+  .tab-client-remind{
     .weui-dialog{
       .weui-dialog__bd{
         font-size: 1.5rem;

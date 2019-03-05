@@ -1,42 +1,46 @@
-.registered-submit{
+.reg-submit{
   min-height: 100vh;
   background: #F1F1F1;
   position: relative;
-  .weui-cells_form{
-    background: none;
-    padding: 15px;
-    margin: 0;
-    :nth-child(2){
-      margin-top: 1vh;
-    }
-    .weui-cell_vcode{
-      background: white;
-    }
-    input{
-      height: 50px;
-    }
-    .weui-vcode-btn{
-      color: #5E5E5E;
-    }
-  }
-  .weui-dialog-agree{
-    .weui-dialog{
-      .weui-dialog__bd:first-child {
-        padding: 10px;
-        color: #353535;
-        text-align: left;
-        font-size: 0.5rem;
+  .reg-submit-form{
+    .weui-cells_form{
+      background: none;
+      padding: 15px;
+      margin: 0;
+      :nth-child(2){
+        margin-top: 1vh;
+      }
+      .weui-cell_vcode{
+        background: white;
+      }
+      input{
+        height: 50px;
+      }
+      .weui-vcode-btn{
+        color: #959595;
       }
     }
   }
-  .weui-dialog-pay{
+  .reg-submit-dialog-agree{
+    .weui-dialog-agree{
+      .weui-dialog{
+        .weui-dialog__bd:first-child {
+          padding: 10px;
+          color: #353535;
+          text-align: left;
+          font-size: 0.5rem;
+        }
+      }
+    }
+  }
+  .reg-submit-dialog-pay{
     .weui-dialog{
       max-width: 86vw;
       width: 86vw;
       padding: 1vh 3vw 3vh 3vw;
     }
   }
-  .weui-submit{
+  .reg-submit-btn{
     padding: 1vh 3vw 0 3vw;
   }
 }

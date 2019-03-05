@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActionSheetComponent, ActionSheetConfig, ActionSheetService, DialogComponent, DialogConfig, SkinType, ToastService} from 'ngx-weui';
 import {Router} from '@angular/router';
-import {HeaderContent} from '../../common/components/header/header.model';
-import {Title} from '@angular/platform-browser';
+import {RegisteredService} from '../../common/services/registered.service';
 
 @Component({
   selector: 'app-registered-referrer',
@@ -11,42 +10,29 @@ import {Title} from '@angular/platform-browser';
   encapsulation: ViewEncapsulation.None
 })
 export class RegisteredReferrerComponent implements OnInit, OnDestroy {
-  // ActionSheet组件
+  // ActionSheet
   @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
   public actionSheetMenus: any[] = [
     { text: '扫描二维码', value: 'camera'},
     { text: '从手机相册选择', value: 'photo'},
   ];
   public configActionSheet: ActionSheetConfig = <ActionSheetConfig>{};
-  // Dialog组件
+  // Dialog
   @ViewChild('iosDialog') iosDialog: DialogComponent;
   public configDialog: DialogConfig = {};
-
-  // 基础数据
-  public referrerNumber: number;
-  public headerOption: HeaderContent = {
-    title: '填写推荐人',
-    leftContent: {
-      icon: 'fa fa-times'
-    },
-    rightContent: {
-      icon: 'fa fa-ellipsis-h'
-    }
+  // data
+  public referrerNumber: any = {
+    workId: ''
   };
 
   constructor(
     private actionSheetService: ActionSheetService,
     private toastService: ToastService,
     private router: Router,
-    public titleService: Title
+    private registeredService: RegisteredService
   ) { }
 
-  ngOnInit() {
-    this.titleService.setTitle('请填写推荐人');
-  }
-  ngOnDestroy() {
-    this.actionSheetService.destroyAll();
-  }
+  ngOnInit() {}
   public actionSheetShow(type: SkinType, element): void {
     this.configActionSheet.skin = type;
     this.configActionSheet = Object.assign({}, this.configActionSheet);
@@ -68,7 +54,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       skin: type,
       cancel: null,
       confirm: '确定',
-      content: '请填写推荐人工号'
+      content: '推荐码不存在'
     });
     setTimeout(() => {
       (<DialogComponent>this[`${type}Dialog`]).show().subscribe((res: any) => {
@@ -78,10 +64,24 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     return false;
   }
   public referrerClick(): void {
-      if (this.referrerNumber) {
-        this.router.navigate(['/registered/submit', {referrerNumber: this.referrerNumber}]);
-        return;
+    this.registeredService.verifyReferrer(this.referrerNumber).subscribe(
+      (val) => {
+        if (val.status == '200') {
+          this.router.navigate(['/registered/submit', {referrerNumber: this.referrerNumber}]);
+          return;
+        }
+        this.dialogShow('ios');
+        this.referrerNumber.workId = '';
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        console.log('');
       }
-    this.dialogShow('ios');
+    );
+  }
+  ngOnDestroy() {
+    this.actionSheetService.destroyAll();
   }
 }

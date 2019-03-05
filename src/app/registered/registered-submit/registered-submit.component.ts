@@ -6,6 +6,7 @@ import {DialogComponent, DialogConfig, SkinType, DialogService, ToastService} fr
 import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
+import {RegisteredService} from '../../common/services/registered.service';
 
 @Component({
   selector: 'app-registered-submit',
@@ -14,43 +15,35 @@ import {Title} from '@angular/platform-browser';
   encapsulation: ViewEncapsulation.None
 })
 export class RegisteredSubmitComponent implements OnInit, OnDestroy {
-  // agreeDialog组件
+  // agreeDialog
   @ViewChild('agreeDialog') iosAgreeDialog: DialogComponent;
   public configAgreeDialog: DialogConfig = {};
-
-  // dialogPay组件
+  // dialogPay
   public dialogPayShow = false;
-
-  public submitStatus: boolean;
-  public submitPhone: any;
-  public submitCode: any;
-  public submitAgree = false;
-  public submitPayPassword: any;
-  public buttonDisabled = false;
   public dialogPayConfig = new DialogPay('请输入六位数密码', true, ['', '', '', '', '', ''], false, true, false);
+  // code
+  public codeError = false;
+  public submitPhone: any = {
+    phone: '',
+    smsCode: '',
+  };
+  public submitAgree = false;
   constructor(
     private srv: DialogService,
     private toastService: ToastService,
     private router: Router,
-    public titleService: Title
+    private registeredService: RegisteredService
   ) {}
 
-  ngOnInit() {
-    this.titleService.setTitle('注册');
-  }
-  ngOnDestroy() {
-    this.srv.destroyAll();
-  }
-  public onSendCode(): Observable<boolean> {
-    return timer(1000).pipe(map((v, i) => {
-      this.submitStatus = true;
-      setTimeout(() => {
-        this.submitStatus = false;
-      }, 3000);
-      console.log(v);
-      console.log(i);
-      return this.submitStatus;
-    }));
+  ngOnInit() {}
+  public codeBtnClick() {
+    this.registeredService.verifyPhone(this.submitPhone).subscribe(
+      (val) => {
+         if (val.status == 200) {
+           console.log(val);
+         }
+      }
+    );
   }
   public dialogAgreeShow(type: SkinType) {
     this.configAgreeDialog = Object.assign({}, <DialogConfig>{
@@ -78,13 +71,19 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     }
   }
   public onsubmit(): void {
-    this.dialogPayShow = true;
+    this.registeredService.verifyCode(this.submitPhone).subscribe(
+      (val) => {
+        console.log(val);
+        if (val.status == 200) {
+          this.dialogPayShow = true;
+        } else {
+          this.codeError = true;
+          this.submitPhone.smsCode = '';
+        }
+      }
+    );
   }
-  public onForm() {
-    this.buttonDisabled = false;
-    if ((this.submitPhone !== undefined) && (this.submitCode !== undefined) && this.submitAgree) {
-      this.buttonDisabled = true;
-      return;
-    }
+  ngOnDestroy() {
+    this.srv.destroyAll();
   }
 }

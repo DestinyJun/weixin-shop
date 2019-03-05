@@ -1,20 +1,20 @@
 <div class="registered-referrer-box">
   <!--<app-header [option]="headerOption"></app-header>-->
-  <article class="registered-input">
-    <input class="weui-input" type="number"  name="qq" pattern="[0-9]*" placeholder="请填写推荐人工号" [(ngModel)]="referrerNumber">
+  <div class="registered-input">
+    <input class="weui-input" type="number"  name="qq" pattern="[0-9]*" placeholder="请填写推荐人工号" [(ngModel)]="referrerNumber.workId">
     <i class="fa fa-bars" aria-hidden="true" (click)="actionSheetShow('ios', photo)"></i>
-  </article>
-  <article class="registered-scan">
+  </div>
+  <div class="registered-scan">
     <weui-actionsheet #iosActionSheet [menus]="actionSheetMenus" [config]="configActionSheet"></weui-actionsheet>
-  </article>
-  <article class="registered-camera">
+  </div>
+  <div class="registered-camera">
     <!--获取摄像头-->
     <input #photo type="file" accept="image/*" style="display: none">
-  </article>
+  </div>
   <footer class="registered-footer">
-    <button weui-button weui-type="primary" (click)="referrerClick()">下一步</button>
+    <button class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled': !referrerNumber.workId}" [disabled]="!referrerNumber.workId" (click)="referrerClick()">下一步</button>
   </footer>
-  <article class="registered-dialog">
+  <div class="registered-dialog">
     <weui-dialog #iosDialog [config]="configDialog"></weui-dialog>
-  </article>
+  </div>
 </div>
