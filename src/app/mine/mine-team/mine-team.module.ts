@@ -10,9 +10,10 @@ import {FormsModule} from '@angular/forms';
 import {HeaderModule} from '../../common/components/header/header.module';
 import {WeUiModule} from 'ngx-weui';
 import {NgxEchartsModule} from 'ngx-echarts';
+import { MineDetailPersonalComponent } from './mine-detail-personal/mine-detail-personal.component';
 
 @NgModule({
-  declarations: [MineTeamComponent, TeamEarningComponent, TeamFiltrateComponent, TeamDetailComponent, TeamInviteComponent],
+  declarations: [MineTeamComponent, TeamEarningComponent, TeamFiltrateComponent, TeamDetailComponent, TeamInviteComponent, MineDetailPersonalComponent],
   imports: [
     CommonModule,
     MineTeamRoutingModule,

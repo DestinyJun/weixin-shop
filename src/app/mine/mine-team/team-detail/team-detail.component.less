@@ -1,0 +1,68 @@
+.mine-detail {
+  height: 100vh;
+  overflow: hidden;
+  background-color: #F1F1F1;
+  position: relative;
+  .mine-detail-header {
+    height: 50px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5001;
+  }
+  .mine-detail-list {
+    .weui-cells__title {
+      p {
+        font-size: 1.5rem;
+        color: #9BC48F;
+      }
+    }
+    .weui-cells {
+      margin-top: 65px;
+      font-size: 1.4rem;
+    }
+  }
+  .recharge-mask {
+    .weui-mask {
+      .weui-mask__content {
+        .weui-cells {
+          margin-top: 0;
+          position: fixed;
+          top: 50px;
+          left: 0;
+          width: 100vw;
+        }
+        .status{
+          .weui-cells_title{
+            padding: 10px 15px;
+            color: #C5C5C5;
+          }
+          .weui-flex{
+            padding-left: 10px;
+            .weui-flex__item{
+              margin-right: 10px;
+              .weui-btn{
+                padding: 0;
+                font-size: 1.3rem;
+                line-height: 1.6;
+              }
+            }
+          }
+        }
+        .btn-group{
+          .weui-flex{
+            .weui-flex__item{
+              .weui-btn{
+                border-radius: 0;
+                &:after{
+                  border: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

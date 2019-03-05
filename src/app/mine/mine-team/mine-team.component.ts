@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {InfiniteLoaderConfig, PickerData, PickerOptions, PickerService} from 'ngx-weui';
+import {InfiniteLoaderConfig, PickerOptions, PickerService} from 'ngx-weui';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-mine-team',
@@ -42,7 +43,8 @@ export class MineTeamComponent implements OnInit, AfterViewInit, OnDestroy {
   options: any;
 
   constructor(
-    private srv: PickerService
+    private srv: PickerService,
+    private router: Router
   ) {
   }
 
@@ -204,5 +206,8 @@ export class MineTeamComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log(res);
       // this.srvRes = res.value;
     });
+  }
+  public mineTeamInClient() {
+    this.router.navigate(['/mine/team/detail']);
   }
 }
