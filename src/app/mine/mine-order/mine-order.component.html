@@ -1,3 +1,283 @@
-<p>
-  mine-order works!
-</p>
+<div class="mine-order">
+  <div class="mine-order-header">
+    <app-header [option]="headerOption" (headerRightClick)="mineTeamInClient()"></app-header>
+  </div>
+  <div class="mine-order-select">
+    <div class="weui-cells">
+      <div class="weui-flex">
+        <div class="weui-flex__item" *ngFor="let item of orderList">
+          <div class="placeholder">
+            <p style="font-size: 1.5rem">{{item.name}}</p>
+            <p style="font-size: 1.2rem;color: #BEBEBE;">{{item.amount}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mine-order-list">
+    <weui-infiniteloader #comp [config]="infiniteloaderConfig">
+      <div class="weui-cells__title">
+        <span>今日</span>
+      </div>
+      <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__hd">
+          <div class="weui-cell">
+            <div class="weui-cell__bd" style="vertical-align: middle">
+              <p>订单号：157754284</p>
+              <p style="font-size: 1.6rem;color: #5E5E5E;">客户：王明</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p style="color: #7FB66E;vertical-align: middle;">待收货</p>
+              <p style="margin-top: 8px">2018-11-23 08:57</p>
+            </div>
+          </div>
+        </div>
+        <div class="weui-panel__bd">
+          <div class="weui-cell" *ngFor="let item of goodsInfo; let i = index">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.imgURL"
+                   alt="">
+            </div>
+            <div class="weui-cell__bd">
+              <p style="font-size: 1.3rem;">{{item.goodsName}}</p>
+              <p style="font-size: 1rem;color: #888888;">{{item.goodsDesc}}</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p>￥100</p>
+              <p>x1</p>
+            </div>
+          </div>
+          <div class="weui-total">
+            <p class="pull-right">
+              <span>共两件商品 合计：</span>
+              <span style="color: #FF4343;">￥300.00</span>
+            </p>
+          </div>
+        </div>
+        <div class="weui-panel__ft">
+          <div class="weui-flex">
+            <div class="weui-flex__item">
+              <span>查看物流</span>
+            </div>
+            <div class="weui-flex__item">
+              <span>确认收货</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__hd">
+          <div class="weui-cell">
+            <div class="weui-cell__bd" style="vertical-align: middle">
+              <p>订单号：157754284</p>
+              <p style="font-size: 1.6rem;color: #5E5E5E;">客户：王明</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p style="color: #FF3333;vertical-align: middle;">未付款</p>
+              <p style="margin-top: 8px">2018-11-23 08:57</p>
+            </div>
+          </div>
+        </div>
+        <div class="weui-panel__bd">
+          <div class="weui-cell" *ngFor="let item of goodsInfo; let i = index">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.imgURL"
+                   alt="">
+            </div>
+            <div class="weui-cell__bd">
+              <p style="font-size: 1.3rem;">{{item.goodsName}}</p>
+              <p style="font-size: 1rem;color: #888888;">{{item.goodsDesc}}</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p>￥100</p>
+              <p>x1</p>
+            </div>
+          </div>
+          <div class="weui-total">
+            <p class="pull-right">
+              <span>共两件商品 合计：</span>
+              <span style="color: #FF4343;">￥300.00</span>
+            </p>
+          </div>
+        </div>
+        <div class="weui-panel__ft">
+          <div class="weui-flex">
+            <div class="weui-flex__item">
+              <span>取消订单</span>
+            </div>
+            <div class="weui-flex__item">
+              <span>去付款</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__hd">
+          <div class="weui-cell">
+            <div class="weui-cell__bd" style="vertical-align: middle">
+              <p>订单号：157754284</p>
+              <p style="font-size: 1.6rem;color: #5E5E5E;">客户：王明</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p style="color: #BEBEBE;vertical-align: middle;">已取消</p>
+              <p style="margin-top: 8px">2018-11-23 08:57</p>
+            </div>
+          </div>
+        </div>
+        <div class="weui-panel__bd">
+          <div class="weui-cell" *ngFor="let item of goodsInfo; let i = index">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.imgURL"
+                   alt="">
+            </div>
+            <div class="weui-cell__bd">
+              <p style="font-size: 1.3rem;">{{item.goodsName}}</p>
+              <p style="font-size: 1rem;color: #888888;">{{item.goodsDesc}}</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p>￥100</p>
+              <p>x1</p>
+            </div>
+          </div>
+          <div class="weui-total">
+            <p class="pull-right">
+              <span>共两件商品 合计：</span>
+              <span style="color: #FF4343;">￥300.00</span>
+            </p>
+          </div>
+        </div>
+        <div class="weui-panel__ft">
+          <div class="weui-flex">
+            <div class="weui-flex__item">
+              <span>删除订单</span>
+            </div>
+            <div class="weui-flex__item">
+              <span>重新购买</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__hd">
+          <div class="weui-cell">
+            <div class="weui-cell__bd" style="vertical-align: middle">
+              <p>订单号：157754284</p>
+              <p style="font-size: 1.6rem;color: #5E5E5E;">客户：王明</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p style="color: #8FBD80;vertical-align: middle;">已完成</p>
+              <p style="margin-top: 8px">2018-11-23 08:57</p>
+            </div>
+          </div>
+        </div>
+        <div class="weui-panel__bd">
+          <div class="weui-cell" *ngFor="let item of goodsInfo; let i = index">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.imgURL"
+                   alt="">
+            </div>
+            <div class="weui-cell__bd">
+              <p style="font-size: 1.3rem;">{{item.goodsName}}</p>
+              <p style="font-size: 1rem;color: #888888;">{{item.goodsDesc}}</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p>￥100</p>
+              <p>x1</p>
+            </div>
+          </div>
+          <div class="weui-total">
+            <p class="pull-right">
+              <span>共两件商品 合计：</span>
+              <span style="color: #FF4343;">￥300.00</span>
+            </p>
+          </div>
+        </div>
+        <div class="weui-panel__ft">
+          <div class="weui-flex">
+            <div class="weui-flex__item">
+              <span>删除订单</span>
+            </div>
+            <div class="weui-flex__item">
+              <span>再下一单</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__hd">
+          <div class="weui-cell">
+            <div class="weui-cell__bd" style="vertical-align: middle">
+              <p>订单号：157754284</p>
+              <p style="font-size: 1.6rem;color: #5E5E5E;">客户：王明</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p style="color: #8FBD80;vertical-align: middle;">已付款</p>
+              <p style="margin-top: 8px">2018-11-23 08:57</p>
+            </div>
+          </div>
+        </div>
+        <div class="weui-panel__bd">
+          <div class="weui-cell" *ngFor="let item of goodsInfo; let i = index">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.imgURL"
+                   alt="">
+            </div>
+            <div class="weui-cell__bd">
+              <p style="font-size: 1.3rem;">{{item.goodsName}}</p>
+              <p style="font-size: 1rem;color: #888888;">{{item.goodsDesc}}</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p>￥100</p>
+              <p>x1</p>
+            </div>
+          </div>
+          <div class="weui-total">
+            <p class="pull-right">
+              <span>共两件商品 合计：</span>
+              <span style="color: #FF4343;">￥300.00</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="weui-panel weui-panel_access">
+        <div class="weui-panel__hd">
+          <div class="weui-cell">
+            <div class="weui-cell__bd" style="vertical-align: middle">
+              <p>订单号：157754284</p>
+              <p style="font-size: 1.6rem;color: #5E5E5E;">客户：王明</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p style="color: #FF3F3F;vertical-align: middle;">退款中</p>
+              <p style="margin-top: 8px">2018-11-23 08:57</p>
+            </div>
+          </div>
+        </div>
+        <div class="weui-panel__bd">
+          <div class="weui-cell" *ngFor="let item of goodsInfo; let i = index">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.imgURL"
+                   alt="">
+            </div>
+            <div class="weui-cell__bd">
+              <p style="font-size: 1.3rem;">{{item.goodsName}}</p>
+              <p style="font-size: 1rem;color: #888888;">{{item.goodsDesc}}</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p>￥100</p>
+              <p>x1</p>
+            </div>
+          </div>
+          <div class="weui-total">
+            <p class="pull-right">
+              <span>共两件商品 合计：</span>
+              <span style="color: #FF4343;">￥300.00</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </weui-infiniteloader>
+  </div>
+  <div class="mine-oeder-none" *ngIf="false">
+    <p>暂无订单记录</p>
+  </div>
+</div>

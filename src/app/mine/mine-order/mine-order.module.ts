@@ -7,12 +7,25 @@ import { OrderPendreceComponent } from './order-pendrece/order-pendrece.componen
 import { OrderCompleteComponent } from './order-complete/order-complete.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { OrderLogisticsComponent } from './order-logistics/order-logistics.component';
+import {HeaderModule} from '../../common/components/header/header.module';
+import {WeUiModule} from 'ngx-weui';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
-  declarations: [MineOrderComponent, OrderPendpayComponent, OrderPendreceComponent, OrderCompleteComponent, OrderDetailsComponent, OrderLogisticsComponent],
+  declarations: [
+    MineOrderComponent,
+    OrderPendpayComponent,
+    OrderPendreceComponent,
+    OrderCompleteComponent,
+    OrderDetailsComponent,
+    OrderLogisticsComponent
+  ],
   imports: [
     CommonModule,
-    MineOrderRoutingModule
+    MineOrderRoutingModule,
+    HeaderModule,
+    WeUiModule.forRoot(),
+    FormsModule
   ]
 })
 export class MineOrderModule { }
