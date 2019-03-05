@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MineDetailPersonalComponent } from './mine-detail-personal.component';
+import { TeamBillComponent } from './team-bill.component';
 
-describe('MineDetailPersonalComponent', () => {
-  let component: MineDetailPersonalComponent;
-  let fixture: ComponentFixture<MineDetailPersonalComponent>;
+describe('TeamBillComponent', () => {
+  let component: TeamBillComponent;
+  let fixture: ComponentFixture<TeamBillComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MineDetailPersonalComponent ]
+      declarations: [ TeamBillComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MineDetailPersonalComponent);
+    fixture = TestBed.createComponent(TeamBillComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

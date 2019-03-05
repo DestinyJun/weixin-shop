@@ -23,6 +23,29 @@
       font-size: 1.4rem;
     }
   }
+  .mine-filter-list{
+    margin-top: 65px;
+    font-size: 1.4rem;
+    .weui-cells__title {
+      background-color: #fff;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      span {
+        display: inline-block;
+        font-size: 1.4rem;
+        padding: 2px 10px 2px 15px;
+        margin-right: 10px;
+        color: #868787;
+        background-color: #F8F8F8;
+        border: 1px solid #E0E0E0;
+        border-radius: 5px;
+        i{
+          margin-left: 15px;
+        }
+      }
+    }
+    .weui-cells {}
+  }
   .recharge-mask {
     .weui-mask {
       .weui-mask__content {
@@ -32,12 +55,14 @@
           top: 50px;
           left: 0;
           width: 100vw;
+          height: 80%;
+        }
+        .weui-cells_title{
+          padding: 10px 15px;
+          color: #C5C5C5;
+          font-size: 1.5rem;
         }
         .status{
-          .weui-cells_title{
-            padding: 10px 15px;
-            color: #C5C5C5;
-          }
           .weui-flex{
             padding-left: 10px;
             .weui-flex__item{
@@ -46,11 +71,49 @@
                 padding: 0;
                 font-size: 1.3rem;
                 line-height: 1.6;
+                color: #868787;
+              }
+            }
+          }
+        }
+        .timer{
+          margin-top: 10px;
+          font-size: 1.3rem;
+          .weui-flex{
+            padding-left: 10px;
+            margin-right: 10px;
+            .weui-flex__item{
+              .weui-btn{
+                padding: 0;
+                font-size: 1.3rem;
+                line-height: 1.6;
+                color: #868787;
+              }
+            }
+          }
+        }
+        .member{
+          margin-top: 10px;
+          font-size: 1.3rem;
+          .weui-flex{
+            padding-left: 10px;
+            .weui-flex__item{
+              margin-right: 10px;
+              .weui-btn{
+                padding: 0;
+                font-size: 1.3rem;
+                line-height: 1.6;
+                color: #868787;
               }
             }
           }
         }
         .btn-group{
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          left: 0;
+          margin-top: 15px;
           .weui-flex{
             .weui-flex__item{
               .weui-btn{

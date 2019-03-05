@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "@cmgustavo/ngx-qrcode": "^1.0.1",
+    "angularx-qrcode": "^1.5.3",
     "core-js": "^2.5.4",
     "echarts": "^4.1.0",
     "font-awesome": "^4.7.0",

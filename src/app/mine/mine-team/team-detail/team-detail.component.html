@@ -2,12 +2,67 @@
   <div class="mine-detail-header">
     <app-header [option]="headerOption" (headerRightClick)="this.teamDetailMask.show()"></app-header>
   </div>
-  <div class="mine-detail-list">
+  <div class="mine-detail-list" *ngIf="false">
     <div class="weui-cells">
       <div class="weui-cells__title">
         <p style="font-size: 1.5rem">今日业绩</p>
       </div>
       <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p>梳理名</p>
+          <p style="font-size: 1.2rem;color: #888888;">
+            <span>2019-03-01</span>
+            <span>19:58:43</span>
+          </p>
+        </div>
+        <div class="weui-cell__ft">
+          <p style="color: #F9C847;">+650.00</p>
+          <p style="color: #F9C847;font-size: 1.2rem">入账中</p>
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p>陆雨航</p>
+          <p style="font-size: 1.2rem;color: #888888;">
+            <span>2019-03-01</span>
+            <span>19:58:43</span>
+          </p>
+        </div>
+        <div class="weui-cell__ft">
+          <p style="color: #E92E38;">+650.00</p>
+          <p style="color: #E92E38;font-size: 1.2rem">入账失败</p>
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p>里可以</p>
+          <p style="font-size: 1.2rem;color: #888888;">
+            <span>2019-03-01</span>
+            <span>19:58:43</span>
+          </p>
+        </div>
+        <div class="weui-cell__ft">
+          <p style="color: #89BB7A;">+650.00</p>
+          <p style="color: #89BB7A;font-size: 1.2rem">已入账</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mine-filter-list">
+    <div class="weui-cells__title" style="">
+      <span>已入账<i class="fa fa-times"></i></span>
+      <span>2018.11.11-2019.03.05<i class="fa fa-times"></i></span>
+    </div>
+    <div class="weui-cells">
+      <div class="weui-cell" style="background-color: #F2F1F0;">
+        <div class="weui-cell__bd" style="color: #999999;">
+          总计收益：￥23653.00
+        </div>
+        <div class="weui-cell__ft">
+          168单
+        </div>
+      </div>
+      <div class="weui-cell" [routerLink]="['/mine/team/personal']">
         <div class="weui-cell__bd">
           <p>梳理名</p>
           <p style="font-size: 1.2rem;color: #888888;">
@@ -61,39 +116,49 @@
                 <button class="weui-btn weui-btn_primary">全部</button>
               </div>
               <div class="weui-flex__item">
-                <button class="weui-btn">全部</button>
+                <button class="weui-btn weui-btn_default">已入账</button>
               </div>
               <div class="weui-flex__item">
-                <button class="weui-btn">全部</button>
+                <button class="weui-btn weui-btn_default">入账中</button>
               </div>
               <div class="weui-flex__item">
-                <button class="weui-btn">全部</button>
+                <button class="weui-btn weui-btn_default">入账失效</button>
               </div>
             </div>
           </div>
-
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <span style="vertical-align: middle">订单号</span>
+          <div class="timer">
+            <div class="weui-cells_title">
+              按时间筛选
             </div>
-            <div class="weui-cell__ft">
-              <span style="vertical-align: middle">654784275457</span>
+            <div class="weui-flex">
+              <div class="weui-flex__item" style="flex: 2" (click)="detailTimeSelClick('start')">
+                <button class="weui-btn weui-btn_default">开始时间</button>
+              </div>
+              <div class="weui-flex__item" style="flex: 0.3;text-align: center">
+                至
+              </div>
+              <div class="weui-flex__item" style="flex: 2" (click)="detailTimeSelClick('end')">
+                <button class="weui-btn weui-btn_default">结束时间</button>
+              </div>
             </div>
           </div>
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <span style="vertical-align: middle">付款方式</span>
+          <div class="member">
+            <div class="weui-cells_title">
+              成员筛选
             </div>
-            <div class="weui-cell__ft">
-              <span style="vertical-align: middle">微信支付</span>
-            </div>
-          </div>
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <span style="vertical-align: middle">需付款</span>
-            </div>
-            <div class="weui-cell__ft">
-              <span style="vertical-align: middle">￥4568.00</span>
+            <div class="weui-flex">
+              <div class="weui-flex__item">
+                <button class="weui-btn weui-btn_default">全部</button>
+              </div>
+              <div class="weui-flex__item">
+                <button class="weui-btn weui-btn_default">王二小</button>
+              </div>
+              <div class="weui-flex__item">
+                <button class="weui-btn weui-btn_primary">李小花</button>
+              </div>
+              <div class="weui-flex__item">
+                <button class="weui-btn weui-btn_default">张大嘴</button>
+              </div>
             </div>
           </div>
           <div class="btn-group">

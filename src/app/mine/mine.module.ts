@@ -7,6 +7,7 @@ import {HeaderModule} from '../common/components/header/header.module';
 import {WeUiModule} from 'ngx-weui';
 import { MineUserNameComponent } from './mine-user/mine-user-name/mine-user-name.component';
 import { MineUserAddressComponent } from './mine-user/mine-user-address/mine-user-address.component';
+import {QRCodeModule} from 'angularx-qrcode';
 
 @NgModule({
   declarations: [MineUserComponent, MineSharedComponent, MineUserNameComponent, MineUserAddressComponent],
@@ -15,6 +16,7 @@ import { MineUserAddressComponent } from './mine-user/mine-user-address/mine-use
     MineRoutingModule,
     HeaderModule,
     WeUiModule.forRoot(),
+    QRCodeModule
   ]
 })
 export class MineModule { }

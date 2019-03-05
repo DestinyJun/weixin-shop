@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {MaskComponent} from 'ngx-weui';
+import {MaskComponent, PickerService} from 'ngx-weui';
 
 @Component({
   selector: 'app-team-detail',
@@ -8,7 +8,7 @@ import {MaskComponent} from 'ngx-weui';
   styleUrls: ['./team-detail.component.less'],
   encapsulation: ViewEncapsulation.None
 })
-export class TeamDetailComponent implements OnInit {
+export class TeamDetailComponent implements OnInit, OnDestroy {
   // header
   public headerOption: HeaderContent = {
     title: '团队收益明细',
@@ -22,8 +22,22 @@ export class TeamDetailComponent implements OnInit {
   };
   // mask
   @ViewChild('teamDetailMask') teamDetailMask: MaskComponent;
-  constructor() { }
+  constructor(
+    private srv: PickerService
+  ) { }
 
   ngOnInit() {
+  }
+  ngOnDestroy() {
+    this.srv.destroyAll();
+  }
+  public detailTimeSelClick(type: string) {
+    this.srv.showDateTime('date', '', new Date(), null, new Date()).subscribe((res: any) => {
+      if (type === 'start') {
+        console.log('开始时间', res);
+        return;
+      }
+      console.log('结束时间', res);
+    });
   }
 }
