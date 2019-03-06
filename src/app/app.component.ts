@@ -1,7 +1,7 @@
 import {Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {environment} from '../environments/environment';
-import {ToastComponent} from 'ngx-weui';
+import {ToastComponent, ToastService} from 'ngx-weui';
 import {GlobalService} from './common/services/global.service';
 @Component({
   selector: 'app-root',
@@ -10,14 +10,11 @@ import {GlobalService} from './common/services/global.service';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  public remindMsg: string;
-  @ViewChild('success') successToast: ToastComponent;
-  @ViewChild('failure') failureToast: ToastComponent;
-  @ViewChild('loading') loadingToast: ToastComponent;
   title = 'weixin-shop';
   constructor(
     private router: Router,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private srv: ToastService
   ) {
     console.log(environment.env);
     router.events.subscribe(
@@ -28,14 +25,26 @@ export class AppComponent {
       }
     );
     globalService.remindEvent.subscribe(
-      (val) => {
+      (val: any) => {
         console.log(val);
-        this.remindMsg = val.msg;
-        this.onShow(val.type);
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        console.log('完成');
       }
     );
   }
-  onShow(type: 'success' | 'loading' | 'failure') {
-    (<ToastComponent>this[`${type}Toast`]).onShow();
+  onShowBySrv(type: 'success' | 'loading', msg) {
+     if (type === 'loading') {
+       this.srv.loading(null, 0);
+       return;
+     }
+    this.srv.success(msg);
+  }
+  onHide() {
+    console.log('11');
+    this.srv.hide();
   }
 }

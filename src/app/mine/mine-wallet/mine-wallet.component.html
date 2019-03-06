@@ -7,7 +7,7 @@
           账户余额
         </div>
         <div class="weui-cell__ft">
-          <span style="color: #FF5E5E;">￥10000.00</span>
+          <span style="color: #FF5E5E;">￥{{mineBalance.balance || '0.00'}}</span>
         </div>
       </div>
       <div class="weui-cell">
@@ -15,7 +15,7 @@
           可提现
         </div>
         <div class="weui-cell__ft">
-          <span style="color: #000000;">￥100.00</span>
+          <span style="color: #000000;">￥{{mineBalance.withdraw || '0.00'}}</span>
         </div>
       </div>
     </div>

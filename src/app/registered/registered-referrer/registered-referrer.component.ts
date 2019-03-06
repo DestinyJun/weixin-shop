@@ -66,7 +66,8 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   public referrerClick(): void {
     this.registeredService.verifyReferrer(this.referrerNumber).subscribe(
       (val) => {
-        if (val.status == '200') {
+        console.log(val);
+        if (val.status === 200) {
           this.router.navigate(['/registered/submit', {referrerNumber: this.referrerNumber}]);
           return;
         }
@@ -74,10 +75,10 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
         this.referrerNumber.workId = '';
       },
       (error) => {
-        console.log(error);
+        // console.log(error);
       },
       () => {
-        console.log('');
+        // console.log('完成');
       }
     );
   }

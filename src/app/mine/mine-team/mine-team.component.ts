@@ -1,7 +1,8 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderConfig, PickerOptions, PickerService} from 'ngx-weui';
 import {Router} from '@angular/router';
+import {MineTeamService} from '../../common/services/mine-team.service';
 
 @Component({
   selector: 'app-mine-team',
@@ -9,7 +10,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./mine-team.component.less'],
   encapsulation: ViewEncapsulation.None
 })
-export class MineTeamComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MineTeamComponent implements OnInit, OnDestroy {
   // header
   public headerOption: HeaderContent = {
     title: '我的团队',
@@ -44,9 +45,9 @@ export class MineTeamComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(
     private srv: PickerService,
-    private router: Router
-  ) {
-  }
+    private router: Router,
+    private mineTeamSrv: MineTeamService
+  ) {}
 
   ngOnInit() {
     const data = [1615, 2700, 3100, 3600, 4500, 5001, 5500, 5800, 6000];
@@ -189,12 +190,7 @@ export class MineTeamComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.srv.destroyAll();
   }
-
-  ngAfterViewInit() {
-  }
-
-  public onSelect() {
-  }
+  public onSelect() {}
   public selectMonthClick() {
     this.srv.showDateTime('date-ym', '', null, null, new Date()).subscribe((res: any) => {
       console.log(res);

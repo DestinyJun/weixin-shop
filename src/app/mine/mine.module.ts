@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import { MineUserComponent } from './mine-user/mine-user.component';
 import { MineSharedComponent } from './mine-shared/mine-shared.component';
 import {MineRoutingModule} from './mine-routing.module';
@@ -17,6 +17,7 @@ import {QRCodeModule} from 'angularx-qrcode';
     HeaderModule,
     WeUiModule.forRoot(),
     QRCodeModule
-  ]
+  ],
+  providers: [DatePipe]
 })
 export class MineModule { }

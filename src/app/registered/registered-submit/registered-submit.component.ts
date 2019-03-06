@@ -28,6 +28,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     smsCode: '',
   };
   public submitAgree = false;
+  // btn code
   constructor(
     private srv: DialogService,
     private toastService: ToastService,

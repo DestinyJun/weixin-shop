@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {environment} from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,9 +9,15 @@ export class TabService {
     private http: HttpClient
   ) {}
   public tabGetClientList(): Observable<any> {
-    return this.http.post(`${environment.dev_test_url}/contacts/list`, {});
+    return this.http.post(`/contacts/list`, {});
   }
   public tabDeleteClient(id): Observable<any> {
-    return this.http.post(`${environment.dev_test_url}/contacts/delete`, {id: id});
+    return this.http.post(`/contacts/delete`, {id: id});
+  }
+  public tabGetPersonIncome(params): Observable<any> {
+    return this.http.post(`/moayoOrder/myOrderInfo`, params);
+  }
+  public tabGetTeamTop(params): Observable<any> {
+    return this.http.post(`/team/top`, params);
   }
 }

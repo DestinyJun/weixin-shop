@@ -1,96 +1,105 @@
 .home{
+  height: 100%;
+  overflow: hidden;
+  position: relative;
   background-color: #F1F1F1;
-  .weui-panel_access{
-    height: 12vh;
-    .weui-panel__bd{
-      .weui-media-box{
-        .weui-media-box__title{
-          font-size: 1rem;
-          color: #CACACA;
-        }
-        .weui-media-box__desc{
-          color: #424242;
-          font-size: 1.333rem;
-          font-min-size: 15px;
-          letter-spacing: 1px;
+  .home-income{
+    .weui-panel_access{
+      height: 12vh;
+      .weui-panel__bd{
+        .weui-media-box{
+          .weui-media-box__title{
+            font-size: 1rem;
+            color: #CACACA;
+          }
+          .weui-media-box__desc{
+            color: #424242;
+            font-size: 1.333rem;
+            font-min-size: 15px;
+            letter-spacing: 1px;
+          }
         }
       }
     }
   }
-  .weui-grids{
-    margin-top: 1vh;
-    margin-left: 2vw;
-    margin-right: 2vw;
-    :nth-child(2){
-      margin: 0 0.5vw;
-    }
-    .weui-grid{
-      padding: 0;
-      background-color: #fff;
-      width: 31.66666vw;
-      .weui-flex{
-
-        .weui-flex__item{
-          .time{
-            color: white;
-            font-size: 12px;
-            text-align: center;
-          }
-          .amount{
-            color: #AEAEAE;
-            font-size: 12px;
-            text-align: center;
-          }
-          .placeholder{
-            text-align: center;
-            font-size: 14px;
-            font-weight: bold;
-          }
-          .placeholder.time{
-            font-size: 12px;
-            color: #AEAEAE;
-          }
-        }
-      }
-      .weui-flex.top{
-        :nth-child(2) {
-          flex: 2;
-        }
-      }
-      .top{
-        height: 3vh;
-        line-height: 3vh;
-      }
-      .center{
-        height: 4vh;
-        line-height: 4vh;
-      }
-      .bottom{
-        height: 4vh;
-        line-height: 2vh;
-      }
-    }
-  }
-  .card{
-    margin: 1vh 2vw 0 2vw;
-    .weui-flex__item:nth-child(1){
-      background-color: #7FB56E;
-    }
-    .weui-flex__item:nth-child(2){
-      background-color: #4670DB;
+  .home-personal{
+    .weui-grids{
+      margin-top: 1vh;
       margin-left: 2vw;
-    }
-    .weui-flex__item{
-      height: 10vh;
-      text-align: center;
-      color: white;
-      .weui-cell{
-        padding: 15px 15px;
+      margin-right: 2vw;
+      :nth-child(2){
+        margin: 0 0.5vw;
+      }
+      .weui-grid{
+        padding: 0;
+        background-color: #fff;
+        width: 31.66666vw;
+        .weui-flex{
+
+          .weui-flex__item{
+            .time{
+              color: white;
+              font-size: 12px;
+              text-align: center;
+            }
+            .amount{
+              color: #AEAEAE;
+              font-size: 12px;
+              text-align: center;
+            }
+            .placeholder{
+              text-align: center;
+              font-size: 14px;
+              font-weight: bold;
+            }
+            .placeholder.time{
+              font-size: 12px;
+              color: #AEAEAE;
+            }
+          }
+        }
+        .weui-flex.top{
+          :nth-child(2) {
+            flex: 2;
+          }
+        }
+        .top{
+          height: 3vh;
+          line-height: 3vh;
+        }
+        .center{
+          height: 4vh;
+          line-height: 4vh;
+        }
+        .bottom{
+          height: 4vh;
+          line-height: 2vh;
+        }
       }
     }
   }
-  .weui-scroll{
-    margin-top: 1vh;
+  .home-card{
+    .weui-flex{
+      margin: 1vh 2vw 0 2vw;
+      .weui-flex__item:nth-child(1){
+        background-color: #7FB56E;
+      }
+      .weui-flex__item:nth-child(2){
+        background-color: #4670DB;
+        margin-left: 2vw;
+      }
+      .weui-flex__item{
+        height: 10vh;
+        text-align: center;
+        color: white;
+        .weui-cell{
+          padding: 15px 15px;
+        }
+      }
+    }
+  }
+  .home-rank{
+    margin-top: 10px;
     background-color: #fff;
     .weui-cells__title{
       height: 4vh;
@@ -105,10 +114,34 @@
     .weui-mine{
       font-size: 1.166rem;
       color: #7FB56E;
+      .weui-cell{
+        .weui-cell__hd{
+          width: 60px;
+        }
+        .weui-cell__bd{
+          margin-left: 50px;
+        }
+      }
     }
-    .weui-infiniteloader__content{
-      .weui-cells{
-        font-size: 1.166rem;
+    .weui-scroll{
+      background-color: #fff;
+      position: absolute;
+      top: 326px;
+      left: 0;
+      right: 0;
+      bottom: 5px;
+      .weui-infiniteloader__content{
+        .weui-cells{
+          font-size: 1.166rem;
+          .weui-cell{
+            .weui-cell__hd{
+              width: 60px;
+            }
+            .weui-cell__bd{
+              margin-left: 50px;
+            }
+          }
+        }
       }
     }
   }
