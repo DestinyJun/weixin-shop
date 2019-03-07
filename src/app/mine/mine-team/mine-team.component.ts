@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {InfiniteLoaderConfig, PickerOptions, PickerService} from 'ngx-weui';
+import {InfiniteLoaderComponent, InfiniteLoaderConfig, PickerOptions, PickerService} from 'ngx-weui';
 import {Router} from '@angular/router';
 import {MineTeamService} from '../../common/services/mine-team.service';
 
@@ -26,12 +26,21 @@ export class MineTeamComponent implements OnInit, OnDestroy {
   public infiniteloaderConfig: InfiniteLoaderConfig = {
     height: '100%'
   };
+  public data: any[] = [
+    {name: '王明', number: '1615'},
+    {name: '张宝', number: '2700'},
+    {name: '袁晨阳', number: '3100'},
+    {name: '源田鱼', number: '3600'},
+    {name: '俗称非', number: '4500'},
+    {name: '王二小', number: '5001'},
+    {name: '李万三', number: '5500'},
+    {name: '宋史草', number: '5800'},
+    {name: '张三妹', number: '6000'},
+    {name: '黄宏三', number: '6500'},
+  ];
+  public boxWidth: number;
   // date picker
-  DT: any = {
-    min: new Date(2015, 1, 5),
-    max: new Date()
-  };
-  res: any = {
+  public res: any = {
     city: '310105',
     date: new Date()
   };
@@ -50,8 +59,8 @@ export class MineTeamComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    const data = [1615, 2700, 3100, 3600, 4500, 5001, 5500, 5800, 6000];
-    const dataName =  ['王明', '张宝', '袁晨阳', '源田鱼', '俗称非', '王二小', '王二小', '王二小', '王二小'];
+    /*const data = [1615, 2700, 3100, 3600, 4500, 5001, 5500, 5800, 6000, 6500];
+    const dataName =  ['王明', '张宝', '袁晨阳', '源田鱼', '俗称非', '王二小', '李万三', '宋史草', '张三妹', '黄宏三'];
     this.options = {
       tooltip: {
         show: false,
@@ -74,25 +83,25 @@ export class MineTeamComponent implements OnInit, OnDestroy {
       yAxis: {
         show: false,
         type: 'category',
-        data: ['王明', '张宝', '袁晨阳', '源田鱼', '俗称非', '王二小', '王二小', '王二小', '王二小'],
+        data: ['王明', '张宝', '袁晨阳', '源田鱼', '俗称非', '王二小', '王二小', '王二小', '王二小', '王二小', '王二小', '王二小', '王二小', '王二小', '王二小'],
         // max: 7
       },
       series: [
         {
           name: '背景色',
           type: 'bar',
-          data: [6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500],
+          data: [6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500],
           silent: true,
           // barWidth: 35,
           barGap: '-100%',
           // barCategoryGap: '-5%',
           label: {
             show: false,
-            /* position: ['90%', '30%'],
+            /!* position: ['90%', '30%'],
              color: '#000000',
              formatter: function (param) {
                return data[param.dataIndex];
-             }*/
+             }*!/
           },
           itemStyle: {
             normal: {
@@ -152,7 +161,7 @@ export class MineTeamComponent implements OnInit, OnDestroy {
               }
             }
           },
-          data: [6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500],
+          data: [6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500],
         },
         {
           name: '数字数据',
@@ -182,15 +191,15 @@ export class MineTeamComponent implements OnInit, OnDestroy {
               }
             }
           },
-          data: [6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500],
+          data: [6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500, 6500],
         }
       ]
-    };
-  }
-  ngOnDestroy() {
-    this.srv.destroyAll();
+    };*/
   }
   public onSelect() {}
+  public onLoadMore(comp: InfiniteLoaderComponent) {
+    comp.setFinished();
+  }
   public selectMonthClick() {
     this.srv.showDateTime('date-ym', '', null, null, new Date()).subscribe((res: any) => {
       console.log(res);
@@ -205,5 +214,8 @@ export class MineTeamComponent implements OnInit, OnDestroy {
   }
   public mineTeamInClient() {
     this.router.navigate(['/mine/team/detail']);
+  }
+  ngOnDestroy() {
+    this.srv.destroyAll();
   }
 }

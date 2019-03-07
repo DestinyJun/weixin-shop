@@ -11,23 +11,62 @@
     bottom: 0;
     background-color: #FFFFFF;
     .weui-article{
-      padding: 10px 0;
-      .weui-cells{
-        margin-top: 0;
-        .weui-cell{
-          .weui-cell__bd{
-            span{
-              color: white;
-              background-color: #1AAD19;
-              display: inline-block;
-              padding: 3px 10px;
+      padding: 0;
+      .list{
+        height: 100%;
+        position: relative;
+        .weui-cells{
+          margin-top: 0;
+          .weui-cell{
+            .weui-cell__bd{
+              span{
+                color: white;
+                background-color: #1AAD19;
+                display: inline-block;
+                padding: 3px 10px;
+                font-size: 1.3rem;
+                border-radius: 5px;
+              }
+            }
+            .weui-cell__ft{
               font-size: 1.3rem;
-              border-radius: 5px;
+              color: #757576;
             }
           }
-          .weui-cell__ft{
-            font-size: 1.3rem;
-            color: #757576;
+        }
+        .list-scroll{
+          position: absolute;
+          top: 50px;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          padding: 0 15px;
+          .list-scroll-cell{
+            width: 100%;
+            height: 30px;
+            background-color: #DAEBD1;
+            position: relative;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            .box{
+              position: absolute;
+              //width: 80%;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              border-radius: 5px;
+              background: #89C56B;
+            }
+            .text{
+              position: absolute;
+              width: 100%;
+              height: 30px;
+              line-height: 30px;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              padding: 0 10px;
+            }
           }
         }
       }

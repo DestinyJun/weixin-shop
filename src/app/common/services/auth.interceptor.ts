@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       headers: req.headers.set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MTg4NDY3Nn0.op0gsph3D5d1A_XpzppNrwExcQSkEjaLL9h8yi4aFa-V7wjgrAKSHVGuZ5z7JdNezIJvr60gTPFmb9Yu1HMseA')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MjAxNTY2NX0.KGwUk50YYZXFbkKtLtbalhGMDdFF9_9tGLrwSRfxe4FBxKP0_BlWAWns9bISTafNc_b-dEh_4N4REO2S5Vxh2Q')
     });
     return next.handle(clonedRequest).pipe(
       /*mergeMap((event: any) => {
@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         return Observable.create(observer => observer.next(event)); // 请求成功返回响应
       }),*/
-      map((event: HttpResponse) => {
+      map((event: any, ) => {
         if (event.status === 200) {
           if (event.body && event.body.status === 200) {
             return event;

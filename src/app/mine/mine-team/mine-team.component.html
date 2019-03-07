@@ -8,9 +8,9 @@
   </div>
   <div class="mine-team-tab">
     <weui-navbar>
-      <weui-tab heading="月度" (select)="onSelect()">
-        <article class="weui-article">
-          <weui-infiniteloader [config]="infiniteloaderConfig">
+      <weui-tab heading="月度" (select)="onSelect()" style="height: 100%">
+        <article class="weui-article" style="height: 100%">
+          <div class="list" style="">
             <div class="weui-cells">
               <div class="weui-cell">
                 <div class="weui-cell__bd" (click)="selectMonthClick()">
@@ -20,11 +20,20 @@
                   <span>本月收益：￥5487.00</span>
                 </div>
               </div>
-              <div class="weui-cell">
-                <div class="echarts-bar" echarts [options]="options" style="min-height: 500px;width: 100vw"></div>
-              </div>
             </div>
-          </weui-infiniteloader>
+            <div class="list-scroll">
+              <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
+                <div class="list-scroll-cell" *ngFor="let item of data?.reverse();">
+                  <div class="box" [ngStyle]="{'width':(((item?.number * 100) / data[0]?.number).toFixed(1)) + '%'}"></div>
+                  <div class="text">
+                    <p class="pull-left">{{item?.name}}</p>
+                    <p class="pull-right">{{item?.number}}</p>
+                  </div>
+                </div>
+                <!--<div echarts [options]="options" style="width: 100%;height: 100%"></div>-->
+              </weui-infiniteloader>
+            </div>
+          </div>
         </article>
       </weui-tab>
       <weui-tab heading="年度" (select)="onSelect()">

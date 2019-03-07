@@ -45,7 +45,7 @@ export class TabHomeComponent implements OnInit {
     );
   }
   public onLoadMore(comp: InfiniteLoaderComponent): void {
-    this.restartBtn = false;
+    /*this.restartBtn = false;
     timer(1500).subscribe(() => {
       this.items.push(
         ...Array(10)
@@ -59,7 +59,7 @@ export class TabHomeComponent implements OnInit {
         return;
       }
       comp.resolveLoading();
-    });
+    });*/
   }
   public restart(): void {
     // this.items.length = 0;
