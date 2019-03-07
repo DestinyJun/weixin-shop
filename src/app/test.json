@@ -1,19 +1,32 @@
 {
   "currentPage": 0,
-  "datas": [
-    {
-      "createdDate": 1550176232000,
-      "id": 5,
-      "lastModifiedDate": 1550176235000,
-      "name": "王敏2"
-    },
-    {
-      "createdDate": 1550176232000,
-      "id": 6,
-      "lastModifiedDate": 1550176235000,
-      "name": "王敏6"
-    }
-  ],
+  "data": {
+    "date": "2019年01月",
+    "detailsSum": 8.000,
+    "mainSum": 3.000000,
+    "team": [
+      {
+        "sum_amount_paid": 6.000,
+        "nikeName": "18984597390",
+        "workId": 10003
+      },
+      {
+        "sum_amount_paid": 2.000,
+        "nikeName": "18984597391",
+        "workId": 10002
+      },
+      {
+        "nikeName": "18984597392",
+        "sum_amount_paid": 0,
+        "workId": 10001
+      },
+      {
+        "nikeName": "18984597389",
+        "sum_amount_paid": 0,
+        "workId": 10004
+      }
+    ]
+  },
   "message": "查询成功！",
   "pageSize": 0,
   "status": 200,

@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig, PickerOptions, PickerService} from 'ngx-weui';
 import {Router} from '@angular/router';
 import {MineTeamService} from '../../common/services/mine-team.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-mine-team',
@@ -26,19 +27,32 @@ export class MineTeamComponent implements OnInit, OnDestroy {
   public infiniteloaderConfig: InfiniteLoaderConfig = {
     height: '100%'
   };
-  public data: any[] = [
-    {name: '王明', number: '1615'},
-    {name: '张宝', number: '2700'},
-    {name: '袁晨阳', number: '3100'},
-    {name: '源田鱼', number: '3600'},
-    {name: '俗称非', number: '4500'},
-    {name: '王二小', number: '5001'},
-    {name: '李万三', number: '5500'},
-    {name: '宋史草', number: '5800'},
-    {name: '张三妹', number: '6000'},
-    {name: '黄宏三', number: '6500'},
+  public dataMonth: any[] = [
+    {name: '王明', number: 1615},
+    {name: '张宝', number: 2700},
+    {name: '袁晨阳', number: 3100},
+    {name: '源田鱼', number: 3600},
+    {name: '俗称非', number: 4500},
+    {name: '王二小', number: 5001},
+    {name: '李万三', number: 5500},
+    {name: '宋史草', number: 5800},
+    {name: '张三妹', number: 6000},
+    {name: '黄宏三', number: 6500},
   ];
-  public boxWidth: number;
+  public dataYear: any[] = [
+    {name: '王明', number: 1615},
+    {name: '张宝', number: 2700},
+    {name: '袁晨阳', number: 3100},
+    {name: '源田鱼', number: 3600},
+    {name: '俗称非', number: 4500},
+    {name: '王二小', number: 5001},
+    {name: '李万三', number: 5500},
+    {name: '宋史草', number: 5800},
+    {name: '张三妹', number: 6000},
+    {name: '黄宏三', number: 6500},
+  ];
+  public maxData: number;
+  public mineTeamDate: any;
   // date picker
   public res: any = {
     city: '310105',
@@ -55,10 +69,12 @@ export class MineTeamComponent implements OnInit, OnDestroy {
   constructor(
     private srv: PickerService,
     private router: Router,
-    private mineTeamSrv: MineTeamService
+    private mineTeamSrv: MineTeamService,
+    private dateSrv: DatePipe
   ) {}
 
   ngOnInit() {
+    this.mineTeamGetData(this.dateSrv.transform(new Date(), 'yyyy-MM'));
     /*const data = [1615, 2700, 3100, 3600, 4500, 5001, 5500, 5800, 6000, 6500];
     const dataName =  ['王明', '张宝', '袁晨阳', '源田鱼', '俗称非', '王二小', '李万三', '宋史草', '张三妹', '黄宏三'];
     this.options = {
@@ -196,7 +212,23 @@ export class MineTeamComponent implements OnInit, OnDestroy {
       ]
     };*/
   }
-  public onSelect() {}
+  public mineTeamGetData(time: string) {
+    this.mineTeamSrv.mineTeamGetDate({date: time}).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.mineTeamDate = val.data;
+          this.maxData = val.data.team[val.data.team.length - 1].sum_amount_paid;
+        }
+      }
+    );
+  }
+  public onSelect(event) {
+     if (event.heading === '月度') {
+       this.mineTeamGetData(this.dateSrv.transform(new Date(), 'yyyy-MM'));
+       return;
+     }
+    this.mineTeamGetData(this.dateSrv.transform(new Date(), 'yyyy'));
+  }
   public onLoadMore(comp: InfiniteLoaderComponent) {
     comp.setFinished();
   }

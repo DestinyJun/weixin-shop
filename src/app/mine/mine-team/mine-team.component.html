@@ -3,12 +3,12 @@
     <app-header [option]="headerOption" (headerRightClick)="mineTeamInClient()"></app-header>
   </div>
   <div class="mine-team-earnings">
-    <p style="color: #EA5559;font-size: 2rem">15284</p>
+    <p style="color: #EA5559;font-size: 2rem">{{mineTeamDate?.mainSum}}</p>
     <p style="color: #6E6E6E;font-size: 1.3rem">团队总收益</p>
   </div>
   <div class="mine-team-tab">
     <weui-navbar>
-      <weui-tab heading="月度" (select)="onSelect()" style="height: 100%">
+      <weui-tab heading="月度" (select)="onSelect($event)" style="height: 100%">
         <article class="weui-article" style="height: 100%">
           <div class="list" style="">
             <div class="weui-cells">
@@ -17,38 +17,47 @@
                   <span>按月选择</span>
                 </div>
                 <div class="weui-cell__ft">
-                  <span>本月收益：￥5487.00</span>
+                  <span>本月收益：￥{{mineTeamDate?.detailsSum}}</span>
                 </div>
               </div>
             </div>
             <div class="list-scroll">
               <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
-                <div class="list-scroll-cell" *ngFor="let item of data?.reverse();">
-                  <div class="box" [ngStyle]="{'width':(((item?.number * 100) / data[0]?.number).toFixed(1)) + '%'}"></div>
+                <div class="list-scroll-cell" *ngFor="let item of mineTeamDate?.team?.reverse();">
+                  <div class="box" [ngStyle]="{'width':(((item?.sum_amount_paid * 100) / maxData).toFixed(1)) + '%'}"></div>
                   <div class="text">
-                    <p class="pull-left">{{item?.name}}</p>
-                    <p class="pull-right">{{item?.number}}</p>
+                    <p class="pull-left">{{item?.nikeName}}</p>
+                    <p class="pull-right">{{item?.sum_amount_paid}}</p>
                   </div>
                 </div>
-                <!--<div echarts [options]="options" style="width: 100%;height: 100%"></div>-->
               </weui-infiniteloader>
             </div>
           </div>
         </article>
       </weui-tab>
-      <weui-tab heading="年度" (select)="onSelect()">
-        <article class="weui-article">
-          <div class="weui-cells">
-            <div class="weui-cell">
-              <div class="weui-cell__bd" (click)="selectYearClick()">
-                <span>按年选择</span>
-              </div>
-              <div class="weui-cell__ft">
-                <span>本年收益：￥5487.00</span>
+      <weui-tab heading="年度" (select)="onSelect($event)" style="height: 100%">
+        <article class="weui-article" style="height: 100%">
+          <div class="list" style="">
+            <div class="weui-cells">
+              <div class="weui-cell">
+                <div class="weui-cell__bd" (click)="selectYearClick()">
+                  <span>按年选择</span>
+                </div>
+                <div class="weui-cell__ft">
+                  <span>本年收益：￥{{mineTeamDate?.detailsSum}}</span>
+                </div>
               </div>
             </div>
-            <div class="weui-cell">
-              <div class="echarts-bar" echarts [options]="options" style="min-height: 500px;width: 100vw"></div>
+            <div class="list-scroll">
+              <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
+                <div class="list-scroll-cell" *ngFor="let item of mineTeamDate?.team?.reverse();">
+                  <div class="box" [ngStyle]="{'width':(((item?.sum_amount_paid * 100) / maxData).toFixed(1)) + '%'}"></div>
+                  <div class="text">
+                    <p class="pull-left">{{item?.nikeName}}</p>
+                    <p class="pull-right">{{item?.sum_amount_paid}}</p>
+                  </div>
+                </div>
+              </weui-infiniteloader>
             </div>
           </div>
         </article>
