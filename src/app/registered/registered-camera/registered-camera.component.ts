@@ -54,4 +54,7 @@ export class RegisteredCameraComponent implements OnInit {
     // window.alert(error);
     console.log('访问用户媒体设备失败：', error.name, error.message);
   }
+  public goBack (): void {
+    window.history.back();
+  }
 }
