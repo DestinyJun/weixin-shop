@@ -1,32 +1,38 @@
 <div class="order-place">
-  <app-header [option]="headerOption"></app-header>
-  <div class="weui-cells adress" [routerLink]="['./orclient']">
-    <div class="weui-cell">
-      <div class="weui-cell__bd">请选择一个收获地址</div>
+  <div class="order-place-header">
+    <app-header [option]="headerOption"></app-header>
+  </div>
+  <div class="order-place-address">
+    <div class="weui-cells" [routerLink]="['./orclient']">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">请选择一个收获地址</div>
+      </div>
     </div>
   </div>
-  <div class="weui-panel weui-panel_access commodity">
-    <div class="weui-panel__hd" style="font-size: 1.4rem">商品信息</div>
-    <weui-infiniteloader #comp [config]="infiniteloaderConfig">
-      <div class="weui-panel__bd">
-        <div class="weui-cell" *ngFor="let item of goodsInfo; let i = index">
-          <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-            <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.imgURL"
-                 alt="">
-          </div>
-          <div class="weui-cell__bd">
-            <p style="font-size: 1.3rem;">{{item.goodsName}}</p>
-            <p style="font-size: 1rem;color: #888888;">{{item.goodsDesc}}</p>
-            <p style="font-size: 1.2rem;color: #FF2D2D;margin-top: 1vh">￥{{item.goodsPrice}}</p>
-          </div>
-          <div class="weui-cell__ft">
-            <weui-stepper [(ngModel)]="goodsInfo[i].amount" [min]="0" [max]="1000000" (change)="goodsTotalCount($event, i)"></weui-stepper>
+  <div class="order-place-goods">
+    <div class="weui-panel weui-panel_access commodity">
+      <div class="weui-panel__hd" style="font-size: 1.4rem">商品信息</div>
+      <weui-infiniteloader #comp [config]="infiniteloaderConfig">
+        <div class="weui-panel__bd">
+          <div class="weui-cell" *ngFor="let item of goodsInfo; let i = index">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.mainImage"
+                   alt="暂无">
+            </div>
+            <div class="weui-cell__bd">
+              <p style="font-size: 1.3rem;">{{item.title}}</p>
+              <p style="font-size: 1rem;color: #888888;">{{item.info}}</p>
+              <p style="font-size: 1.2rem;color: #FF2D2D;margin-top: 1vh">￥{{item.originalPrice}}</p>
+            </div>
+            <div class="weui-cell__ft">
+              <weui-stepper [(ngModel)]="goodsInfo[i].amount" [min]="0" [max]="1000000" (change)="goodsTotalCount($event, i)"></weui-stepper>
+            </div>
           </div>
         </div>
-      </div>
-    </weui-infiniteloader>
+      </weui-infiniteloader>
+    </div>
   </div>
-  <div class="weui-bill">
+  <div class="order-place-bill">
     <div class="weui-cells">
       <div class="weui-cell weui-cell_access" [routerLink]="['./orinvoice']">
         <div class="weui-cell__bd">
@@ -58,8 +64,9 @@
       </div>
     </div>
   </div>
+  <div class="order-place-toast">
+    <weui-toast #success [text]="'请先填写收货地址'" [icon]="''" [time]="1000"></weui-toast>
+  </div>
 </div>
-<div class="order-toast">
-  <weui-toast #success [text]="'请先填写收货地址'" [icon]="''" [time]="1000"></weui-toast>
-</div>
+
 

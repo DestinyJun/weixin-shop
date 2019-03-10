@@ -1,0 +1,111 @@
+.order-details{
+  height: 100vh;
+  background-color: #F1F1F1;
+  position: relative;
+  .order-details-header{
+    position: fixed;
+    width: 100vw;
+    left: 0;
+    top: 0;
+    z-index: 1;
+  }
+  .order-details-ems{
+    padding-top: 50px;
+    .weui-cells{
+      padding: 10px 0;
+      height:72px;
+      background: linear-gradient(to right,#80B66F, #B0F59A);
+      font-size: 15px;
+      color: white;
+      .weui-cell{
+        .weui-cell__bd{
+          margin-right: 20px;
+        }
+        .weui-cell__ft{
+          color: white;
+        }
+      }
+    }
+  }
+  .order-details-adress{
+    font-size: 15px;
+    padding: 10px 15px;
+    background-color: #fff;
+  }
+  .order-details-product{
+    margin-top: 15px;
+    .weui-panel{
+      .weui-panel__bd{
+        .weui-cell{
+          .weui-cell__ft{
+            span.minus > em{
+              font-size: 3rem;
+            }
+            em{
+              font-style:normal;
+              font-size: 2rem;
+            }
+            span{
+              border: none;
+              height: 40px;
+              line-height: 40px;
+            }
+            .input{
+              line-height: 30px;
+            }
+
+          }
+        }
+        .weui-total{
+          font-size: 1.5rem;
+          padding: 10px 15px;
+          overflow: hidden;
+          .pull-left{
+            text-align: center;
+            font-size: 1.2rem;
+            border: 1px solid #868686;
+            border-radius: 10px;
+            background-color: #fff;
+            padding: 0 10px;
+          }
+        }
+      }
+    }
+  }
+  .order-details-att{
+    margin-bottom: 65px;
+    .weui-cells{
+      font-size: 1.2rem;
+    }
+  }
+  .order-details-footer{
+    .weui-footer{
+      height: 50px;
+      background-color: #fff;
+      padding: 0 15px;
+      bottom: 0;
+      z-index: 999;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      span{
+        display: inline-block;
+        width: 80px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        font-size: 1.5rem;
+        border: 1px solid #868686;
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 0 15px;
+        &:nth-child(2){
+          margin-left: 15px;
+          background-color: #7FB56E;
+          color:white;
+          border-color: #7FB56E;
+        }
+      }
+    }
+  }
+}

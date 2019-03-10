@@ -1,3 +1,77 @@
-<p>
-  order-details works!
-</p>
+<div class="order-details">
+  <div class="order-details-header">
+    <app-header [option]="headerOption"></app-header>
+  </div>
+  <div class="order-details-ems">
+    <div class="weui-cells" *ngIf="payStatus === 1">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p>[贵阳市]到达中国邮政集团贵阳邮区中心[贵阳市]到达中国邮政集团贵阳邮区中心</p>
+          </div>
+        <div class="weui-cell__ft">
+          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="order-details-adress">
+    <p>收货姓名：王明</p>
+    <p>手机号码：18747577841</p>
+    <p>收获地址：贵州省贵阳市观山湖区金融城MAX</p>
+  </div>
+  <div class="order-details-product">
+    <div class="weui-panel weui-panel_access">
+      <div class="weui-panel__bd">
+        <div class="weui-cell" *ngFor="let item of goodsInfo; let i = index">
+          <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+            <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.imgURL"
+                 alt="">
+          </div>
+          <div class="weui-cell__bd">
+            <p style="font-size: 1.3rem;">{{item.goodsName}}</p>
+            <p style="font-size: 1rem;color: #888888;">{{item.goodsDesc}}</p>
+          </div>
+          <div class="weui-cell__ft">
+            <p>￥100</p>
+            <p>x1</p>
+          </div>
+        </div>
+        <div class="weui-total">
+          <span class="pull-left">申请退款</span>
+          <p class="pull-right">
+            <span>共两件商品 合计：</span>
+            <span style="color: #FF4343;">￥300.00</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="order-details-att">
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p>订单编号：547545454545</p>
+          <p>订单时间：2018-11-23 08:31:14</p>
+          <p>发货时间：2018-11-23 08:31:14</p>
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p>支付方式：微信支付</p>
+          <p>付款时间：2018-11-23 08:31:14</p>
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p>发票信息：不需要发票</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="order-details-footer">
+    <div class="weui-footer weui-footer_fixed-bottom">
+      <span>取消订单</span>
+      <span>去付款</span>
+    </div>
+  </div>
+</div>

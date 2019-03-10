@@ -20,4 +20,7 @@ export class TabService {
   public tabGetTeamTop(params): Observable<any> {
     return this.http.post(`/team/top`, params);
   }
+  public tabGetClientAdrs(params): Observable<any> {
+    return this.http.post(`/address/ListFindById`, params);
+  }
 }

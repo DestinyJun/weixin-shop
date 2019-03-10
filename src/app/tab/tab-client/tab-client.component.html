@@ -39,7 +39,7 @@
     </ul>
   </div>
   <div class="tab-client-scroll">
-     <weui-infiniteloader (loadmore)="onLoadMore($event)" #comp [config]="infiniteloaderConfig">
+     <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
        <div class="client-list" *ngFor="let item of clientList">
          <div class="weui-cells__title" [id]="item?.firstPY">{{item?.firstPY}}</div>
          <!--<div class="weui-cells">
@@ -56,7 +56,7 @@
          </div>-->
          <div class="weui-cells">
            <div class="weui-cell" (touchmove)="onTouchMove($event, item)" (touchstart)="onTouchstart($event)">
-             <div class="weui-cell__bd" (click)="this.rechargeMask.show()">
+             <div class="weui-cell__bd" (click)="clientNameClick(item)">
                <p><span>{{item.name}}</span></p>
              </div>
              <div class="weui-cell__ft">
@@ -66,33 +66,35 @@
            </div>
          </div>
        </div>
-       <weui-button *ngIf="restartBtn" (click)="restart()">重新开始</weui-button>
      </weui-infiniteloader>
   </div>
   <div class="tab-client-mask">
-    <weui-mask #rechargeMask>
+    <weui-mask #tabClientMask>
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd" style="text-align: center">
-            <span style="vertical-align: middle;color: #000;">王大锤</span>
+            <span style="vertical-align: middle;color: #000;">{{clientName}}</span>
           </div>
-          <div class="weui-cell__ft" (click)="this.rechargeMask.hide()">
+          <div class="weui-cell__ft" (click)="this.tabClientMask.hide()">
             <i class="fa fa-times" aria-hidden="true"></i>
           </div>
         </div>
-        <div class="weui-cell">
-          <div class="weui-cell__bd">
-            <p>收货人：王明</p>
-            <p>联系电话：18788888888</p>
-            <p>收获地址：贵州省贵阳市花果园</p>
-          </div>
-        </div>
-        <div class="weui-cell">
-          <div class="weui-cell__bd">
-            <p>收货人：王明</p>
-            <p>联系电话：18788888888</p>
-            <p>收获地址：贵州省贵阳市花果园</p>
-          </div>
+        <div style=" width: 100%;
+    position: absolute;
+    top:45px;
+    left: 0;
+    bottom: 0;
+">
+          <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="addressLoaderConfig">
+            <div class="weui-cell" *ngFor="let item of clientAddressList">
+              <div class="weui-cell__bd">
+                <p>暂无收获信息</p>
+                <p>收货人：{{item?.name}}</p>
+                <p>联系电话：{{item?.phone}}</p>
+                <p>收获地址：{{item.address}}</p>
+              </div>
+            </div>
+          </weui-infiniteloader>
         </div>
       </div>
     </weui-mask>

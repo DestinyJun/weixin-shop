@@ -1,16 +1,18 @@
 <div class="client-add">
-  <app-header [option]="headerOption" (headerRightClick)="saveAddClient()"></app-header>
-  <div class="client-username">
+  <div class="client-add-header">
+    <app-header [option]="headerOption" (headerRightClick)="saveAddClient()"></app-header>
+  </div>
+  <div class="client-add-username">
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label" for="cliuser">客户</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" id="cliuser" type="text" name="cliuser" placeholder="请输入姓名" [(ngModel)]="inputRes.name">
+          <input class="weui-input" id="cliuser" type="text" name="cliuser" placeholder="请输入姓名" [(ngModel)]="addClient.name">
         </div>
       </div>
     </div>
   </div>
-  <div class="client-tab">
+  <div class="client-add-tab">
     <weui-navbar>
       <weui-tab heading="地址" (select)="onSelect()">
         <article class="weui-article">
@@ -43,31 +45,48 @@
       </weui-tab>
     </weui-navbar>
   </div>
-  <div class="add-userinfo" (click)="addAddressClick()">
+  <div class="client-add-userinfo" (click)="addAddressClick()">
     <div class="weui-footer weui-footer_fixed-bottom">
       <button class="weui-btn weui-btn_primary" weui-button>新增客户收获地址</button>
     </div>
   </div>
-  <div class="client-toast">
-    <weui-toast #success [text]="'请先填写客户姓名'" [icon]="''" [time]="2000"></weui-toast>
+  <div class="client-add-toast">
+    <weui-toast #addRemindToast [type]="'success'" [text]="'请先填写客户姓名'" [icon]="''" [time]="2000"></weui-toast>
+    <weui-toast #addClientToast [type]="'success'" [text]="clientMsg" [icon]="''" [time]="2000"></weui-toast>
   </div>
-  <div class="client-dialog">
+  <div class="client-add-dialog">
     <weui-dialog #iosDialog [config]="configDialog"></weui-dialog>
   </div>
-  <div class="add-client-info">
-    <app-wj-dialog *ngIf="addDialogShow" [config]="addDialogConfig" (dialogPayClick)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)">
-      <div class="dialog-content">
-        <div class="weui-cells weui-cells_form">
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <input class="weui-input" type="text" placeholder="请输入收货人姓名" [(ngModel)]="addRes.name" name="name">
-              <input class="weui-input" type="text" placeholder="请输入文本" [(ngModel)]="addRes.phone" name="phone">
-              <input class="weui-input" type="text" placeholder="请输入文本" [(ngModel)]="addRes.address" name="address">
-              <input class="weui-input" type="text" placeholder="请输入文本" [(ngModel)]="addRes.description" name="description">
-            </div>
+  <div class="client-add-address">
+    <weui-mask #clientAddMask>
+      <div class="weui-cells">
+        <div class="weui-cell">
+          <div class="weui-cell__bd" style="text-align: center">
+            <span style="vertical-align: middle;color: #000;">新增收货人地址</span>
+          </div>
+          <div class="weui-cell__ft" (click)="this.clientAddMask.hide()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </div>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入收货人姓名" [(ngModel)]="addAddressRes.name" name="name">
+            <input class="weui-input" type="tel" placeholder="请输入收货人手机号码"  weui-input="mobile" weui-required [(ngModel)]="addAddressRes.phone" name="mobile">
+            <input class="weui-input" type="text" placeholder="请输入收货人详细地址" [(ngModel)]="addAddressRes.address" name="address">
+            <input class="weui-input" type="text" placeholder="粘贴整段地址,自动识别姓名、电话和地址" name="description">
+          </div>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <button
+              class="weui-btn"
+              [disabled]="!addAddressRes.name || !addAddressRes.phone || !addAddressRes.address"
+              (click)="saveAddressClick()"
+              [ngClass]="{'weui-btn_primary': addAddressRes.name && addAddressRes.phone && addAddressRes.address}"
+            >保存</button>
           </div>
         </div>
       </div>
-    </app-wj-dialog>
+    </weui-mask>
   </div>
 </div>

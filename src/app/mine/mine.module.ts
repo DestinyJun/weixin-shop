@@ -8,6 +8,7 @@ import {WeUiModule} from 'ngx-weui';
 import { MineUserNameComponent } from './mine-user/mine-user-name/mine-user-name.component';
 import { MineUserAddressComponent } from './mine-user/mine-user-address/mine-user-address.component';
 import {QRCodeModule} from 'angularx-qrcode';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [MineUserComponent, MineSharedComponent, MineUserNameComponent, MineUserAddressComponent],
@@ -16,7 +17,8 @@ import {QRCodeModule} from 'angularx-qrcode';
     MineRoutingModule,
     HeaderModule,
     WeUiModule.forRoot(),
-    QRCodeModule
+    QRCodeModule,
+    FormsModule,
   ],
   providers: [DatePipe]
 })

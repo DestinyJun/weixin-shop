@@ -30,8 +30,7 @@ export class TabClientComponent implements OnInit {
   @ViewChild('iosDelDialog') iosDelDialog: DialogComponent;
   public configDelDialog: DialogConfig = {};
   // mask
-  // mask
-  @ViewChild('rechargeMask') rechargeMask: MaskComponent;
+  @ViewChild('tabClientMask') tabClientMask: MaskComponent;
   // header
   public headerOption: HeaderContent = {
     title: '客户',
@@ -60,19 +59,18 @@ export class TabClientComponent implements OnInit {
       ]
     },*/
   ];
+  public clientAddressList: any[];
+  public clientName: string;
   // search
   public searchItems: Observable<string[]>;
   public value: string;
   // scroll
-  @ViewChild(InfiniteLoaderComponent) il;
-  public restartBtn = false;
   public infiniteloaderConfig: InfiniteLoaderConfig = {
     height: '100%'
   };
-  public items: any[] = Array(20)
-    .fill(0)
-    .map((v: any, i: number) => i);
-
+  public addressLoaderConfig: InfiniteLoaderConfig = {
+    height: '100%'
+  };
   constructor(
     private router: Router,
     private tabService: TabService,
@@ -102,25 +100,7 @@ export class TabClientComponent implements OnInit {
   }
 
   public onLoadMore(comp: InfiniteLoaderComponent): void {
-    this.restartBtn = false;
-    timer(1500).subscribe(() => {
-      this.items.push(
-        ...Array(10)
-          .fill(this.items.length)
-          .map((v, i) => v + i),
-      );
-
-      if (this.items.length >= 50) {
-        this.restartBtn = true;
-        comp.setFinished();
-        return;
-      }
-      comp.resolveLoading();
-    });
-  }
-  public restart(): void {
-    this.items.length = 0;
-    this.il.restart();
+    comp.setFinished();
   }
   public onBarSearch(term: string) {
     this.value = term;
@@ -138,6 +118,7 @@ export class TabClientComponent implements OnInit {
   public onHeaderRightClick(): void {
     this.router.navigate(['/client/add']);
   }
+  // swipt
   public onTouchstart (event): void {
     this.touchStartX = event.touches[0].pageX;
     this.touchStartPageY = event.touches[0].pageY;
@@ -162,8 +143,21 @@ export class TabClientComponent implements OnInit {
       console.log('左滑呀');
     }
   }
+  // client
   public clientDeleteClick (id): void {
     this.dialogDelShow('ios', {id: id, msg: '你确定删除当前客户吗？'});
+  }
+  public clientNameClick(item) {
+    this.clientName = item.name;
+    this.tabClientMask.show();
+    this.tabService.tabGetClientAdrs({contactsId: item.id}).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.clientAddressList = val.datas;
+          console.log(val.datas.length);
+        }
+      }
+    );
   }
   public dialogDelShow(type: SkinType, item: any) {
     console.log(item);

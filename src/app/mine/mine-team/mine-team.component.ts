@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {InfiniteLoaderComponent, InfiniteLoaderConfig, PickerOptions, PickerService} from 'ngx-weui';
+import {InfiniteLoaderComponent, InfiniteLoaderConfig, PickerData, PickerOptions, PickerService} from 'ngx-weui';
 import {Router} from '@angular/router';
 import {MineTeamService} from '../../common/services/mine-team.service';
 import {DatePipe} from '@angular/common';
@@ -58,7 +58,7 @@ export class MineTeamComponent implements OnInit, OnDestroy {
     city: '310105',
     date: new Date()
   };
-  public year: string[] = ['2015年', '2016年', '2017年'];
+  public year: string[];
   public pickerOptions: PickerOptions = {
     cancel: '取消',
     confirm: '确认'
@@ -74,6 +74,7 @@ export class MineTeamComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.timer();
     this.mineTeamGetData(this.dateSrv.transform(new Date(), 'yyyy-MM'));
     /*const data = [1615, 2700, 3100, 3600, 4500, 5001, 5500, 5800, 6000, 6500];
     const dataName =  ['王明', '张宝', '袁晨阳', '源田鱼', '俗称非', '王二小', '李万三', '宋史草', '张三妹', '黄宏三'];
@@ -212,6 +213,14 @@ export class MineTeamComponent implements OnInit, OnDestroy {
       ]
     };*/
   }
+  public timer() {
+    this.year = [];
+    const date = new Date;
+    for (let i = 0; i < 5; i++) {
+      this.year.push(date.getFullYear() - i + '年');
+    }
+    this.year = this.year.reverse();
+  }
   public mineTeamGetData(time: string) {
     this.mineTeamSrv.mineTeamGetDate({date: time}).subscribe(
       (val) => {
@@ -235,13 +244,13 @@ export class MineTeamComponent implements OnInit, OnDestroy {
   public selectMonthClick() {
     this.srv.showDateTime('date-ym', '', null, null, new Date()).subscribe((res: any) => {
       console.log(res);
+      this.mineTeamGetData(res.formatValue);
       // this.srvRes = res.value;
     });
   }
   public selectYearClick() {
     this.srv.show(this.year, null, [this.year.length - 1], this.pickerOptions).subscribe((res: any) => {
-      console.log(res);
-      // this.srvRes = res.value;
+      this.mineTeamGetData(res.value.slice(0, 4));
     });
   }
   public mineTeamInClient() {

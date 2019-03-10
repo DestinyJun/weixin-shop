@@ -13,4 +13,13 @@ export class MineTeamService {
   public mineTeamGetDate(params): Observable<any> {
     return this.http.post('/team/listByUserAndDate', params);
   }
+  public mineTeamGetEarn(params): Observable<any> {
+    return this.http.post('/team/earningsScreen', params);
+  }
+  public mineTeamGetMember(params): Observable<any> {
+    return this.http.post('/team/teamList', params);
+  }
+  public mineTeamGetMemberEarn(params): Observable<any> {
+    return this.http.post('/team/teamEarningsItem', params);
+  }
 }

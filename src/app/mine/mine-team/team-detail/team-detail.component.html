@@ -2,12 +2,12 @@
   <div class="mine-detail-header">
     <app-header [option]="headerOption" (headerRightClick)="this.teamDetailMask.show()"></app-header>
   </div>
-  <div class="mine-detail-list" *ngIf="false">
+  <div class="mine-detail-list" *ngIf="!filterLabel.userId && !filterLabel.earningStatus && !filterLabel.startDate && !filterLabel.endDate">
     <div class="weui-cells">
       <div class="weui-cells__title">
         <p style="font-size: 1.5rem">今日业绩</p>
       </div>
-      <div class="weui-cell">
+      <div class="weui-cell" [routerLink]="['/mine/team/personal', {id: 2}]">
         <div class="weui-cell__bd">
           <p>梳理名</p>
           <p style="font-size: 1.2rem;color: #888888;">
@@ -48,10 +48,12 @@
       </div>
     </div>
   </div>
-  <div class="mine-filter-list">
-    <div class="weui-cells__title" style="">
-      <span>已入账<i class="fa fa-times"></i></span>
-      <span>2018.11.11-2019.03.05<i class="fa fa-times"></i></span>
+  <div class="mine-filter-list" *ngIf="filterLabel.userId || filterLabel.earningStatus|| filterLabel.startDate|| filterLabel.endDate">
+    <div class="weui-cells__title" >
+      <span *ngIf="filterLabel.userId">{{filterLabel.userId}}<i class="fa fa-times" (click)="detailDelFilterClick('userId')"></i></span>
+      <span *ngIf="filterLabel.earningStatus">{{filterLabel.earningStatus}}<i class="fa fa-times" (click)="detailDelFilterClick('earningStatus')"></i></span>
+      <span *ngIf="filterLabel.startDate">{{filterLabel.startDate}}<i class="fa fa-times" (click)="detailDelFilterClick('startDate')"></i></span>
+      <span *ngIf="filterLabel.endDate">{{filterLabel.endDate}}<i class="fa fa-times" (click)="detailDelFilterClick('endDate')"></i></span>
     </div>
     <div class="weui-cells">
       <div class="weui-cell" style="background-color: #F2F1F0;">
@@ -62,7 +64,7 @@
           168单
         </div>
       </div>
-      <div class="weui-cell" [routerLink]="['/mine/team/personal']">
+      <div class="weui-cell" [routerLink]="['/mine/team/personal', {id: 2}]">
         <div class="weui-cell__bd">
           <p>梳理名</p>
           <p style="font-size: 1.2rem;color: #888888;">
@@ -112,17 +114,12 @@
               按状态筛选
             </div>
             <div class="weui-flex">
-              <div class="weui-flex__item">
-                <button class="weui-btn weui-btn_primary">全部</button>
-              </div>
-              <div class="weui-flex__item">
-                <button class="weui-btn weui-btn_default">已入账</button>
-              </div>
-              <div class="weui-flex__item">
-                <button class="weui-btn weui-btn_default">入账中</button>
-              </div>
-              <div class="weui-flex__item">
-                <button class="weui-btn weui-btn_default">入账失效</button>
+              <div class="weui-flex__item" *ngFor="let item of filterStatus; let i = index">
+                <button class="weui-btn"
+                        [ngClass]="{'weui-btn_primary': item.actives, 'weui-btn_default': !item.actives}"
+                        [ngStyle]="{'color': item.actives?'white':''}"
+                        (click)="detailFilterStatusClick(item)"
+                >{{item.label}}</button>
               </div>
             </div>
           </div>

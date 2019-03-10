@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {DialogComponent, DialogConfig, SkinType, ToastComponent} from 'ngx-weui';
-import {WjDialogPay} from '../../common/components/wj-dialog/wj-dialog.component';
+import {DialogComponent, DialogConfig, MaskComponent, SkinType, ToastComponent, ToastService} from 'ngx-weui';
+import {ClientService} from '../../common/services/client.service';
 
 @Component({
   selector: 'app-client-add',
@@ -10,24 +10,25 @@ import {WjDialogPay} from '../../common/components/wj-dialog/wj-dialog.component
   encapsulation: ViewEncapsulation.None
 })
 export class ClientAddComponent implements OnInit {
-  // add dialog
-  public addDialogShow = true;
-  public addDialogConfig = new WjDialogPay(true, '弹窗标题', true, true, );
-  public inputRes: any = {
-    name: ''
+  // data
+  public addClient: any = {
+    name: null
   };
-  // toast
-  @ViewChild('success') successToast: ToastComponent;
-  // Dialog
-  @ViewChild('iosDialog') iosDialog: DialogComponent;
-  public configDialog: DialogConfig = {};
-  // add
-  public addRes: any = {
+  public addAddressRes: any = {
     name: null,
     phone: null,
     address: null,
-    description: null
   };
+  // toast
+  @ViewChild('addRemindToast') addRemindToast: ToastComponent;
+  @ViewChild('addClientToast') addClientToast: ToastComponent;
+  @ViewChild('loading') loadingToast: ToastComponent;
+  public clientMsg: string;
+  // mask
+  @ViewChild('clientAddMask') clientAddMask: MaskComponent;
+  // Dialog
+  @ViewChild('iosDialog') iosDialog: DialogComponent;
+  public configDialog: DialogConfig = {};
   // header
   public headerOption: HeaderContent = {
     title: '新增客户收货地址',
@@ -39,7 +40,10 @@ export class ClientAddComponent implements OnInit {
       color: '#86B876'
     }
   };
-  constructor() { }
+  constructor(
+    private clientSrv: ClientService,
+    private srv: ToastService
+  ) { }
 
   ngOnInit() {
   }
@@ -62,8 +66,43 @@ export class ClientAddComponent implements OnInit {
     }, 10);
     return false;
   }
-  public onDialogPayClick(event): void {
-    this.addDialogShow = event.show;
+  public saveAddClient (): void {
+    if (!this.addClient.name) {
+      this.onShow('addRemind');
+      return;
+    }
+    this.srv.loading();
+    this.clientSrv.clientAdd(this.addClient).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.srv.hide();
+          this.clientMsg = val.message;
+          this.onShow('addClient');
+        }
+      }
+    );
   }
-  public saveAddClient() {}
+  public addAddressClick() {
+    if (!this.addClient.name) {
+      this.onShow('addRemind');
+      return;
+    }
+    this.clientAddMask.show();
+  }
+  public saveAddressClick() {
+    this.addAddressRes.contactsId = '5';
+    this.srv.loading('添加中...');
+    this.clientSrv.clientAddAddress(this.addAddressRes).subscribe(
+      (value) => {
+        if (value.status === 200) {
+          // this.srv.hide();
+          this.clientMsg = value.message;
+          this.onShow('addClient');
+        }
+      }
+    );
+  }
+  public onShow(type: string) {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
+  }
 }

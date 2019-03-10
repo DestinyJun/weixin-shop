@@ -40,7 +40,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   public codeBtnClick() {
     this.registeredService.verifyPhone(this.submitPhone).subscribe(
       (val) => {
-         if (val.status == 200) {
+         if (val.status === 200) {
            console.log(val);
          }
       }
@@ -67,15 +67,17 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     if (event.password === 'destroy') {
       return;
     }
+    this.router.navigate(['/registered/success']);
     if (event.password === '123456') {
-      this.router.navigate(['/registered/success']);
+
     }
   }
   public onsubmit(): void {
+    this.dialogPayShow = true;
     this.registeredService.verifyCode(this.submitPhone).subscribe(
       (val) => {
         console.log(val);
-        if (val.status == 200) {
+        if (val.status === 200) {
           this.dialogPayShow = true;
         } else {
           this.codeError = true;

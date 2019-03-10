@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
+import {MineTeamService} from '../../../common/services/mine-team.service';
 
 @Component({
   selector: 'app-team-bill',
@@ -18,9 +19,12 @@ export class TeamBillComponent implements OnInit {
       icon: ''
     }
   };
-  constructor() { }
+  constructor(
+    private mineTeamSrv: MineTeamService,
+  ) { }
 
   ngOnInit() {
+
   }
 
 }
