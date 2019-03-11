@@ -34,41 +34,44 @@
   </div>
   <div class="client-add-tab">
     <weui-navbar>
-      <weui-tab heading="地址" (select)="onSelect()">
+      <weui-tab heading="地址" (select)="clientTabSelect($event)" style="height: 100%;">
         <article class="weui-article">
-          <h3 style="text-align: center;color: #B4B4B4;">暂无收货人信息</h3>
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <p>收货人：王明</p>
-              <p>联系电话：18788888888</p>
-              <p>收获地址：贵州省贵阳市花果园</p>
-            </div>
-            <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前收货人信息')">
-              <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
-            </div>
+          <div class="client-tab-scroll">
+            <weui-infiniteloader (loadmore)="clientAddLoadMore($event)" [config]="clientAddloaderConfig">
+              <h3 *ngIf="clientAddressList?.length === 0" style="text-align: center;color: red;margin-top: 30%">暂无收货人信息</h3>
+              <div class="weui-cell" *ngFor="let item of clientAddressList" (click)="clientUpdateClick(item)">
+                <div class="weui-cell__bd">
+                  <p>收<span>货</span>人：{{item?.name}}</p>
+                  <p>联系电话：{{item?.phone}}</p>
+                  <p>收获地址：{{item?.address}}</p>
+                </div>
+                <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前收货地址？', item, $event)">
+                  <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
+                </div>
+              </div>
+            </weui-infiniteloader>
           </div>
         </article>
       </weui-tab>
-      <weui-tab heading="发票" (select)="onSelect()">
+      <weui-tab heading="发票" (select)="clientTabSelect($event)" style="height: 100%;">
         <article class="weui-article">
-          <h3 style="text-align: center;color: #B4B4B4;">暂无收货人信息</h3>
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <p><span>发票抬头：</span><span>贵州四季常青药业</span></p>
-              <p><span>税号：</span><span>54564564564564654</span></p>
-            </div>
-            <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前发票信息')">
-              <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
-            </div>
+          <div class="client-tab-scroll">
+            <weui-infiniteloader (loadmore)="clientAddLoadMore($event)" [config]="clientAddloaderConfig">
+              <h3 *ngIf="clientInvoiceList?.length === 0" style="text-align: center;color: red;margin-top: 30%">当前客户暂无发票信息</h3>
+              <div class="weui-cell" *ngFor="let item of clientInvoiceList" (click)="clientUpdateClick(item)">
+                <div class="weui-cell__bd">
+                  <p>发票抬头：{{item?.title}}</p>
+                  <p>税<span>号</span>：{{item?.number}}</p>
+                </div>
+                <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前发票？', item, $event)">
+                  <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
+                </div>
+              </div>
+            </weui-infiniteloader>
           </div>
         </article>
       </weui-tab>
     </weui-navbar>
-  </div>
-  <div class="client-add-userinfo" (click)="addAddressClick()">
-    <div class="weui-footer weui-footer_fixed-bottom">
-      <button class="weui-btn weui-btn_primary" weui-button>新增客户收获地址</button>
-    </div>
   </div>
   <div class="client-add-toast">
     <weui-toast #addRemindToast [type]="'success'" [text]="'请先填写客户姓名'" [icon]="''" [time]="2000"></weui-toast>
@@ -78,11 +81,11 @@
     <weui-dialog #iosDialog [config]="configDialog"></weui-dialog>
   </div>
   <div class="client-add-address">
-    <weui-mask #clientAddMask>
+    <weui-mask #clientAddMask [backdrop]="false">
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd" style="text-align: center">
-            <span style="vertical-align: middle;color: #000;">新增收货人地址</span>
+            <span style="vertical-align: middle;color: #000;">{{clientMaskInfo.title}}</span>
           </div>
           <div class="weui-cell__ft" (click)="this.clientAddMask.hide()">
             <i class="fa fa-times" aria-hidden="true"></i>
@@ -108,5 +111,59 @@
         </div>
       </div>
     </weui-mask>
+  </div>
+  <div class="client-add-individual" *ngIf="clientIndividualShow">
+    <div class="weui-cells weui-cells_checkbox">
+      <div class="weui-cell">
+        <div class="weui-cell__bd" style="text-align: center">
+          <span style="vertical-align: middle;color: #000;">{{clientMaskInfo.title}}</span>
+        </div>
+        <div class="weui-cell__ft" (click)="clientIndividualShow=false">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="weui-cell">
+        <label class="weui-cell__hd weui-check__label" for="s12" style="margin-right: 20px">
+          <input type="radio" class="weui-check" name="checkbox" id="s12" value="individual" [(ngModel)]="clientAddRadioRes.invoiceType">
+          <i class="weui-icon-checked"></i>
+          <span>个人</span>
+        </label>
+        <label class="weui-cell__bd weui-check__label" for="s13">
+          <input type="radio" class="weui-check" name="checkbox" id="s13" value="company" [(ngModel)]="clientAddRadioRes.invoiceType">
+          <i class="weui-icon-checked"></i>
+          <span>公司</span>
+        </label>
+      </div>
+      <div class="weui-cell personal-input" *ngIf="clientAddRadioRes.invoiceType === 'individual'">
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请填写发票抬头" [(ngModel)]="clientAddRadioRes.title" name="title">
+        </div>
+      </div>
+      <div class="company-input" *ngIf="clientAddRadioRes.invoiceType === 'company'">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请填写发票抬头" [(ngModel)]="clientAddRadioRes.title" name="title">
+          </div>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请填写纳税人识别号" [(ngModel)]="clientAddRadioRes.number" name="number">
+          </div>
+        </div>
+      </div>
+      <div class="weui-cell_btn">
+        <button
+          class="weui-btn"
+          [disabled]="!clientAddRadioRes.title"
+          (click)="saveAddressClick()"
+          [ngClass]="{'weui-btn_primary': clientAddRadioRes.title || clientAddRadioRes.number}"
+        >保存</button>
+      </div>
+    </div>
+  </div>
+  <div class="client-add-button" (click)="addAddressClick()">
+    <div class="weui-footer weui-footer_fixed-bottom">
+      <button class="weui-btn weui-btn_primary" weui-button>{{addButton === 'address'?'新增客户收获地址': '新增客户发票信息'}}</button>
+    </div>
   </div>
 </div>

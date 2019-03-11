@@ -2,6 +2,7 @@
   height: 100vh;
   background-color: #F1F1F1;
   position: relative;
+  overflow: hidden;
   .client-add-tab{
     width: 100%;
     position: absolute;
@@ -10,23 +11,39 @@
     bottom: 46px;
     background-color: #FFFFFF;
     .weui-article{
-      p{
-        margin: 0;
-        font-size: 1.2rem;
-      }
-      .weui-cell{
-        box-shadow: 0 0 10px 2px rgb(234,234,234);
-        margin-top: 10px;
-        .weui-cell__ft{
-          .weui-badge{
-            background-color: transparent;
-            color: #999999;
+      padding: 0;
+      height: 100%;
+      position: relative;
+      .client-tab-scroll{
+        position: absolute;
+        top: 15px;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        overflow: hidden;
+        .weui-infiniteloader__content{
+          padding-left: 15px;
+          padding-bottom: 15px;
+          padding-right: 15px;
+          .weui-cell{
+            box-shadow: 0 0 10px 2px rgb(234,234,234);
+            margin-top: 10px;
+            .weui-cell__ft{
+              .weui-badge{
+                background-color: transparent;
+                color: #999999;
+              }
+            }
+          }
+          p{
+            margin: 0;
+            font-size: 1.2rem;
           }
         }
       }
     }
   }
-  .client-add-userinfo{
+  .client-add-button{
     .weui-footer_fixed-bottom{
       bottom: 0;
       .weui-btn{
@@ -57,7 +74,7 @@
           margin-left: 10px;
           margin-right: 10px;
           border-radius: 5px;
-          position: fixed;
+          position: absolute;
           top: 50%;
           transform: translateY(-50%);
           left: 0;
@@ -75,24 +92,45 @@
       }
     }
   }
-}
-.weui-toast {
-  height: 14vh;
-  line-height: 7vh;
-  font-size: 1.5rem;
-  min-height: 0;
-  width: 80vw;
-  margin-left: -40vw;
-  border-radius: 10px;
-  top: 50%;
-  transform: translateY(-70%);
-  .weui-icon_toast{
-    margin: 0;
+  .client-add-individual{
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    transition-duration: 0.3s;
+    .weui-cells{
+      margin-top: 0;
+      margin-left: 10px;
+      margin-right: 10px;
+      border-radius: 5px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      min-height: 230px;
+      left: 0;
+      right: 0;
+      font-size: 1.3rem;
+      color: #A1A1A1;
+      padding-bottom: 15px;
+      z-index: 1002;
+      .weui-cell_btn{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        z-index: 1003;
+        padding: 0 15px;
+      }
+      .weui-cell{
+        .weui-input{
+          margin-top: 5px;
+          color: #757575;
+        }
+      }
+    }
   }
-  .weui-toast__content{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-  }
 }
+

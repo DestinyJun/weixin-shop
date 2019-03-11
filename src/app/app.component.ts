@@ -10,12 +10,20 @@ import {GlobalService} from './common/services/global.service';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
+  // toast
+  @ViewChild('statusRemindToast') statusRemindToast: ToastComponent;
   title = 'weixin-shop';
+  msg: string;
   constructor(
     private router: Router,
-    private globalService: GlobalService,
-    private srv: ToastService
+    private globalSrv: GlobalService,
+    private toastSrv: ToastService
   ) {
+    // this.toastSrv.loading('删除中...');
+    // this.toastSrv.hide();
+
+    // this.msg = val.message;
+    // this.onShow('statusRemind');
     console.log(environment.env);
     router.events.subscribe(
       (event) => {
@@ -24,27 +32,14 @@ export class AppComponent {
         }
       }
     );
-    globalService.remindEvent.subscribe(
+    globalSrv.remindEvent.subscribe(
       (val: any) => {
+        this.toastSrv.loading(val.msg);
         console.log(val);
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        console.log('完成');
       }
     );
   }
-  onShowBySrv(type: 'success' | 'loading', msg) {
-     if (type === 'loading') {
-       this.srv.loading(null, 0);
-       return;
-     }
-    this.srv.success(msg);
-  }
-  onHide() {
-    console.log('11');
-    this.srv.hide();
+  public appRemindToast(type: string) {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
   }
 }

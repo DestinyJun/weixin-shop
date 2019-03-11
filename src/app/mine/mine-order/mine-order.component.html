@@ -5,7 +5,7 @@
   <div class="mine-order-select">
     <div class="weui-cells">
       <div class="weui-flex">
-        <div class="weui-flex__item" *ngFor="let item of orderList">
+        <div class="weui-flex__item" *ngFor="let item of mOrderStatusList">
           <div class="placeholder">
             <p style="font-size: 1.5rem">{{item.name}}</p>
             <p style="font-size: 1.2rem;color: #BEBEBE;">{{item.amount}}</p>
@@ -15,11 +15,11 @@
     </div>
   </div>
   <div class="mine-order-list" [routerLink]="['/mine/order/detail']">
-    <weui-infiniteloader #comp [config]="infiniteloaderConfig">
-      <div class="weui-cells__title">
+    <weui-infiniteloader [config]="mOrderLoaderConfig">
+      <div class="weui-cells__title" *ngIf="mOrderList.length !== 0">
         <span>今日</span>
       </div>
-      <div class="weui-panel weui-panel_access">
+      <div class="weui-panel weui-panel_access" *ngFor="let item of mOrderList">
         <div class="weui-panel__hd">
           <div class="weui-cell">
             <div class="weui-cell__bd" style="vertical-align: middle">
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>
-      <div class="weui-panel weui-panel_access">
+      <!--<div class="weui-panel weui-panel_access">
         <div class="weui-panel__hd">
           <div class="weui-cell">
             <div class="weui-cell__bd" style="vertical-align: middle">
@@ -274,10 +274,10 @@
             </p>
           </div>
         </div>
-      </div>
+      </div>-->
     </weui-infiniteloader>
   </div>
-  <div class="mine-oeder-none" *ngIf="false">
+  <div class="mine-oeder-none" style="color: red;text-align: center" *ngIf="mOrderList.length === 0">
     <p>暂无订单记录</p>
   </div>
 </div>
