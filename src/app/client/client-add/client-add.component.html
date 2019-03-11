@@ -7,10 +7,30 @@
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label" for="cliuser">客户</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" id="cliuser" type="text" name="cliuser" placeholder="请输入姓名" [(ngModel)]="addClient.name">
+          <input class="weui-input" id="cliuser" type="text" name="cliuser" placeholder="请输入姓名" (input)="clinetNameChange($event)">
         </div>
       </div>
     </div>
+    <!--<div class="weui-panel" style="margin-top: 0px;" *ngIf="searchItems | async">
+      <div class="weui-panel__bd" *ngIf="searchItems | async; let searchItems; else loading">
+        <div class="weui-cell weui-cell_access" *ngFor="let item of searchItems">
+          <div class="weui-cell__bd weui-cell_primary">
+            <p>{{item}}</p>
+          </div>
+        </div>
+      </div>
+      <ng-template #loading>
+        <div class="weui-panel__bd">
+          <div class="weui-media-box weui-media-box_text">Loading...</div>
+        </div>
+      </ng-template>
+      &lt;!&ndash;  <a class="weui-panel__ft" href="javascript:void(0);">
+          <div class="weui-cell weui-cell_access weui-cell_link">
+            <div class="weui-cell__bd">More</div>
+            <div class="weui-cell__ft"></div>
+          </div>
+        </a>&ndash;&gt;
+    </div>-->
   </div>
   <div class="client-add-tab">
     <weui-navbar>

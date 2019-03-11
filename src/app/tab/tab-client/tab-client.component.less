@@ -4,6 +4,7 @@
   height: 100%;
   .tab-client-search{
     margin-top:15px;
+    position: relative;
     .weui-search-bar{
       background: #FFFFFF;
       .weui-search-bar__form{
@@ -11,6 +12,9 @@
         line-height: 40px;
         .weui-search-bar__label{}
       }
+    }
+    .weui-panel{
+      z-index: 999;
     }
   }
   .tab-client-alphabet{
@@ -62,20 +66,52 @@
       }
     }
   }
-  .tab-client-mask{
+  .tab-client-address{
     .weui-mask{
-      .weui-mask__content{
-        .weui-cells{
-          margin-top: 0;
-          width: 100vw;
-          height: 50vh;
-          position: fixed;
+      .client-address-content{
+        width: 100vw;
+        height: 50vh;
+        position: fixed;
+        left: 0;
+        bottom : 0;
+        color: #A1A1A1;
+        font-size: 1.3rem;
+        background: white;
+        .scroll{
+          position: absolute;
+          top:45px;
           left: 0;
-          bottom : 0;
-          color: #A1A1A1;
-          font-size: 1.3rem;
-          z-index: 900;
+          right: 0;
+          bottom: 0;
+          overflow: auto;
+          padding: 0 15px;
+          font-size: 1.5rem;
+          padding-bottom: 50px;
+          .scroll-content{
+            margin-top: 20px;
+          }
+          .scroll-remind{
+            position: absolute;
+            top:30%;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            color: red;
+            font-size: 1.5rem;
+            text-align: center;
+          }
         }
+      }
+      .client-update-content{
+        position: fixed;
+        border-radius: 5px;
+        top:50%;
+        transform: translateY(-50%);
+        left: 0;
+        right: 0;
+        color: #A1A1A1;
+        font-size: 1.3rem;
+        padding: 0 15px;
       }
     }
   }

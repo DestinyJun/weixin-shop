@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {DialogComponent, DialogConfig, MaskComponent, SkinType, ToastComponent, ToastService} from 'ngx-weui';
 import {ClientService} from '../../common/services/client.service';
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-client-add',
@@ -48,6 +49,26 @@ export class ClientAddComponent implements OnInit {
   ngOnInit() {
   }
   public onSelect() {}
+  // client Name
+  public clinetNameChange (event): void {
+    this.addClient.name = event.data;
+    /*this.clientSrv.clientSearchName(this.addClient).subscribe(
+      (val) => {
+        console.log(this.addClient.name);
+        console.log(val);
+      },
+      error1 => console.log(error1),
+      () => console.log('完成')
+    );*/
+    this.clientSrv.clientSearchName(this.addClient)
+      .pipe(
+        map(res => res.json())
+      ).subscribe(
+      (val) => {
+        console.log(val);
+      }
+    );
+  }
   public dialogDelShow(type: SkinType, msg: string) {
     console.log(type);
     this.configDialog = Object.assign({}, <DialogConfig>{

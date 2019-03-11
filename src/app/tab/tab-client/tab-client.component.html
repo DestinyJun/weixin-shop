@@ -39,62 +39,67 @@
     </ul>
   </div>
   <div class="tab-client-scroll">
-     <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
+     <weui-infiniteloader (loadmore)="clientLoadMore($event)" [config]="clientloaderConfig">
        <div class="client-list" *ngFor="let item of clientList">
          <div class="weui-cells__title" [id]="item?.firstPY">{{item?.firstPY}}</div>
-         <!--<div class="weui-cells">
-           <div class="weui-cell" *ngFor="let list of item.value" (click)="actionSheetShow('ios', list)">
-             <div class="weui-cell__bd">
-               <p><span>{{list.name}}</span><span>{{list.phone}}</span></p>
-               <p style="font-size: 1.2rem;color: #888888;">{{list.address}}</p>
-             </div>
-             <div class="weui-cell__ft">
-               <button *ngIf="list.editState" class="weui-btn weui-btn_warn" (click)="list.editState=false">删除</button>
-               <button *ngIf="!list.editState" class="weui-btn weui-btn_default" style="color: #7FB56E;" (click)="list.editState=true">编辑</button>
-             </div>
-           </div>
-         </div>-->
          <div class="weui-cells">
            <div class="weui-cell" (touchmove)="onTouchMove($event, item)" (touchstart)="onTouchstart($event)">
-             <div class="weui-cell__bd" (click)="clientNameClick(item)">
+             <div class="weui-cell__bd" (click)="clientNameClick(item, 'address')">
                <p><span>{{item.name}}</span></p>
              </div>
              <div class="weui-cell__ft">
                <button *ngIf="item.editState" class="weui-btn weui-btn_warn" (click)="clientDeleteClick(item.id)">删除</button>
-               <button *ngIf="!item.editState" class="weui-btn weui-btn_default" style="color: #7FB56E;">编辑</button>
+               <button *ngIf="!item.editState" class="weui-btn weui-btn_default" style="color: #7FB56E;" (click)="clientNameClick(item , 'update')">编辑</button>
              </div>
            </div>
          </div>
        </div>
      </weui-infiniteloader>
   </div>
-  <div class="tab-client-mask">
+  <div class="tab-client-address">
     <weui-mask #tabClientMask>
-      <div class="weui-cells">
-        <div class="weui-cell">
-          <div class="weui-cell__bd" style="text-align: center">
-            <span style="vertical-align: middle;color: #000;">{{clientName}}</span>
-          </div>
-          <div class="weui-cell__ft" (click)="this.tabClientMask.hide()">
-            <i class="fa fa-times" aria-hidden="true"></i>
+      <div class="client-address-content" [hidden]="!clientMaskShow">
+        <div class="weui-cells" style="margin-top: 0">
+          <div class="weui-cell">
+            <div class="weui-cell__bd" style="text-align: center">
+              <span style="color: #000;">{{clientName}}</span>
+            </div>
+            <div class="weui-cell__ft" (click)="this.tabClientMask.hide()">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
           </div>
         </div>
-        <div style=" width: 100%;
-    position: absolute;
-    top:45px;
-    left: 0;
-    bottom: 0;
-">
-          <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="addressLoaderConfig">
-            <div class="weui-cell" *ngFor="let item of clientAddressList">
-              <div class="weui-cell__bd">
-                <p>暂无收获信息</p>
-                <p>收货人：{{item?.name}}</p>
-                <p>联系电话：{{item?.phone}}</p>
-                <p>收获地址：{{item.address}}</p>
-              </div>
+        <div class="scroll">
+          <div class="scroll-remind" *ngIf="clientAddressList?.length === 0">
+            <p>该客户暂无收货地址</p>
+          </div>
+          <div class="scroll-content" *ngFor="let item of clientAddressList">
+            <p>收货人：{{item?.name}}</p>
+            <p><span>电</span><span style="margin-left: 16px;">话</span>：{{item?.phone}}</p>
+            <p><span>地</span><span style="margin-left: 16px;">址</span>：{{item?.address}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="client-update-content" [hidden]="clientMaskShow">
+        <div class="weui-cells" style="margin-top: 0;border-radius: 5px">
+          <div class="weui-cell">
+            <div class="weui-cell__bd" style="text-align: center">
+              <span style="color: #000;">客户信息修改</span>
             </div>
-          </weui-infiniteloader>
+            <div class="weui-cell__ft" (click)="this.tabClientMask.hide()">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <input class="weui-input" type="text" placeholder="请输入新名称" [(ngModel)]="clientUpdateName.name">
+            </div>
+          </div>
+          <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <button class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled': !clientUpdateName.name}" [disabled]="!clientUpdateName.name">保存</button>
+            </div>
+          </div>
         </div>
       </div>
     </weui-mask>

@@ -23,4 +23,7 @@ export class TabService {
   public tabGetClientAdrs(params): Observable<any> {
     return this.http.post(`/address/ListFindById`, params);
   }
+  public tabUpdateClientName(params): Observable<any> {
+    return this.http.post(`/contacts/update`, params);
+  }
 }

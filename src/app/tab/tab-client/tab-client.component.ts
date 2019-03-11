@@ -43,32 +43,19 @@ export class TabClientComponent implements OnInit {
     }
   };
   // client
-  public clientList = [
-    /*{
-      className: '最近7天交易客户',
-      value: [
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
-      ]
-    },
-    {
-      className: 'A',
-      value: [
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false},
-        {name: '王大锤', phone: 13888888888, address: '贵阳市南明区花果园', editState: false}
-      ]
-    },*/
-  ];
+  public clientList = [];
   public clientAddressList: any[];
   public clientName: string;
+  public clientMaskShow: boolean;
+  public clientUpdateName: any = {
+    name: null,
+    id: null
+  };
   // search
   public searchItems: Observable<string[]>;
   public value: string;
   // scroll
-  public infiniteloaderConfig: InfiniteLoaderConfig = {
-    height: '100%'
-  };
-  public addressLoaderConfig: InfiniteLoaderConfig = {
+  public clientloaderConfig: InfiniteLoaderConfig = {
     height: '100%'
   };
   constructor(
@@ -79,29 +66,34 @@ export class TabClientComponent implements OnInit {
   }
 
   ngOnInit() {
+   this.tabClientInitialize();
+  }
+  // initialize
+  public tabClientInitialize (): void {
     this.tabService.tabGetClientList().subscribe(
-        (value) => {
-          if (value['status'] === 200) {
-            value['datas'].map((val) => {
-              val.editState = false;
-            });
-            this.clientList = value['datas'];
-          } else {
-            console.log(value['status']);
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          console.log('完成');
+      (value) => {
+        if (value['status'] === 200) {
+          value['datas'].map((val) => {
+            val.editState = false;
+          });
+          this.clientList = value['datas'];
+        } else {
+          console.log(value['status']);
         }
-      );
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        console.log('完成');
+      }
+    );
   }
-
-  public onLoadMore(comp: InfiniteLoaderComponent): void {
-    comp.setFinished();
+  // header
+  public onHeaderRightClick(): void {
+    this.router.navigate(['/client/add']);
   }
+  // search
   public onBarSearch(term: string) {
     this.value = term;
     // if (term) this.items = this.tbService.search(term);
@@ -115,10 +107,11 @@ export class TabClientComponent implements OnInit {
   public onBarSubmit(value: string): void {
     console.log('onSubmit', value);
   }
-  public onHeaderRightClick(): void {
-    this.router.navigate(['/client/add']);
+  // scroll
+  public clientLoadMore(comp: InfiniteLoaderComponent): void {
+    comp.setFinished();
   }
-  // swipt
+  // slide
   public onTouchstart (event): void {
     this.touchStartX = event.touches[0].pageX;
     this.touchStartPageY = event.touches[0].pageY;
@@ -147,18 +140,33 @@ export class TabClientComponent implements OnInit {
   public clientDeleteClick (id): void {
     this.dialogDelShow('ios', {id: id, msg: '你确定删除当前客户吗？'});
   }
-  public clientNameClick(item) {
-    this.clientName = item.name;
+  public clientNameClick(item, type: 'address' | 'update') {
+    console.log(item.id);
+    this.clientUpdateName.id = item.id;
     this.tabClientMask.show();
-    this.tabService.tabGetClientAdrs({contactsId: item.id}).subscribe(
+    if (type === 'address') {
+      this.clientMaskShow = true;
+      this.clientName = item.name;
+      this.tabService.tabGetClientAdrs({contactsId: item.id}).subscribe(
+        (val) => {
+          if (val.status === 200) {
+            this.clientAddressList = val.datas;
+          }
+        }
+      );
+      return;
+    }
+    this.clientMaskShow = false;
+    this.tabService.tabUpdateClientName(this.clientUpdateName).subscribe(
       (val) => {
         if (val.status === 200) {
-          this.clientAddressList = val.datas;
-          console.log(val.datas.length);
+          console.log(val);
+          this.tabClientInitialize();
         }
       }
     );
   }
+  // remind
   public dialogDelShow(type: SkinType, item: any) {
     console.log(item);
     this.configDelDialog = Object.assign({}, <DialogConfig>{
@@ -175,6 +183,7 @@ export class TabClientComponent implements OnInit {
             (value) => {},
             error => console.log(error),
             () => {
+              this.tabClientInitialize();
               this.globalService.remindEvent.next({msg: '删除成功', type: 'success'});
             }
           );
