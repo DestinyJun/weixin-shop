@@ -21,7 +21,7 @@ export class TabHomeComponent implements OnInit {
     .fill(0)
     .map((v: any, i: number) => i);*/
   public tradeStatistics: any;
-  public teamTop: any;
+  public teamTop: any = [];
 
   constructor(
     private tabSrc: TabService
@@ -40,6 +40,7 @@ export class TabHomeComponent implements OnInit {
         if (val.status === 200) {
           console.log(val);
           this.teamTop = val.data;
+          console.log(this.teamTop[0]);
         }
       }
     );

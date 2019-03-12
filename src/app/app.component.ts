@@ -34,7 +34,7 @@ export class AppComponent {
     );
     globalSrv.remindEvent.subscribe(
       (val: any) => {
-        this.toastSrv.loading(val.msg);
+        // this.toastSrv.loading(val.msg);
         console.log(val);
       }
     );

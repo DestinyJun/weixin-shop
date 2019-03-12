@@ -66,19 +66,12 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   public referrerClick(): void {
     this.registeredService.verifyReferrer(this.referrerNumber).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           this.router.navigate(['/registered/submit', {referrerNumber: this.referrerNumber}]);
           return;
         }
         this.dialogShow('ios');
         this.referrerNumber.workId = '';
-      },
-      (error) => {
-        // console.log(error);
-      },
-      () => {
-        // console.log('完成');
       }
     );
   }

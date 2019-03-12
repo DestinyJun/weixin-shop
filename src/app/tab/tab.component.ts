@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Location} from '@angular/common';
-import {NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
+import {HeaderContent} from '../common/components/header/header.model';
 @Component({
   selector: 'app-tab',
   templateUrl: './tab.component.html',
@@ -9,6 +10,17 @@ import {Title} from '@angular/platform-browser';
 })
 export class TabComponent implements OnInit {
   public tabActive: string;
+  public clientHeader: HeaderContent = {
+    title: '客户',
+    leftContent: {
+      icon: ''
+    },
+    rightContent: {
+      title: '新增',
+      color: '#86B876'
+    }
+  };
+  public rouStatus: string = null;
   constructor(
     private router: Router,
     private location: Location,
@@ -17,7 +29,8 @@ export class TabComponent implements OnInit {
      router.events.subscribe(
        (event) => {
          if (event instanceof NavigationEnd) {
-           this.tabActive = event.urlAfterRedirects.split('/')[2];
+           this.rouStatus = event.urlAfterRedirects.slice(-5);
+           this.tabActive = event.urlAfterRedirects.slice(5, 11);
          }
        }
      );
@@ -25,6 +38,29 @@ export class TabComponent implements OnInit {
 
   ngOnInit() {
     this.titleServices.setTitle('首页');
+    if (this.rouStatus === 'order') {
+      this.clientHeader = {
+        title: '请选择客户收货地址',
+        leftContent: {
+          icon: 'fa fa-chevron-left'
+        },
+        rightContent: {
+          title: '新增',
+          color: '#86B876'
+        }
+      };
+    } else {
+      this.clientHeader = {
+        title: '客户',
+        leftContent: {
+          icon: ''
+        },
+        rightContent: {
+          title: '新增',
+          color: '#86B876'
+        }
+      };
+    }
   }
   public onSelect(name): void {
     this.router.navigate([`/tab/${name}`]);

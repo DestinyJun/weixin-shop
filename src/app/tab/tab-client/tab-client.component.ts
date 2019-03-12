@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {Observable, timer} from 'rxjs';
 import {
@@ -10,7 +10,7 @@ import {
   InfiniteLoaderConfig, MaskComponent,
   SkinType
 } from 'ngx-weui';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {TabService} from '../../common/services/tab.service';
 import {GlobalService} from '../../common/services/global.service';
 
@@ -32,16 +32,9 @@ export class TabClientComponent implements OnInit {
   // mask
   @ViewChild('tabClientMask') tabClientMask: MaskComponent;
   // header
-  public headerOption: HeaderContent = {
-    title: '客户',
-    leftContent: {
-      icon: ''
-    },
-    rightContent: {
-      title: '新增',
-      color: '#86B876'
-    }
-  };
+  @Input() public headerOption: HeaderContent = {};
+  // router
+  @Input() public routerStatus: string = null;
   // client
   public clientList = [];
   public clientAddressList: any[];
@@ -110,6 +103,12 @@ export class TabClientComponent implements OnInit {
   // scroll
   public clientLoadMore(comp: InfiniteLoaderComponent): void {
     comp.setFinished();
+  }
+  public scrollAddressClick (item): void {
+    if (this.routerStatus === 'order') {
+      this.globalService.addressEvent = item;
+      window.history.back();
+    }
   }
   // slide
   public onTouchstart (event): void {

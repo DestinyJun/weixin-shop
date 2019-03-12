@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       headers: req.headers.set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MjM3MDQ3NH0.b83hp_etgFqvYCnmt0IL-Oyj1M-TUKAHXLzIjsuKH4gNsKBOrSkPrrh20-lqvvbxygSeYF8neXcmUBYZBLFsOQ')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MjQ2OTEwOX0.hNiLRRHFKtv_Hc0YBIY6BnR0p-CMTM3I8dyOzupDUj7EKdPCOqsjvrtTvFLP8euTwPq-d9zLgqZMHzwUREEMGQ')
     });
     return next.handle(clonedRequest).pipe(
       /*mergeMap((event: any) => {
@@ -31,35 +31,40 @@ export class AuthInterceptor implements HttpInterceptor {
         return Observable.create(observer => observer.next(event)); // 请求成功返回响应
       }),*/
       map((event: any, ) => {
+        // console.log(event);
         if (event.status === 200) {
-          if (event.body && event.body.status === 200) {
-            return event;
-          } else if (event.body && event.body.status === 403) {
-            console.log('未授权');
-          } else if (event.body && event.body.status === 40001) {
-            console.log('参数错误或者为空');
-          } else if (event.body && event.body.status === 40002) {
-            console.log('操作失败');
-          } else if (event.body && event.body.status === 40003) {
-            console.log('安全错误、必须先通过验证码验证');
-          } else if (event.body && event.body.status === 40004) {
-            console.log('查询不到数据');
-          } else if (event.body && event.body.status === 40005 ) {
-            console.log('参数不符合规则');
-          } else if (event.body && event.body.status === 40006 ) {
-            console.log('验证码验证失败');
-          } else if (event.body && event.body.status === 40007 ) {
-            console.log('下单失败，请联系后台人员');
-          } else if (event.body && event.body.status === 40008 ) {
-            console.log('支付密码验证错误');
-          } else if (event.body && event.body.status === 40009 ) {
-            console.log('余额不足');
-          } else if (event.body && event.body.status === 40010 ) {
-            console.log('支付密码过时');
-          } else if (event.body && event.body.status === 40011 ) {
-            console.log('订单状错误');
-          }
+          return event;
+        } else {
+         console.log('找不到服务器');
         }
+        /* if (event.body && event.body.status === 200) {
+         return event;
+       } else if (event.body && event.body.status === 403) {
+         console.log('未授权');
+       } else if (event.body && event.body.status === 40001) {
+         console.log('参数错误或者为空');
+       } else if (event.body && event.body.status === 40002) {
+         console.log('操作失败');
+       } else if (event.body && event.body.status === 40003) {
+         console.log('安全错误、必须先通过验证码验证');
+       } else if (event.body && event.body.status === 40004) {
+         console.log('查询不到数据');
+         return event;
+       } else if (event.body && event.body.status === 40005 ) {
+         console.log('参数不符合规则');
+       } else if (event.body && event.body.status === 40006 ) {
+         console.log('验证码验证失败');
+       } else if (event.body && event.body.status === 40007 ) {
+         console.log('下单失败，请联系后台人员');
+       } else if (event.body && event.body.status === 40008 ) {
+         console.log('支付密码验证错误');
+       } else if (event.body && event.body.status === 40009 ) {
+         console.log('余额不足');
+       } else if (event.body && event.body.status === 40010 ) {
+         console.log('支付密码过时');
+       } else if (event.body && event.body.status === 40011 ) {
+         console.log('订单状错误');
+       }*/
       }),
       catchError((err: HttpErrorResponse) => {
         return Observable.create(observer => observer.next(err));

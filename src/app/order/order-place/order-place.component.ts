@@ -3,6 +3,7 @@ import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
 import {Router} from '@angular/router';
 import {OrderService} from '../../common/services/order.service';
+import {GlobalService} from '../../common/services/global.service';
 
 @Component({
   selector: 'app-order-place',
@@ -11,6 +12,7 @@ import {OrderService} from '../../common/services/order.service';
   encapsulation: ViewEncapsulation.None
 })
 export class OrderPlaceComponent implements OnInit {
+  public orderPlaceAddress: any = null;
   // toast
   @ViewChild('success') successToast: ToastComponent;
   // scroll
@@ -37,10 +39,12 @@ export class OrderPlaceComponent implements OnInit {
   ];*/
   constructor(
     private router: Router,
-    private orderSrv: OrderService
+    private orderSrv: OrderService,
+    private globalService: GlobalService
   ) { }
 
   ngOnInit() {
+    this.orderPlaceAddress = this.globalService.addressEvent;
     this.orderSrv.orderGetGoods({}).subscribe(
       (val) => {
         if (val.status === 200) {

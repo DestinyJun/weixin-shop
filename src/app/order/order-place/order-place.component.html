@@ -3,9 +3,9 @@
     <app-header [option]="headerOption"></app-header>
   </div>
   <div class="order-place-address">
-    <div class="weui-cells" [routerLink]="['./orclient']">
+    <div class="weui-cells" [routerLink]="['/tab/client', {status: 'order'}]">
       <div class="weui-cell">
-        <div class="weui-cell__bd">请选择一个收获地址</div>
+        <div class="weui-cell__bd">{{orderPlaceAddress?orderPlaceAddress.address:'请选择一个收获地址'}}</div>
       </div>
     </div>
   </div>
