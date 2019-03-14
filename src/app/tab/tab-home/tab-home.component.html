@@ -110,18 +110,18 @@
         <div class="weui-cell__ft">￥{{teamTop?teamTop[0]?.sumPaid: ''}}</div>
       </div>
     </div>
-    <div class="weui-scroll">
-      <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
-        <div class="weui-cells" style="margin-top: 0 ">
-          <div class="weui-cell" *ngFor="let item of teamTop?.slice(1); let i = index">
-            <div class="weui-cell__hd">NO.{{item?.Ranks}}</div>
-            <div class="weui-cell__bd">{{item?.nikeName}}</div>
-            <div class="weui-cell__ft">￥{{item?.sumPaid}}</div>
-          </div>
+  </div>
+  <div class="home-scroll">
+    <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
+      <div class="weui-cells" style="margin-top: 0 ">
+        <div class="weui-cell" *ngFor="let item of teamTop?.slice(1); let i = index">
+          <div class="weui-cell__hd">NO.{{item?.Ranks}}</div>
+          <div class="weui-cell__bd">{{item?.nikeName}}</div>
+          <div class="weui-cell__ft">￥{{item?.sumPaid}}</div>
         </div>
-        <weui-button *ngIf="restartBtn" (click)="restart()">重新开始</weui-button>
-      </weui-infiniteloader>
-    </div>
+      </div>
+      <weui-button *ngIf="restartBtn" (click)="restart()">重新开始</weui-button>
+    </weui-infiniteloader>
   </div>
 </div>
 

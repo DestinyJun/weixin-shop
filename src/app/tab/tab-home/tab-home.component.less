@@ -35,25 +35,24 @@
         background-color: #fff;
         width: 31.66666vw;
         .weui-flex{
-
           .weui-flex__item{
             .time{
               color: white;
-              font-size: 12px;
+              font-size: 1rem;
               text-align: center;
             }
             .amount{
               color: #AEAEAE;
-              font-size: 12px;
+              font-size: 0.8rem;
               text-align: center;
             }
             .placeholder{
               text-align: center;
-              font-size: 14px;
+              font-size: 1rem;
               font-weight: bold;
             }
             .placeholder.time{
-              font-size: 12px;
+              font-size: 0.7rem;
               color: #AEAEAE;
             }
           }
@@ -101,6 +100,7 @@
   .home-rank{
     margin-top: 10px;
     background-color: #fff;
+    position: relative;
     .weui-cells__title{
       height: 4vh;
       line-height: 4vh;
@@ -108,11 +108,12 @@
       margin-bottom: 0;
     }
     .title{
-      font-size: 1.5rem;
+      font-size: 1.1rem;
+      font-weight: bold;
       color: black;
     }
     .weui-mine{
-      font-size: 1.166rem;
+      font-size: 1rem;
       color: #7FB56E;
       .weui-cell{
         .weui-cell__hd{
@@ -123,23 +124,23 @@
         }
       }
     }
-    .weui-scroll{
-      background-color: #fff;
-      position: absolute;
-      top: 364px;
-      left: 0;
-      right: 0;
-      bottom: 5px;
-      .weui-infiniteloader__content{
-        .weui-cells{
-          font-size: 1.166rem;
-          .weui-cell{
-            .weui-cell__hd{
-              width: 60px;
-            }
-            .weui-cell__bd{
-              margin-left: 50px;
-            }
+  }
+  .home-scroll{
+    background-color: #fff;
+    position: absolute;
+    top: 372.8px;
+    left: 0;
+    right: 0;
+    bottom: 5px;
+    .weui-infiniteloader__content{
+      .weui-cells{
+        font-size: 1rem;
+        .weui-cell{
+          .weui-cell__hd{
+            width: 60px;
+          }
+          .weui-cell__bd{
+            margin-left: 50px;
           }
         }
       }

@@ -3,7 +3,7 @@
     <i [class]="option.leftContent.icon"></i>
     <span>{{option.leftContent.title}}</span>
   </span>
-  <span (click)="centerClick()">{{option.title}}</span>
+  <span class="header-title" (click)="centerClick()">{{option.title}}</span>
   <span *ngIf="rightShow" class="pull-right" [ngStyle]="{'color': this.option.rightContent.color}" (click)="rightClick()">
     <i [class]="option.rightContent.icon" aria-hidden="true"></i>
     <span>{{option.rightContent.title}}</span>

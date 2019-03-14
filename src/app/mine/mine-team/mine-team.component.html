@@ -3,14 +3,14 @@
     <app-header [option]="headerOption" (headerRightClick)="mineTeamInClient()"></app-header>
   </div>
   <div class="mine-team-earnings">
-    <p style="color: #EA5559;font-size: 2rem">{{mineTeamDate?.mainSum}}</p>
-    <p style="color: #6E6E6E;font-size: 1.3rem">团队总收益</p>
+    <p style="color: #EA5559;font-size: 1.5rem">{{mineTeamDate?.mainSum}}</p>
+    <p style="color: #6E6E6E;font-size: 1.1rem">团队总收益</p>
   </div>
   <div class="mine-team-tab">
     <weui-navbar>
       <weui-tab heading="月度" (select)="onSelect($event)" style="height: 100%">
         <article class="weui-article" style="height: 100%">
-          <div class="list" style="">
+          <div class="list">
             <div class="weui-cells">
               <div class="weui-cell">
                 <div class="weui-cell__bd" (click)="selectMonthClick()">
@@ -37,7 +37,7 @@
       </weui-tab>
       <weui-tab heading="年度" (select)="onSelect($event)" style="height: 100%">
         <article class="weui-article" style="height: 100%">
-          <div class="list" style="">
+          <div class="list">
             <div class="weui-cells">
               <div class="weui-cell">
                 <div class="weui-cell__bd" (click)="selectYearClick()">

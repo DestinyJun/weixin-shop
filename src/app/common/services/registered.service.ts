@@ -19,4 +19,7 @@ export class RegisteredService {
   public verifyCode(params): Observable<any> {
     return this.http.post(`/member/verifySMS`, params);
   }
+  public verifyPayCode(params): Observable<any> {
+    return this.http.post(`/member/setPayPwd`, params);
+  }
 }

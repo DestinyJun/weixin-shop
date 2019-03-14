@@ -1,15 +1,15 @@
-@import "../../../styles";
-.registered-referrer-box{
+.reg-referrer{
   height: 100vh;
   background: #F1F1F1;
   position: relative;
-  padding-top: 15px;
-  .registered-input{
+  overflow: hidden;
+  .reg-referrer-input{
+    margin-top: 15px;
     position: relative;
     .weui-input {
       height: 50px;
       background: white;
-      color: @weui-btn-color-info;
+      color: #17A2B8;
       text-indent: 15px;
     }
     ::placeholder{}
@@ -22,16 +22,13 @@
       font-min-size: 1.5rem;
     }
   }
-  .registered-footer{
+  .reg-referrer-footer{
     margin-top: 2vh;
     display: flex;
     justify-content: center;
     button{
       width: 90%;
     }
-  }
-  .registered-dialog .weui-dialog{
-    //background: red;
   }
 }
 

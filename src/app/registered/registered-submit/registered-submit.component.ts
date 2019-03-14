@@ -33,12 +33,12 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     private srv: DialogService,
     private toastService: ToastService,
     private router: Router,
-    private registeredService: RegisteredService
+    private regSrv: RegisteredService
   ) {}
 
   ngOnInit() {}
   public codeBtnClick() {
-    this.registeredService.verifyPhone(this.submitPhone).subscribe(
+    this.regSrv.verifyPhone(this.submitPhone).subscribe(
       (val) => {
          if (val.status === 200) {
            console.log(val);
@@ -67,14 +67,18 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     if (event.password === 'destroy') {
       return;
     }
-    this.router.navigate(['/registered/success']);
-    if (event.password === '123456') {
-
-    }
+    console.log(event);
+    this.regSrv.verifyPayCode({payPwd: event.password}).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.router.navigate(['/registered/success']);
+        }
+      }
+    );
   }
   public onsubmit(): void {
     this.dialogPayShow = true;
-    this.registeredService.verifyCode(this.submitPhone).subscribe(
+    this.regSrv.verifyCode(this.submitPhone).subscribe(
       (val) => {
         console.log(val);
         if (val.status === 200) {
