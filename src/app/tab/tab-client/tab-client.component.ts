@@ -39,14 +39,13 @@ export class TabClientComponent implements OnInit {
   public clientList = [];
   public clientAddressList: any[];
   public clientName: string;
-  public clientMaskShow: boolean;
   public clientUpdateName: any = {
     name: null,
     id: null
   };
   // search
-  public searchItems: Observable<string[]>;
-  public value: string;
+  // public searchItems: Observable<string[]>;
+  // public searchKeyword: string;
   // scroll
   public clientloaderConfig: InfiniteLoaderConfig = {
     height: '100%'
@@ -71,16 +70,7 @@ export class TabClientComponent implements OnInit {
           });
           this.clientList = value['datas'];
           this.clientSerialization(value['datas']);
-          console.log(value['datas']);
-        } else {
-          console.log(value['status']);
         }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        console.log('完成');
       }
     );
   }
@@ -90,17 +80,28 @@ export class TabClientComponent implements OnInit {
   }
   // search
   public onBarSearch(term: string) {
-    this.value = term;
-    // if (term) this.items = this.tbService.search(term);
+    // this.searchKeyword = term;
+    if (term) {
+      this.tabService.tabSearchClientList({name: term}).subscribe(
+        (value) => {
+          if (value['status'] === 200) {
+            value['datas'].map((val) => {
+              val.editState = false;
+            });
+            this.clientList = value['datas'];
+            this.clientSerialization(value['datas']);
+          }
+        }
+      );
+      return;
+    }
+    this.tabClientInitialize();
   }
   public onBarCancel(): void {
-    console.log('onCancel');
+    this.tabClientInitialize();
   }
   public onBarClear(): void {
-    console.log('onCancel');
-  }
-  public onBarSubmit(value: string): void {
-    console.log('onSubmit', value);
+    this.tabClientInitialize();
   }
   // scroll
   public clientLoadMore(comp: InfiniteLoaderComponent): void {
@@ -142,14 +143,13 @@ export class TabClientComponent implements OnInit {
     this.dialogDelShow('ios', {id: id, msg: '你确定删除当前客户吗？'});
   }
   public clientNameClick(item, type: 'address' | 'update') {
-    // console.log(item.id);
-    // this.clientUpdateName.id = item.id;
-    // this.tabClientMask.show();
+    this.clientUpdateName.id = item.id;
+    this.tabClientMask.show();
     if (type === 'address') {
-      this.clientMaskShow = true;
       this.clientName = item.name;
       this.tabService.tabGetClientAdrs({contactsId: item.id}).subscribe(
         (val) => {
+          console.log(val);
           if (val.status === 200) {
             this.clientAddressList = val.datas;
           }
@@ -158,15 +158,6 @@ export class TabClientComponent implements OnInit {
       return;
     }
     this.router.navigate(['/client/add',  {id: item.id, status: 'update'}]);
-    /*this.clientMaskShow = false;
-    this.tabService.tabUpdateClientName(this.clientUpdateName).subscribe(
-      (val) => {
-        if (val.status === 200) {
-          console.log(val);
-          this.tabClientInitialize();
-        }
-      }
-    );*/
   }
   // remind
   public dialogDelShow(type: SkinType, item: any) {

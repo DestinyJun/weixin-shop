@@ -5,31 +5,24 @@
       [placeholder]="'请输入你想输入的内容'"
       (search)="onBarSearch($event)"
       (cancel)="onBarClear()"
-      (clear)="onBarCancel()"
-      (submit)="onBarSubmit($event)">
+      (clear)="onBarCancel()">
     </weui-searchbar>
-    <div class="weui-panel" style="margin-top: 0px;" *ngIf="value">
-      <div class="weui-panel__hd">查询{{value}}</div>
+   <!-- <div class="weui-panel" style="margin-top: 0;" *ngIf="searchKeyword">
+      <div class="weui-panel__hd">查询关键字：【{{searchKeyword}}】</div>
       <div class="weui-panel__bd" *ngIf="searchItems | async; let searchItems; else loading">
-        <div class="weui-cell weui-cell_access" *ngFor="let item of searchItems">
+        <div class="weui-cell weui-cell_access" *ngFor="let item of searchItems.datas">
           <div class="weui-cell__bd weui-cell_primary">
-            <p>{{item}}</p>
+            <p>{{item.name}}</p>
           </div>
         </div>
-        <div class="weui-media-box weui-media-box_text" *ngIf="searchItems?.length === 0">Can't find any！</div>
+        <div class="weui-media-box weui-media-box_text" *ngIf="searchItems.datas?.length === 0">查不到相关数据</div>
       </div>
       <ng-template #loading>
         <div class="weui-panel__bd">
-          <div class="weui-media-box weui-media-box_text">Loading...</div>
+          <div class="weui-media-box weui-media-box_text">搜索中...</div>
         </div>
       </ng-template>
-      <!--  <a class="weui-panel__ft" href="javascript:void(0);">
-          <div class="weui-cell weui-cell_access weui-cell_link">
-            <div class="weui-cell__bd">More</div>
-            <div class="weui-cell__ft"></div>
-          </div>
-        </a>-->
-    </div>
+    </div>-->
   </div>
   <div class="tab-client-alphabet">
     <ul>
@@ -58,7 +51,7 @@
   </div>
   <div class="tab-client-address">
     <weui-mask #tabClientMask>
-      <div class="client-address-content" [hidden]="!clientMaskShow">
+      <div class="client-address-content">
         <div class="weui-cells" style="margin-top: 0">
           <div class="weui-cell">
             <div class="weui-cell__bd" style="text-align: center">
@@ -77,28 +70,6 @@
             <p>收货人：{{item?.name}}</p>
             <p><span>电</span><span style="margin-left: 16px;">话</span>：{{item?.phone}}</p>
             <p><span>地</span><span style="margin-left: 16px;">址</span>：{{item?.address}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="client-update-content" [hidden]="clientMaskShow">
-        <div class="weui-cells" style="margin-top: 0;border-radius: 5px">
-          <div class="weui-cell">
-            <div class="weui-cell__bd" style="text-align: center">
-              <span style="color: #000;">客户信息修改</span>
-            </div>
-            <div class="weui-cell__ft" (click)="this.tabClientMask.hide()">
-              <i class="fa fa-times" aria-hidden="true"></i>
-            </div>
-          </div>
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <input class="weui-input" type="text" placeholder="请输入新名称" [(ngModel)]="clientUpdateName.name">
-            </div>
-          </div>
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <button class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled': !clientUpdateName.name}" [disabled]="!clientUpdateName.name">保存</button>
-            </div>
           </div>
         </div>
       </div>

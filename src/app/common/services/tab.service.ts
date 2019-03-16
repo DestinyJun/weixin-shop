@@ -14,6 +14,9 @@ export class TabService {
   public tabDeleteClient(id): Observable<any> {
     return this.http.post(`/contacts/delete`, {id: id});
   }
+  public tabSearchClientList(params): Observable<any> {
+    return this.http.post(`/contacts/nameLike`, params);
+  }
   public tabGetPersonIncome(params): Observable<any> {
     return this.http.post(`/moayoOrder/myOrderInfo`, params);
   }
@@ -22,8 +25,5 @@ export class TabService {
   }
   public tabGetClientAdrs(params): Observable<any> {
     return this.http.post(`/address/ListFindById`, params);
-  }
-  public tabUpdateClientName(params): Observable<any> {
-    return this.http.post(`/contacts/update`, params);
   }
 }
