@@ -1,13 +1,13 @@
 <div class="client-add">
   <div class="client-add-header">
-    <app-header [option]="headerOption" (headerRightClick)="saveAddClient()"></app-header>
+    <app-header [option]="headerOption" (headerRightClick)="saveHeaderClick()"></app-header>
   </div>
   <div class="client-add-username">
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell">
         <div class="weui-cell__hd"><label class="weui-label" for="cliuser">客户</label></div>
         <div class="weui-cell__bd">
-          <input class="weui-input" id="cliuser" type="text" name="cliuser" placeholder="请输入姓名" (input)="clinetNameChange($event)">
+          <input class="weui-input" id="cliuser" type="text" name="cliuser" placeholder="请输入姓名" [(ngModel)]="addClient.name" (change)="clinetNameChange()">
         </div>
       </div>
     </div>
@@ -85,9 +85,9 @@
       <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__bd" style="text-align: center">
-            <span style="vertical-align: middle;color: #000;">{{clientMaskInfo.title}}</span>
+            <span style="vertical-align: middle;color: #000;">{{clientMaskTitle}}</span>
           </div>
-          <div class="weui-cell__ft" (click)="this.clientAddMask.hide()">
+          <div class="weui-cell__ft" (click)="closeAddressMask();">
             <i class="fa fa-times" aria-hidden="true"></i>
           </div>
         </div>
@@ -104,7 +104,7 @@
             <button
               class="weui-btn"
               [disabled]="!addAddressRes.name || !addAddressRes.phone || !addAddressRes.address"
-              (click)="saveAddressClick()"
+              (click)="saveBtnClick(clientSaveBtnStatus)"
               [ngClass]="{'weui-btn_primary': addAddressRes.name && addAddressRes.phone && addAddressRes.address}"
             >保存</button>
           </div>
@@ -116,7 +116,7 @@
     <div class="weui-cells weui-cells_checkbox">
       <div class="weui-cell">
         <div class="weui-cell__bd" style="text-align: center">
-          <span style="vertical-align: middle;color: #000;">{{clientMaskInfo.title}}</span>
+          <span style="vertical-align: middle;color: #000;">{{clientMaskTitle}}</span>
         </div>
         <div class="weui-cell__ft" (click)="clientIndividualShow=false">
           <i class="fa fa-times" aria-hidden="true"></i>
@@ -155,15 +155,15 @@
         <button
           class="weui-btn"
           [disabled]="!clientAddRadioRes.title"
-          (click)="saveAddressClick()"
+          (click)="saveBtnClick(clientSaveBtnStatus)"
           [ngClass]="{'weui-btn_primary': clientAddRadioRes.title || clientAddRadioRes.number}"
         >保存</button>
       </div>
     </div>
   </div>
-  <div class="client-add-button" (click)="addAddressClick()">
+  <div class="client-add-button" (click)="bottomBtnClick()">
     <div class="weui-footer weui-footer_fixed-bottom">
-      <button class="weui-btn weui-btn_primary" weui-button>{{addButton === 'address'?'新增客户收获地址': '新增客户发票信息'}}</button>
+      <button class="weui-btn weui-btn_primary" weui-button>{{bottomBtnStatus === 'address'?'新增客户收获地址': '新增客户发票信息'}}</button>
     </div>
   </div>
 </div>

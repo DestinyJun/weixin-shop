@@ -34,22 +34,22 @@
   <div class="tab-client-alphabet">
     <ul>
       <li *ngFor="let item of clientList;let i = index">
-        <span>{{item?.firstPY}}</span>
+        <span>{{item?.name}}</span>
       </li>
     </ul>
   </div>
   <div class="tab-client-scroll">
      <weui-infiniteloader (loadmore)="clientLoadMore($event)" [config]="clientloaderConfig">
        <div class="client-list" *ngFor="let item of clientList">
-         <div class="weui-cells__title" [id]="item?.firstPY">{{item?.firstPY}}</div>
-         <div class="weui-cells">
-           <div class="weui-cell" (touchmove)="onTouchMove($event, item)" (touchstart)="onTouchstart($event)">
-             <div class="weui-cell__bd" (click)="clientNameClick(item, 'address')">
-               <p><span>{{item.name}}</span></p>
+         <div class="weui-cells__title" [id]="item?.name">{{item?.name}}</div>
+         <div class="weui-cells" >
+           <div class="weui-cell" *ngFor="let prop of item.value" (touchmove)="onTouchMove($event, prop)" (touchstart)="onTouchstart($event)">
+             <div class="weui-cell__bd" (click)="clientNameClick(prop, 'address')">
+               <p><span>{{prop.name}}</span></p>
              </div>
              <div class="weui-cell__ft">
-               <button *ngIf="item.editState" class="weui-btn weui-btn_warn" (click)="clientDeleteClick(item.id)">删除</button>
-               <button *ngIf="!item.editState" class="weui-btn weui-btn_default" style="color: #7FB56E;" (click)="clientNameClick(item , 'update')">编辑</button>
+               <button *ngIf="prop.editState" class="weui-btn weui-btn_warn" (click)="clientDeleteClick(prop.id)">删除</button>
+               <button *ngIf="!prop.editState" class="weui-btn weui-btn_default" style="color: #7FB56E;" (click)="clientNameClick(prop , 'update')">编辑</button>
              </div>
            </div>
          </div>
@@ -62,7 +62,7 @@
         <div class="weui-cells" style="margin-top: 0">
           <div class="weui-cell">
             <div class="weui-cell__bd" style="text-align: center">
-              <span style="color: #000;">{{clientName}}</span>
+              <span style="color: #000;font-size: 1.2rem">{{clientName}}</span>
             </div>
             <div class="weui-cell__ft" (click)="this.tabClientMask.hide()">
               <i class="fa fa-times" aria-hidden="true"></i>

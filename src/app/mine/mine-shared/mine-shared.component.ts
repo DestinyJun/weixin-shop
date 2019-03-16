@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {MineService} from '../../common/services/mine.service';
 
 @Component({
   selector: 'app-mine-shared',
@@ -8,7 +9,7 @@ import {HeaderContent} from '../../common/components/header/header.model';
   encapsulation: ViewEncapsulation.None
 })
 export class MineSharedComponent implements OnInit {
-// header
+  // header
   public headerOption: HeaderContent = {
     title: '邀请你加入团队',
     leftContent: {
@@ -19,9 +20,26 @@ export class MineSharedComponent implements OnInit {
       color: '#86B876'
     }
   };
-  constructor() { }
+  public qrImgRrl: string = null;
+  constructor(
+    private mineSrv: MineService
+  ) { }
 
   ngOnInit() {
+    this.mineSharedInitialize();
   }
-  public sharegHeaderRightClick() {}
+  public mineSharedInitialize (): void {
+    this.mineSrv.mineGetQrImg({}).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.qrImgRrl = val.data.QRimage;
+          console.log(this.qrImgRrl);
+        }
+        console.log(val);
+      }
+    );
+  }
+  public sharegHeaderRightClick() {
+    this.mineSharedInitialize();
+  }
 }

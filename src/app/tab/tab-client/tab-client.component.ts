@@ -70,6 +70,8 @@ export class TabClientComponent implements OnInit {
             val.editState = false;
           });
           this.clientList = value['datas'];
+          this.clientSerialization(value['datas']);
+          console.log(value['datas']);
         } else {
           console.log(value['status']);
         }
@@ -84,7 +86,7 @@ export class TabClientComponent implements OnInit {
   }
   // header
   public onHeaderRightClick(): void {
-    this.router.navigate(['/client/add']);
+    this.router.navigate(['/client/add', {id: null, status: 'add'}]);
   }
   // search
   public onBarSearch(term: string) {
@@ -140,9 +142,9 @@ export class TabClientComponent implements OnInit {
     this.dialogDelShow('ios', {id: id, msg: '你确定删除当前客户吗？'});
   }
   public clientNameClick(item, type: 'address' | 'update') {
-    console.log(item.id);
-    this.clientUpdateName.id = item.id;
-    this.tabClientMask.show();
+    // console.log(item.id);
+    // this.clientUpdateName.id = item.id;
+    // this.tabClientMask.show();
     if (type === 'address') {
       this.clientMaskShow = true;
       this.clientName = item.name;
@@ -155,7 +157,8 @@ export class TabClientComponent implements OnInit {
       );
       return;
     }
-    this.clientMaskShow = false;
+    this.router.navigate(['/client/add',  {id: item.id, status: 'update'}]);
+    /*this.clientMaskShow = false;
     this.tabService.tabUpdateClientName(this.clientUpdateName).subscribe(
       (val) => {
         if (val.status === 200) {
@@ -163,7 +166,7 @@ export class TabClientComponent implements OnInit {
           this.tabClientInitialize();
         }
       }
-    );
+    );*/
   }
   // remind
   public dialogDelShow(type: SkinType, item: any) {
@@ -190,5 +193,30 @@ export class TabClientComponent implements OnInit {
       });
     }, 10);
     return false;
+  }
+  // client Serialization
+  public clientSerialization(params): void {
+    this.clientList = [];
+    const a = [];
+    const b = [];
+    params.map((item) => {
+        b.push(item.firstPY);
+    });
+    for (const s in b) {
+      if (b) {
+        if (a.indexOf(b[s]) < 0) {
+          a.push(b[s]);
+        }
+      }
+    }
+    a.map((val) => {
+      const c = [];
+      params.map((pItem) => {
+        if (pItem.firstPY === val) {
+          c.push(pItem);
+        }
+      });
+      this.clientList.push({name: val, value: c });
+    });
   }
 }

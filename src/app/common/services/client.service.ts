@@ -17,8 +17,13 @@ export class ClientService {
     return this.http.post(`/contacts/add`, params);
   }
   public clientSearchName(params): Observable<any> {
-    console.log(params);
     return this.http.post(`/contacts/nameLike`, params);
+  }
+  public clientSearchInfo(params): Observable<any> {
+    return this.http.post(`/contacts/findById`, params);
+  }
+  public clientNameUpdate(params): Observable<any> {
+    return this.http.post(`/contacts/update`, params);
   }
   // address
   public clientAddAddress(params): Observable<any> {

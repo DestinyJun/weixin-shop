@@ -12,6 +12,7 @@ import {
 } from 'ngx-weui';
 import {ClientService} from '../../common/services/client.service';
 import {map} from 'rxjs/operators';
+import {ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-client-add',
@@ -31,12 +32,11 @@ export class ClientAddComponent implements OnInit {
   };
   public clientAddressList: any[] = [];
   public clientInvoiceList: any[] = [];
-  public addButton = 'address';
-  public clientId = {contactsId: '5'};
-  public clientMaskInfo: any = {
-    title: null,
-    status: null
-  };
+  public bottomBtnStatus = 'address';
+  public clientId: string = null;
+  public clientMaskTitle = '新增客户收获地址';
+  public clientStatus: string = null;
+  public clientSaveBtnStatus = 'add';
   // radio
   public clientAddRadioRes: any = {
     invoiceType: 'individual',
@@ -59,7 +59,7 @@ export class ClientAddComponent implements OnInit {
   };
   // header
   public headerOption: HeaderContent = {
-    title: '新增客户收货地址',
+    title: '',
     leftContent: {
       icon: 'fa fa-chevron-left'
     },
@@ -70,38 +70,54 @@ export class ClientAddComponent implements OnInit {
   };
   constructor(
     private clientSrv: ClientService,
-    private srv: ToastService
+    private srv: ToastService,
+    private routerInfo: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.clientSelectClick();
+    this.routerInfo.params.subscribe(
+      (params: Params) => {
+        this.clientId = params.id;
+        this.clientStatus = params.status;
+        if (params.status === 'add') {
+          this.headerOption.title = '新增客户收货地址';
+        } else {
+          this.headerOption.title = '修改客户收货地址';
+          this.clientSrv.clientSearchInfo({id: params.id}).subscribe(
+            (val) => {
+              if (val.status === 200) {
+                this.addClient.name = val.data.name;
+                console.log(this.addClient.name);
+              }
+            }
+          );
+          this.clientSelectClick();
+        }
+    });
   }
   public clientTabSelect(item) {
     if (item.heading === '地址') {
-      this.addButton = 'address';
+      this.bottomBtnStatus = 'address';
       return;
     }
-    this.addButton = 'invoice';
+    this.bottomBtnStatus = 'invoice';
   }
   // client Name
   public clinetNameChange (event): void {
-    this.addClient.name = event.data;
-    this.clientSrv.clientSearchName(this.addClient).subscribe(
-      (val) => {
-        console.log(val);
-      }
-    );
+    if (this.clientStatus === 'add') {
+      this.clientId = 'null';
+    }
   }
-  // select client
+  // select client address and invoice
   public clientSelectClick (): void {
-    this.clientSrv.clientGetAddress(this.clientId).subscribe(
+    this.clientSrv.clientGetAddress({contactsId: this.clientId}).subscribe(
       (val) => {
         if (val.status === 200) {
           this.clientAddressList = val.datas;
         }
       }
     );
-    this.clientSrv.clientGetInvoice(this.clientId).subscribe(
+    this.clientSrv.clientGetInvoice({contactsId: this.clientId}).subscribe(
       (val) => {
         if (val.status === 200) {
           this.clientInvoiceList = val.datas;
@@ -113,43 +129,112 @@ export class ClientAddComponent implements OnInit {
   public clientAddLoadMore(comp: InfiniteLoaderComponent): void {
     comp.setFinished();
   }
-  public saveAddClient (): void {
+  // header
+  public saveHeaderClick (): void {
     if (!this.addClient.name) {
       this.onShow('addRemind');
       return;
     }
-    this.srv.loading();
-    this.clientSrv.clientAdd(this.addClient).subscribe(
-      (val) => {
-        if (val.status === 200) {
-          this.srv.hide();
-          this.clientMsg = val.message;
-          this.onShow('addClient');
+    if (this.clientStatus === 'add') {
+      this.srv.loading();
+      this.clientSrv.clientAdd(this.addClient).subscribe(
+        (val) => {
+          console.log(val);
+          if (val.status === 200) {
+            this.srv.hide();
+            this.clientMsg = val.message;
+            this.clientId = val.data.id;
+            this.onShow('addClient');
+          }
         }
-      }
-    );
+      );
+    } else if (this.clientStatus === 'update') {
+      this.addClient.id = this.clientId;
+      this.srv.loading();
+      this.clientSrv.clientNameUpdate(this.addClient).subscribe(
+        (val) => {
+          if (val.status === 200) {
+            this.srv.hide();
+            this.clientMsg = val.message;
+            this.onShow('addClient');
+          }
+        }
+      );
+    }
   }
   // add && update
-  public addAddressClick() {
+  public bottomBtnClick() {
+    this.clientSaveBtnStatus = 'add';
     if (!this.addClient.name) {
       this.onShow('addRemind');
       return;
     }
-    this.clientMaskInfo.status = 'add';
-    if (this.addButton === 'address') {
-      this.clientMaskInfo.title = '新增收货人地址';
+    if (this.bottomBtnStatus === 'address') {
+      this.clientMaskTitle = '新增收货人地址';
       this.clientAddMask.show();
       return;
-    }
-    this.clientMaskInfo.title = '新增收货人地址';
+    } else if (this.bottomBtnStatus === 'invoice') {
+      this.clientMaskTitle = '新增发票信息';
     this.clientIndividualShow = true;
+    }
   }
-  public saveAddressClick() {
-    if (this.addButton === 'address') {
-      if (this.clientMaskInfo.status === 'add') {
-        this.addAddressRes.contactsId = '5';
+  public saveBtnClick(type: 'add' | 'update') {
+    console.log(type);
+    if (this.bottomBtnStatus === 'address') {
+      if (type === 'add') {
         this.srv.loading('添加中...');
-        this.clientSrv.clientAddAddress(this.addAddressRes).subscribe(
+         if (this.clientId !== 'null') {
+           console.log('id已有');
+           this.addAddressRes.contactsId = this.clientId;
+           this.clientSrv.clientAddAddress(this.addAddressRes).subscribe(
+             (value) => {
+               if (value.status === 200) {
+                 this.srv.hide();
+                 this.clientAddMask.hide();
+                 this.clientMsg = value.message;
+                 this.addAddressRes = {
+                   name: null,
+                   phone: null,
+                   address: null,
+                 };
+                 this.onShow('addClient');
+                 this.clientSelectClick();
+               }
+             }
+           );
+         } else {
+           console.log('id没有');
+           this.clientSrv.clientAdd(this.addClient).subscribe(
+             (val) => {
+               if (val.status === 200) {
+                 this.clientId = val.data.id;
+                 this.addAddressRes.contactsId = this.clientId;
+                 this.clientSrv.clientAddAddress(this.addAddressRes).subscribe(
+                   (value) => {
+                     if (value.status === 200) {
+                       this.srv.hide();
+                       this.clientAddMask.hide();
+                       this.clientMsg = value.message;
+                       this.addAddressRes = {
+                         name: null,
+                         phone: null,
+                         address: null,
+                       };
+                       this.onShow('addClient');
+                       this.clientSelectClick();
+                     }
+                   }
+                 );
+               }
+             }
+           );
+         }
+        return;
+      }
+      else if (type === 'update') {
+        this.addAddressRes.contactsId = this.clientId;
+        this.srv.loading('修改中...');
+        this.clientSrv.clientUpdateAddress(this.addAddressRes).subscribe(
           (val) => {
             if (val.status === 200) {
               this.srv.hide();
@@ -167,86 +252,115 @@ export class ClientAddComponent implements OnInit {
         );
         return;
       }
-      this.srv.loading('修改中...');
-      this.clientSrv.clientUpdateAddress(this.addAddressRes).subscribe(
-        (val) => {
-          if (val.status === 200) {
-            this.srv.hide();
-            this.clientAddMask.hide();
-            this.clientMsg = val.message;
-            this.addAddressRes = {
-              name: null,
-              phone: null,
-              address: null,
-            };
-            this.onShow('addClient');
-            this.clientSelectClick();
-          }
-        }
-      );
-      return;
     }
-    if (this.clientMaskInfo.status === 'add') {
-      this.clientAddRadioRes.contactsId = '5';
-      this.srv.loading('添加中...');
-      this.clientSrv.clientAddInvoice(this.clientAddRadioRes).subscribe(
-        (val) => {
-          if (val.status === 200) {
-            this.srv.hide();
-            this.clientIndividualShow = false;
-            this.clientMsg = val.message;
-            this.clientAddRadioRes = {
-              invoiceType: 'individual',
-              title: null,
-              number: null,
-            };
-            this.onShow('addClient');
-            this.clientSelectClick();
-          }
+    else if (this.bottomBtnStatus === 'invoice') {
+      if (type === 'add') {
+        this.srv.loading('添加中...');
+        if (this.clientId !== 'null') {
+          this.clientAddRadioRes.contactsId = this.clientId;
+          this.clientSrv.clientAddInvoice(this.clientAddRadioRes).subscribe(
+            (value) => {
+              if (value.status === 200) {
+                this.srv.hide();
+                this.clientAddMask.hide();
+                this.clientMsg = value.message;
+                this.clientAddRadioRes = {
+                  invoiceType: 'individual',
+                  title: null,
+                  number: null,
+                };
+                this.clientIndividualShow = false;
+                this.onShow('addClient');
+                this.clientSelectClick();
+              }
+            }
+          );
+        } else {
+          this.clientSrv.clientAdd(this.addClient).subscribe(
+            (val) => {
+              if (val.status === 200) {
+                this.clientId = val.data.id;
+                this.clientAddRadioRes.contactsId = this.clientId;
+                this.clientSrv.clientAddInvoice(this.clientAddRadioRes).subscribe(
+                  (value) => {
+                    if (value.status === 200) {
+                      this.srv.hide();
+                      this.clientAddMask.hide();
+                      this.clientMsg = value.message;
+                      this.clientAddRadioRes = {
+                        invoiceType: 'individual',
+                        title: null,
+                        number: null,
+                      };
+                      this.clientIndividualShow = false;
+                      this.onShow('addClient');
+                      this.clientSelectClick();
+                    }
+                  }
+                );
+              }
+            }
+          );
         }
-      );
-      return;
-    }
-    this.srv.loading('修改中...');
-    this.clientSrv.clientUpdateInvoice(this.clientAddRadioRes).subscribe(
-      (val) => {
-        if (val.status === 200) {
-          this.srv.hide();
-          this.clientIndividualShow = false;
-          this.clientMsg = val.message;
-          this.clientAddRadioRes = {
-            invoiceType: 'individual',
-            title: null,
-            number: null,
-          };
-          this.onShow('addClient');
-          this.clientSelectClick();
-        }
+        return;
       }
-    );
+      else if (type === 'update') {
+        this.addAddressRes.contactsId = this.clientId;
+        this.srv.loading('修改中...');
+        this.clientSrv.clientUpdateInvoice(this.clientAddRadioRes).subscribe(
+          (val) => {
+            if (val.status === 200) {
+              this.srv.hide();
+              this.clientIndividualShow = false;
+              this.clientMsg = val.message;
+              this.clientAddRadioRes = {
+                invoiceType: 'individual',
+                title: null,
+                number: null,
+              };
+              this.onShow('addClient');
+              this.clientSelectClick();
+            }
+          }
+        );
+      }
+    }
+  }
+  // close
+  public closeAddressMask (): void {
+    this.clientAddMask.hide();
+    this.addAddressRes = {
+      name: null,
+      phone: null,
+      address: null,
+    };
   }
   // update
   public clientUpdateClick (item): void {
-    this.clientMaskInfo.status = 'update';
-    if (this.addButton === 'address') {
+    this.clientSaveBtnStatus = 'update';
+    if (this.bottomBtnStatus === 'address') {
       for (const prop in this.addAddressRes) {
         if (item) {
           this.addAddressRes[prop] = item[prop];
         }
       }
       this.addAddressRes.id = item.id;
-      this.clientMaskInfo.title = '修改收货人地址';
+      this.clientMaskTitle = '修改收货人地址';
       this.clientAddMask.show();
       return;
-    }
-    for (const prop in this.clientAddRadioRes) {
-      if (item) {
-        this.clientAddRadioRes[prop] = item[prop];
+    } else if (this.bottomBtnStatus === 'invoice') {
+      for (const prop in this.clientAddRadioRes) {
+        if (item) {
+          this.clientAddRadioRes[prop] = item[prop];
+        }
       }
+      this.clientAddRadioRes.id = item.id;
+      this.clientMaskTitle = '修改发票信息';
+      this.clientIndividualShow = true;
     }
-    this.clientAddRadioRes.id = item.id;
-    this.clientMaskInfo.title = '修改发票信息';
-    this.clientIndividualShow = true;
+   /* if (this.clientStatus === 'update') {
+
+    }*/
   }
   // remind + del
   public dialogDelShow(type: SkinType, msg: string, item: any, event) {
@@ -261,7 +375,7 @@ export class ClientAddComponent implements OnInit {
       (<DialogComponent>this[`${type}Dialog`]).show().subscribe((res: any) => {
         if (res.value) {
           this.srv.loading('删除中...');
-          if (this.addButton === 'address') {
+          if (this.bottomBtnStatus === 'address') {
             this.clientSrv.clientDelAddress({id: item.id}).subscribe(
               (val) => {
                 if (val.status === 200) {
