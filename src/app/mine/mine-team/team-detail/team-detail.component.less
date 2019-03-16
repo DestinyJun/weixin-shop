@@ -14,13 +14,13 @@
   .mine-detail-list {
     .weui-cells__title {
       p {
-        font-size: 1.5rem;
+        font-size: 1rem;
         color: #9BC48F;
       }
     }
     .weui-cells {
       margin-top: 65px;
-      font-size: 1.4rem;
+      font-size: 1rem;
     }
   }
   .mine-filter-list{
@@ -46,80 +46,82 @@
     }
     .weui-cells {}
   }
-  .recharge-mask {
-    .weui-mask {
-      .weui-mask__content {
-        .weui-cells {
-          margin-top: 0;
-          position: fixed;
-          top: 50px;
-          left: 0;
-          width: 100vw;
-          height: 80%;
-        }
-        .weui-cells_title{
-          padding: 10px 15px;
-          color: #C5C5C5;
-          font-size: 1.5rem;
-        }
-        .status{
-          .weui-flex{
-            padding-left: 10px;
-            .weui-flex__item{
+  .mine-detail-mask{
+    .recharge-mask {
+      .weui-mask {
+        .weui-mask__content {
+          .weui-cells {
+            margin-top: 0;
+            position: fixed;
+            top: 50px;
+            left: 0;
+            width: 100vw;
+            height: 80%;
+          }
+          .weui-cells_title{
+            padding: 10px 15px;
+            color: #C5C5C5;
+            font-size: 1.5rem;
+          }
+          .status{
+            .weui-flex{
+              padding-left: 10px;
+              .weui-flex__item{
+                margin-right: 10px;
+                .weui-btn{
+                  padding: 0;
+                  font-size: 1.3rem;
+                  line-height: 1.6;
+                  color: #868787;
+                }
+              }
+            }
+          }
+          .timer{
+            margin-top: 10px;
+            font-size: 1.3rem;
+            .weui-flex{
+              padding-left: 10px;
               margin-right: 10px;
-              .weui-btn{
-                padding: 0;
-                font-size: 1.3rem;
-                line-height: 1.6;
-                color: #868787;
+              .weui-flex__item{
+                .weui-btn{
+                  padding: 0;
+                  font-size: 1.3rem;
+                  line-height: 1.6;
+                  color: #868787;
+                }
               }
             }
           }
-        }
-        .timer{
-          margin-top: 10px;
-          font-size: 1.3rem;
-          .weui-flex{
-            padding-left: 10px;
-            margin-right: 10px;
-            .weui-flex__item{
-              .weui-btn{
-                padding: 0;
-                font-size: 1.3rem;
-                line-height: 1.6;
-                color: #868787;
+          .member{
+            margin-top: 10px;
+            font-size: 1.3rem;
+            .weui-flex{
+              padding-left: 10px;
+              .weui-flex__item{
+                margin-right: 10px;
+                .weui-btn{
+                  padding: 0;
+                  font-size: 1.3rem;
+                  line-height: 1.6;
+                  color: #868787;
+                }
               }
             }
           }
-        }
-        .member{
-          margin-top: 10px;
-          font-size: 1.3rem;
-          .weui-flex{
-            padding-left: 10px;
-            .weui-flex__item{
-              margin-right: 10px;
-              .weui-btn{
-                padding: 0;
-                font-size: 1.3rem;
-                line-height: 1.6;
-                color: #868787;
-              }
-            }
-          }
-        }
-        .btn-group{
-          position: absolute;
-          width: 100%;
-          bottom: 0;
-          left: 0;
-          margin-top: 15px;
-          .weui-flex{
-            .weui-flex__item{
-              .weui-btn{
-                border-radius: 0;
-                &:after{
-                  border: none;
+          .btn-group{
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            margin-top: 15px;
+            .weui-flex{
+              .weui-flex__item{
+                .weui-btn{
+                  border-radius: 0;
+                  &:after{
+                    border: none;
+                  }
                 }
               }
             }

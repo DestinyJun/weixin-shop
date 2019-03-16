@@ -17,17 +17,17 @@
             <div class="time" style="background-color: #FF6565;">今天</div>
           </div>
           <div class="weui-flex__item">
-            <div class="amount">0笔</div>
+            <div class="amount">{{tradeStatistics?.today?.total || 0}}笔</div>
           </div>
         </div>
         <div class="weui-flex center">
           <div class="weui-flex__item">
-            <div class="placeholder">￥{{tradeStatistics?.today['total'] || '0'}}</div>
+            <div class="placeholder">￥{{tradeStatistics?.today?.sum_amount || 0}}</div>
           </div>
         </div>
         <div class="weui-flex bottom">
           <div class="weui-flex__item" style="padding-top: 1vh">
-            <div class="placeholder time">{{tradeStatistics?.today['startDay']}}</div>
+            <div class="placeholder time">{{tradeStatistics?.today?.startDay}}</div>
           </div>
         </div>
       </div>
@@ -37,12 +37,12 @@
             <div class="time" style="background-color: #65D2FF;">本月</div>
           </div>
           <div class="weui-flex__item">
-            <div class="amount">{{0}}笔</div>
+            <div class="amount">{{tradeStatistics?.month?.total || 0}}笔</div>
           </div>
         </div>
         <div class="weui-flex center">
           <div class="weui-flex__item">
-            <div class="placeholder">￥{{tradeStatistics?.month['total'] || '0'}}</div>
+            <div class="placeholder">￥{{tradeStatistics?.month['sum_amount'] || '0'}}</div>
           </div>
         </div>
         <div class="weui-flex bottom">
@@ -58,18 +58,18 @@
             <div class="time" style="background-color: #7E65FF;">本年</div>
           </div>
           <div class="weui-flex__item">
-            <div class="amount">{{0}}笔</div>
+            <div class="amount">{{tradeStatistics?.year?.total || 0}}笔</div>
           </div>
         </div>
         <div class="weui-flex center">
           <div class="weui-flex__item">
-            <div class="placeholder">￥{{tradeStatistics?.month['year'] || '0'}}</div>
+            <div class="placeholder">￥{{tradeStatistics?.year['sum_amount'] || '0'}}</div>
           </div>
         </div>
         <div class="weui-flex bottom">
           <div class="weui-flex__item">
-            <div class="placeholder time">{{tradeStatistics?.month['startDay'] || '0'}}</div>
-            <div class="placeholder time">{{tradeStatistics?.month['endDay'] || '0'}}</div>
+            <div class="placeholder time">{{tradeStatistics?.year['startDay'] || '0'}}</div>
+            <div class="placeholder time">{{tradeStatistics?.year['endDay'] || '0'}}</div>
           </div>
         </div>
       </div>

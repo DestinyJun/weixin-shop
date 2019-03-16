@@ -1,5 +1,12 @@
 .tab-mine{
   background: #F1F1F1;
+  .weui-cells{
+    font-size: 1rem;
+    .weui-cell{
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+  }
   .tab-mine-profile{
     .weui-cell_access{
       margin-top: 0;
@@ -8,32 +15,44 @@
       .weui-cell__bd{
         p{
           position: relative;
+          .weui-badge{
+            border-radius: 3px;
+          }
         }
       }
     }
   }
-  .order-list{
-    text-align: center;
+  .tab-mine-order{
     .weui-cells{
       .weui-flex{
+        text-align: center;
+        position: relative;
         .weui-flex__item{
           padding-top: 10px;
           padding-bottom: 10px;
         }
+        &:after{
+          content: " ";
+          position: absolute;
+          left: 15px;
+          top: 0;
+          right: 0;
+          height: 1px;
+          border-top: 1px solid #F4F4F4;
+          color: #e5e5e5;
+          -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+          -webkit-transform: scaleY(0.5);
+          transform: scaleY(0.5);
+          z-index: 2;
+        }
       }
     }
   }
-  .weui-cells{
-    font-size: 1.5rem;
-    .weui-cell{
-      padding-top: 15px;
-      padding-bottom: 15px;
-    }
-  }
-  .contact-dialog{
+  .tab-mine-condialog{
     .weui-dialog{
       .weui-dialog__bd{
-        font-size: 1.5rem;
+        font-size: 1rem;
         :nth-child(2){
           margin-top: 5px;
         }

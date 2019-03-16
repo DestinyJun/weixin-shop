@@ -20,11 +20,8 @@ export class TabMineComponent implements OnInit {
   public configDialog: DialogConfig = {};
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.tel.nativeElement);
-  }
+  ngOnInit() {}
   public dialogShow(type: SkinType) {
-    console.log(type);
     this.configDialog = Object.assign({}, <DialogConfig>{
       skin: type,
       cancel: '取消',
@@ -33,7 +30,6 @@ export class TabMineComponent implements OnInit {
     });
     setTimeout(() => {
       (<DialogComponent>this[`${type}Dialog`]).show().subscribe((res: any) => {
-        console.log(res);
         if (res.value) {
           this.tel.nativeElement.click();
         }

@@ -1,0 +1,74 @@
+// 团队成员收入明细
+{
+  "currentPage": 0,
+  "data":[
+    {
+      "addressModel（地址）": {
+        "address": "云岩区xxxxx",
+        "createdDate": 1550204337000,
+        "id": 1,
+        "lastModifiedDate": 1550215494000,
+        "name": "修改1后123",
+        "phone": "1234579009"
+      },
+      "amount（应付款）": 2.000000,
+      "amountPaid（已付款）": 0.000,
+      "createdDate": 1550729921000,
+      "id": 1,
+      "invoiceModel（发票）": {
+        "createdDate": 1550214198000,
+        "id": 1,
+        "invoiceType(发票类型)": "company",
+        "moyaoOrderItemModels": [
+          {
+            "goods（商品）": {
+              "createdDate": 1550164594000,
+              "id": 1,
+              "imgs": "1",
+              "info": "1",
+              "lastModifiedDate": 1550164599000,
+              "mainImage": "1",
+              "originalPrice": 1.00,
+              "title": "1"
+            },
+            "quantity（数量）": "1",
+            "price（商品总价）": "2.000"
+          }
+        ],
+        "lastModifiedDate": 1550215556000,
+        "number": "0987654321（发票号）",
+        "title（抬头）": "title"
+      },
+      "lastModifiedDate": 1550729921000,
+      "price": 2.000000,
+      "sn": "2019（订单号）",
+      "payType(支付方式)": "wallet",
+      "status（订单状态）": "pendingPayment"
+    }
+  ],
+  "amountLog": {
+    "createdDate": "1550204337000(支付)",
+    "amount": "2.000",
+    "remainingAmount": "992",
+    "detail": "12"
+  },
+  "message": "查询成功！",
+  "pageSize": 0,
+  "status": 200,
+  "totalCount": 0,
+  "totalPage": 0
+}
+
+/*
+user:{"nikeName"}
+earningStatus状态（
+//没有收益
+noEarning,
+//入账中
+earning,
+//入账完成
+earned,
+//入账失败
+earnFailed
+}）
+*/

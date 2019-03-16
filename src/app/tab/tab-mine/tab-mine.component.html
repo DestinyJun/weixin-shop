@@ -7,39 +7,35 @@
         </div>
         <div class="weui-cell__bd">
           <p>
-          <span style="position: relative;font-size: 1.7rem">
+          <span style="position: relative;font-size: 1.3rem">
             王大明
             <span class="weui-badge" style="position: absolute;top: -0.7em;right: -3em;background-color: #7FB56E;">店员</span>
           </span>
           </p>
-          <p style="font-size: 1.2rem;color: #888888;">工号：1011484</p>
+          <p style="font-size: 1rem;color: #888888;margin-top: 8px">工号：1011484</p>
         </div>
         <div class="weui-cell__ft"></div>
       </div>
     </div>
   </div>
-  <div class="my-order" [routerLink]="['/mine/order']">
+  <div class="tab-mine-order" [routerLink]="['/mine/order']">
    <div class="weui-cells">
      <div class="weui-cell weui-cell_access">
        <div class="weui-cell__bd">我的订单</div>
-       <div class="weui-cell__ft" style="font-size: 0">
+       <div class="weui-cell__ft">
          <!--<span class="weui-badge weui-badge_dot" style="margin-left: 5px;margin-right: 5px;"></span>-->
+       </div>
+     </div>
+     <div class="weui-flex">
+       <div class="weui-flex__item" *ngFor="let item of orderList">
+         <div class="placeholder">
+           <p style="font-size: 1rem">{{item.name}}</p>
+           <p style="font-size: 1rem;color: #BEBEBE;">{{item.amount}}</p>
+         </div>
        </div>
      </div>
    </div>
  </div>
-  <div class="order-list">
-    <div class="weui-cells">
-      <div class="weui-flex">
-        <div class="weui-flex__item" *ngFor="let item of orderList">
-          <div class="placeholder">
-            <p style="font-size: 1.5rem">{{item.name}}</p>
-            <p style="font-size: 1.2rem;color: #BEBEBE;">{{item.amount}}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="tab-mine-list">
     <div class="weui-cells">
       <div class="weui-cell weui-cell_access" [routerLink]="['/mine/wallet']">
@@ -75,7 +71,7 @@
       </div>
     </div>
   </div>
-  <div class="contact-dialog">
+  <div class="tab-mine-condialog">
     <a #tel href="tel:400-8485-5577" [hidden]="true"></a>
     <weui-dialog #iosDialog [config]="configDialog"></weui-dialog>
   </div>

@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {InfiniteLoaderComponent, InfiniteLoaderConfig, PickerData, PickerOptions, PickerService} from 'ngx-weui';
+import {InfiniteLoaderComponent, InfiniteLoaderConfig, PickerOptions, PickerService} from 'ngx-weui';
 import {Router} from '@angular/router';
 import {MineTeamService} from '../../common/services/mine-team.service';
 import {DatePipe} from '@angular/common';
@@ -213,6 +213,7 @@ export class MineTeamComponent implements OnInit, OnDestroy {
       ]
     };*/
   }
+  // year
   public timer() {
     this.year = [];
     const date = new Date;
@@ -221,6 +222,7 @@ export class MineTeamComponent implements OnInit, OnDestroy {
     }
     this.year = this.year.reverse();
   }
+  // team data
   public mineTeamGetData(time: string) {
     this.mineTeamSrv.mineTeamGetDate({date: time}).subscribe(
       (val) => {
@@ -231,6 +233,7 @@ export class MineTeamComponent implements OnInit, OnDestroy {
       }
     );
   }
+  // tab
   public onSelect(event) {
      if (event.heading === '月度') {
        this.mineTeamGetData(this.dateSrv.transform(new Date(), 'yyyy-MM'));
@@ -238,14 +241,14 @@ export class MineTeamComponent implements OnInit, OnDestroy {
      }
     this.mineTeamGetData(this.dateSrv.transform(new Date(), 'yyyy'));
   }
+  // scroll
   public onLoadMore(comp: InfiniteLoaderComponent) {
     comp.setFinished();
   }
+  // select
   public selectMonthClick() {
     this.srv.showDateTime('date-ym', '', null, null, new Date()).subscribe((res: any) => {
-      console.log(res);
       this.mineTeamGetData(res.formatValue);
-      // this.srvRes = res.value;
     });
   }
   public selectYearClick() {
@@ -253,6 +256,7 @@ export class MineTeamComponent implements OnInit, OnDestroy {
       this.mineTeamGetData(res.value.slice(0, 4));
     });
   }
+  // header
   public mineTeamInClient() {
     this.router.navigate(['/mine/team/detail']);
   }

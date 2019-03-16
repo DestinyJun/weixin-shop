@@ -32,10 +32,11 @@
           <span style="vertical-align:middle;color: #CBCBCB;">100001</span>
         </div>
       </div>
-      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/proaddress']">
+      <div class="weui-cell weui-cell_access">
         <div class="weui-cell__bd">地区</div>
         <div class="weui-cell__ft">
-          <span style="vertical-align:middle;">贵州贵阳</span>
+          <weui-city-picker required placeholder="Pick a City" [(ngModel)]="res.city" name="city"
+                            [data]="cityData" (change)="cityChange($event)"></weui-city-picker>
         </div>
       </div>
     </div>

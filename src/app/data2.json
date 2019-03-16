@@ -1,0 +1,40 @@
+// 团队成员收入明细
+{
+  "currentPage": 0,
+  "datas": [
+    {
+      "addressModel": {
+        "address": "云岩区xxxxx",
+        "createdDate": "2019-02-15 06:18:57",
+        "id": 1,
+        "lastModifiedDate": "2019-02-15 09:24:54",
+        "name": "修改1后123",
+        "phone": "1234579009"
+      },
+      "amount": 2.000000,
+      "amountPaid": 2.000,
+      "createdDate": "2019-01-10 08:50:21",
+      "earning": 1.000000,
+      "earningStatus": "earning",
+      "id": 5,
+      "invoiceModel": {
+        "createdDate": "2019-02-15 09:03:18",
+        "id": 1,
+        "invoiceType": "company",
+        "lastModifiedDate": "2019-02-15 09:25:56",
+        "number": "0987654321",
+        "title": "title"
+      },
+      "lastModifiedDate": "2019-02-21 08:50:21",
+      "moyaoOrderItemModels": [],
+      "price": 2.000000,
+      "sn": "2023",
+      "status": "pendingReview"
+    }
+  ],
+  "message": "查询成功！",
+  "pageSize": 0,
+  "status": 200,
+  "totalCount": 0,
+  "totalPage": 0
+}

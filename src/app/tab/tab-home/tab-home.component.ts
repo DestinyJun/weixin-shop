@@ -32,15 +32,14 @@ export class TabHomeComponent implements OnInit {
       (val) => {
         if (val.status === 200) {
           this.tradeStatistics = val['dataObject'];
+          console.log(this.tradeStatistics);
         }
       }
     );
     this.tabSrc.tabGetTeamTop({}).subscribe(
       (val) => {
         if (val.status === 200) {
-          console.log(val);
           this.teamTop = val.data;
-          console.log(this.teamTop[0]);
         }
       }
     );
