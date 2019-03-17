@@ -45,6 +45,7 @@ export class OrderPlaceComponent implements OnInit {
 
   ngOnInit() {
     this.orderPlaceAddress = this.globalService.addressEvent;
+    console.log(this.orderPlaceAddress);
     this.orderSrv.orderGetGoods({}).subscribe(
       (val) => {
         if (val.status === 200) {

@@ -11,7 +11,7 @@
   </div>
   <div class="order-place-goods">
     <div class="weui-panel weui-panel_access commodity">
-      <div class="weui-panel__hd" style="font-size: 1.4rem">商品信息</div>
+      <div class="weui-panel__hd" style="font-size: 1rem">商品信息</div>
       <weui-infiniteloader #comp [config]="infiniteloaderConfig">
         <div class="weui-panel__bd">
           <div class="weui-cell" *ngFor="let item of goodsInfo; let i = index">
@@ -20,9 +20,9 @@
                    alt="暂无">
             </div>
             <div class="weui-cell__bd">
-              <p style="font-size: 1.3rem;">{{item.title}}</p>
-              <p style="font-size: 1rem;color: #888888;">{{item.info}}</p>
-              <p style="font-size: 1.2rem;color: #FF2D2D;margin-top: 1vh">￥{{item.originalPrice}}</p>
+              <p style="font-size: 1.1rem;">{{item.title}}</p>
+              <p style="font-size: 0.8rem;color: #888888;">{{item.info}}</p>
+              <p style="font-size: 1.1rem;color: #FF2D2D;margin-top: 1vh">￥{{item.originalPrice}}</p>
             </div>
             <div class="weui-cell__ft">
               <weui-stepper [(ngModel)]="goodsInfo[i].amount" [min]="0" [max]="1000000" (change)="goodsTotalCount($event, i)"></weui-stepper>
@@ -53,19 +53,19 @@
       </div>
     </div>
   </div>
+  <div class="order-place-toast">
+    <weui-toast #success [text]="'请先填写收货地址'" [icon]="''" [time]="1000"></weui-toast>
+  </div>
   <div class="weui-footer weui-footer_fixed-bottom" *ngIf="totalPrice">
     <div class="weui-flex">
       <div class="weui-flex__item">
-        <span style="color: #2A2A2A;font-size: 1.5rem">共计</span>
-        <span style="color: #FF3535;font-size: 1.5rem">￥{{totalPrice}}</span>
+        <span style="color: #2A2A2A;font-size: 1.1rem">共计</span>
+        <span style="color: #FF3535;font-size: 1.1rem">￥{{totalPrice}}</span>
       </div>
       <div class="weui-flex__item" (click)="submitOrder();">
-        <span style="color: white;font-size: 1.5rem">提交订单</span>
+        <span style="color: white;font-size: 1.1rem">提交订单</span>
       </div>
     </div>
-  </div>
-  <div class="order-place-toast">
-    <weui-toast #success [text]="'请先填写收货地址'" [icon]="''" [time]="1000"></weui-toast>
   </div>
 </div>
 
