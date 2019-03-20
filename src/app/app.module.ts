@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './common/services/auth.interceptor';
 import {WeUiModule} from 'ngx-weui';
-import {GlobalService} from './common/services/global.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +18,9 @@ import {GlobalService} from './common/services/global.service';
     HttpClientModule,
     WeUiModule.forRoot(),
   ],
-  providers: [GlobalService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

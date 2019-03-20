@@ -1,13 +1,13 @@
 <div class="pay-way">
   <app-header [option]="headerOption"></app-header>
-  <div class="cash">
+  <div class="pay-way-cash">
     <div class="weui-cells">
         <p style="font-size: 1.2rem">订单编号 475415487545</p>
         <p style="color: #FF2525;font-size:1.5rem;">￥100.00</p>
         <p style="color: #CDCDCD;font-size: 1rem;">剩余时间：15:00</p>
     </div>
   </div>
-  <div class="way">
+  <div class="pay-way-select">
     <div class="weui-cells">
       <div class="weui-panel">
         <div class="weui-panel__hd" style="font-size: 1.4rem;color: #000;">选择支付方式</div>
@@ -47,7 +47,7 @@
   <div class="weui-dialog-pay">
     <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayOnchange)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>
   </div>
-  <div class="pay">
+  <div class="pay-way-sure">
     <button class="weui-btn weui-btn_primary" (click)="dialogPayShow = true">立即支付</button>
   </div>
   <div class="pay-way-dialog">

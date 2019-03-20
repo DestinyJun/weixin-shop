@@ -43,10 +43,6 @@ export class TabClientComponent implements OnInit {
     name: null,
     id: null
   };
-  // search
-  // public searchItems: Observable<string[]>;
-  // public searchKeyword: string;
-  // scroll
   public clientloaderConfig: InfiniteLoaderConfig = {
     height: '100%'
   };
@@ -109,6 +105,7 @@ export class TabClientComponent implements OnInit {
   }
   public scrollAddressClick (item): void {
     if (this.routerStatus === 'order') {
+      item.parentId = this.clientUpdateName.id;
       this.globalService.addressEvent = item;
       window.history.back();
     }
@@ -127,7 +124,7 @@ export class TabClientComponent implements OnInit {
           item.editState = false;
         }
       }
-      console.log('右滑呀');
+      // console.log('右滑呀');
       return;
     } else {
       if (Math.abs(this.touchStartPageY - this.touchMovePageY) < 5 ) {
@@ -135,7 +132,7 @@ export class TabClientComponent implements OnInit {
           item.editState = true;
         }
       }
-      console.log('左滑呀');
+      // console.log('左滑呀');
     }
   }
   // client
@@ -149,7 +146,6 @@ export class TabClientComponent implements OnInit {
       this.clientName = item.name;
       this.tabService.tabGetClientAdrs({contactsId: item.id}).subscribe(
         (val) => {
-          console.log(val);
           if (val.status === 200) {
             this.clientAddressList = val.datas;
           }

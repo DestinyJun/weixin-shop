@@ -5,7 +5,7 @@
   <div class="order-place-address">
     <div class="weui-cells" [routerLink]="['/tab/client', {status: 'order'}]">
       <div class="weui-cell">
-        <div class="weui-cell__bd">{{orderPlaceAddress?orderPlaceAddress.address:'请选择一个收获地址'}}</div>
+        <div class="weui-cell__bd">{{orderPlaceAddressInfo?orderPlaceAddressInfo.address:'请选择一个收获地址'}}</div>
       </div>
     </div>
   </div>
@@ -34,16 +34,21 @@
   </div>
   <div class="order-place-bill">
     <div class="weui-cells">
-      <div class="weui-cell weui-cell_access" [routerLink]="['./orinvoice']">
+      <div class="weui-cell weui-cell_access" (click)="getInvoiceClick()">
         <div class="weui-cell__bd">
           <span style="vertical-align: middle">发票</span>
         </div>
         <div class="weui-cell__ft">
-          <span>不需要发票</span>
-          <i></i>
+          <span>{{orderPlaceInvoiceInfo?.invoiceType === 'individual'?'个人':orderPlaceInvoiceInfo?.invoiceType === 'company'?'公司': '不需要发票'}}</span>
         </div>
       </div>
-      <div class="weui-cell weui-cell_access">
+      <div class="weui-cell center" *ngIf="orderPlaceInvoiceInfo?.invoiceType || orderPlaceInvoiceInfo?.invoiceType==='noinvoice'">
+        <div class="weui-cell__bd">
+          <p><span class="left">发票抬头</span>{{orderPlaceInvoiceInfo?.title}}</p>
+          <p *ngIf="orderPlaceInvoiceInfo?.number"><span class="left">税<span style="margin-left: 2rem;">号</span></span>{{orderPlaceInvoiceInfo?.number}}</p>
+        </div>
+      </div>
+      <div class="weui-cell">
         <div class="weui-cell__hd">
           <span style="vertical-align: middle">备注：</span>
         </div>

@@ -5,6 +5,25 @@ import {EventEmitter, Injectable} from '@angular/core';
 })
 export class GlobalService {
   public remindEvent = new EventEmitter<any>();
-  public addressEvent: any;
-  constructor() { }
+  public addressEvent: any = null;
+  public invoiceEvent: any = null;
+  public orderPlaceInfo: any;
+  constructor() {
+    if (!sessionStorage) {
+      throw new Error('Current browser does not support Local Storage');
+    }
+    this.orderPlaceInfo = sessionStorage;
+  }
+  public orderPlaceSetObject(key: string, value: any): void {
+    this.orderPlaceInfo[key] = JSON.stringify(value);
+  }
+  public orderPlaceGetObject(key: string): any {
+    return JSON.parse(this.orderPlaceInfo[key] || 0);
+  }
+  public orderPlaceRemove(key: string): any {
+    this.orderPlaceInfo.removeItem(key);
+  }
+  public orderPlaceDel(): any {
+    this.orderPlaceInfo.clear();
+  }
 }

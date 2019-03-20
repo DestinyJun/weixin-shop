@@ -12,7 +12,14 @@ import {GlobalService} from '../../common/services/global.service';
   encapsulation: ViewEncapsulation.None
 })
 export class OrderPlaceComponent implements OnInit {
-  public orderPlaceAddress: any = null;
+  // data
+  public orderPlaceAddressInfo: any = null;
+  public orderPlaceInvoiceInfo: any = null;
+  public orderPlaceInfo: any = {
+    addressId: '',
+    invoiceId: '',
+    goodsItem: [],
+  };
   // toast
   @ViewChild('success') successToast: ToastComponent;
   // scroll
@@ -33,6 +40,7 @@ export class OrderPlaceComponent implements OnInit {
   // goodsinfo
   public totalPrice = 0;
   public goodsInfo: any[];
+
   /*public goodsInfo = [
     {mainImage: 'assets/images/weui-img.png', title: '八宝五胆药墨（一锭）', info: '八宝五胆药墨简介', originalPrice: 100.00, amount: 0},
     {mainImage: 'assets/images/weui-img.png', title: '八宝五胆药墨（二锭）', info: '八宝五胆药墨简介', originalPrice: 200.00, amount: 0},
@@ -41,37 +49,81 @@ export class OrderPlaceComponent implements OnInit {
     private router: Router,
     private orderSrv: OrderService,
     private globalService: GlobalService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    this.orderPlaceAddress = this.globalService.addressEvent;
-    console.log(this.orderPlaceAddress);
+    this.orderPlaceAddressInfo = this.globalService.addressEvent;
+    this.orderPlaceInvoiceInfo = this.globalService.invoiceEvent;
+    if (this.orderPlaceAddressInfo) {
+      this.orderPlaceInfo.addressId = this.orderPlaceAddressInfo.id;
+    }
+    if (this.orderPlaceInvoiceInfo) {
+      this.orderPlaceInfo.invoiceId = this.orderPlaceInvoiceInfo.id;
+    }
+    this.orderPlaceInitialize();
+  }
+  // get goods
+  public orderPlaceInitialize (): void {
     this.orderSrv.orderGetGoods({}).subscribe(
       (val) => {
         if (val.status === 200) {
-          val.datas.map((item) => {
-            item['amount'] = null;
+          val.datas.map((item, index) => {
+            item['amount'] = parseInt(this.globalService.orderPlaceGetObject('goods' + index), 10);
+            if (item.amount) {
+              this.orderPlaceInfo.goodsItem.push({
+                goodsId: item.id,
+                quantity: item.amount,
+              });
+            }
+            this.totalPrice += item.originalPrice * item.amount;
           });
           this.goodsInfo = val.datas;
         }
       }
     );
   }
-  public goodsTotalCount (event, i): void {
-    console.log(event);
+ // goods count
+  public goodsTotalCount(event, i): void {
+    this.orderPlaceInfo.goodsItem = [];
     this.totalPrice = 0;
+    this.globalService.orderPlaceSetObject(`goods${i}`, event);
     this.goodsInfo[i].amount = event;
     this.goodsInfo.map((item) => {
+      if (item.amount) {
+        this.orderPlaceInfo.goodsItem.push({
+          goodsId: item.id,
+          quantity: item.amount,
+        });
+      }
       this.totalPrice += item.originalPrice * item.amount;
     });
-    console.log(this.totalPrice);
   }
+
+  // get Invoice
+  public getInvoiceClick(): void {
+    if (this.orderPlaceAddressInfo) {
+      this.router.navigate(['/order/orinvoice', this.orderPlaceAddressInfo.parentId]);
+      return;
+    }
+    this.onToastShow('success');
+  }
+
+  // order place
+  public submitOrder() {
+    this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.globalService.orderPlaceDel();
+          this.router.navigate(['/pay/sure', this.totalPrice]);
+        }
+      }
+    );
+  }
+
+  // toast
   public onToastShow(type: 'success' | 'loading') {
     (<ToastComponent>this[`${type}Toast`]).onShow();
-  }
-  public submitOrder() {
-    this.onToastShow('success');
-    this.router.navigate(['/pay']);
   }
 
 }

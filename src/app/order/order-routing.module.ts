@@ -6,7 +6,7 @@ import {OrderInvoiceComponent} from './order-invoice/order-invoice.component';
 const tabRoutes: Routes = [
   {path: '', component: OrderPlaceComponent},
   {path: 'orclient', component: OrderClientComponent},
-  {path: 'orinvoice', component: OrderInvoiceComponent},
+  {path: 'orinvoice/:id', component: OrderInvoiceComponent},
 ];
 @NgModule({
   imports: [RouterModule.forChild(tabRoutes)],

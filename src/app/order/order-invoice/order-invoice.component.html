@@ -1,10 +1,10 @@
 <div class="order-invoice">
-  <app-header [option]="headerOption"></app-header>
-  <div class="invoice">
+  <app-header [option]="headerOption" (headerRightClick)="orderAddBillClick()"></app-header>
+  <div class="order-invoice-select">
     <div class="weui-cells weui-cells_checkbox">
       <label class="weui-cell weui-check__label" for="s11">
         <div class="weui-cell__hd">
-          <input type="radio" class="weui-check" name="checkbox" id="s11" value="noinvoice" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+          <input type="radio" class="weui-check" name="checkbox" id="s11" value="noinvoice" [(ngModel)]="orderAddRadioRes.invoiceType" (change)="radioResChanges()">
           <i class="weui-icon-checked"></i>
         </div>
         <div class="weui-cell__bd">
@@ -15,53 +15,50 @@
     <div class="weui-cells weui-cells_checkbox">
       <div class="weui-cell">
         <label class="weui-cell__hd weui-check__label" for="s12" style="margin-right: 20px">
-          <input type="radio" class="weui-check" name="checkbox" id="s12" value="personal" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+          <input type="radio" class="weui-check" name="checkbox" id="s12" value="individual" [(ngModel)]="orderAddRadioRes.invoiceType" (change)="radioResChanges()">
           <i class="weui-icon-checked"></i>
           <span>个人</span>
         </label>
         <label class="weui-cell__bd weui-check__label" for="s13">
-          <input type="radio" class="weui-check" name="checkbox" id="s13" value="company" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+          <input type="radio" class="weui-check" name="checkbox" id="s13" value="company" [(ngModel)]="orderAddRadioRes.invoiceType" (change)="radioResChanges()">
           <i class="weui-icon-checked"></i>
           <span>公司</span>
         </label>
       </div>
-      <div class="weui-cell personal-input" *ngIf="radioRes.radio === 'personal'">
+      <div class="weui-cell personal-input" *ngIf="orderAddRadioRes.invoiceType === 'individual'">
         <div class="weui-cell__bd">
-          <input class="weui-input" type="text" placeholder="请填写发票抬头" [(ngModel)]="radioRes.txt" name="txt" (change)="radioResChanges()">
+          <input class="weui-input" type="text" placeholder="请填写发票抬头" [(ngModel)]="orderAddRadioRes.title" name="txt" (change)="radioResChanges()">
         </div>
       </div>
-      <div class="company-input" *ngIf="radioRes.radio === 'company'">
+      <div class="company-input" *ngIf="orderAddRadioRes.invoiceType === 'company'">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请填写发票抬头" [(ngModel)]="radioRes.txt" name="txt" (change)="radioResChanges()">
+            <input class="weui-input" type="text" placeholder="请填写发票抬头" [(ngModel)]="orderAddRadioRes.title" name="txt" (change)="radioResChanges()">
           </div>
         </div>
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="请填写纳税人识别号" [(ngModel)]="radioRes.txtNum" name="txt" (change)="radioResChanges()">
+            <input class="weui-input" type="text" placeholder="请填写纳税人识别号" [(ngModel)]="orderAddRadioRes.number" name="txt" (change)="radioResChanges()">
           </div>
         </div>
       </div>
-
     </div>
   </div>
-  <div class="history-invoice">
+  <div class="order-invoice-history">
     <div class="weui-cells__title">已有发票信息</div>
-    <div class="weui-cells weui-cells_radio">
-      <label class="weui-cell weui-check__label">
-        <div class="weui-cell__hd">
-          <p>发票抬头</p>
-          <p>税<span class="pull-right">号</span></p>
-        </div>
+    <div class="weui-cells" *ngIf="orderBill | async as orderBill; else loading">
+      <div class="weui-cell" *ngFor="let item of orderBill?.datas" (click)="orderBillClick(item)">
         <div class="weui-cell__bd">
-          <p>贵州四季常青药业</p>
-          <p>544554545478798798</p>
+          <p><span class="left">发票抬头</span>{{item?.title}}</p>
+          <p *ngIf="item?.number"><span class="left">税<span style="margin-left: 2rem;">号</span></span>{{item?.number}}</p>
         </div>
-        <div class="weui-cell__ft">
-          <input type="checkbox" class="weui-check" [(ngModel)]="radioRes.hisRadio" name="hisRadio" value="hisRadio1" id="radio1" (change)="radioResChanges()">
-          <span class="weui-icon-checked"></span>
-        </div>
-      </label>
+      </div>
     </div>
+    <ng-template #loading>
+      <div style="color: #03A9F4;text-align: center;font-size: 0.8rem">
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+      </div>
+    </ng-template>
   </div>
 </div>

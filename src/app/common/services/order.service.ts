@@ -11,7 +11,20 @@ export class OrderService {
     private http: HttpClient
   ) { }
 
+  // goods list
   public orderGetGoods(params): Observable<any> {
     return this.http.post('/goods/list', params);
+  }
+  // get invoice
+  public orderGetInvoice(params): Observable<any> {
+    return this.http.post(`/invoice/ListFindById`, params);
+  }
+  // add invoice
+  public orderAddInvoice(params): Observable<any> {
+    return this.http.post(`/invoice/add`, params);
+  }
+  // add order
+  public orderPlace(params): Observable<any> {
+    return this.http.post(`/moayoOrder/confirmOrder`, params);
   }
 }

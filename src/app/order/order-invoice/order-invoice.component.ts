@@ -1,5 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {ActivatedRoute, Params} from '@angular/router';
+import {Observable} from 'rxjs';
+import {OrderService} from '../../common/services/order.service';
+import {GlobalService} from '../../common/services/global.service';
 
 @Component({
   selector: 'app-order-invoice',
@@ -16,24 +20,65 @@ export class OrderInvoiceComponent implements OnInit {
     },
     rightContent: {
       title: '提交',
-      color: '#86B876'
+      color: '#8C8C8C'
     }
   };
   // radio
-  radioRes: any = {
-    radio: 'noinvoice',
-    txt: '',
-    txtNum: '',
-    hisRadio: ''
+  public orderAddRadioRes: any = {
+    invoiceType: 'noinvoice',
+    title: null,
+    number: null,
   };
-  constructor() { }
+  // bill list
+  public orderBill: Observable<any>;
+  // data
+  public orderClientId: any = null;
+  constructor(
+    private orderSrv: OrderService,
+    private globalSrv: GlobalService,
+    private routeInfo: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.routeInfo.params.subscribe((params: Params) => {
+      this.orderClientId = params['id'];
+      this.orderInvocInitialize(params['id']);
+    });
   }
+  // Initialize
+  public orderInvocInitialize (id): void {
+    this.orderBill = this.orderSrv.orderGetInvoice({contactsId: id});
+  }
+  // radio change
   public radioResChanges() {
-    if (this.radioRes.radio === 'noinvoice') {
-      this.radioRes.hisRadio = '';
+    if (this.orderAddRadioRes.invoiceType !== 'noinvoice') {
+      this.headerOption.rightContent.color = '#86B876';
+    } else {
+      this.headerOption.rightContent.color = '#8C8C8C';
+      window.history.back();
     }
-    console.log(this.radioRes);
+  }
+  // add click
+  public orderAddBillClick (): void {
+    if (this.orderAddRadioRes.invoiceType !== 'noinvoice') {
+      this.orderAddRadioRes.contactsId = this.orderClientId;
+      this.orderSrv.orderAddInvoice(this.orderAddRadioRes).subscribe(
+        (val) => {
+          if (val.status === 200) {
+            this.orderAddRadioRes = {
+              invoiceType: 'individual',
+              title: null,
+              number: null,
+            };
+            this.orderInvocInitialize(this.orderClientId);
+          }
+        }
+      );
+    }
+  }
+  // bill click
+  public orderBillClick (item): void {
+    this.globalSrv.invoiceEvent = item;
+    window.history.back();
   }
 }

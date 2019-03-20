@@ -8,9 +8,10 @@ import { OrderInvoiceComponent } from './order-invoice/order-invoice.component';
 import {HeaderModule} from '../common/components/header/header.module';
 import {FormsModule} from '@angular/forms';
 import {GlobalService} from '../common/services/global.service';
+import { OrderSureComponent } from './order-sure/order-sure.component';
 
 @NgModule({
-  declarations: [OrderPlaceComponent, OrderClientComponent, OrderInvoiceComponent],
+  declarations: [OrderPlaceComponent, OrderClientComponent, OrderInvoiceComponent, OrderSureComponent],
   imports: [
     CommonModule,
     OrderRoutingModule,
