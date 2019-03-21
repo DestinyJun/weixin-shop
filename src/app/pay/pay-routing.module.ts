@@ -4,7 +4,7 @@ import {PayWayComponent} from './pay-way/pay-way.component';
 import {PaySuccessComponent} from './pay-success/pay-success.component';
 import {PayPasswordComponent} from './pay-password/pay-password.component';
 const payRoutes: Routes = [
-  {path: 'sure/:total', component: PayWayComponent},
+  {path: 'sure', component: PayWayComponent},
   {path: 'success', component: PaySuccessComponent},
   {path: 'resetpwd', component: PayPasswordComponent},
 ];

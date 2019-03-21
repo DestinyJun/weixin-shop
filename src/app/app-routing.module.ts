@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import {ErrorRemindComponent} from './error-remind/error-remind.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/registered', pathMatch: 'full'},
@@ -9,6 +10,7 @@ const routes: Routes = [
   {path: 'pay', loadChildren: './pay/pay.module#PayModule'},
   {path: 'mine', loadChildren: './mine/mine.module#MineModule'},
   {path: 'client', loadChildren: './client/client.module#ClientModule'},
+  {path: '*', component: ErrorRemindComponent},
 ];
 
 @NgModule({

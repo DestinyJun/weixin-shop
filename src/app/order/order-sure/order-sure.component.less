@@ -1,0 +1,72 @@
+.order-sure{
+  height: 100vh;
+  background-color: #F1F1F1;
+  .order-sure-address{
+    color: #636363;
+    font-size: 1rem;
+  }
+  .order-sure-goods{
+    .weui-panel.weui-panel_access.commodity{
+      margin-top: 1.17647059em;
+      .weui-panel__bd{
+        .weui-total{
+          font-size: 1rem;
+          padding: 10px 15px;
+          overflow: hidden;
+          div{
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+  .order-sure-bill{
+    .weui-cells{
+      .weui-cell{
+        font-size: 1rem;
+        .weui-cell__bd{
+          .weui-input{
+            &::placeholder{
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+  .weui-footer{
+    bottom: 0;
+    .weui-flex{
+      .weui-flex__item{
+        height: 50px;
+        line-height: 50px;
+      }
+      .weui-flex__item:nth-child(1){
+        text-align: left;
+        flex: 2;
+        background: white;
+        padding-left: 15px;
+      }
+      .weui-flex__item:nth-child(2){
+        background: #7FB56E;
+      }
+    }
+  }
+}
+.order-sure-mask{
+  position: fixed;
+  z-index: 1000;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  .loading{
+    color: white;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 100vh;
+  }
+}

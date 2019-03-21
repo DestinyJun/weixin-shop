@@ -2,7 +2,7 @@
   height: 100vh;
   background-color: #F1F1F1;
   .order-place-address{
-    color: #C1C1C1;
+    //color: ;
     font-size: 1rem;
   }
   .order-place-goods{
@@ -37,14 +37,11 @@
     .weui-cells{
       .weui-cell{
         font-size: 1rem;
-      }
-      .center{
         .weui-cell__bd{
-          .left{
-            color: #8C8C8C;
-            width: 4rem;
-            display: inline-block;
-            margin-right: 15px;
+          .weui-input{
+            &::placeholder{
+              text-align: right;
+            }
           }
         }
       }

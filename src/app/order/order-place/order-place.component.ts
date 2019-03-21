@@ -19,6 +19,7 @@ export class OrderPlaceComponent implements OnInit {
     addressId: '',
     invoiceId: '',
     goodsItem: [],
+    remark: ''
   };
   // toast
   @ViewChild('success') successToast: ToastComponent;
@@ -40,11 +41,6 @@ export class OrderPlaceComponent implements OnInit {
   // goodsinfo
   public totalPrice = 0;
   public goodsInfo: any[];
-
-  /*public goodsInfo = [
-    {mainImage: 'assets/images/weui-img.png', title: '八宝五胆药墨（一锭）', info: '八宝五胆药墨简介', originalPrice: 100.00, amount: 0},
-    {mainImage: 'assets/images/weui-img.png', title: '八宝五胆药墨（二锭）', info: '八宝五胆药墨简介', originalPrice: 200.00, amount: 0},
-  ];*/
   constructor(
     private router: Router,
     private orderSrv: OrderService,
@@ -55,6 +51,7 @@ export class OrderPlaceComponent implements OnInit {
   ngOnInit() {
     this.orderPlaceAddressInfo = this.globalService.addressEvent;
     this.orderPlaceInvoiceInfo = this.globalService.invoiceEvent;
+    console.log(this.orderPlaceAddressInfo);
     if (this.orderPlaceAddressInfo) {
       this.orderPlaceInfo.addressId = this.orderPlaceAddressInfo.id;
     }
@@ -114,8 +111,9 @@ export class OrderPlaceComponent implements OnInit {
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
         if (val.status === 200) {
+          console.log(val);
           this.globalService.orderPlaceDel();
-          this.router.navigate(['/pay/sure', this.totalPrice]);
+          this.router.navigate(['/pay/sure', 21]);
         }
       }
     );

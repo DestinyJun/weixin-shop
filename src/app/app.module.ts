@@ -6,10 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './common/services/auth.interceptor';
 import {WeUiModule} from 'ngx-weui';
+import { ErrorRemindComponent } from './error-remind/error-remind.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorRemindComponent
   ],
   imports: [
     BrowserModule,
