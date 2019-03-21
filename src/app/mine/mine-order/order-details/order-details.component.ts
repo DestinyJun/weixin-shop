@@ -1,5 +1,8 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
+import {Observable} from 'rxjs';
+import {MineOrderService} from '../../../common/services/mine-order.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-order-details',
@@ -20,32 +23,7 @@ export class OrderDetailsComponent implements OnInit {
     }
   };
   // details list
-  public detailsData: any = {
-    'addressModel': {
-      'address': '贵州省贵阳市观山湖区金融城MAX',
-      'createdDate': 1550204337000,
-      'id': 1,
-      'lastModifiedDate': 1550215494000,
-      'name': '王明',
-      'phone': '18745787842'
-    },
-    'amount': 2.000000,
-    'amountPaid': 0.000,
-    'createdDate': 1550729921000,
-    'id': 1,
-    'invoiceModel': {
-      'createdDate': 1550214198000,
-      'id': 1,
-      'invoiceType': 'company',
-      'lastModifiedDate': 1550215556000,
-      'number': '0987654321',
-      'title': 'title'
-    },
-    'lastModifiedDate': 1550729921000,
-    'price': 2.000000,
-    'sn': '2019',
-    'status': 'pendingPayment'
-  };
+  public detailsData: Observable<any>;
   // order list
   public goodsInfo = [
     {imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（一锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 100.00, amount: 0},
@@ -54,10 +32,15 @@ export class OrderDetailsComponent implements OnInit {
   public payStatus = 1;
 
 
-  constructor() {
-  }
+  constructor(
+    private mOrderSrv: MineOrderService,
+    private routerInfo: ActivatedRoute
+  ) {}
 
   ngOnInit() {
+    this.routerInfo.params.subscribe(params => this.mineOrdDetailInit(params.id));
   }
-
+  public mineOrdDetailInit (id): void {
+    this.detailsData = this.mOrderSrv.mineOrdGetDetail({orderId: id});
+  }
 }

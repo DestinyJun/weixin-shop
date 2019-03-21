@@ -52,14 +52,44 @@ export class MineOrderComponent implements OnInit {
 
   public mOrderInit(): void {
     this.globalSrv.remindEvent.next({msg: '加载中...', status: false});
-    this.mOrderSrv.getMineOrderList({currentPag: '1', status: 'pendingReview'}).subscribe(
+    this.mOrderSrv.getMineOrderList({currentPage: '1'}).subscribe(
       (val) => {
         if (val.status === 200 ) {
           this.globalSrv.remindEvent.next({msg: '加载完毕...', status: true});
-          this.mOrderList = val.datas;
+          // this.mOrderList = val.datas;
           console.log(val);
+          this.orderSerialization(val.datas);
         }
       }
     );
+  }
+  // scroll
+  public mineOrderLoadMore(comp: InfiniteLoaderComponent): void {
+    comp.setFinished();
+  }
+  // client Serialization
+  public orderSerialization(params): void {
+    this.mOrderList = [];
+    const a = [];
+    const b = [];
+    params.map((item) => {
+      b.push(item.createdDate.slice(0, 10));
+    });
+    for (const s in b) {
+      if (b) {
+        if (a.indexOf(b[s]) < 0) {
+          a.push(b[s]);
+        }
+      }
+    }
+    a.map((val) => {
+      const c = [];
+      params.map((pItem) => {
+        if (pItem.createdDate.slice(0, 10) === val) {
+          c.push(pItem);
+        }
+      });
+      this.mOrderList.push({times: val, value: c });
+    });
   }
 }

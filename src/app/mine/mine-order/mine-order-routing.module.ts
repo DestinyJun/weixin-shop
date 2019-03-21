@@ -4,7 +4,7 @@ import {MineOrderComponent} from './mine-order.component';
 import {OrderDetailsComponent} from './order-details/order-details.component';
 const tabRoutes: Routes = [
   {path: '', component: MineOrderComponent},
-  {path: 'detail', component: OrderDetailsComponent},
+  {path: 'detail/:id', component: OrderDetailsComponent},
 ];
 @NgModule({
   imports: [RouterModule.forChild(tabRoutes)],

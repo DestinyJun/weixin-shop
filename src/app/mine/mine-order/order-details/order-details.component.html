@@ -1,4 +1,5 @@
-<div class="order-details">
+<div class="order-details" *ngIf="detailsData | async as detailsData">
+  {{detailsData}}
   <div class="order-details-header">
     <app-header [option]="headerOption"></app-header>
   </div>
@@ -28,8 +29,8 @@
                  alt="">
           </div>
           <div class="weui-cell__bd">
-            <p style="font-size: 1.3rem;">{{item.goodsName}}</p>
-            <p style="font-size: 1rem;color: #888888;">{{item.goodsDesc}}</p>
+            <p style="font-size: 1.1rem;">{{item.goodsName}}</p>
+            <p style="font-size: 0.8rem;color: #888888;">{{item.goodsDesc}}</p>
           </div>
           <div class="weui-cell__ft">
             <p>￥100</p>
