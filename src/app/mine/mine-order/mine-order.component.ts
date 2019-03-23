@@ -51,11 +51,10 @@ export class MineOrderComponent implements OnInit {
   }
 
   public mOrderInit(): void {
-    this.globalSrv.remindEvent.next({msg: '加载中...', status: false});
     this.mOrderSrv.getMineOrderList({currentPage: '1'}).subscribe(
       (val) => {
+        console.log(val);
         if (val.status === 200 ) {
-          this.globalSrv.remindEvent.next({msg: '加载完毕...', status: true});
           // this.mOrderList = val.datas;
           console.log(val);
           this.orderSerialization(val.datas);
@@ -91,5 +90,6 @@ export class MineOrderComponent implements OnInit {
       });
       this.mOrderList.push({times: val, value: c });
     });
+    console.log(this.mOrderList);
   }
 }

@@ -10,6 +10,8 @@ import { OrderLogisticsComponent } from './order-logistics/order-logistics.compo
 import {HeaderModule} from '../../common/components/header/header.module';
 import {WeUiModule} from 'ngx-weui';
 import {FormsModule} from '@angular/forms';
+import { OrderAftsaleComponent } from './order-aftsale/order-aftsale.component';
+import { OrderRetreatComponent } from './order-retreat/order-retreat.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import {FormsModule} from '@angular/forms';
     OrderPendreceComponent,
     OrderCompleteComponent,
     OrderDetailsComponent,
-    OrderLogisticsComponent
+    OrderLogisticsComponent,
+    OrderAftsaleComponent,
+    OrderRetreatComponent
   ],
   imports: [
     CommonModule,

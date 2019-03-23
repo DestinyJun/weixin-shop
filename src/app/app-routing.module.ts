@@ -10,7 +10,7 @@ const routes: Routes = [
   {path: 'pay', loadChildren: './pay/pay.module#PayModule'},
   {path: 'mine', loadChildren: './mine/mine.module#MineModule'},
   {path: 'client', loadChildren: './client/client.module#ClientModule'},
-  {path: '*', component: ErrorRemindComponent},
+  {path: 'error', component: ErrorRemindComponent},
 ];
 
 @NgModule({

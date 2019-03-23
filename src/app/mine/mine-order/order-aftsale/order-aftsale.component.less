@@ -1,0 +1,45 @@
+.order-aftsale{
+  height: 100vh;
+  background-color: #F1F1F1;
+  position: relative;
+  .order-aftsal-product{
+    margin-top: 15px;
+    .weui-panel{
+      .weui-panel__hd{
+        color: #000000;
+        font-size: 1rem;
+        .weui-cell{
+          padding: 0;
+        }
+      }
+    }
+  }
+  .order-aftsal-select{
+    .weui-cells{
+      .weui-cell{
+        .weui-cell__hd{
+          color: #7FB56E;
+        }
+        .weui-cell__bd{
+          padding-left: 15px;
+        }
+      }
+    }
+  }
+}
+.order-aftsale-mask{
+  position: fixed;
+  z-index: 1000;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  .loading{
+    color: white;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 100vh;
+  }
+}

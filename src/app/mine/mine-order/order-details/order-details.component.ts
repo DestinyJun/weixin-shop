@@ -3,6 +3,7 @@ import {HeaderContent} from '../../../common/components/header/header.model';
 import {Observable} from 'rxjs';
 import {MineOrderService} from '../../../common/services/mine-order.service';
 import {ActivatedRoute} from '@angular/router';
+import {InfiniteLoaderConfig} from 'ngx-weui';
 
 @Component({
   selector: 'app-order-details',
@@ -21,6 +22,10 @@ export class OrderDetailsComponent implements OnInit {
       title: '',
       color: '#86B876'
     }
+  };
+  // scroll
+  ordDeilScrollConfig: InfiniteLoaderConfig = {
+    height: 'auto'
   };
   // details list
   public detailsData: Observable<any>;

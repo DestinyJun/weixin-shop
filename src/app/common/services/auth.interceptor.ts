@@ -4,76 +4,45 @@ import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import {catchError, map, mergeMap} from 'rxjs/operators';
 import {GlobalService} from './global.service';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       headers: req.headers.set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MzI0MTA2NX0.a-0vrExA7WYjworPEU5J85sC5MMpX71YS6mFVSQjcl3YOIiR5MSk45tzViSs84Gfm51kXjAK12KICxvcYOzlYA')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MzQwMjAxMn0.F4Aa8pPOJLiVe8IHyPY2GeDIhi4OOx8c0yv0NaXHX938FaQ-3awiK6oNN-A6-v9ZDF4FB3w3_g30nenuVpLZ4g')
     });
     return next.handle(clonedRequest).pipe(
-      /*mergeMap((event: any) => {
-        this.globalService.remindEvent.next({type: 'loading'});
-       /!* if (event instanceof HttpResponse && event.status === 200) {
-          // return this.handleData(event); // 具体处理请求返回数据
-          return Observable.create(observer => observer.next(event)); // 请求成功返回响应
-        }*!/
-        // return Observable.create(observer => observer.next(event)); // 请求成功返回响应
-        console.log(event);
-        if (event instanceof HttpResponse && event.status === 200) {
-          this.globalService.remindEvent.next({type: 'loading', close: true});
-        }
-        return Observable.create(observer => observer.next(event)); // 请求成功返回响应
-      }),*/
       map((event: any, ) => {
-        // console.log(event);
         if (event.status === 200) {
           return event;
-        } else {
-         console.log('找不到服务器');
         }
-        /* if (event.body && event.body.status === 200) {
-         return event;
-       } else if (event.body && event.body.status === 403) {
-         console.log('未授权');
-       } else if (event.body && event.body.status === 40001) {
-         console.log('参数错误或者为空');
-       } else if (event.body && event.body.status === 40002) {
-         console.log('操作失败');
-       } else if (event.body && event.body.status === 40003) {
-         console.log('安全错误、必须先通过验证码验证');
-       } else if (event.body && event.body.status === 40004) {
-         console.log('查询不到数据');
-         return event;
-       } else if (event.body && event.body.status === 40005 ) {
-         console.log('参数不符合规则');
-       } else if (event.body && event.body.status === 40006 ) {
-         console.log('验证码验证失败');
-       } else if (event.body && event.body.status === 40007 ) {
-         console.log('下单失败，请联系后台人员');
-       } else if (event.body && event.body.status === 40008 ) {
-         console.log('支付密码验证错误');
-       } else if (event.body && event.body.status === 40009 ) {
-         console.log('余额不足');
-       } else if (event.body && event.body.status === 40010 ) {
-         console.log('支付密码过时');
-       } else if (event.body && event.body.status === 40011 ) {
-         console.log('订单状错误');
-       }*/
       }),
       catchError((err: HttpErrorResponse) => {
         return Observable.create(observer => observer.next(err));
-        // console.log(err);
-        // return this.handleData(err);
-        // return Observable.create(observer => observer.next(err));
       })
     );
   }
+
+  /*mergeMap((event: any) => {
+       this.globalService.remindEvent.next({type: 'loading'});
+      /!* if (event instanceof HttpResponse && event.status === 200) {
+         // return this.handleData(event); // 具体处理请求返回数据
+         return Observable.create(observer => observer.next(event)); // 请求成功返回响应
+       }*!/
+       // return Observable.create(observer => observer.next(event)); // 请求成功返回响应
+       console.log(event);
+       if (event instanceof HttpResponse && event.status === 200) {
+         this.globalService.remindEvent.next({type: 'loading', close: true});
+       }
+       return Observable.create(observer => observer.next(event)); // 请求成功返回响应
+     }),*/
 /*  private handleData(event: HttpResponse<any> | HttpErrorResponse): Observable<any> {
     console.log(event);
     // 业务处理：一些通用操作
@@ -123,4 +92,33 @@ export class AuthInterceptor implements HttpInterceptor {
         return of(event);
     }
   }*/
+
+  /* if (event.body && event.body.status === 200) {
+        return event;
+      } else if (event.body && event.body.status === 403) {
+        console.log('未授权');
+      } else if (event.body && event.body.status === 40001) {
+        console.log('参数错误或者为空');
+      } else if (event.body && event.body.status === 40002) {
+        console.log('操作失败');
+      } else if (event.body && event.body.status === 40003) {
+        console.log('安全错误、必须先通过验证码验证');
+      } else if (event.body && event.body.status === 40004) {
+        console.log('查询不到数据');
+        return event;
+      } else if (event.body && event.body.status === 40005 ) {
+        console.log('参数不符合规则');
+      } else if (event.body && event.body.status === 40006 ) {
+        console.log('验证码验证失败');
+      } else if (event.body && event.body.status === 40007 ) {
+        console.log('下单失败，请联系后台人员');
+      } else if (event.body && event.body.status === 40008 ) {
+        console.log('支付密码验证错误');
+      } else if (event.body && event.body.status === 40009 ) {
+        console.log('余额不足');
+      } else if (event.body && event.body.status === 40010 ) {
+        console.log('支付密码过时');
+      } else if (event.body && event.body.status === 40011 ) {
+        console.log('订单状错误');
+      }*/
 }
