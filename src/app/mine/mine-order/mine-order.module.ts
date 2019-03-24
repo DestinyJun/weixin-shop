@@ -11,7 +11,8 @@ import {HeaderModule} from '../../common/components/header/header.module';
 import {WeUiModule} from 'ngx-weui';
 import {FormsModule} from '@angular/forms';
 import { OrderAftsaleComponent } from './order-aftsale/order-aftsale.component';
-import { OrderRetreatComponent } from './order-retreat/order-retreat.component';
+import { OrderRefundComponent } from './order-refund/order-refund.component';
+import { OrderReturnComponent } from './order-return/order-return.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { OrderRetreatComponent } from './order-retreat/order-retreat.component';
     OrderDetailsComponent,
     OrderLogisticsComponent,
     OrderAftsaleComponent,
-    OrderRetreatComponent
+    OrderRefundComponent,
+    OrderReturnComponent
   ],
   imports: [
     CommonModule,

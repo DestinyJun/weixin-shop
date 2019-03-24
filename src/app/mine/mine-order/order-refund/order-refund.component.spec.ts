@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrderRetreatComponent } from './order-retreat.component';
+import { OrderRefundComponent } from './order-refund.component';
 
-describe('OrderRetreatComponent', () => {
-  let component: OrderRetreatComponent;
-  let fixture: ComponentFixture<OrderRetreatComponent>;
+describe('OrderRefundComponent', () => {
+  let component: OrderRefundComponent;
+  let fixture: ComponentFixture<OrderRefundComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrderRetreatComponent ]
+      declarations: [ OrderRefundComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrderRetreatComponent);
+    fixture = TestBed.createComponent(OrderRefundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

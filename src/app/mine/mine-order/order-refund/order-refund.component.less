@@ -1,0 +1,102 @@
+.order-refund{
+  height: 100vh;
+  background-color: #F1F1F1;
+  position: relative;
+  .order-refund-progress{
+    .weui-cells{
+      .weui-cell{
+        justify-content: center;
+        padding: 20px 15px;
+        .circle-box{
+          flex: 1;
+          text-align: center;
+          font-size: 0.8rem;
+          color: #7FB56E;
+          min-width: 3.2rem;
+          position: relative;
+          .circle{
+            display: inline-block;
+            height: 12px;
+            width: 12px;
+            background-color: #7FB56E;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px #BFDAB6;
+          }
+          .line{
+            position: absolute;
+            top: 0;
+            right: -3.5rem;
+            bottom: 0;
+            display: inline-block;
+            height: 1px;
+            width: 5rem;
+            background-color: #7FB56E;
+            margin: 0.4rem 15px;
+          }
+        }
+      }
+    }
+  }
+  .order-refund-product{
+    margin-top: 15px;
+    .weui-panel{
+      .weui-panel__hd{
+        color: #000000;
+        font-size: 1rem;
+        .weui-cell{
+          padding: 0;
+        }
+      }
+    }
+  }
+  .order-refund-remark{
+    .weui-cells{
+      .weui-cell{
+        font-size: 1rem;
+        .weui-cell__hd{
+          position: relative;
+          .badge{
+            position: absolute;
+            top: 0;
+            left: -10px;
+            font-size: 1rem;
+          }
+        }
+        .weui-cell__bd{
+          padding-left: 15px;
+          .weui-uploader{
+            .weui-uploader__bd{
+              .weui-uploader__input-box{
+                border-radius: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .order-refund-submit{
+    .weui-footer_fixed-bottom{
+      bottom: 0;
+      .weui-btn{
+        border-radius: 0;
+      }
+    }
+  }
+}
+.order-refund-mask{
+  position: fixed;
+  z-index: 1000;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  .loading{
+    color: white;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 100vh;
+  }
+}

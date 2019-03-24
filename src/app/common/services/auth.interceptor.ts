@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       headers: req.headers.set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MzQwMjAxMn0.F4Aa8pPOJLiVe8IHyPY2GeDIhi4OOx8c0yv0NaXHX938FaQ-3awiK6oNN-A6-v9ZDF4FB3w3_g30nenuVpLZ4g')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MzQ4OTc1NX0.kqVy_I-MQzr4qDXulYJ85HTQPaRqlA7t1Qsmh2j2d7SKPeInCVh8Xz3xnimrR-nXj-sWZVJhPhrSSjS3Ygybcg')
     });
     return next.handle(clonedRequest).pipe(
       map((event: any, ) => {
@@ -25,6 +25,9 @@ export class AuthInterceptor implements HttpInterceptor {
         }
       }),
       catchError((err: HttpErrorResponse) => {
+        if (err.status === 0) {
+          this.router.navigate(['/error']);
+        }
         return Observable.create(observer => observer.next(err));
       })
     );

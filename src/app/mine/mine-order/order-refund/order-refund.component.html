@@ -1,0 +1,123 @@
+<div class=" order-refund" *ngIf="orderDetailsData | async as detailsData; else loading">
+  <div class="order-refund-header">
+    <app-header [option]="headerOption"></app-header>
+  </div>
+  <div class="order-refund-progress">
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="circle-box">
+          <p class="circle"></p>
+          <p>填写申请</p>
+          <div class="line"></div>
+        </div>
+        <div class="circle-box">
+          <p class="circle"></p>
+          <p>等待审核</p>
+          <div class="line"></div>
+        </div>
+        <div class="circle-box">
+          <p class="circle"></p>
+          <p>退款成功</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="order-refund-product">
+    <div class="weui-panel weui-panel_access">
+      <weui-infiniteloader [config]="ordAftScrollConfig">
+        <div class="weui-panel__hd">
+          <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <p>订单号：{{detailsData?.data?.sn}}</p>
+            </div>
+            <div class="weui-cell__ft">
+              <span style="color: #ACACAC;">{{detailsData?.data?.createdDate}}</span></div>
+          </div>
+        </div>
+        <div class="weui-panel__bd">
+          <div class="weui-cell" *ngFor="let item of detailsData?.data?.moyaoOrderItemModels; let i = index">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item?.goods?.mainImage"
+                   alt="">
+            </div>
+            <div class="weui-cell__bd">
+              <p style="font-size: 1.1rem;">{{item?.goods?.title}}</p>
+              <p style="font-size: 0.8rem;color: #888888;">{{item?.goods?.info}}</p>
+            </div>
+            <div class="weui-cell__ft">
+              <p>￥{{item?.goods?.originalPrice}}</p>
+              <p>x{{item?.quantity}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="weui-panel__ft">
+          <div class="weui-cell">
+            <div class="weui-cell__bd">
+              <p>退款金额：<span style="color: #FF6464;">{{detailsData?.data?.amountPaid}}元</span></p>
+            </div>
+          </div>
+        </div>
+      </weui-infiniteloader>
+    </div>
+  </div>
+  <div class="order-refund-remark">
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__hd">
+          <span class="badge" style="color: #FF4242;">*</span>
+          <span style="vertical-align: middle">退款说明：</span>
+        </div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请填写退款原因" name="txt">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd">
+          <span style="vertical-align: middle">退款金额：</span>
+        </div>
+        <div class="weui-cell__bd">
+          <p style="color: #FF6464;">{{detailsData?.data?.amountPaid}}元</p>
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd" style="padding-left: 0">
+          <div class="weui-uploader">
+            <div class="weui-uploader__bd">
+              <ul class="weui-uploader__files">
+                <li class="weui-uploader__file" *ngFor="let item of uploader.queue"
+                    [weui-thumb]="item._file"
+                    (click)="onGallery(item)"
+                    [ngClass]="{'weui-uploader__file_status': item.isError}">
+                  <div class="weui-uploader__file-content" *ngIf="item.isUploading">{{item.progress}}%</div>
+                  <div class="weui-uploader__file-content" *ngIf="item.isError">
+                    <i class="weui-icon-warn"></i>
+                  </div>
+                </li>
+              </ul>
+              <div class="weui-uploader__input-box">
+                <input class="weui-uploader__input" type="file" accept="image/*" multiple
+                       [weui-uploader-file]="uploader">
+              </div>
+            </div>
+          </div>
+          <weui-gallery [imgs]="img" [(show)]="imgShow" (delete)="onDel($event)"></weui-gallery>
+        </div>
+      </div>
+     <!-- <div class="weui-btn-area">
+        <button weui-button (click)="uploader.uploadAll()" [disabled]="uploader.isUploading">上传</button>
+      </div>-->
+    </div>
+  </div>
+  <div class="order-refund-submit" (click)="ordRefSubClick()">
+    <div class="weui-footer weui-footer_fixed-bottom">
+      <button class="weui-btn weui-btn_primary" weui-button>提交申请</button>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <div class="order-refund-mask">
+    <div class="loading">
+      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    </div>
+  </div>
+</ng-template>
