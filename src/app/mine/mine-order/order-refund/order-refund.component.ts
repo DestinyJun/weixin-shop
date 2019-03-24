@@ -110,8 +110,12 @@ export class OrderRefundComponent implements OnInit {
     this.img = [{file: item._file, item: item}];
     this.imgShow = true;
   }
-  public onDel(item: any) {
-    console.log(item);
+  public onDel(item: any, event) {
+    if (event) {
+      event.stopPropagation();
+      this.uploader.removeFromQueue(item);
+      return;
+    }
     this.uploader.removeFromQueue(item.item);
   }
   public ordRefSubClick() {
