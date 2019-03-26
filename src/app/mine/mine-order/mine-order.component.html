@@ -7,8 +7,8 @@
       <div class="weui-flex">
         <div class="weui-flex__item" *ngFor="let item of mOrderStatusList">
           <div class="placeholder">
-            <p style="font-size: 1rem">{{item.name}}</p>
-            <p style="font-size: 0.8rem;color: #BEBEBE;">{{item.amount}}</p>
+            <p style="font-size: 1rem">{{item?.name}}</p>
+            <p style="font-size: 0.8rem;color: #BEBEBE;">{{item?.amount}}</p>
           </div>
         </div>
       </div>
@@ -28,10 +28,7 @@
                 <p style="font-size: 1rem;color: #5E5E5E;">{{childItem?.user?.username}}</p>
               </div>
               <div class="weui-cell__ft">
-                <p *ngIf="childItem?.status === 'shippe'" style="color: #7FB66E;vertical-align: middle;">待收货</p>
-                <p *ngIf="childItem?.status === 'pendingPayment'" style="color: #FF3333;vertical-align: middle;">待付款</p>
-                <p *ngIf="childItem?.status === 'completed'" style="color: #8FBD80;vertical-align: middle;">已完成</p>
-                <p *ngIf="childItem?.status === 'pendingReview'" style="color: #FF3F3F;vertical-align: middle;">退款中</p>
+                <p [ngStyle]="{'color': orderStates[childItem?.status]?.color,'vertical-align': 'middle'}">{{orderStates[childItem?.status]?.name}}</p>
                 <p style="margin-top: 8px">{{childItem?.createdDate}}</p>
               </div>
             </div>
@@ -59,15 +56,15 @@
             </div>
           </div>
           <div class="weui-panel__ft">
-            <div class="weui-flex" *ngIf="childItem?.status === 'pendingPayment'">
-              <div class="weui-flex__item">
-                <span>取消订单</span>
+            <div class="weui-flex">
+              <div class="weui-flex__item" *ngFor="let param of orderStates[childItem?.status]?.operating">
+                <span>{{param}}</span>
               </div>
-              <div class="weui-flex__item">
+             <!-- <div class="weui-flex__item">
                 <span>去付款</span>
-              </div>
+              </div>-->
             </div>
-            <div class="weui-flex" *ngIf="childItem?.status === 'shippe'">
+           <!-- <div class="weui-flex" *ngIf="childItem?.status === 'shippe'">
               <div class="weui-flex__item">
                 <span>查看物流</span>
               </div>
@@ -82,7 +79,7 @@
               <div class="weui-flex__item">
                 <span>在下一单</span>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>

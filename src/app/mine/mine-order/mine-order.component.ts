@@ -34,6 +34,20 @@ export class MineOrderComponent implements OnInit {
     /*{imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（一锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 100.00, amount: 0},
     {imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（二锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 200.00, amount: 0},*/
   ];
+  public orderStates: any = {
+    shippe: {name: '待收货', color: '#7FB56E', operating: ['查看物流', '确认收货']},
+    pendingReview: {name: '待审核', color: 'red', operating: ['', '']},
+    pendingPayment: {name: '未付款', color: 'red', operating: ['取消订单', '去付款']},
+    received: {name: '已收货', color: 'red', operating: ['取消订单', '去付款']},
+    completed: {name: '已完成', color: '#7FB56E', operating: ['删除订单', '在下一单']},
+    canceled: {name: '已取消', color: '#A0A0A0', operating: ['删除订单', '重新购买']},
+    refundReview: {name: '退款审核', color: 'red', operating: ['取消订单', '去付款']},
+    refundding: {name: '退款中', color: 'red', operating: ['取消订单', '去付款']},
+    refundded: {name: '已退款', color: 'red', operating: ['取消订单', '去付款']},
+    goodsReturnReview: {name: '退货审核', color: 'red', operating: ['取消订单', '去付款']},
+    goodsReturning: {name: '退货中', color: 'red', operating: ['取消订单', '去付款']},
+    goodsReturned: {name: '已退货', color: 'red', operating: ['取消订单', '去付款']},
+  };
   // scroll
   @ViewChild(InfiniteLoaderComponent) il;
   mOrderLoaderConfig: InfiniteLoaderConfig = {
