@@ -51,7 +51,6 @@ export class OrderPlaceComponent implements OnInit {
   ngOnInit() {
     this.orderPlaceAddressInfo = this.globalService.addressEvent;
     this.orderPlaceInvoiceInfo = this.globalService.invoiceEvent;
-    console.log(this.orderPlaceAddressInfo);
     if (this.orderPlaceAddressInfo) {
       this.orderPlaceInfo.addressId = this.orderPlaceAddressInfo.id;
     }
@@ -108,12 +107,13 @@ export class OrderPlaceComponent implements OnInit {
 
   // order place
   public submitOrder() {
+    console.log('sdadad');
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
         if (val.status === 200) {
-          console.log(val);
+          console.log(val.data);
           this.globalService.orderPlaceDel();
-          this.router.navigate(['/pay/sure', 21]);
+          this.router.navigate(['/order/sure', val.data.id]);
         }
       }
     );

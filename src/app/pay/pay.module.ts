@@ -8,6 +8,7 @@ import {HeaderModule} from '../common/components/header/header.module';
 import {FormsModule} from '@angular/forms';
 import {DialogPayModule} from '../common/components/dialog-pay/dialog-pay.module';
 import {WeUiModule} from 'ngx-weui';
+import {LoadingModule} from '../common/components/loading/loading.module';
 
 @NgModule({
   declarations: [PayWayComponent, PaySuccessComponent, PayPasswordComponent],
@@ -15,6 +16,7 @@ import {WeUiModule} from 'ngx-weui';
     CommonModule,
     PayRoutingModule,
     HeaderModule,
+    LoadingModule,
     FormsModule,
     DialogPayModule,
     WeUiModule.forRoot(),

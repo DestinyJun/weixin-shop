@@ -100,10 +100,10 @@ export class OrderRefundComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.routerInfo.params.subscribe(params => this.mineOrdDetailInit(params.id));
+    this.routerInfo.params.subscribe(params => this.mineOrdRefundInit(params.id));
   }
 
-  public mineOrdDetailInit(id): void {
+  public mineOrdRefundInit(id): void {
     this.orderDetailsData = this.mOrderSrv.mineOrdGetDetail({orderId: id});
   }
   public onGallery(item: any) {

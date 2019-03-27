@@ -1,16 +1,22 @@
 <div class="order-details" *ngIf="detailsData | async as detailsData; else loading">
-  <!--{{detailsData | json}}-->
+<!--  {{detailsData | json}}-->
   <div class="order-details-header">
     <app-header [option]="headerOption"></app-header>
   </div>
   <div class="order-details-ems">
-    <div class="weui-cells" *ngIf="payStatus === 1">
-      <div class="weui-cell">
+    <div class="weui-cells weui-cell_access"
+         [ngStyle]="{
+         'background': 'linear-gradient(to right,'+orderDetailStates[detailsData?.data?.status]?.bgColor[0] + ','+orderDetailStates[detailsData?.data?.status]?.bgColor[1]+')'
+         }">
+      <div class="weui-cell" *ngIf="detailsData?.data?.status === 'shippe'">
         <div class="weui-cell__bd">
           <p>{{detailsData?.data?.addressModel?.address}}</p>
           </div>
-        <div class="weui-cell__ft">
-          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        <div class="weui-cell__ft"></div>
+      </div>
+      <div class="weui-cell" *ngIf="detailsData?.data?.status !== 'shippe'">
+        <div class="weui-cell__bd">
+          <p style="font-size: 1.5rem">{{orderDetailStates[detailsData?.data?.status]?.name}}</p>
         </div>
       </div>
     </div>
@@ -26,8 +32,7 @@
         <div class="weui-panel__bd">
           <div class="weui-cell" *ngFor="let item of detailsData?.data?.moyaoOrderItemModels; let i = index">
             <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item?.goods?.mainImage"
-                   alt="">
+              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item?.goods?.mainImage" alt="">
             </div>
             <div class="weui-cell__bd">
               <p style="font-size: 1.1rem;">{{item?.goods?.title}}</p>
@@ -39,7 +44,10 @@
             </div>
           </div>
           <div class="weui-total">
-            <span class="pull-left" [routerLink]="['/mine/order/aftsale', 22]">申请售后</span>
+            <span
+              *ngIf="orderDetailStates[detailsData?.data?.status]?.services"
+              class="pull-left"
+              [routerLink]="['/mine/order/aftsale', detailsData?.data?.id]">{{orderDetailStates[detailsData?.data?.status]?.services}}</span>
             <p class="pull-right">
               <span>共两件商品 合计：</span>
               <span style="color: #FF4343;">￥{{detailsData?.data?.amountPaid}}</span>
@@ -61,7 +69,7 @@
       <div class="weui-cell">
         <div class="weui-cell__bd">
           <p>支付方式：微信支付</p>
-          <p>付款时间：2018-11-23 08:31:14</p>
+          <p>付款时间：{{detailsData?.data?.createdDate}}</p>
         </div>
       </div>
       <div class="weui-cell">
@@ -78,15 +86,10 @@
   </div>
   <div class="order-details-footer">
     <div class="weui-footer weui-footer_fixed-bottom">
-      <span>取消订单</span>
-      <span>去付款</span>
+      <span *ngFor="let item of orderDetailStates[detailsData?.data?.status]?.operating">{{item}}</span>
     </div>
   </div>
 </div>
 <ng-template #loading>
-  <div class="order-sure-mask">
-    <div class="loading">
-      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-    </div>
-  </div>
+
 </ng-template>

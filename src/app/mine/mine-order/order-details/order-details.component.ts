@@ -34,7 +34,23 @@ export class OrderDetailsComponent implements OnInit {
     {imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（一锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 100.00, amount: 0},
     {imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（二锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 200.00, amount: 0},
   ];
-  public payStatus = 1;
+  // order status
+  public orderDetailStates: any = {
+    shippe: {name: '待收货', bgColor: ['#80B66F', '#B0F49A'], services: '申请退款', operating: ['再次购买', '确认收货']},
+    pendingShipment: {name: '待发货', bgColor: ['#B66F6E', '#F49C9A'], services: '', operating: []},
+    pendingPayment: {name: '未付款', bgColor: ['#B66F6E', '#F49C9A'], services: '', operating: ['取消订单', '去付款']},
+    canceled: {name: '已取消', bgColor: ['#8E8E8E', '#C2C2C2'], services: '', operating: ['删除订单', '重新购买']},
+    completed: {name: '已完成', bgColor: ['#80B66F', '#B0F49A'], services: '申请退款', operating: ['删除订单', '再次购买']},
+    refundding: {name: '退款中', bgColor: ['#B66F6E', '#F49C9A'], services: '', operating: ['再次购买', '退款进度']},
+    goodsReturning: {name: '退货中', bgColor: ['#B66F6E', '#F49C9A'], services: '', operating: ['再次购买', '退货进度']},
+
+    pendingReview: {name: '待审核', bgColor: ['#B66F6E', '#F49C9A'], operating: []},
+    received: {name: '已收货', bgColor: [], operating: ['#80B66F', '#B0F49A']},
+    refundReview: {name: '退款审核', bgColor: ['#B66F6E', '#F49C9A'], operating: []},
+    refundded: {name: '已退款', bgColor: ['#B66F6E', '#F49C9A'], operating: []},
+    goodsReturnReview: {name: '退货审核', bgColor: ['#B66F6E', '#F49C9A'], operating: []},
+    goodsReturned: {name: '已退货', bgColor: ['#B66F6E', '#F49C9A'], operating: []},
+  };
 
 
   constructor(

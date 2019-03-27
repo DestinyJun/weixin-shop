@@ -33,8 +33,8 @@ export class MineWalletComponent implements OnInit {
     this.mineWalletSrv.getWalletAmount({}).subscribe(
       (val) => {
         if (val.status === 200) {
-          this.mineBalance.balance = val['remainingSum'];
-          this.mineBalance.withdraw = val['remainingSum'];
+          this.mineBalance.balance = val.data['remainingSum'] + '.00';
+          this.mineBalance.withdraw = val.data['remainingSum'] + '.00';
         }
       }
     );

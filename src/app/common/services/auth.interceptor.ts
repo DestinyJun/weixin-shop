@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       headers: req.headers.set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1MzcwMDAzNX0.bWG5Tsb5G8qRAEc9QP8TIuvWEM_-UgJdGWL1JQGeRkix_wwtZM24UsG1gFeLXioqMLx3LVTro-Dmh_D4NOlWsw')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1Mzc2NzU2NH0.viCIr6ZPhsrUi0UgYT2LC2djb6RVOqlp2zVp-kVuuZQdT-dz9yJgK6EEXoJRi58jc1P0HrfXfzCP3lW3nWNJRw')
     });
     return next.handle(clonedRequest).pipe(
       map((event: any, ) => {

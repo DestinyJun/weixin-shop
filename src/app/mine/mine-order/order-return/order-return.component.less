@@ -1,0 +1,188 @@
+.order-return{
+  height: 100vh;
+  background-color: #F1F1F1;
+  position: relative;
+  .order-return-progress{
+    .weui-cells{
+      .weui-cell{
+        justify-content: center;
+        padding: 20px 15px;
+        .circle-box{
+          flex: 1;
+          text-align: center;
+          font-size: 0.8rem;
+          color: #7FB56E;
+          min-width: 3.2rem;
+          position: relative;
+          .circle{
+            display: inline-block;
+            height: 12px;
+            width: 12px;
+            background-color: #7FB56E;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px #BFDAB6;
+          }
+          .line{
+            position: absolute;
+            top: 0;
+            right: -2.6rem;
+            bottom: 0;
+            display: inline-block;
+            height: 1px;
+            width: 3.5rem;
+            background-color: #7FB56E;
+            margin: 0.4rem 15px;
+            .small-circle{
+              position: absolute;
+              top:50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background-color: #7FB56E;
+            }
+            .small-text{
+              position: absolute;
+              top:-27px;
+              left: 50%;
+              transform: translateX(-50%);
+              font-size: 0.6rem;
+              min-width: 3.2rem;
+            }
+          }
+        }
+      }
+    }
+  }
+  .order-return-ems{
+    .weui-cells{
+      .weui-cell{
+        font-size: 1rem;
+        .weui-cell__hd{
+          position: relative;
+          .badge{
+            position: absolute;
+            top: 0;
+            left: -10px;
+            font-size: 1rem;
+          }
+        }
+        .weui-cell__bd{
+          padding-left: 15px;
+          .weui-uploader{
+            .weui-uploader__bd{
+              padding-top: 6px;
+              .weui-uploader__files{
+                .weui-uploader__file{
+                  position: relative;
+                  .del-icon{
+                    font-size: 10px;
+                    height: 13px;
+                    width: 13px;
+                    line-height: 13px;
+                    text-align: center;
+                    font-weight: bolder;
+                    position: absolute;
+                    top:-4px;
+                    right: -4px;
+                    color: #fff;
+                    background-color: #FF0000;
+                    border-radius: 50%;
+                    z-index: 1;
+                  }
+                }
+              }
+              .weui-uploader__input-box{
+                border-radius: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .order-return-product{
+    margin-top: 15px;
+    .weui-panel{
+      .weui-panel__hd{
+        color: #000000;
+        font-size: 1rem;
+        .weui-cell{
+          padding: 0;
+        }
+      }
+    }
+  }
+  .order-return-remark{
+    .weui-cells{
+      .weui-cell{
+        font-size: 1rem;
+        .weui-cell__hd{
+          position: relative;
+          .badge{
+            position: absolute;
+            top: 0;
+            left: -10px;
+            font-size: 1rem;
+          }
+        }
+        .weui-cell__bd{
+          padding-left: 15px;
+          .weui-uploader{
+            .weui-uploader__bd{
+              padding-top: 6px;
+              .weui-uploader__files{
+                .weui-uploader__file{
+                  position: relative;
+                  .del-icon{
+                    font-size: 10px;
+                    height: 13px;
+                    width: 13px;
+                    line-height: 13px;
+                    text-align: center;
+                    font-weight: bolder;
+                    position: absolute;
+                    top:-4px;
+                    right: -4px;
+                    color: #fff;
+                    background-color: #FF0000;
+                    border-radius: 50%;
+                    z-index: 1;
+                  }
+                }
+              }
+              .weui-uploader__input-box{
+                border-radius: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .order-return-submit{
+    .weui-footer_fixed-bottom{
+      bottom: 0;
+      .weui-btn{
+        border-radius: 0;
+      }
+    }
+  }
+}
+.order-return-mask{
+  position: fixed;
+  z-index: 1000;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  .loading{
+    color: white;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 100vh;
+  }
+}

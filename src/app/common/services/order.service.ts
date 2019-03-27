@@ -25,9 +25,10 @@ export class OrderService {
   }
   // add order
   public orderPlace(params): Observable<any> {
+    console.log(params);
     return this.http.post(`/moayoOrder/confirmOrder`, params);
   }
-  // add order
+  // add order detail
   public orderGetDetail(params): Observable<any> {
     return this.http.post(`/moayoOrder/orderItem`, params);
   }

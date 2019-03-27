@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-pay-success',
@@ -7,6 +8,8 @@ import {HeaderContent} from '../../common/components/header/header.model';
   styleUrls: ['./pay-success.component.less']
 })
 export class PaySuccessComponent implements OnInit {
+  // order id
+  public paySucOrdId: any;
   // header
   public headerOption: HeaderContent = {
     title: '支付完成',
@@ -15,9 +18,15 @@ export class PaySuccessComponent implements OnInit {
     },
     rightContent: {}
   };
-  constructor() { }
+  constructor(
+    private router: Router,
+    private routerInfo: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
+    this.routerInfo.queryParams.subscribe((params: Params) => {
+      this.paySucOrdId = params;
+    });
   }
 
 }

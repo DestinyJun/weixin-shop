@@ -35,7 +35,7 @@
   </div>
   <div class="order-aftsal-select">
     <div class="weui-cells">
-      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/order/refund', 22]">
+      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/order/refund', detailsData?.data?.id]">
         <div class="weui-cell__hd">
           <i class="fa fa-amazon" aria-hidden="true"></i>
         </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="weui-cell__ft"></div>
       </div>
-      <div class="weui-cell weui-cell_access">
+      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/order/return', detailsData?.data?.id]">
         <div class="weui-cell__hd">
           <i class="fa fa-amazon" aria-hidden="true"></i>
         </div>

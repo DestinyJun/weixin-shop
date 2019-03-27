@@ -46,6 +46,6 @@ export class OrderSureComponent implements OnInit {
   // order sure
   public orderSureClick(id) {
     console.log(id);
-    this.router.navigate(['/pay/sure']);
+    this.router.navigate(['/pay/sure'], {queryParams: {orderId: id}});
   }
 }
