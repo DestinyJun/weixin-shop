@@ -12,7 +12,7 @@ import {GlobalService} from '../../common/services/global.service';
 })
 export class MineOrderComponent implements OnInit {
   // new date
-  public newDate = new Date();
+  public mOrderNewDate = new Date();
   // header
   public headerOption: HeaderContent = {
     title: '我的订单',
@@ -26,10 +26,10 @@ export class MineOrderComponent implements OnInit {
   };
   // order select
   public mOrderStatusList: any = [
-    {name: '待付款', amount: 156},
-    {name: '待收货', amount: 6},
-    {name: '已完成', amount: 50},
-    {name: '退货', amount: 6},
+    {name: '全部', amount: 156, status: null},
+    {name: '待付款', amount: 156, status: 'pendingPayment'},
+    {name: '待收货', amount: 6, status: 'shippe'},
+    {name: '已完成', amount: 50, status: 'completed'},
   ];
   // order list
   public mOrderList: any[] = [
@@ -39,17 +39,18 @@ export class MineOrderComponent implements OnInit {
   // order status
   public orderStates: any = {
     shippe: {name: '待收货', color: '#7FB56E', operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: ''}]},
-    pendingShipment: {name: '待发货', color: '#7FB56E', operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: ''}]},
-    pendingReview: {name: '待审核', color: 'red', operating: []},
-    pendingPayment: {name: '未付款', color: 'red', operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
-    received: {name: '已收货', color: 'red', operating: []},
+    pendingPayment: {name: '待付款', color: 'red', operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
     completed: {name: '已完成', color: '#7FB56E', operating: [{title: '删除订单', routes: ''}, {title: '再下一单', routes: ''}]},
     canceled: {name: '已取消', color: '#A0A0A0', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: ''}]},
-    refundReview: {name: '退款审核', color: 'red', operating: []},
     refundding: {name: '退款中', color: 'red', operating: [{title: '再次购买', routes: ''}, {title: '退款进度', routes: ''}]},
+    goodsReturning: {name: '退货中', color: 'red', operating: [{title: '再次购买', routes: ''}, {title: '退款进度', routes: ''}]},
+
+    pendingShipment: {name: '待发货', color: '#7FB56E', operating: []},
+    pendingReview: {name: '待审核', color: 'red', operating: []},
+    received: {name: '已收货', color: 'red', operating: []},
+    refundReview: {name: '退款审核', color: 'red', operating: []},
     refundded: {name: '已退款', color: 'red', operating: []},
     goodsReturnReview: {name: '退货审核', color: 'red', operating: []},
-    goodsReturning: {name: '退货中', color: 'red', operating: ['再次购买', '退货进度']},
     goodsReturned: {name: '已退货', color: 'red', operating: []},
   };
   // scroll
@@ -65,24 +66,24 @@ export class MineOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mOrderInit();
+    this.mOrderInit({currentPage: '1'});
   }
-
-  public mOrderInit(): void {
-    this.mOrderSrv.getMineOrderList({currentPage: '1'}).subscribe(
+  // init
+  public mOrderInit(param): void {
+    this.mOrderSrv.getMineOrderList(param).subscribe(
       (val) => {
         if (val.status === 200 ) {
-          this.orderSerialization(val.datas);
+          this.mOrderSerialization(val.datas);
         }
       }
     );
   }
   // scroll
-  public mineOrderLoadMore(comp: InfiniteLoaderComponent): void {
+  public mOrderLoadMore(comp: InfiniteLoaderComponent): void {
     comp.setFinished();
   }
   // client Serialization
-  public orderSerialization(params): void {
+  public mOrderSerialization(params): void {
     this.mOrderList = [];
     const a = [];
     const b = [];
@@ -106,5 +107,15 @@ export class MineOrderComponent implements OnInit {
       this.mOrderList.push({times: val, value: c });
     });
     console.log(this.mOrderList);
+  }
+  // select status
+  public mOrderStatusSelect (status): void {
+    console.log(status);
+    if (!status) {
+      this.mOrderInit({currentPage: '1'});
+      return;
+    }
+    console.log('111');
+    this.mOrderInit({currentPage: '1', status: 'shippe'});
   }
 }

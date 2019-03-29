@@ -5,7 +5,7 @@
   <div class="mine-order-select">
     <div class="weui-cells">
       <div class="weui-flex">
-        <div class="weui-flex__item" *ngFor="let item of mOrderStatusList">
+        <div class="weui-flex__item" *ngFor="let item of mOrderStatusList" (click)="mOrderStatusSelect(item.status)">
           <div class="placeholder">
             <p style="font-size: 1rem">{{item?.name}}</p>
             <p style="font-size: 0.8rem;color: #BEBEBE;">{{item?.amount}}</p>
@@ -15,10 +15,10 @@
     </div>
   </div>
   <div class="mine-order-list">
-    <weui-infiniteloader (loadmore)="mineOrderLoadMore($event)" [config]="mOrderLoaderConfig">
+    <weui-infiniteloader (loadmore)="mOrderLoadMore($event)" [config]="mOrderLoaderConfig">
       <div class="list" *ngFor="let item of mOrderList">
         <div class="weui-cells__title">
-          <span>{{item?.times === (newDate | date: 'yyyy-MM-dd')? '今日': item?.times}}</span>
+          <span>{{item?.times === (mOrderNewDate | date: 'yyyy-MM-dd')? '今日': item?.times}}</span>
         </div>
         <div class="weui-panel weui-panel_access" *ngFor="let childItem of item?.value">
           <div class="weui-panel__hd" [routerLink]="['/mine/order/detail', childItem.id]">

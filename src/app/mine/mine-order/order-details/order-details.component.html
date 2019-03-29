@@ -68,8 +68,8 @@
       </div>
       <div class="weui-cell">
         <div class="weui-cell__bd">
-          <p>支付方式：微信支付</p>
-          <p>付款时间：{{detailsData?.data?.createdDate}}</p>
+          <p>支付方式：{{detailsData?.data?.amountLog?.payType === 'Wallet'?'钱包支付':'微信支付'}}</p>
+          <p *ngIf="detailsData?.data?.amountLog">付款时间：{{detailsData?.data?.amountLog?.createdDate}}</p>
         </div>
       </div>
       <div class="weui-cell">
@@ -86,7 +86,7 @@
   </div>
   <div class="order-details-footer">
     <div class="weui-footer weui-footer_fixed-bottom">
-      <span *ngFor="let item of orderDetailStates[detailsData?.data?.status]?.operating">{{item}}</span>
+      <span *ngFor="let item of orderDetailStates[detailsData?.data?.status]?.operating" [routerLink]="['/pay/sure']" [queryParams]="{orderId: detailsData?.data?.id}">{{item.title}}</span>
     </div>
   </div>
 </div>
