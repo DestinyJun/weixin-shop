@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {MaskComponent, PickerService} from 'ngx-weui';
 import {MineTeamService} from '../../../common/services/mine-team.service';
@@ -25,6 +25,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   };
   // filter
   public filters: any = {};
+  public filtersSearchList: any = null;
   public filtersName: any = '';
   public filterStatus: any[] = [
     {label: '全部', value: 'noEarning', actives: true},
@@ -53,7 +54,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.detailDataInit({});
+    this.detailDataInit({}, 'init');
     this.mineTeamSrv.mineTeamGetMember({}).subscribe(
       (value) => {
         if (value.status === 200) {
@@ -71,12 +72,17 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.srv.destroyAll();
   }
-  public detailDataInit(param) {
+  public detailDataInit(param, type: 'init' | 'search') {
     console.log(param);
     this.mineTeamSrv.mineTeamGetEarn(param).subscribe(
       (value) => {
         if (value.status === 200) {
-          this.detailSerialization(value.datas);
+          if (type === 'init') {
+            this.earningList = this.detailSerialization(value.datas);
+          } else {
+            this.filtersSearchList = this.detailSerialization(value.datas);
+            console.log(this.filtersSearchList);
+          }
         }
       }
     );
@@ -122,8 +128,8 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     }
   }
   // team detail Serialization
-  public detailSerialization(params): void {
-    this.earningList = [];
+  public detailSerialization(params): any {
+    const res = [];
     const a = [];
     const b = [];
     params.map((item) => {
@@ -143,12 +149,14 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
           c.push(pItem);
         }
       });
-      this.earningList.push({times: val, value: c });
+      res.push({times: val, value: c });
     });
+    return res;
   }
   // filter delete
   public detailDelFilterClick(item: string) {
     delete this.filters[item];
+    this.detailDataInit(this.filters, 'search');
   }
   // filter reset
   public detailResetFilterClick (type: 'reset' | 'sure'): void {
@@ -170,5 +178,8 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
         val.actives = false;
       }
     });
+    if (type === 'sure') {
+      this.detailDataInit(this.filters, 'search');
+    }
   }
 }

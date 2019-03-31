@@ -2,34 +2,42 @@
   <div class="personal-header">
     <app-header [option]="headerOption"></app-header>
   </div>
-  <div class="personal-detail-list">
-    <div class="weui-cells">
-      <div class="weui-cell">
-        <div class="weui-cell__bd" style="font-size: 2rem;color: #4F4F50;">
-          俗礼明
-        </div>
-        <div class="weui-cell__ft" style="color: #4F4F50;">
-          <p style="font-size: 2rem;">￥1650.00</p>
-          <p>150单</p>
-        </div>
-      </div>
-    </div>
-    <div class="weui-cells__title">
-      今天
-    </div>
-    <div class="weui-cells">
-      <div class="weui-cell" [routerLink]="['/mine/team/bill']">
-        <div class="weui-cell__bd">
-          <p style="color: #F9C847;">+650.00</p>
-          <p style="color: #F9C847;font-size: 1.2rem">入账中</p>
-        </div>
-        <div class="weui-cell__ft">
-          <p style="font-size: 1.2rem;color: #888888;">
-            <span>2019-03-01</span>
-            <span>19:58:43</span>
-          </p>
+  <div class="personal-detail-list" *ngIf="memberDetailList | async as memberDetailList; else loading">
+    <ng-container *ngIf="memberDetailList?.datas?.length !== 0; else remind">
+      <div class="weui-cells">
+        <div class="weui-cell">
+          <div class="weui-cell__bd" style="font-size: 1.5rem;color: #4F4F50;">
+            俗礼明
+          </div>
+          <div class="weui-cell__ft" style="color: #4F4F50;">
+            <p style="font-size: 1.5rem;">￥1650.00</p>
+            <p style="font-size: 0.8rem;">150单</p>
+          </div>
         </div>
       </div>
-    </div>
+      <div class="weui-cells__title">
+        今天
+      </div>
+      <div class="weui-cells">
+        <div class="weui-cell" [routerLink]="['/mine/team/bill']">
+          <div class="weui-cell__bd">
+            <p style="color: #F9C847;">+650.00</p>
+            <p style="color: #F9C847;font-size: 1rem">入账中</p>
+          </div>
+          <div class="weui-cell__ft">
+            <p style="font-size: 1rem;color: #888888;">
+              <span>2019-03-01</span>
+              <span>19:58:43</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #remind>
+      <h3 style="color: red;text-align: center">暂无明细</h3>
+    </ng-template>
   </div>
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
 </div>

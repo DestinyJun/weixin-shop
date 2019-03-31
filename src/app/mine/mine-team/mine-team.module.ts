@@ -9,6 +9,7 @@ import {WeUiModule} from 'ngx-weui';
 import {NgxEchartsModule} from 'ngx-echarts';
 import {TeamPersonalComponent} from './team-personal/team-personal.component';
 import { TeamBillComponent } from './team-bill/team-bill.component';
+import {LoadingModule} from '../../common/components/loading/loading.module';
 
 @NgModule({
   declarations: [MineTeamComponent, TeamDetailComponent, TeamPersonalComponent, TeamBillComponent],
@@ -17,6 +18,7 @@ import { TeamBillComponent } from './team-bill/team-bill.component';
     MineTeamRoutingModule,
     FormsModule,
     HeaderModule,
+    LoadingModule,
     WeUiModule.forRoot(),
     NgxEchartsModule
   ]

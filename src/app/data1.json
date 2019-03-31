@@ -1,117 +1,34 @@
 {
+  "currentPage": 0,
   "datas": [
     {
-      "amount": 2,
-      "lastModifiedDate": "2019-02-21 08:50:21",
-      "invoiceModel": {
-        "number": "123456789",
-        "createdDate": "2019-02-15 09:03:18",
-        "lastModifiedDate": "2019-03-12 03:07:38",
-        "invoiceType": "company",
-        "id": 1,
-        "title": "贵州松林科技"
-      },
-      "earningStatus": "noEarning",
-      "createdDate": "2019-02-21 08:50:21",
-      "amountPaid": 2,
-      "addressModel": {
-        "address": "贵州省贵阳市南明区",
-        "createdDate": "2019-02-15 06:18:57",
-        "lastModifiedDate": "2019-03-16 11:26:11",
-        "phone": "13888888888",
-        "name": "王文军6",
-        "id": 1
-      },
-      "moyaoOrderItemModels": [
-        {
-          "createdDate": "2019-02-21 08:50:21",
-          "quantity": 2,
-          "lastModifiedDate": "2019-02-21 08:50:21",
-          "price": 1,
-          "goods": {
-            "imgs": "1",
-            "mainImage": "1",
-            "createdDate": "2019-02-14 19:16:34",
-            "originalPrice": 1,
-            "lastModifiedDate": "2019-02-14 19:16:39",
-            "id": 1,
-            "title": "1",
-            "info": "1"
-          },
-          "id": 3
-        }
-      ],
-      "price": 2,
-      "id": 3,
-      "sn": "2021",
-      "earning": 0,
+      "amount": 2.000000,
+      "amountPaid": 2.000,
+      "createdDate": "2019-02-21 08:18:41",
+      "earning": 1.000000,
+      "earningStatus": "earning",
+      "id": 1,
+      "lastModifiedDate": "2019-02-21 08:18:41",
+      "price": 2.000000,
+      "sn": "2019",
       "status": "completed"
     },
     {
-      "amount": 2,
-      "lastModifiedDate": "2019-02-21 08:44:18",
-      "invoiceModel": {
-        "$ref": "$.datas[0].invoiceModel"
-      },
-      "earningStatus": "noEarning",
-      "createdDate": "2019-02-21 08:44:18",
-      "amountPaid": 2,
-      "addressModel": {
-        "$ref": "$.datas[0].addressModel"
-      },
-      "moyaoOrderItemModels": [
-        {
-          "createdDate": "2019-02-21 08:44:18",
-          "quantity": 2,
-          "lastModifiedDate": "2019-02-21 08:44:18",
-          "price": 1,
-          "goods": {
-            "$ref": "$.datas[0].moyaoOrderItemModels[0].goods"
-          },
-          "id": 2
-        }
-      ],
-      "price": 2,
-      "id": 2,
-      "sn": "2020",
-      "earning": 0,
-      "status": "pendingShipment"
-    },
-    {
-      "amount": 2,
-      "lastModifiedDate": "2019-02-21 08:18:41",
-      "invoiceModel": {
-        "$ref": "$.datas[0].invoiceModel"
-      },
-      "earningStatus": "noEarning",
-      "createdDate": "2019-02-21 08:18:41",
-      "amountPaid": 2,
-      "addressModel": {
-        "$ref": "$.datas[0].addressModel"
-      },
-      "moyaoOrderItemModels": [
-        {
-          "createdDate": "2019-02-21 08:18:41",
-          "quantity": 2,
-          "lastModifiedDate": "2019-02-21 08:18:41",
-          "price": 1,
-          "goods": {
-            "$ref": "$.datas[0].moyaoOrderItemModels[0].goods"
-          },
-          "id": 1
-        }
-      ],
-      "price": 2,
-      "id": 1,
-      "sn": "2019",
-      "earning": 0,
-      "status": "pendingShipment"
+      "amount": 2.000000,
+      "amountPaid": 0.000,
+      "createdDate": "2019-01-10 08:50:21",
+      "earning": 1.000000,
+      "earningStatus": "earnFailed",
+      "id": 6,
+      "lastModifiedDate": "2019-02-21 08:50:21",
+      "price": 2.000000,
+      "sn": "2024",
+      "status": "pendingPayment"
     }
   ],
-  "totalPage": 0,
-  "pageSize": 0,
-  "currentPage": 0,
   "message": "查询成功！",
+  "pageSize": 0,
+  "status": 200,
   "totalCount": 0,
-  "status": 200
+  "totalPage": 0
 }

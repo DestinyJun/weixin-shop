@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {MineTeamService} from '../../../common/services/mine-team.service';
 import {ActivatedRoute, Params} from '@angular/router';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-mine-detail-personal',
@@ -21,7 +22,7 @@ export class TeamPersonalComponent implements OnInit {
     }
   };
   // data
-  public user: any = {userId: null};
+  public memberDetailList: Observable<any>;
 
   constructor(
     private mineTeamSrv: MineTeamService,
@@ -31,21 +32,7 @@ export class TeamPersonalComponent implements OnInit {
   ngOnInit() {
     this.routerInfoSrv.params.subscribe(
       (params: Params) => {
-        this.user.userId = params['id'];
-        this.mineTeamSrv.mineTeamGetMemberEarn(this.user).subscribe(
-          (value) => {
-            console.log(value);
-          }
-        );
-      },
-      error => console.log('没有获取参数'),
-      () => {
-        console.log('完成');
-        this.mineTeamSrv.mineTeamGetMemberEarn({userId: this.user}).subscribe(
-          (value) => {
-            console.log(value);
-          }
-        );
+        this.memberDetailList = this.mineTeamSrv.mineTeamGetMemberEarn({userId: params['id']});
       }
     );
   }

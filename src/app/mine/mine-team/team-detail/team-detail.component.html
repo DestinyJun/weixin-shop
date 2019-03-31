@@ -7,7 +7,7 @@
       <div class="weui-cells__title">
         <p style="font-size: 1.1rem">{{item?.times === (tDetailNewDate | date: 'yyyy-MM-dd')? '今日业绩': item?.times}}</p>
       </div>
-      <div class="weui-cell" *ngFor="let prop of item.value" [routerLink]="['/mine/team/personal', {id: 2}]">
+      <div class="weui-cell" *ngFor="let prop of item.value" [routerLink]="['/mine/team/personal', {id: prop?.id}]">
         <div class="weui-cell__bd">
           <p>{{prop?.user?.nikeName}}</p>
           <p style="font-size: 0.9rem;color: #888888;">

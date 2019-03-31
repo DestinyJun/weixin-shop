@@ -20,6 +20,7 @@ export class MineTeamService {
   public mineTeamGetMember(params): Observable<any> {
     return this.http.post('/team/teamList', params);
   }
+  // menmber detail
   public mineTeamGetMemberEarn(params): Observable<any> {
     return this.http.post('/team/teamEarningsItem', params);
   }
