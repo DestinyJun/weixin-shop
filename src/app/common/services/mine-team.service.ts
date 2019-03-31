@@ -16,6 +16,7 @@ export class MineTeamService {
   public mineTeamGetEarn(params): Observable<any> {
     return this.http.post('/team/earningsScreen', params);
   }
+  // team member
   public mineTeamGetMember(params): Observable<any> {
     return this.http.post('/team/teamList', params);
   }

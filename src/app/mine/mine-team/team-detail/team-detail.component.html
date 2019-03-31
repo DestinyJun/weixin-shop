@@ -2,58 +2,33 @@
   <div class="mine-detail-header">
     <app-header [option]="headerOption" (headerRightClick)="this.teamDetailMask.show()"></app-header>
   </div>
-  <div class="mine-detail-list" *ngIf="!filterLabel.userId && !filterLabel.earningStatus && !filterLabel.startDate && !filterLabel.endDate">
-    <div class="weui-cells">
+  <div class="mine-detail-list" *ngIf="!filters?.userId && !filters?.earningStatus && !filters?.startDate && !filters?.endDate">
+    <div class="weui-cells" *ngFor="let item of earningList">
       <div class="weui-cells__title">
-        <p style="font-size: 1.1rem">今日业绩</p>
+        <p style="font-size: 1.1rem">{{item?.times === (tDetailNewDate | date: 'yyyy-MM-dd')? '今日业绩': item?.times}}</p>
       </div>
-      <div class="weui-cell" [routerLink]="['/mine/team/personal', {id: 2}]">
+      <div class="weui-cell" *ngFor="let prop of item.value" [routerLink]="['/mine/team/personal', {id: 2}]">
         <div class="weui-cell__bd">
-          <p>梳理名</p>
+          <p>{{prop?.user?.nikeName}}</p>
           <p style="font-size: 0.9rem;color: #888888;">
-            <span>2019-03-01</span>
-            <span>19:58:43</span>
+            <span>{{prop?.createdDate}}</span>
           </p>
         </div>
         <div class="weui-cell__ft">
-          <p style="color: #F9C847;">+650.00</p>
-          <p style="color: #F9C847;font-size: 0.9rem">入账中</p>
-        </div>
-      </div>
-      <div class="weui-cell">
-        <div class="weui-cell__bd">
-          <p>陆雨航</p>
-          <p style="font-size: 0.9rem;color: #888888;">
-            <span>2019-03-01</span>
-            <span>19:58:43</span>
-          </p>
-        </div>
-        <div class="weui-cell__ft">
-          <p style="color: #E92E38;">+650.00</p>
-          <p style="color: #E92E38;font-size: 0.9rem">入账失败</p>
-        </div>
-      </div>
-      <div class="weui-cell">
-        <div class="weui-cell__bd">
-          <p>里可以</p>
-          <p style="font-size: 0.9rem;color: #888888;">
-            <span>2019-03-01</span>
-            <span>19:58:43</span>
-          </p>
-        </div>
-        <div class="weui-cell__ft">
-          <p style="color: #89BB7A;">+650.00</p>
-          <p style="color: #89BB7A;font-size: 0.9rem">已入账</p>
+          <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1]}">+{{prop?.earning}}</p>
+          <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.9rem'}">{{earningStatusList[prop?.earningStatus][0]}}</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="mine-filter-list" *ngIf="filterLabel.userId || filterLabel.earningStatus|| filterLabel.startDate|| filterLabel.endDate">
+  <div class="mine-filter-list" *ngIf="filters?.userId || filters?.earningStatus|| filters?.startDate|| filters?.endDate">
     <div class="weui-cells__title" >
-      <span *ngIf="filterLabel.userId">{{filterLabel.userId}}<i class="fa fa-times" (click)="detailDelFilterClick('userId')"></i></span>
-      <span *ngIf="filterLabel.earningStatus">{{filterLabel.earningStatus}}<i class="fa fa-times" (click)="detailDelFilterClick('earningStatus')"></i></span>
-      <span *ngIf="filterLabel.startDate">{{filterLabel.startDate}}<i class="fa fa-times" (click)="detailDelFilterClick('startDate')"></i></span>
-      <span *ngIf="filterLabel.endDate">{{filterLabel.endDate}}<i class="fa fa-times" (click)="detailDelFilterClick('endDate')"></i></span>
+      <span *ngIf="filters?.userId">{{filtersName}}<i class="fa fa-times" (click)="detailDelFilterClick('userId')"></i></span>
+      <span *ngIf="filters?.earningStatus">{{earningStatusList[filters?.earningStatus][0]}}<i class="fa fa-times" (click)="detailDelFilterClick('earningStatus')"></i></span>
+      <span *ngIf="filters?.startDate">
+        {{filters?.startDate}}-{{filters?.endDate?filters?.endDate: '至今'}}
+        <i class="fa fa-times" (click)="detailDelFilterClick('startDate')"></i>
+      </span>
     </div>
     <div class="weui-cells">
       <div class="weui-cell" style="background-color: #F2F1F0;">
@@ -67,40 +42,13 @@
       <div class="weui-cell" [routerLink]="['/mine/team/personal', {id: 2}]">
         <div class="weui-cell__bd">
           <p>梳理名</p>
-          <p style="font-size: 1.2rem;color: #888888;">
-            <span>2019-03-01</span>
-            <span>19:58:43</span>
+          <p style="font-size: 0.8rem;color: #888888;">
+            <span>2019-03-01 19:58:43</span>
           </p>
         </div>
         <div class="weui-cell__ft">
           <p style="color: #F9C847;">+650.00</p>
-          <p style="color: #F9C847;font-size: 1.2rem">入账中</p>
-        </div>
-      </div>
-      <div class="weui-cell">
-        <div class="weui-cell__bd">
-          <p>陆雨航</p>
-          <p style="font-size: 1.2rem;color: #888888;">
-            <span>2019-03-01</span>
-            <span>19:58:43</span>
-          </p>
-        </div>
-        <div class="weui-cell__ft">
-          <p style="color: #E92E38;">+650.00</p>
-          <p style="color: #E92E38;font-size: 1.2rem">入账失败</p>
-        </div>
-      </div>
-      <div class="weui-cell">
-        <div class="weui-cell__bd">
-          <p>里可以</p>
-          <p style="font-size: 1.2rem;color: #888888;">
-            <span>2019-03-01</span>
-            <span>19:58:43</span>
-          </p>
-        </div>
-        <div class="weui-cell__ft">
-          <p style="color: #89BB7A;">+650.00</p>
-          <p style="color: #89BB7A;font-size: 1.2rem">已入账</p>
+          <p style="color: #F9C847;font-size: 0.8rem">入账中</p>
         </div>
       </div>
     </div>
@@ -128,14 +76,14 @@
               按时间筛选
             </div>
             <div class="weui-flex">
-              <div class="weui-flex__item" style="flex: 2" (click)="detailTimeSelClick('start')">
-                <button class="weui-btn weui-btn_default">开始时间</button>
+              <div class="weui-flex__item" style="flex: 2" (click)="detailFilterTimeSelClick('start')">
+                <button class="weui-btn weui-btn_default">{{filtersTime.startDate}}</button>
               </div>
               <div class="weui-flex__item" style="flex: 0.3;text-align: center">
                 至
               </div>
-              <div class="weui-flex__item" style="flex: 2" (click)="detailTimeSelClick('end')">
-                <button class="weui-btn weui-btn_default">结束时间</button>
+              <div class="weui-flex__item" style="flex: 2" (click)="detailFilterTimeSelClick('end')">
+                <button class="weui-btn weui-btn_default">{{filtersTime.endDate}}</button>
               </div>
             </div>
           </div>
@@ -143,32 +91,24 @@
             <div class="weui-cells_title">
               成员筛选
             </div>
-            <div class="weui-flex">
-              <div class="weui-flex__item">
-                <button class="weui-btn weui-btn_default">全部</button>
-              </div>
-              <div class="weui-flex__item">
-                <button class="weui-btn weui-btn_default">王二小</button>
-              </div>
-              <div class="weui-flex__item">
-                <button class="weui-btn weui-btn_primary">李小花</button>
-              </div>
-              <div class="weui-flex__item">
-                <button class="weui-btn weui-btn_default">张大嘴</button>
-              </div>
+            <div class="weui-flex_list">
+              <button  class="weui-btn" *ngFor="let item of filterMember"
+                      [ngClass]="{'weui-btn_primary': item.actives, 'weui-btn_default': !item.actives}"
+                      [ngStyle]="{'color': item.actives?'white':''}"
+                      (click)="detailFilterMemberClick(item)"
+              ><span>{{item.nikeName}}</span></button>
             </div>
           </div>
           <div class="btn-group">
             <div class="weui-flex">
-              <div class="weui-flex__item" (click)="this.teamDetailMask.hide()">
+              <div class="weui-flex__item" (click)="detailResetFilterClick('reset')">
                 <button class="weui-btn weui-btn_primary">重置</button>
               </div>
-              <div class="weui-flex__item" (click)="this.teamDetailMask.hide()">
+              <div class="weui-flex__item" (click)="detailResetFilterClick('sure');teamDetailMask.hide()">
                 <button class="weui-btn weui-btn_primary" style="border-left: 1px solid white">确定</button>
               </div>
             </div>
           </div>
-
         </div>
       </weui-mask>
     </div>

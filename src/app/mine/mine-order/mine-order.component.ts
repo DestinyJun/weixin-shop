@@ -73,6 +73,7 @@ export class MineOrderComponent implements OnInit {
     this.mOrderSrv.getMineOrderList(param).subscribe(
       (val) => {
         if (val.status === 200 ) {
+          console.log(val);
           this.mOrderSerialization(val.datas);
         }
       }
@@ -106,16 +107,13 @@ export class MineOrderComponent implements OnInit {
       });
       this.mOrderList.push({times: val, value: c });
     });
-    console.log(this.mOrderList);
   }
   // select status
   public mOrderStatusSelect (status): void {
-    console.log(status);
     if (!status) {
       this.mOrderInit({currentPage: '1'});
       return;
     }
-    console.log('111');
-    this.mOrderInit({currentPage: '1', status: 'shippe'});
+    this.mOrderInit({currentPage: '1', status: status});
   }
 }

@@ -13,7 +13,7 @@ export class WalletBalapayComponent implements OnInit, OnDestroy {
   @ViewChild('maskContent') maskContent: MaskComponent;
   // date picker
   srvRes: any = '';
-// header
+  // header
   public headerOption: HeaderContent = {
     title: '收支明细',
     leftContent: {
@@ -37,6 +37,7 @@ export class WalletBalapayComponent implements OnInit, OnDestroy {
     this.onShowBySrv();
   }
   public onShowBySrv() {
+    this.srv.destroyAll();
     this.srv.showDateTime('date-ym', '', null, null, new Date()).subscribe((res: any) => {
       console.log(res);
       this.srvRes = res.value;
