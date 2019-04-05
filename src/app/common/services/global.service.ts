@@ -4,7 +4,7 @@ import {EventEmitter, Injectable} from '@angular/core';
   providedIn: 'root'
 })
 export class GlobalService {
-  public remindEvent = new EventEmitter<any>();
+  public remindEvent = new EventEmitter<boolean>();
   public addressEvent: any = null;
   public invoiceEvent: any = null;
   public orderPlaceInfo: any;

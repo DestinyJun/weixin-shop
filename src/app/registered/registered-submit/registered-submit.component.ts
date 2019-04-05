@@ -20,7 +20,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   public configAgreeDialog: DialogConfig = {};
   // dialogPay
   public dialogPayShow = false;
-  public dialogPayConfig = new DialogPay('请输入六位数密码', true, ['', '', '', '', '', ''], false, true, false);
+  public dialogPayConfig = new DialogPay('请设置支付密码', true, ['', '', '', '', '', ''], false, true, false);
   // code
   public codeError = false;
   public submitPhone: any = {
@@ -67,7 +67,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     if (event.password === 'destroy') {
       return;
     }
-    console.log(event);
     this.regSrv.verifyPayCode({payPwd: event.password}).subscribe(
       (val) => {
         if (val.status === 200) {

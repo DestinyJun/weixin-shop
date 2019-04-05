@@ -103,7 +103,7 @@ export class ClientAddComponent implements OnInit {
     this.bottomBtnStatus = 'invoice';
   }
   // client Name
-  public clinetNameChange (event): void {
+  public clinetNameChange (): void {
     if (this.clientStatus === 'add') {
       this.clientId = 'null';
     }
@@ -178,8 +178,7 @@ export class ClientAddComponent implements OnInit {
     this.clientIndividualShow = true;
     }
   }
-  public saveBtnClick(type: 'add' | 'update') {
-    console.log(type);
+  public saveBtnClick(type) {
     if (this.bottomBtnStatus === 'address') {
       if (type === 'add') {
         this.srv.loading('添加中...');
@@ -230,8 +229,7 @@ export class ClientAddComponent implements OnInit {
            );
          }
         return;
-      }
-      else if (type === 'update') {
+      } else if (type === 'update') {
         this.addAddressRes.contactsId = this.clientId;
         this.srv.loading('修改中...');
         this.clientSrv.clientUpdateAddress(this.addAddressRes).subscribe(
@@ -252,8 +250,7 @@ export class ClientAddComponent implements OnInit {
         );
         return;
       }
-    }
-    else if (this.bottomBtnStatus === 'invoice') {
+    } else if (this.bottomBtnStatus === 'invoice') {
       if (type === 'add') {
         this.srv.loading('添加中...');
         if (this.clientId !== 'null') {
@@ -303,8 +300,7 @@ export class ClientAddComponent implements OnInit {
           );
         }
         return;
-      }
-      else if (type === 'update') {
+      } else if (type === 'update') {
         this.addAddressRes.contactsId = this.clientId;
         this.srv.loading('修改中...');
         this.clientSrv.clientUpdateInvoice(this.clientAddRadioRes).subscribe(
@@ -358,9 +354,6 @@ export class ClientAddComponent implements OnInit {
       this.clientMaskTitle = '修改发票信息';
       this.clientIndividualShow = true;
     }
-   /* if (this.clientStatus === 'update') {
-
-    }*/
   }
   // remind + del
   public dialogDelShow(type: SkinType, msg: string, item: any, event) {

@@ -1,7 +1,2 @@
 <router-outlet></router-outlet>
-<div class="app-remind">
-  <!--<weui-toast #statusRemind [type]="'success'" [text]="msg" [icon]="''" [time]="2000"></weui-toast>-->
-</div>
-<div class="app-mask">
-  <weui-mask #mask [loading]="loading"></weui-mask>
-</div>
+<app-loading *ngIf="loading"></app-loading>

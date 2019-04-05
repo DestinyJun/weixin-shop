@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angul
 import {ActionSheetComponent, ActionSheetConfig, ActionSheetService, DialogComponent, DialogConfig, SkinType, ToastService} from 'ngx-weui';
 import {Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
+import {GlobalService} from '../../common/services/global.service';
 
 @Component({
   selector: 'app-registered-referrer',
@@ -29,7 +30,8 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     private actionSheetService: ActionSheetService,
     private toastService: ToastService,
     private router: Router,
-    private registeredService: RegisteredService
+    private registeredService: RegisteredService,
+    private globalSrv: GlobalService
   ) { }
 
   ngOnInit() {}
@@ -64,8 +66,11 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     return false;
   }
   public referrerClick(): void {
+    this.globalSrv.remindEvent.next(true);
     this.registeredService.verifyReferrer(this.referrerNumber).subscribe(
       (val) => {
+        console.log(val);
+        this.globalSrv.remindEvent.next(false);
         if (val.status === 200) {
           this.router.navigate(['/registered/submit', {referrerNumber: this.referrerNumber}]);
           return;

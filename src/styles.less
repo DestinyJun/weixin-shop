@@ -12,8 +12,20 @@
 @weui-btn-color-dark: #343A40;
 @weui-h1: 1rem;
 @weui-h2: 1rem;
-// [自定义主题](https://cipchk.github.io/ngx-weui/#/docs/style)
-// @weuiFontDefault: "Helvetica Neue";
-// @weuiBtnPrimaryBg: #f50;
-
+.index-loading-mask{
+  position: fixed;
+  z-index: 1000;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 1);
+  .loading{
+    color: #3A96FF;
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 100vh;
+  }
+}
 
