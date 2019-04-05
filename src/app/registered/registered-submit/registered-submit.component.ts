@@ -1,11 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {HeaderContent} from '../../common/components/header/header.model';
-import {Observable, timer} from 'rxjs';
-import {map} from 'rxjs/operators';
 import {DialogComponent, DialogConfig, SkinType, DialogService, ToastService} from 'ngx-weui';
 import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
 import {Router} from '@angular/router';
-import {Title} from '@angular/platform-browser';
 import {RegisteredService} from '../../common/services/registered.service';
 
 @Component({
@@ -37,8 +33,9 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {}
+  // send code
   public codeBtnClick() {
-    this.regSrv.verifyPhone(this.submitPhone).subscribe(
+    this.regSrv.regSendSMS(this.submitPhone).subscribe(
       (val) => {
          if (val.status === 200) {
            console.log(val);
@@ -62,24 +59,24 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     }, 10);
     return false;
   }
+  // verifyPayCode
   public onDialogPayClick(event): void {
     this.dialogPayShow = event.show;
     if (event.password === 'destroy') {
       return;
     }
-    this.regSrv.verifyPayCode({payPwd: event.password}).subscribe(
+    /*this.regSrv.regVerifyPayCode({payPwd: event.password}).subscribe(
       (val) => {
         if (val.status === 200) {
           this.router.navigate(['/registered/success']);
         }
       }
-    );
+    );*/
   }
   public onsubmit(): void {
     this.dialogPayShow = true;
-    this.regSrv.verifyCode(this.submitPhone).subscribe(
+    /*this.regSrv.verifyCode(this.submitPhone).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           this.dialogPayShow = true;
         } else {
@@ -87,7 +84,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
           this.submitPhone.smsCode = '';
         }
       }
-    );
+    );*/
   }
   ngOnDestroy() {
     this.srv.destroyAll();

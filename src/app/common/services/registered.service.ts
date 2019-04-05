@@ -13,13 +13,13 @@ export class RegisteredService {
   public verifyReferrer(params): Observable<any> {
     return this.http.post(`/member/recommenderWorkId`, params);
   }
-  public verifyPhone(params): Observable<any> {
+  public regSendSMS(params): Observable<any> {
     return this.http.post(`/member/sendSMS`, params);
   }
-  public verifyCode(params): Observable<any> {
+  public regVerifySMS(params): Observable<any> {
     return this.http.post(`/member/verifySMS`, params);
   }
-  public verifyPayCode(params): Observable<any> {
+  public regVerifyPayCode(params): Observable<any> {
     return this.http.post(`/member/setPayPwd`, params);
   }
 }

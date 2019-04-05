@@ -173,7 +173,6 @@ export class TabClientComponent implements OnInit {
             error => console.log(error),
             () => {
               this.tabClientInitialize();
-              this.globalService.remindEvent.next({msg: '删除成功', type: 'success'});
             }
           );
         }

@@ -13,25 +13,44 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const clonedRequest = req.clone({
-      url: environment.dev_test_url + req.url,
-      headers: req.headers.set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NDQ2NzAyMH0.Bui32VvLOPU1Z-1fTeW7-RyhPv7BeB5dq3jNJlVqAiMjkyWgmCwz22snUGdfKGz4cdLq9OFPijakk5KDSkCuvQ')
-    });
-    return next.handle(clonedRequest).pipe(
-      map((event: any, ) => {
-        if (event.status === 200) {
-          return event;
-        }
-      }),
-      catchError((err: HttpErrorResponse) => {
-        this.globalService.remindEvent.next(false);
-        if (err.status === 0) {
-          this.router.navigate(['/error']);
-        }
-        return Observable.create(observer => observer.next(err));
-      })
-    );
+    if (req.url.indexOf('api.weixin') === -1) {
+      const clonedRequest = req.clone({
+        url: environment.dev_test_url + req.url,
+        headers: req.headers
+          .set('Content-type', 'application/json; charset=UTF-8')
+          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NDQ2NzAyMH0.Bui32VvLOPU1Z-1fTeW7-RyhPv7BeB5dq3jNJlVqAiMjkyWgmCwz22snUGdfKGz4cdLq9OFPijakk5KDSkCuvQ')
+      });
+      return next.handle(clonedRequest).pipe(
+        map((event: any, ) => {
+          if (event.status === 200) {
+            return event;
+          }
+        }),
+        catchError((err: HttpErrorResponse) => {
+          this.globalService.remindEvent.next(false);
+          if (err.status === 0) {
+            this.router.navigate(['/error']);
+          }
+          return Observable.create(observer => observer.next(err));
+        })
+      );
+    } else {
+      const clonedRequest = req.clone({});
+      return next.handle(clonedRequest).pipe(
+        map((event: any, ) => {
+          if (event.status === 200) {
+            return event;
+          }
+        }),
+        catchError((err: HttpErrorResponse) => {
+          this.globalService.remindEvent.next(false);
+          if (err.status === 0) {
+            this.router.navigate(['/error']);
+          }
+          return Observable.create(observer => observer.next(err));
+        })
+      );
+    }
   }
 
   /*mergeMap((event: any) => {
