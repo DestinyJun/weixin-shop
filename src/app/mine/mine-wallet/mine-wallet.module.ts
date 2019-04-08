@@ -10,6 +10,7 @@ import { WalletWithdrawalComponent } from './wallet-withdrawal/wallet-withdrawal
 import {WeUiModule} from 'ngx-weui';
 import {FormsModule} from '@angular/forms';
 import {DialogPayModule} from '../../common/components/dialog-pay/dialog-pay.module';
+import {LoadingModule} from '../../common/components/loading/loading.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {DialogPayModule} from '../../common/components/dialog-pay/dialog-pay.mod
     WeUiModule.forRoot(),
     FormsModule,
     DialogPayModule,
+    LoadingModule
   ]
 })
 export class MineWalletModule { }

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Location} from '@angular/common';
-import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {HeaderContent} from '../common/components/header/header.model';
+import {TabService} from '../common/services/tab.service';
+import {forkJoin} from 'rxjs';
 @Component({
   selector: 'app-tab',
   templateUrl: './tab.component.html',
@@ -21,10 +23,12 @@ export class TabComponent implements OnInit {
     }
   };
   public rouStatus: string = null;
+  public tabHome: any = null;
   constructor(
     private router: Router,
     private location: Location,
     private titleServices: Title,
+    private tabSrc: TabService
   ) {
      router.events.subscribe(
        (event) => {
@@ -37,6 +41,11 @@ export class TabComponent implements OnInit {
   }
 
   ngOnInit() {
+    forkJoin([this.tabSrc.tabGetPersonIncome({name: 1}), this.tabSrc.tabGetTeamTop({name: 2})]).subscribe(
+      (res) => {
+        this.tabHome = res;
+      }
+    );
     this.titleServices.setTitle('首页');
     if (this.rouStatus === 'order') {
       this.clientHeader = {
@@ -66,7 +75,6 @@ export class TabComponent implements OnInit {
     this.router.navigate([`/tab/${name}`]);
     if (name === 'home') {
       this.titleServices.setTitle('首页');
-      return;
     }
     if (name === 'client') {
       this.titleServices.setTitle('客户');

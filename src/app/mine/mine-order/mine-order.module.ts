@@ -13,6 +13,7 @@ import {FormsModule} from '@angular/forms';
 import { OrderAftsaleComponent } from './order-aftsale/order-aftsale.component';
 import { OrderRefundComponent } from './order-refund/order-refund.component';
 import { OrderReturnComponent } from './order-return/order-return.component';
+import {LoadingModule} from '../../common/components/loading/loading.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { OrderReturnComponent } from './order-return/order-return.component';
     MineOrderRoutingModule,
     HeaderModule,
     WeUiModule.forRoot(),
-    FormsModule
+    FormsModule,
+    LoadingModule
   ]
 })
 export class MineOrderModule { }

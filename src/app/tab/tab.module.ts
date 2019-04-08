@@ -8,7 +8,7 @@ import { TabClientComponent } from './tab-client/tab-client.component';
 import { TabMineComponent } from './tab-mine/tab-mine.component';
 import {HeaderModule} from '../common/components/header/header.module';
 import {FormsModule} from '@angular/forms';
-import {GlobalService} from '../common/services/global.service';
+import {LoadingModule} from '../common/components/loading/loading.module';
 
 @NgModule({
   declarations: [TabComponent, TabHomeComponent, TabClientComponent, TabMineComponent],
@@ -17,7 +17,8 @@ import {GlobalService} from '../common/services/global.service';
     WeUiModule.forRoot(),
     TabRoutingModule,
     HeaderModule,
-    FormsModule
+    FormsModule,
+    LoadingModule
   ],
   providers: []
 })

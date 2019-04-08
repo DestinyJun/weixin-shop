@@ -1,4 +1,4 @@
-<div class="mine-wallet">
+<div class="mine-wallet" *ngIf="mineBalance.balance;else loading">
   <app-header [option]="headerOption" (headerRightClick)="balapayClick()"></app-header>
   <div class="balance">
     <div class="weui-cells">
@@ -7,7 +7,7 @@
           账户余额
         </div>
         <div class="weui-cell__ft">
-          <span style="color: #FF5E5E;">￥{{mineBalance.balance || '0.00'}}</span>
+          <span style="color: #FF5E5E;">￥{{mineBalance?.balance || '0.00'}}</span>
         </div>
       </div>
       <div class="weui-cell">
@@ -15,7 +15,7 @@
           可提现
         </div>
         <div class="weui-cell__ft">
-          <span style="color: #000000;">￥{{mineBalance.withdraw || '0.00'}}</span>
+          <span style="color: #000000;">￥{{mineBalance?.withdraw || '0.00'}}</span>
         </div>
       </div>
     </div>
@@ -38,3 +38,6 @@
     <p style="color: #7D7D7D;">提示：对余额得说明</p>
   </div>
 </div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

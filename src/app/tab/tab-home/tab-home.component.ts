@@ -1,7 +1,5 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
-import {timer} from 'rxjs';
-import {TabService} from '../../common/services/tab.service';
 
 @Component({
   selector: 'app-tab-home',
@@ -10,40 +8,17 @@ import {TabService} from '../../common/services/tab.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class TabHomeComponent implements OnInit {
+  // base
+  @Input() public tabHome: any = null;
   // scroll
   public infiniteloaderConfig: InfiniteLoaderConfig = {
     height: '100%'
   };
   @ViewChild(InfiniteLoaderComponent) il;
-  // base
-  restartBtn = false;
-  /*public  items: any[] = Array(20)
-    .fill(0)
-    .map((v: any, i: number) => i);*/
-  public tradeStatistics: any;
-  public teamTop: any = [];
 
-  constructor(
-    private tabSrc: TabService
-  ) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.tabSrc.tabGetPersonIncome({}).subscribe(
-      (val) => {
-        if (val.status === 200) {
-          this.tradeStatistics = val['dataObject'];
-          console.log(this.tradeStatistics);
-        }
-      }
-    );
-    this.tabSrc.tabGetTeamTop({}).subscribe(
-      (val) => {
-        if (val.status === 200) {
-          this.teamTop = val.data;
-        }
-      }
-    );
-  }
+  ngOnInit() {}
   public onLoadMore(comp: InfiniteLoaderComponent): void {
     /*this.restartBtn = false;
     timer(1500).subscribe(() => {
@@ -62,7 +37,6 @@ export class TabHomeComponent implements OnInit {
     });*/
   }
   public restart(): void {
-    // this.items.length = 0;
     this.il.restart();
   }
 

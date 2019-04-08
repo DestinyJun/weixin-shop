@@ -16,57 +16,62 @@
   </div>
   <div class="mine-order-list">
     <weui-infiniteloader (loadmore)="mOrderLoadMore($event)" [config]="mOrderLoaderConfig">
-      <div class="list" *ngFor="let item of mOrderList">
-        <div class="weui-cells__title">
-          <span>{{item?.times === (mOrderNewDate | date: 'yyyy-MM-dd')? '今日': item?.times}}</span>
+      <ng-container *ngIf="mOrderList;else loading">
+        <div class="list" *ngFor="let item of mOrderList">
+          <div class="weui-cells__title">
+            <span>{{item?.times === (mOrderNewDate | date: 'yyyy-MM-dd')? '今日': item?.times}}</span>
+          </div>
+          <div class="weui-panel weui-panel_access" *ngFor="let childItem of item?.value">
+            <div class="weui-panel__hd" [routerLink]="['/mine/order/detail', childItem.id]">
+              <div class="weui-cell">
+                <div class="weui-cell__bd" style="vertical-align: middle">
+                  <p>订单号：{{childItem?.sn}}</p>
+                  <p style="font-size: 1rem;color: #5E5E5E;">{{childItem?.user?.username}}</p>
+                </div>
+                <div class="weui-cell__ft">
+                  <p [ngStyle]="{'color': orderStates[childItem?.status]?.color,'vertical-align': 'middle'}">{{orderStates[childItem?.status]?.name}}</p>
+                  <p style="margin-top: 8px">{{childItem?.createdDate}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="weui-panel__bd" [routerLink]="['/mine/order/detail', childItem.id]">
+              <div class="weui-cell" *ngFor="let props of childItem?.moyaoOrderItemModels; let i = index">
+                <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                  <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="props?.goods?.imgs"
+                       alt="图片无效">
+                </div>
+                <div class="weui-cell__bd">
+                  <p style="font-size: 1.1rem;">{{props?.goods?.title}}</p>
+                  <p style="font-size: 0.8rem;color: #888888;">{{props?.goods?.info}}</p>
+                </div>
+                <div class="weui-cell__ft">
+                  <p>￥{{props?.price}}</p>
+                  <p>x{{props?.quantity}}</p>
+                </div>
+              </div>
+              <div class="weui-total">
+                <p class="pull-right">
+                  <span>共两件商品 合计：</span>
+                  <span style="color: #FF4343;">￥{{childItem?.price}}</span>
+                </p>
+              </div>
+            </div>
+            <div class="weui-panel__ft">
+              <div class="weui-flex">
+                <div class="weui-flex__item" *ngFor="let param of orderStates[childItem?.status]?.operating">
+                  <span [routerLink]="[param?.routes]" [queryParams]="{orderId: childItem?.id}">{{param?.title}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="weui-panel weui-panel_access" *ngFor="let childItem of item?.value">
-          <div class="weui-panel__hd" [routerLink]="['/mine/order/detail', childItem.id]">
-            <div class="weui-cell">
-              <div class="weui-cell__bd" style="vertical-align: middle">
-                <p>订单号：{{childItem?.sn}}</p>
-                <p style="font-size: 1rem;color: #5E5E5E;">{{childItem?.user?.username}}</p>
-              </div>
-              <div class="weui-cell__ft">
-                <p [ngStyle]="{'color': orderStates[childItem?.status]?.color,'vertical-align': 'middle'}">{{orderStates[childItem?.status]?.name}}</p>
-                <p style="margin-top: 8px">{{childItem?.createdDate}}</p>
-              </div>
-            </div>
-          </div>
-          <div class="weui-panel__bd" [routerLink]="['/mine/order/detail', childItem.id]">
-            <div class="weui-cell" *ngFor="let props of childItem?.moyaoOrderItemModels; let i = index">
-              <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-                <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="props?.goods?.imgs"
-                     alt="图片无效">
-              </div>
-              <div class="weui-cell__bd">
-                <p style="font-size: 1.1rem;">{{props?.goods?.title}}</p>
-                <p style="font-size: 0.8rem;color: #888888;">{{props?.goods?.info}}</p>
-              </div>
-              <div class="weui-cell__ft">
-                <p>￥{{props?.price}}</p>
-                <p>x{{props?.quantity}}</p>
-              </div>
-            </div>
-            <div class="weui-total">
-              <p class="pull-right">
-                <span>共两件商品 合计：</span>
-                <span style="color: #FF4343;">￥{{childItem?.price}}</span>
-              </p>
-            </div>
-          </div>
-          <div class="weui-panel__ft">
-            <div class="weui-flex">
-              <div class="weui-flex__item" *ngFor="let param of orderStates[childItem?.status]?.operating">
-                <span [routerLink]="[param?.routes]" [queryParams]="{orderId: childItem?.id}">{{param?.title}}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mine-oeder-none" style="color: red;text-align: center" *ngIf="mOrderList.length === 0">
+      </ng-container>
+      <div class="mine-oeder-none" style="color: red;text-align: center" *ngIf="mOrderList?.length === 0">
         <p>暂无订单记录</p>
       </div>
     </weui-infiniteloader>
+    <ng-template #loading>
+      <app-loading></app-loading>
+    </ng-template>
   </div>
 </div>

@@ -1,10 +1,10 @@
-<div class="home">
+<div class="home" *ngIf="tabHome;else loading">
   <div class="home-income">
     <div class="weui-panel weui-panel_access">
       <div class="weui-panel__bd">
         <div class="weui-media-box weui-media-box_text">
           <h5 class="weui-media-box__title">总收益</h5>
-          <h3 class="weui-media-box__desc">￥{{tradeStatistics?.all}}</h3>
+          <h3 class="weui-media-box__desc">￥{{tabHome[0]['dataObject']?.all}}</h3>
         </div>
       </div>
     </div>
@@ -17,17 +17,17 @@
             <div class="time" style="background-color: #FF6565;">今天</div>
           </div>
           <div class="weui-flex__item">
-            <div class="amount">{{tradeStatistics?.today?.total || 0}}笔</div>
+            <div class="amount">{{tabHome[0]['dataObject']?.today?.total || 0}}笔</div>
           </div>
         </div>
         <div class="weui-flex center">
           <div class="weui-flex__item">
-            <div class="placeholder">￥{{tradeStatistics?.today?.sum_amount || 0}}</div>
+            <div class="placeholder">￥{{tabHome[0]['dataObject']?.today?.sum_amount || 0}}</div>
           </div>
         </div>
         <div class="weui-flex bottom">
           <div class="weui-flex__item" style="padding-top: 1vh">
-            <div class="placeholder time">{{tradeStatistics?.today?.startDay}}</div>
+            <div class="placeholder time">{{tabHome[0]['dataObject']?.today?.startDay}}</div>
           </div>
         </div>
       </div>
@@ -37,18 +37,18 @@
             <div class="time" style="background-color: #65D2FF;">本月</div>
           </div>
           <div class="weui-flex__item">
-            <div class="amount">{{tradeStatistics?.month?.total || 0}}笔</div>
+            <div class="amount">{{tabHome[0]['dataObject']?.month?.total || 0}}笔</div>
           </div>
         </div>
         <div class="weui-flex center">
           <div class="weui-flex__item">
-            <div class="placeholder">￥{{tradeStatistics?.month['sum_amount'] || '0'}}</div>
+            <div class="placeholder">￥{{tabHome[0]['dataObject']?.month['sum_amount'] || '0'}}</div>
           </div>
         </div>
         <div class="weui-flex bottom">
           <div class="weui-flex__item">
-            <div class="placeholder time">{{tradeStatistics?.month['startDay']}}</div>
-            <div class="placeholder time">{{tradeStatistics?.month['endDay']}}</div>
+            <div class="placeholder time">{{tabHome[0]['dataObject']?.month['startDay']}}</div>
+            <div class="placeholder time">{{tabHome[0]['dataObject']?.month['endDay']}}</div>
           </div>
         </div>
       </div>
@@ -58,18 +58,18 @@
             <div class="time" style="background-color: #7E65FF;">本年</div>
           </div>
           <div class="weui-flex__item">
-            <div class="amount">{{tradeStatistics?.year?.total || 0}}笔</div>
+            <div class="amount">{{tabHome[0]['dataObject']?.year?.total || 0}}笔</div>
           </div>
         </div>
         <div class="weui-flex center">
           <div class="weui-flex__item">
-            <div class="placeholder">￥{{tradeStatistics?.year['sum_amount'] || '0'}}</div>
+            <div class="placeholder">￥{{tabHome[0]['dataObject']?.year['sum_amount'] || '0'}}</div>
           </div>
         </div>
         <div class="weui-flex bottom">
           <div class="weui-flex__item">
-            <div class="placeholder time">{{tradeStatistics?.year['startDay'] || '0'}}</div>
-            <div class="placeholder time">{{tradeStatistics?.year['endDay'] || '0'}}</div>
+            <div class="placeholder time">{{tabHome[0]['dataObject']?.year['startDay'] || '0'}}</div>
+            <div class="placeholder time">{{tabHome[0]['dataObject']?.year['endDay'] || '0'}}</div>
           </div>
         </div>
       </div>
@@ -105,23 +105,25 @@
     <div class="weui-cells__title title">销售排行榜</div>
     <div class="weui-mine">
       <div class="weui-cell">
-        <div class="weui-cell__hd">{{teamTop?teamTop[0]?.Ranks: ''}}</div>
-        <div class="weui-cell__bd">{{teamTop?teamTop[0]?.nikeName:'没有关键字'}}</div>
-        <div class="weui-cell__ft">￥{{teamTop?teamTop[0]?.sumPaid: ''}}</div>
+        <div class="weui-cell__hd">{{tabHome[1].data?tabHome[1].data[0]?.Ranks: ''}}</div>
+        <div class="weui-cell__bd">{{tabHome[1].data?tabHome[1].data[0]?.nikeName:'没有关键字'}}</div>
+        <div class="weui-cell__ft">￥{{tabHome[1].data?tabHome[1].data[0]?.sumPaid: ''}}</div>
       </div>
     </div>
   </div>
   <div class="home-scroll">
     <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
       <div class="weui-cells" style="margin-top: 0 ">
-        <div class="weui-cell" *ngFor="let item of teamTop?.slice(1); let i = index">
+        <div class="weui-cell" *ngFor="let item of tabHome[1].data?.slice(1); let i = index">
           <div class="weui-cell__hd">NO.{{item?.Ranks}}</div>
           <div class="weui-cell__bd">{{item?.nikeName}}</div>
           <div class="weui-cell__ft">￥{{item?.sumPaid}}</div>
         </div>
       </div>
-      <weui-button *ngIf="restartBtn" (click)="restart()">重新开始</weui-button>
     </weui-infiniteloader>
   </div>
 </div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>
 

@@ -1,4 +1,4 @@
-<div class="tab-client">
+<div class="tab-client" *ngIf="clientList;else loading">
   <app-header [option]="headerOption" (headerRightClick)="onHeaderRightClick()"></app-header>
   <div class="tab-client-search">
     <weui-searchbar
@@ -81,4 +81,7 @@
     </div>
   </div>
 </div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>
 

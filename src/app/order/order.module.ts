@@ -7,8 +7,8 @@ import { OrderClientComponent } from './order-client/order-client.component';
 import { OrderInvoiceComponent } from './order-invoice/order-invoice.component';
 import {HeaderModule} from '../common/components/header/header.module';
 import {FormsModule} from '@angular/forms';
-import {GlobalService} from '../common/services/global.service';
 import { OrderSureComponent } from './order-sure/order-sure.component';
+import {LoadingModule} from '../common/components/loading/loading.module';
 
 @NgModule({
   declarations: [OrderPlaceComponent, OrderClientComponent, OrderInvoiceComponent, OrderSureComponent],
@@ -18,6 +18,7 @@ import { OrderSureComponent } from './order-sure/order-sure.component';
     WeUiModule.forRoot(),
     HeaderModule,
     FormsModule,
+    LoadingModule
   ],
   providers: []
 })

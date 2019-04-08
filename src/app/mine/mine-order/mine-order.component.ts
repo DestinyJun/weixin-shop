@@ -32,10 +32,7 @@ export class MineOrderComponent implements OnInit {
     {name: '已完成', amount: 50, status: 'completed'},
   ];
   // order list
-  public mOrderList: any[] = [
-    /*{imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（一锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 100.00, amount: 0},
-    {imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（二锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 200.00, amount: 0},*/
-  ];
+  public mOrderList: any = null;
   // order status
   public orderStates: any = {
     shippe: {name: '待收货', color: '#7FB56E', operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: ''}]},
@@ -70,11 +67,13 @@ export class MineOrderComponent implements OnInit {
   }
   // init
   public mOrderInit(param): void {
+    this.mOrderList = null;
     this.mOrderSrv.getMineOrderList(param).subscribe(
       (val) => {
         if (val.status === 200 ) {
-          console.log(val);
           this.mOrderSerialization(val.datas);
+        } else {
+          this.mOrderList = [];
         }
       }
     );

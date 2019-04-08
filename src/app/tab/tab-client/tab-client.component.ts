@@ -1,16 +1,13 @@
 import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {Observable, timer} from 'rxjs';
 import {
-  ActionSheetComponent,
-  ActionSheetConfig,
   DialogComponent,
   DialogConfig,
   InfiniteLoaderComponent,
   InfiniteLoaderConfig, MaskComponent,
   SkinType
 } from 'ngx-weui';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {TabService} from '../../common/services/tab.service';
 import {GlobalService} from '../../common/services/global.service';
 
@@ -36,7 +33,7 @@ export class TabClientComponent implements OnInit {
   // router
   @Input() public routerStatus: string = null;
   // client
-  public clientList = [];
+  public clientList: any = null;
   public clientAddressList: any[];
   public clientName: string;
   public clientUpdateName: any = {
@@ -58,6 +55,7 @@ export class TabClientComponent implements OnInit {
   }
   // initialize
   public tabClientInitialize (): void {
+    this.clientList = null;
     this.tabService.tabGetClientList().subscribe(
       (value) => {
         if (value['status'] === 200) {

@@ -9,10 +9,8 @@ import {MineWalletService} from '../../common/services/mine-wallet.service';
   styleUrls: ['./mine-wallet.component.less']
 })
 export class MineWalletComponent implements OnInit {
-  public mineBalance: any = {
-    balance: '0.00',
-    withdraw: '0.00',
-  };
+  public mineBalance: any = {};
+  // public mineBalance: any = null;
   // header
   public headerOption: HeaderContent = {
     title: '我的钱包',
@@ -33,8 +31,8 @@ export class MineWalletComponent implements OnInit {
     this.mineWalletSrv.getWalletAmount({}).subscribe(
       (val) => {
         if (val.status === 200) {
-          this.mineBalance.balance = val.data['remainingSum'] + '.00';
-          this.mineBalance.withdraw = val.data['remainingSum'] + '.00';
+          this.mineBalance['balance'] = val.data['remainingSum'] + '.00';
+          this.mineBalance['withdraw'] = val.data['remainingSum'] + '.00';
         }
       }
     );

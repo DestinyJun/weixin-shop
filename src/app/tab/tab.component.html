@@ -1,7 +1,7 @@
 <div class="tab">
   <weui-tabbar>
     <weui-tab style="height: 100%" heading="首页" [active]="tabActive === 'home'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('home')">
-      <app-tab-home></app-tab-home>
+      <app-tab-home [tabHome]="tabHome"></app-tab-home>
     </weui-tab>
     <weui-tab style="height: 100%" heading="客户" [active]="tabActive === 'client'" [icon]="'<img src=./assets/images/icon_tabbar.png>'" (select)="onSelect('client')">
       <app-tab-client [headerOption]="clientHeader" [routerStatus]="rouStatus"></app-tab-client>

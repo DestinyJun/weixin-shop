@@ -1,4 +1,4 @@
-<div class="order-place">
+<div class="order-place" *ngIf="goodsInfo;else loading">
   <div class="order-place-header">
     <app-header [option]="headerOption"></app-header>
   </div>
@@ -75,5 +75,8 @@
     </div>
   </div>
 </div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>
 
 

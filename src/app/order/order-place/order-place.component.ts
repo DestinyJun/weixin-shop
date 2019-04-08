@@ -40,7 +40,7 @@ export class OrderPlaceComponent implements OnInit {
   };
   // goodsinfo
   public totalPrice = 0;
-  public goodsInfo: any[];
+  public goodsInfo: any = null;
   constructor(
     private router: Router,
     private orderSrv: OrderService,
@@ -107,11 +107,9 @@ export class OrderPlaceComponent implements OnInit {
 
   // order place
   public submitOrder() {
-    console.log('sdadad');
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
         if (val.status === 200) {
-          console.log(val.data);
           this.globalService.orderPlaceDel();
           this.router.navigate(['/order/sure', val.data.id]);
         }
