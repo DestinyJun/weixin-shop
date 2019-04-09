@@ -13,4 +13,14 @@ export class MineService {
   public mineGetQrImg(params): Observable<any> {
     return this.http.post('/member/qrCode', params);
   }
+  // verify payPwd
+  public mineVerifyPayPwd(params): Observable<any> {
+    console.log(params);
+    return this.http.post('/orderPay/payPwd', params);
+  }
+  // setting payPwd
+  public mineSetPayPwd(params): Observable<any> {
+    console.log(params);
+    return this.http.post('/member/setPayPwd', params);
+  }
 }

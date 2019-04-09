@@ -3,6 +3,7 @@ import {HeaderContent} from '../../common/components/header/header.model';
 import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
 import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
 import {Router} from '@angular/router';
+import {MineService} from '../../common/services/mine.service';
 
 @Component({
   selector: 'app-mine-setting',
@@ -28,7 +29,8 @@ export class MineSettingComponent implements OnInit {
     }
   };
   constructor(
-    private router: Router
+    private router: Router,
+    private mineSrv: MineService
   ) { }
 
   ngOnInit() {
@@ -38,11 +40,20 @@ export class MineSettingComponent implements OnInit {
     if (event.status) {
       return;
     }
-    if (event.password === '123456') {
+    this.mineSrv.mineVerifyPayPwd({payPwd: event.password}).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.router.navigate(['/mine/setting/paypwd']);
+        } else {
+
+        }
+      }
+    );
+    /*if (event.password === '123456') {
       this.router.navigate(['/mine/setting/paypwd']);
       return;
     }
-    this.onShow('ios');
+    this.onShow('ios');*/
   }
   public onShow(type: SkinType) {
     this.settingConfig = Object.assign({}, <DialogConfig>{

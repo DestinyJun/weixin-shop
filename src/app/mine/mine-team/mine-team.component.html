@@ -1,4 +1,4 @@
-<div class="mine-team">
+<div class="mine-team" *ngIf="mineTeamDate;else loading">
   <div class="mine-team-header">
     <app-header [option]="headerOption" (headerRightClick)="mineTeamInClient()"></app-header>
   </div>
@@ -23,13 +23,16 @@
             </div>
             <div class="list-scroll">
               <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
-                <div class="list-scroll-cell" *ngFor="let item of mineTeamDate?.team?.reverse();">
+                <ng-container *ngIf="!listLoading">
+                  <div class="list-scroll-cell" *ngFor="let item of mineTeamDate?.team?.reverse();">
                   <div class="box" [ngStyle]="{'width':(((item?.sum_amount_paid * 100) / maxData).toFixed(1)) + '%'}"></div>
                   <div class="text">
                     <p class="pull-left">{{item?.nikeName}}</p>
                     <p class="pull-right">{{item?.sum_amount_paid}}</p>
                   </div>
                 </div>
+                </ng-container>
+                <app-loading *ngIf="listLoading"></app-loading>
               </weui-infiniteloader>
             </div>
           </div>
@@ -50,13 +53,16 @@
             </div>
             <div class="list-scroll">
               <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
-                <div class="list-scroll-cell" *ngFor="let item of mineTeamDate?.team?.reverse();">
-                  <div class="box" [ngStyle]="{'width':(((item?.sum_amount_paid * 100) / maxData).toFixed(1)) + '%'}"></div>
-                  <div class="text">
-                    <p class="pull-left">{{item?.nikeName}}</p>
-                    <p class="pull-right">{{item?.sum_amount_paid}}</p>
+                <ng-container *ngIf="!listLoading">
+                  <div class="list-scroll-cell" *ngFor="let item of mineTeamDate?.team?.reverse();">
+                    <div class="box" [ngStyle]="{'width':(((item?.sum_amount_paid * 100) / maxData).toFixed(1)) + '%'}"></div>
+                    <div class="text">
+                      <p class="pull-left">{{item?.nikeName}}</p>
+                      <p class="pull-right">{{item?.sum_amount_paid}}</p>
+                    </div>
                   </div>
-                </div>
+                </ng-container>
+                <app-loading *ngIf="listLoading"></app-loading>
               </weui-infiniteloader>
             </div>
           </div>
@@ -70,3 +76,6 @@
     <p style="color: #48A531;margin-top: 15px">分享/邀请</p>
   </div>
 </div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

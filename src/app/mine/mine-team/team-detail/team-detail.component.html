@@ -1,4 +1,4 @@
-<div class="mine-detail">
+<div class="mine-detail" *ngIf="earningList;else loading">
   <div class="mine-detail-header">
     <app-header [option]="headerOption" (headerRightClick)="this.teamDetailMask.show()"></app-header>
   </div>
@@ -30,28 +30,30 @@
         <i class="fa fa-times" (click)="detailDelFilterClick('startDate')"></i>
       </span>
     </div>
-    <div class="weui-cells">
-      <div class="weui-cell" style="background-color: #F2F1F0;">
-        <div class="weui-cell__bd" style="color: #999999;">
-          总计收益：￥23653.00
+    <ng-container *ngIf="filtersSearchList;else fillterLaoding">
+      <div class="weui-cells">
+        <div class="weui-cell" style="background-color: #F2F1F0;">
+          <div class="weui-cell__bd" style="color: #999999;">
+            总计收益：￥23653.00
+          </div>
+          <div class="weui-cell__ft">
+            168单
+          </div>
         </div>
-        <div class="weui-cell__ft">
-          168单
+        <div class="weui-cell" [routerLink]="['/mine/team/personal', {id: 2}]">
+          <div class="weui-cell__bd">
+            <p>梳理名</p>
+            <p style="font-size: 0.8rem;color: #888888;">
+              <span>2019-03-01 19:58:43</span>
+            </p>
+          </div>
+          <div class="weui-cell__ft">
+            <p style="color: #F9C847;">+650.00</p>
+            <p style="color: #F9C847;font-size: 0.8rem">入账中</p>
+          </div>
         </div>
       </div>
-      <div class="weui-cell" [routerLink]="['/mine/team/personal', {id: 2}]">
-        <div class="weui-cell__bd">
-          <p>梳理名</p>
-          <p style="font-size: 0.8rem;color: #888888;">
-            <span>2019-03-01 19:58:43</span>
-          </p>
-        </div>
-        <div class="weui-cell__ft">
-          <p style="color: #F9C847;">+650.00</p>
-          <p style="color: #F9C847;font-size: 0.8rem">入账中</p>
-        </div>
-      </div>
-    </div>
+    </ng-container>
   </div>
   <div class="mine-detail-mask">
     <div class="recharge-mask">
@@ -114,3 +116,6 @@
     </div>
   </div>
 </div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

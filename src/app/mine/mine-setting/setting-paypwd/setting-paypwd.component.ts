@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ToastComponent} from 'ngx-weui';
 import {HeaderContent} from '../../../common/components/header/header.model';
+import {MineService} from '../../../common/services/mine.service';
 export class PwdDialogPay {
   value?: Array<string>;
   inputDisabled?: boolean;
@@ -18,6 +19,7 @@ export class PwdDialogPay {
 export class SettingPaypwdComponent implements OnInit {
   // toast
   @ViewChild('success') successToast: ToastComponent;
+  public setPwdToastTxt: string;
   // header
   public headerOption: HeaderContent = {
     title: '修改支付密码',
@@ -38,7 +40,9 @@ export class SettingPaypwdComponent implements OnInit {
     password: '',
     firpassword: ''
   };
-  constructor() { }
+  constructor(
+    private mineSrv: MineService
+  ) { }
 
   ngOnInit() {
   }
@@ -78,9 +82,17 @@ export class SettingPaypwdComponent implements OnInit {
       this.inputShow = true;
       this.firpasswordConfig.inputDisabled = true;
       if (this.inputPws === this.inputFirePws) {
-        this.onToastShow('success');
-        console.log(this.inputPws);
-        console.log(this.inputFirePws);
+        this.mineSrv.mineSetPayPwd({payPwd: this.inputFirePws}).subscribe(
+          (val) => {
+            if (val.status === 200) {
+              this.setPwdToastTxt = val.message;
+              this.onToastShow('success');
+            } else {
+              this.setPwdToastTxt = val.message;
+              this.onToastShow('success');
+            }
+          }
+        );
       } else {
         this.errorShow = true;
       }

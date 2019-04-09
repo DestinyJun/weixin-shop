@@ -39,7 +39,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   };
   public filterMember: any[] = [];
   // earning list
-  public earningList: any;
+  public earningList: any = null;
   public earningStatusList: any = {
     noEarning: ['没有收益', '#7F7F7F'],
     earning: ['入账中', '#F9C22B'],
@@ -73,7 +73,6 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     this.srv.destroyAll();
   }
   public detailDataInit(param, type: 'init' | 'search') {
-    console.log(param);
     this.mineTeamSrv.mineTeamGetEarn(param).subscribe(
       (value) => {
         if (value.status === 200) {
