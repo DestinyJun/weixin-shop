@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start-http-dev": "ng serve --open --host 0.0.0.0",
+    "start-http-dev": "ng serve --open --host 0.0.0.0 --proxy-config proxy.config.json",
     "start-http-prod": "ng serve --open --prod --host 0.0.0.0",
     "start-https-dev": "ng serve --open --host 0.0.0.0 --ssl true --ssl-key \"ssl/server.key\" --ssl-cert \"ssl/server.crt\"",
     "start-https-prod": "ng serve --open --prod --host 0.0.0.0 --ssl true --ssl-key \"ssl/server.key\" --ssl-cert \"ssl/server.crt\"",
-    "build": "ng build --prod --base-href /test-view/",
+    "build": "ng build --prod --base-href /moyaoView/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -1,9 +1,6 @@
 {
-  "/contacts": {
-    "target": "http://1785s28l17.iask.in:13009",
-    "secure": "false",
-    "pathRewrite": {
-      "^/contacts": ""
-    }
+  "/sns/oauth2/access_token?": {
+    "target": "https://api.weixin.qq.com",
+    "secure": "false"
   }
 }

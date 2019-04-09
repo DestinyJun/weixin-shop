@@ -13,12 +13,12 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.indexOf('api.weixin') === -1) {
+    if (req.url.indexOf('sns') === -1) {
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
           .set('Content-type', 'application/json; charset=UTF-8')
-          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NDgxNDE5NH0.xR3I5zflRtMsJglt-bHv93TtwwFa9YyfdAEs0_2aCDcBMNbzgvJD0IuqxY9R3erZEcfWhVHPBerVANi2KEMGaA')
+          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NDkwMDY2Nn0.7YiA9LAhjJc8u5ieULfWra6BnUEqNUBvcjZLSPa1JI5txbK4yFrq6Gj7uNIik1tDUuGnPzOqwyykb917zOvU2A')
       });
       return next.handle(clonedRequest).pipe(
         map((event: any, ) => {
@@ -44,6 +44,7 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         }),
         catchError((err: HttpErrorResponse) => {
+          console.log(err);
           this.globalService.remindEvent.next(false);
           if (err.status === 0) {
             this.router.navigate(['/error']);

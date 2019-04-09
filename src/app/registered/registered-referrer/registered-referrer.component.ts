@@ -72,7 +72,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
         console.log(val);
         this.globalSrv.remindEvent.next(false);
         if (val.status === 200) {
-          this.router.navigate(['/registered/submit', {referrerNumber: this.referrerNumber}]);
+          this.router.navigate(['/registered/submit']);
           return;
         }
         this.dialogShow('ios');
