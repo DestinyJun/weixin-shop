@@ -4,7 +4,6 @@ import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
 import {PayService} from '../../common/services/pay.service';
-import {Observable} from 'rxjs';
 import {mergeMap} from 'rxjs/internal/operators/mergeMap';
 
 @Component({
@@ -48,6 +47,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routerInfo.queryParams.subscribe((params: Params) => {
+      window.alert(JSON.stringify(params));
       this.payOrdDetailInit(params);
     });
   }

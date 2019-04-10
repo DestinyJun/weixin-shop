@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActionSheetComponent, ActionSheetConfig, ActionSheetService, DialogComponent, DialogConfig, SkinType, ToastService} from 'ngx-weui';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
 import {GlobalService} from '../../common/services/global.service';
 
@@ -23,18 +23,26 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   public configDialog: DialogConfig = {};
   // data
   public referrerNumber: any = {
-    workId: ''
+    workId: null,
+    openid: null
   };
 
   constructor(
     private actionSheetService: ActionSheetService,
     private toastService: ToastService,
     private router: Router,
+    private routerInfo: ActivatedRoute,
     private registeredService: RegisteredService,
     private globalSrv: GlobalService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.routerInfo.queryParams.subscribe(
+      (params: Params) => {
+        this.referrerNumber.openid =  params.openid;
+      }
+    );
+  }
   public actionSheetShow(type: SkinType, element): void {
     this.configActionSheet.skin = type;
     this.configActionSheet = Object.assign({}, this.configActionSheet);
@@ -69,14 +77,13 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     this.globalSrv.remindEvent.next(true);
     this.registeredService.verifyReferrer(this.referrerNumber).subscribe(
       (val) => {
-        console.log(val);
         this.globalSrv.remindEvent.next(false);
         if (val.status === 200) {
-          this.router.navigate(['/registered/submit']);
+          this.router.navigate(['/registered/submit'], {queryParams: this.referrerNumber});
           return;
         }
-        this.dialogShow('ios');
         this.referrerNumber.workId = '';
+        this.dialogShow('ios');
       }
     );
   }

@@ -18,11 +18,10 @@ export class AuthInterceptor implements HttpInterceptor {
         url: environment.dev_test_url + req.url,
         headers: req.headers
           .set('Content-type', 'application/json; charset=UTF-8')
-          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NDkwMDY2Nn0.7YiA9LAhjJc8u5ieULfWra6BnUEqNUBvcjZLSPa1JI5txbK4yFrq6Gj7uNIik1tDUuGnPzOqwyykb917zOvU2A')
+          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NDk2Nzk5Nn0.DslFOh9nwGdGT1uRDAWAPxWF46usoBE8R9IYPxKRhjJAXv8pwGsXdrb1c5oVaTguHmMh44MBj_cq281fBqEn-w')
       });
       return next.handle(clonedRequest).pipe(
         map((event: any, ) => {
-          console.log(event);
           if (event.status === 200) {
             return event;
           }
