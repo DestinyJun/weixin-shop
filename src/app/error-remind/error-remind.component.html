@@ -1,6 +1,6 @@
 <div class="error">
   <div class="error-text">
-    <span>链接服务器失败！！!</span>
-    <button class="weui-btn weui-btn_warn" (click)="errorResetClick()">重新加载</button>
+    <span>{{errorMsg.msg}}</span>
+    <button class="weui-btn weui-btn_warn" (click)="errorResetClick()">请重试</button>
   </div>
 </div>

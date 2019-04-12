@@ -43,6 +43,7 @@ export class TabComponent implements OnInit {
   ngOnInit() {
     forkJoin([this.tabSrc.tabGetPersonIncome({name: 1}), this.tabSrc.tabGetTeamTop({name: 2})]).subscribe(
       (res) => {
+        console.log(res);
         this.tabHome = res;
       }
     );

@@ -1,8 +1,10 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DialogComponent, DialogConfig, SkinType, DialogService, ToastService} from 'ngx-weui';
 import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
+import {GlobalService} from '../../common/services/global.service';
+import {mergeMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-registered-submit',
@@ -19,9 +21,11 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   public dialogPayConfig = new DialogPay('请设置支付密码', true, ['', '', '', '', '', ''], false, true, false);
   // code
   public codeError = false;
-  public submitPhone: any = {
-    phone: '',
-    smsCode: '',
+  public regSubmit: any = {
+    username: null,
+    payPwd: null,
+    refereesId: null,
+    wxid: null
   };
   public submitAgree = false;
   // btn code
@@ -29,13 +33,22 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     private srv: DialogService,
     private toastService: ToastService,
     private router: Router,
-    private regSrv: RegisteredService
+    private regSrv: RegisteredService,
+    private routerInfo: ActivatedRoute,
+    private globalSrv: GlobalService,
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.routerInfo.queryParams.subscribe(
+      (params: Params) => {
+        this.regSubmit.wxid =  params.openid;
+        this.regSubmit.refereesId =  params.workId;
+      }
+    );
+  }
   // send code
   public codeBtnClick() {
-    this.regSrv.regSendSMS(this.submitPhone).subscribe(
+    this.regSrv.regSendSMS(this.regSubmit).subscribe(
       (val) => {
          if (val.status === 200) {
            console.log(val);
@@ -59,23 +72,38 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     }, 10);
     return false;
   }
-  // verifyPayCode
+  // set Pay Pwd
   public onDialogPayClick(event): void {
     this.dialogPayShow = event.show;
     if (event.password === 'destroy') {
       return;
     }
-    /*this.regSrv.regVerifyPayCode({payPwd: event.password}).subscribe(
+    this.regSubmit.payPwd = event.password;
+    this.regSrv.regSignin(this.regSubmit).pipe(
+      mergeMap((res) => {
+        console.log(res);
+        return this.regSrv.regLanding({wxid: res.data.wxid});
+      })
+    ).subscribe(
       (val) => {
+        console.log(val);
         if (val.status === 200) {
+          this.globalSrv.tokenSetObject('token', val.token);
           this.router.navigate(['/registered/success']);
         }
       }
-    );*/
+    );
+    /*this.regSrv.regVerifyPayCode({payPwd: event.password}).subscribe(
+  (val) => {
+    if (val.status === 200) {
+      this.router.navigate(['/registered/success']);
+    }
+  }
+);*/
   }
   public onsubmit(): void {
     this.dialogPayShow = true;
-    /*this.regSrv.verifyCode(this.submitPhone).subscribe(
+   /* this.regSrv.verifyCode(this.submitPhone).subscribe(
       (val) => {
         if (val.status === 200) {
           this.dialogPayShow = true;

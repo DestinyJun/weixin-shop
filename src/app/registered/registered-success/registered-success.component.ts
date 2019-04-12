@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {HeaderContent} from '../../common/components/header/header.model';
 
 @Component({
   selector: 'app-registered-success',

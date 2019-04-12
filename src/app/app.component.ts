@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     private routerInfo: ActivatedRoute,
     private globalSrv: GlobalService,
     private http: HttpClient,
-    private location: Location
+    private location: Location,
   ) {
     const title = {
       '/registered': '请填写推荐人',
@@ -39,20 +39,25 @@ export class AppComponent implements OnInit {
         this.http.get(`${wx_url}appid=${wx_appid}&secret=${wx_secret}&code=${wx_code}&grant_type=${wx_grant_type}`)
           .pipe(mergeMap((props) => {
             if (props['openid']) {
+              console.log(props['openid']);
               this.wx_openid = props['openid'];
               return this.http.post('/login', {wxid: props['openid']});
             }
-            window.alert('授权失败');
-            return Observable.create(false);
+            return Observable.create(observer => observer.next({status: 40444, msg: '微信授权失败，请重新授权！', url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxda47c8b3a3d7fdcc&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'}));
           }))
           .subscribe(
             (val) => {
+              if (val['status'] === 40444) {
+                this.router.navigate(['/error'], {queryParams: val});
+                return;
+              }
               if (val['status'] === 200) {
+                window.alert(JSON.stringify(val));
                 this.globalSrv.tokenSetObject('token', val['token']);
                 this.router.navigate(['/tab']);
-              } else {
-                this.router.navigate(['/registered'], {queryParams: {openid: this.wx_openid}});
+                return;
               }
+              this.router.navigate(['/registered'], {queryParams: {openid: this.wx_openid}});
             }
           );
       }

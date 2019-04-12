@@ -43,6 +43,10 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       }
     );
   }
+  ngOnDestroy() {
+    this.actionSheetService.destroyAll();
+  }
+  // camera
   public actionSheetShow(type: SkinType, element): void {
     this.configActionSheet.skin = type;
     this.configActionSheet = Object.assign({}, this.configActionSheet);
@@ -59,6 +63,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       });
     }, 10);
   }
+  // workId dialog
   public dialogShow(type: SkinType) {
     this.configDialog = Object.assign({}, <DialogConfig>{
       skin: type,
@@ -73,12 +78,14 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     }, 10);
     return false;
   }
+  // workId click
   public referrerClick(): void {
     this.globalSrv.remindEvent.next(true);
     this.registeredService.verifyReferrer(this.referrerNumber).subscribe(
       (val) => {
         this.globalSrv.remindEvent.next(false);
         if (val.status === 200) {
+          this.referrerNumber.workId = val.data.workId;
           this.router.navigate(['/registered/submit'], {queryParams: this.referrerNumber});
           return;
         }
@@ -86,8 +93,5 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
         this.dialogShow('ios');
       }
     );
-  }
-  ngOnDestroy() {
-    this.actionSheetService.destroyAll();
   }
 }

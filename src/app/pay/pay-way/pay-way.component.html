@@ -50,7 +50,7 @@
     <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayOnchange)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>
   </div>
   <div class="pay-way-sure">
-    <button class="weui-btn weui-btn_primary" (click)="dialogPayShow = true">立即支付</button>
+    <button class="weui-btn weui-btn_primary" (click)="paySureClick()">立即支付</button>
   </div>
   <div class="pay-way-dialog">
     <weui-dialog #iosPayWay [config]="iosPayWayConfig"></weui-dialog>

@@ -13,12 +13,14 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.indexOf('sns') === -1) {
+    if (!this.globalService.token.length) {
+     console.log(this.globalService.tokenGetObject('token'));
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
           .set('Content-type', 'application/json; charset=UTF-8')
-          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NDk2Nzk5Nn0.DslFOh9nwGdGT1uRDAWAPxWF46usoBE8R9IYPxKRhjJAXv8pwGsXdrb1c5oVaTguHmMh44MBj_cq281fBqEn-w')
+          // .set('token', this.globalService.tokenGetObject('token'))
+          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NTA2MjEwM30.jDYP9oktgm5TYEz4Meeyl9brSjcZIyiJuiFd5qR-7o2H3Xhc7ULwhEornnHkD4YPT8J0a9a_KO2OXyygpcrgog')
       });
       return next.handle(clonedRequest).pipe(
         map((event: any, ) => {
@@ -35,7 +37,11 @@ export class AuthInterceptor implements HttpInterceptor {
         })
       );
     } else {
-      const clonedRequest = req.clone({});
+      const clonedRequest = req.clone({
+        url: environment.dev_test_url + req.url,
+        headers: req.headers
+          .set('Content-type', 'application/json; charset=UTF-8')
+      });
       return next.handle(clonedRequest).pipe(
         map((event: any, ) => {
           if (event.status === 200) {
@@ -43,10 +49,12 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         }),
         catchError((err: HttpErrorResponse) => {
-          console.log(err);
           this.globalService.remindEvent.next(false);
           if (err.status === 0) {
-            this.router.navigate(['/error']);
+            this.router.navigate(['/error'], {queryParams: {status: 404, msg: '连接服务区失败，请检查网络！', url: null}});
+          }
+          if (err.status === 403) {
+            this.router.navigate(['/error'], {queryParams: {status: 403, msg: 'token认证失败！', url: null}});
           }
           return Observable.create(observer => observer.next(err));
         })
