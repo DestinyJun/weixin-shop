@@ -5,6 +5,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
 import {PayService} from '../../common/services/pay.service';
 import {mergeMap} from 'rxjs/internal/operators/mergeMap';
+import {GlobalService} from '../../common/services/global.service';
 declare let WeixinJSBridge;
 
 @Component({
@@ -44,16 +45,19 @@ export class PayWayComponent implements OnInit, OnDestroy {
     private router: Router,
     private routerInfo: ActivatedRoute,
     private paySrv: PayService,
+    private globalSrv: GlobalService,
   ) { }
 
   ngOnInit() {
     this.routerInfo.queryParams.subscribe((params: Params) => {
+      console.log(params);
       this.payOrdDetailInit(params);
     });
   }
   // data init
   public payOrdDetailInit (params): void {
      this.paySrv.payOrdGetDetail(params).subscribe((val) => {
+       console.log(val);
        if (val.status === 200) {
          if (val.data) {
            this.payDetailsData = val.data;
@@ -106,15 +110,37 @@ export class PayWayComponent implements OnInit, OnDestroy {
     if (event.status) {
       return;
     }
-    this.paySrv.payPwdVerify({payPwd: event.password})
-      .pipe(mergeMap((key) => {
-        return this.paySrv.payWalletVerify({payPwd: key.backString, orderId: this.payDetailsData.id});
-      }))
-      .subscribe((val) => {
-        if (val.status === 200) {
-          this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
-        }
-    });
+    if (this.radioRes.radio === 'wallet') {
+      this.paySrv.payPwdVerify({payPwd: event.password})
+        .pipe(mergeMap((key) => {
+          return this.paySrv.payWalletVerify({payPwd: key.backString, orderId: this.payDetailsData.id});
+        }))
+        .subscribe((val) => {
+          if (val.status === 200) {
+            this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
+          }
+        });
+      return;
+    }
+    if (this.radioRes.radio === 'weixin') {
+      this.paySrv.payPwdVerify({payPwd: event.password})
+        .pipe(mergeMap((key) => {
+          window.alert(JSON.stringify(key));
+          window.alert(JSON.stringify(this.globalSrv.tokenGetObject('openid')));
+          return this.paySrv.payWeixinVerify({
+            payPwd: key.backString,
+            orderId: this.payDetailsData.id,
+            openid: '654321'
+          });
+        }))
+        .subscribe((val) => {
+          window.alert(JSON.stringify(val));
+          if (val.status === 200) {
+            this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
+          }
+        });
+      return;
+    }
   }
   public onShow(type: SkinType) {
     this.iosPayWayConfig = Object.assign({}, <DialogConfig>{
@@ -170,14 +196,8 @@ export class PayWayComponent implements OnInit, OnDestroy {
   }
   // pay sure
   public paySureClick() {
-    if (this.radioRes.radio === 'wallet') {
-      this.dialogPayShow = true;
-      return;
-    }
-    this.onBridgeReady();
+    this.dialogPayShow = true;
   }
-
-
 // clearInterval
   ngOnDestroy(): void {
     clearInterval(this.cleanTimer);

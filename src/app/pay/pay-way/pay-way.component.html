@@ -36,7 +36,7 @@
                   <p>微信支付</p>
                 </div>
                 <div class="weui-cell__ft">
-                  <input type="radio" class="weui-check" name="radio" id="s13" value="wexin" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+                  <input type="radio" class="weui-check" name="radio" id="s13" value="weixin" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
                   <i class="weui-icon-checked"></i>
                 </div>
               </label>
@@ -53,7 +53,7 @@
     <button class="weui-btn weui-btn_primary" (click)="paySureClick()">立即支付</button>
   </div>
   <div class="pay-way-dialog">
-    <weui-dialog #iosPayWay [config]="iosPayWayConfig"></weui-dialog>
+    <weui-dialog #iosPayWay [config]="iosPayWayConfig" ></weui-dialog>
   </div>
 </div>
 <ng-template #loading>

@@ -38,7 +38,7 @@
         <article class="weui-article">
           <div class="client-tab-scroll">
             <weui-infiniteloader (loadmore)="clientAddLoadMore($event)" [config]="clientAddloaderConfig">
-              <h3 *ngIf="clientAddressList?.length === 0" style="text-align: center;color: red;margin-top: 30%">暂无收货人信息</h3>
+              <h3 *ngIf="clientAddressList?.length === 0" style="text-align: center;color: #ADADB0;margin-top: 30%">暂无收货人信息</h3>
               <div class="weui-cell" *ngFor="let item of clientAddressList" (click)="clientUpdateClick(item)">
                 <div class="weui-cell__bd">
                   <p>收<span>货</span>人：{{item?.name}}</p>
@@ -57,7 +57,7 @@
         <article class="weui-article">
           <div class="client-tab-scroll">
             <weui-infiniteloader (loadmore)="clientAddLoadMore($event)" [config]="clientAddloaderConfig">
-              <h3 *ngIf="clientInvoiceList?.length === 0" style="text-align: center;color: red;margin-top: 30%">当前客户暂无发票信息</h3>
+              <h3 *ngIf="clientInvoiceList?.length === 0" style="text-align: center;color: #ADADB0;margin-top: 30%">当前客户暂无发票信息</h3>
               <div class="weui-cell" *ngFor="let item of clientInvoiceList" (click)="clientUpdateClick(item)">
                 <div class="weui-cell__bd">
                   <p>发票抬头：{{item?.title}}</p>

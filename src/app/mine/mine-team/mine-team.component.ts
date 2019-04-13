@@ -67,7 +67,10 @@ export class MineTeamComponent implements OnInit, OnDestroy {
         if (val.status === 200) {
           this.listLoading = false;
           this.mineTeamDate = val.data;
-          this.maxData = val.data.team[val.data.team.length - 1].sum_amount_paid;
+          if (val.data.team.length !== 0) {
+            this.maxData = val.data.team[val.data.team.length - 1].sum_amount_paid;
+          }
+          console.log(val.data);
         } else {
           this.listLoading = false;
           window.alert(val.message);

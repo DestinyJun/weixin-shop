@@ -13,14 +13,33 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!this.globalService.token.length) {
-     console.log(this.globalService.tokenGetObject('token'));
+    const clonedRequest = req.clone({
+      url: environment.dev_test_url + req.url,
+      headers: req.headers
+        .set('Content-type', 'application/json; charset=UTF-8')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLnjovkuIkiLCJleHAiOjE1NTUyMDkyOTR9.aZtx3xxogIkY9R1SepZMLOZffA1-qK5FuEWtQMcWPMiZ0302f75kEVe8SECtcpaEurcC8wtKaHkQEceyaRum8Q')
+    });
+    return next.handle(clonedRequest).pipe(
+      map((event: any, ) => {
+        if (event.status === 200) {
+          return event;
+        }
+      }),
+      catchError((err: HttpErrorResponse) => {
+        this.globalService.remindEvent.next(false);
+        if (err.status === 0) {
+          this.router.navigate(['/error']);
+        }
+        return Observable.create(observer => observer.next(err));
+      })
+    );
+    /*if (this.globalService.token.length !== 0) {
+     window.alert(this.globalService.tokenGetObject('token'));
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
           .set('Content-type', 'application/json; charset=UTF-8')
-          // .set('token', this.globalService.tokenGetObject('token'))
-          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NTA2MjEwM30.jDYP9oktgm5TYEz4Meeyl9brSjcZIyiJuiFd5qR-7o2H3Xhc7ULwhEornnHkD4YPT8J0a9a_KO2OXyygpcrgog')
+          .set('token', this.globalService.tokenGetObject('token'))
       });
       return next.handle(clonedRequest).pipe(
         map((event: any, ) => {
@@ -59,7 +78,7 @@ export class AuthInterceptor implements HttpInterceptor {
           return Observable.create(observer => observer.next(err));
         })
       );
-    }
+    }*/
   }
 
   /*mergeMap((event: any) => {

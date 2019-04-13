@@ -11,7 +11,6 @@ import {
   ToastService
 } from 'ngx-weui';
 import {ClientService} from '../../common/services/client.service';
-import {map} from 'rxjs/operators';
 import {ActivatedRoute, Params} from '@angular/router';
 
 @Component({
@@ -139,7 +138,7 @@ export class ClientAddComponent implements OnInit {
       this.srv.loading();
       this.clientSrv.clientAdd(this.addClient).subscribe(
         (val) => {
-          console.log(val);
+          window.alert(JSON.stringify(val));
           if (val.status === 200) {
             this.srv.hide();
             this.clientMsg = val.message;
@@ -183,7 +182,6 @@ export class ClientAddComponent implements OnInit {
       if (type === 'add') {
         this.srv.loading('添加中...');
          if (this.clientId !== 'null') {
-           console.log('id已有');
            this.addAddressRes.contactsId = this.clientId;
            this.clientSrv.clientAddAddress(this.addAddressRes).subscribe(
              (value) => {
@@ -202,7 +200,6 @@ export class ClientAddComponent implements OnInit {
              }
            );
          } else {
-           console.log('id没有');
            this.clientSrv.clientAdd(this.addClient).subscribe(
              (val) => {
                if (val.status === 200) {

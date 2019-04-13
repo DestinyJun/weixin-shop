@@ -12,7 +12,7 @@ export class ClientService {
   constructor(
     public http: HttpClient
   ) { }
-  // client
+  // add client
   public clientAdd(params): Observable<any> {
     return this.http.post(`/contacts/add`, params);
   }

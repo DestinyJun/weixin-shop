@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
             if (props['openid']) {
               console.log(props['openid']);
               this.wx_openid = props['openid'];
+              this.globalSrv.tokenSetObject('openid', props['openid']);
               return this.http.post('/login', {wxid: props['openid']});
             }
             return Observable.create(observer => observer.next({status: 40444, msg: '微信授权失败，请重新授权！', url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxda47c8b3a3d7fdcc&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'}));
@@ -52,7 +53,6 @@ export class AppComponent implements OnInit {
                 return;
               }
               if (val['status'] === 200) {
-                window.alert(JSON.stringify(val));
                 this.globalSrv.tokenSetObject('token', val['token']);
                 this.router.navigate(['/tab']);
                 return;

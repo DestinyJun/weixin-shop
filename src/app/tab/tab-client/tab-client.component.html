@@ -1,4 +1,4 @@
-<div class="tab-client" *ngIf="clientList;else loading">
+<div class="tab-client">
   <app-header [option]="headerOption" (headerRightClick)="onHeaderRightClick()"></app-header>
   <div class="tab-client-search">
     <weui-searchbar
@@ -33,20 +33,33 @@
   </div>
   <div class="tab-client-scroll">
      <weui-infiniteloader (loadmore)="clientLoadMore($event)" [config]="clientloaderConfig">
-       <div class="client-list" *ngFor="let item of clientList">
-         <div class="weui-cells__title" [id]="item?.name">{{item?.name}}</div>
-         <div class="weui-cells" >
-           <div class="weui-cell" *ngFor="let prop of item.value" (touchmove)="onTouchMove($event, prop)" (touchstart)="onTouchstart($event)">
-             <div class="weui-cell__bd" (click)="clientNameClick(prop, 'address')">
-               <p><span>{{prop.name}}</span></p>
-             </div>
-             <div class="weui-cell__ft">
-               <button *ngIf="prop.editState" class="weui-btn weui-btn_warn" (click)="clientDeleteClick(prop.id)">删除</button>
-               <button *ngIf="!prop.editState" class="weui-btn weui-btn_default" style="color: #7FB56E;" (click)="clientNameClick(prop , 'update')">编辑</button>
+       <ng-container *ngIf="clientList;else loading">
+         <ng-container *ngIf="clientList.length !== 0;else remind">
+           <div class="client-list" *ngFor="let item of clientList">
+             <div class="weui-cells__title" [id]="item?.name">{{item?.name}}</div>
+             <div class="weui-cells" >
+               <div class="weui-cell" *ngFor="let prop of item.value" (touchmove)="onTouchMove($event, prop)" (touchstart)="onTouchstart($event)">
+                 <div class="weui-cell__bd" (click)="clientNameClick(prop, 'address')">
+                   <p><span>{{prop.name}}</span></p>
+                 </div>
+                 <div class="weui-cell__ft">
+                   <button *ngIf="prop.editState" class="weui-btn weui-btn_warn" (click)="clientDeleteClick(prop.id)">删除</button>
+                   <button *ngIf="!prop.editState" class="weui-btn weui-btn_default" style="color: #7FB56E;" (click)="clientNameClick(prop , 'update')">编辑</button>
+                 </div>
+               </div>
              </div>
            </div>
-         </div>
-       </div>
+         </ng-container>
+         <ng-template #remind>
+           <div style="text-align: center;color: #7E7E7E;font-weight: bold;margin-top: 30%">
+             <span>暂无客户，</span>
+             <span style="color: #87BA77;" [routerLink]="['/client/add', {id: null, status: 'add'}]">点击添加</span>
+           </div>
+         </ng-template>
+       </ng-container>
+       <ng-template #loading>
+         <app-loading></app-loading>
+       </ng-template>
      </weui-infiniteloader>
   </div>
   <div class="tab-client-address">
@@ -81,7 +94,4 @@
     </div>
   </div>
 </div>
-<ng-template #loading>
-  <app-loading></app-loading>
-</ng-template>
 
