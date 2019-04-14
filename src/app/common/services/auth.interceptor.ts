@@ -13,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const clonedRequest = req.clone({
+    /*const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
@@ -32,9 +32,10 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         return Observable.create(observer => observer.next(err));
       })
-    );
-    /*if (this.globalService.token.length !== 0) {
-     window.alert(this.globalService.tokenGetObject('token'));
+    );*/
+    console.log(this.globalService.token.length);
+    if (this.globalService.token.length !== 0) {
+      console.log(this.globalService.tokenGetObject('token'));
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -78,7 +79,7 @@ export class AuthInterceptor implements HttpInterceptor {
           return Observable.create(observer => observer.next(err));
         })
       );
-    }*/
+    }
   }
 
   /*mergeMap((event: any) => {

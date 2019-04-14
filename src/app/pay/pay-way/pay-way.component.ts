@@ -125,15 +125,16 @@ export class PayWayComponent implements OnInit, OnDestroy {
     if (this.radioRes.radio === 'weixin') {
       this.paySrv.payPwdVerify({payPwd: event.password})
         .pipe(mergeMap((key) => {
-          window.alert(JSON.stringify(key));
-          window.alert(JSON.stringify(this.globalSrv.tokenGetObject('openid')));
+          console.log(key);
+          console.log(this.globalSrv.tokenGetObject('openid'));
           return this.paySrv.payWeixinVerify({
             payPwd: key.backString,
             orderId: this.payDetailsData.id,
-            openid: '654321'
+            openid: this.globalSrv.tokenGetObject('openid')
           });
         }))
         .subscribe((val) => {
+          console.log(val);
           window.alert(JSON.stringify(val));
           if (val.status === 200) {
             this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});

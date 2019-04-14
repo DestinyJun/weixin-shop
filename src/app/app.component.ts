@@ -30,10 +30,12 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.location.path() && this.location.path().split('?')[1] !== undefined) {
+      console.log(this.location.path());
       if (this.location.path().split('?')[1].split('=')[0] === 'code') {
+        console.log(this.location.path().split('?')[1].split('=')[0]);
         const wx_url = '/wx/getOauth?';
-        const wx_appid = 'wxda47c8b3a3d7fdcc';
-        const wx_secret = 'f6fe4d42a7bcb9279d9c524e7ce58d84';
+        const wx_appid = 'wxbacad0ba65a80a3d';
+        const wx_secret = '3dff3ec9e534c308e3b2d5916b4f35e8';
         const wx_code = this.location.path().split('?')[1].split('=')[1].split('&')[0];
         const wx_grant_type = 'authorization_code';
         this.http.get(`${wx_url}appid=${wx_appid}&secret=${wx_secret}&code=${wx_code}&grant_type=${wx_grant_type}`)
