@@ -13,6 +13,8 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log(this.globalService.wxSessionGetObject('token'));
+    console.log(req.url);
     /*const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       headers: req.headers
@@ -33,14 +35,12 @@ export class AuthInterceptor implements HttpInterceptor {
         return Observable.create(observer => observer.next(err));
       })
     );*/
-    console.log(this.globalService.token.length);
-    if (this.globalService.token.length !== 0) {
-      console.log(this.globalService.tokenGetObject('token'));
+    if (this.globalService.wxSessionGetObject('token')) {
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
           .set('Content-type', 'application/json; charset=UTF-8')
-          .set('token', this.globalService.tokenGetObject('token'))
+          .set('token', this.globalService.wxSessionGetObject('token'))
       });
       return next.handle(clonedRequest).pipe(
         map((event: any, ) => {

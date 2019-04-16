@@ -21,6 +21,7 @@ export class OrderPlaceComponent implements OnInit {
     goodsItem: [],
     remark: ''
   };
+  public goodsIndex: any = null;
   // toast
   @ViewChild('success') successToast: ToastComponent;
   // scroll
@@ -65,7 +66,7 @@ export class OrderPlaceComponent implements OnInit {
       (val) => {
         if (val.status === 200) {
           val.datas.map((item, index) => {
-            item['amount'] = parseInt(this.globalService.orderPlaceGetObject('goods' + index), 10);
+            item['amount'] = parseInt(this.globalService.wxSessionGetObject('goods' + index), 10);
             if (item.amount) {
               this.orderPlaceInfo.goodsItem.push({
                 goodsId: item.id,
@@ -83,7 +84,7 @@ export class OrderPlaceComponent implements OnInit {
   public goodsTotalCount(event, i): void {
     this.orderPlaceInfo.goodsItem = [];
     this.totalPrice = 0;
-    this.globalService.orderPlaceSetObject(`goods${i}`, event);
+    this.globalService.wxSessionSetObject(`goods${i}`, event);
     this.goodsInfo[i].amount = event;
     this.goodsInfo.map((item) => {
       if (item.amount) {
@@ -110,7 +111,7 @@ export class OrderPlaceComponent implements OnInit {
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
         if (val.status === 200) {
-          this.globalService.orderPlaceDel();
+          // this.globalService.orderPlaceDel();
           this.router.navigate(['/order/sure', val.data.id]);
         }
       }

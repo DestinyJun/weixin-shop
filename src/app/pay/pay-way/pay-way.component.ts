@@ -113,11 +113,17 @@ export class PayWayComponent implements OnInit, OnDestroy {
     if (this.radioRes.radio === 'wallet') {
       this.paySrv.payPwdVerify({payPwd: event.password})
         .pipe(mergeMap((key) => {
-          return this.paySrv.payWalletVerify({payPwd: key.backString, orderId: this.payDetailsData.id});
+          if (key.status === 200) {
+            return this.paySrv.payWalletVerify({payPwd: key.backString, orderId: this.payDetailsData.id});
+          } else {
+            this.onShow('ios', key.message);
+          }
         }))
         .subscribe((val) => {
           if (val.status === 200) {
             this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
+          } else {
+            console.log(val);
           }
         });
       return;
@@ -126,30 +132,34 @@ export class PayWayComponent implements OnInit, OnDestroy {
       this.paySrv.payPwdVerify({payPwd: event.password})
         .pipe(mergeMap((key) => {
           console.log(key);
-          console.log(this.globalSrv.tokenGetObject('openid'));
-          return this.paySrv.payWeixinVerify({
-            payPwd: key.backString,
-            orderId: this.payDetailsData.id,
-            openid: this.globalSrv.tokenGetObject('openid')
-          });
+          if (key.status === 200) {
+            return this.paySrv.payWeixinVerify({
+              payPwd: key.backString,
+              orderId: this.payDetailsData.id,
+              openid: this.globalSrv.wxSessionGetObject('openid')
+            });
+          } else {
+            this.onShow('ios', key.message);
+          }
         }))
         .subscribe((val) => {
-          console.log(val);
           window.alert(JSON.stringify(val));
+          console.log(val);
           if (val.status === 200) {
-            this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
+            this.onBridgeReady(val.dataObject);
+            // this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
           }
         });
       return;
     }
   }
-  public onShow(type: SkinType) {
+  public onShow(type: SkinType, msg: string) {
     this.iosPayWayConfig = Object.assign({}, <DialogConfig>{
       skin: type,
       cancel: '重试',
       confirm: '忘记密码',
       btns: null,
-      content: '支付密码错误，请重试'
+      content: msg
     });
     setTimeout(() => {
       (<DialogComponent>this[`${type}PayWay`]).show().subscribe((res: any) => {
@@ -163,7 +173,17 @@ export class PayWayComponent implements OnInit, OnDestroy {
     return false;
   }
   // weixin pay
-  public onBridgeReady() {
+  public onBridgeReady(obj) {
+    const timeStamp = (new Date().getTime()) / 1000;
+   /* const  payReq = {
+      appId: obj.sub_appid, // 公众号名称，由商户传入
+      timeStamp: timeStamp,  // 时间戳，自1970年以来的秒数
+      nonceStr: obj.nonce_str, // 随机串
+      package: `prepay_id=${obj.prepay_id}`,
+      signType: `HMAC-SHA256`,
+      paySign: obj.sign
+    };*/
+    console.log(obj);
    /* if (typeof WeixinJSBridge == 'undefined') {
       if (document.addEventListener) {
         document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
@@ -175,22 +195,14 @@ export class PayWayComponent implements OnInit, OnDestroy {
       onBridgeReady();
     }*/
 
-    const appId = 'appId';
-    const timeStamp = new Date().getTime();
     WeixinJSBridge.invoke(
-      'getBrandWCPayRequest', {
-        'appId': appId,     // 公众号名称，由商户传入
-        'timeStamp': timeStamp,         // 时间戳，自1970年以来的秒数
-        'nonceStr': 'e61463f8efa94090b1f366cccfbbb444', // 随机串
-        'package': 'prepay_id=u802345jgfjsdfgsdg888',
-        'signType': 'MD5',         // 微信签名方式：
-        'paySign': '70EA570631E4BB79628FBCA90534C63FF7FADD89' // 微信签名
-      },
+      'getBrandWCPayRequest', obj,
       function (res) {
         window.alert(JSON.stringify(res));
-        if (res.err_msg == 'get_brand_wcpay_request:ok') {
+        console.log(res);
+        if (res.err_msg === 'get_brand_wcpay_request:ok') {
           // 使用以上方式判断前端返回,微信团队郑重提示：
-          //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+          // res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
           console.log(res);
         }
       });

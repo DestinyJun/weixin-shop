@@ -30,9 +30,7 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     if (this.location.path() && this.location.path().split('?')[1] !== undefined) {
-      console.log(this.location.path());
       if (this.location.path().split('?')[1].split('=')[0] === 'code') {
-        console.log(this.location.path().split('?')[1].split('=')[0]);
         const wx_url = '/wx/getOauth?';
         const wx_appid = 'wxbacad0ba65a80a3d';
         const wx_secret = '3dff3ec9e534c308e3b2d5916b4f35e8';
@@ -41,12 +39,13 @@ export class AppComponent implements OnInit {
         this.http.get(`${wx_url}appid=${wx_appid}&secret=${wx_secret}&code=${wx_code}&grant_type=${wx_grant_type}`)
           .pipe(mergeMap((props) => {
             if (props['openid']) {
-              console.log(props['openid']);
               this.wx_openid = props['openid'];
-              this.globalSrv.tokenSetObject('openid', props['openid']);
+              this.globalSrv.wxSessionSetObject('openid', props['openid']);
               return this.http.post('/login', {wxid: props['openid']});
             }
-            return Observable.create(observer => observer.next({status: 40444, msg: '微信授权失败，请重新授权！', url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxda47c8b3a3d7fdcc&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'}));
+            return Observable.create(observer => observer.next({
+              status: 40444, msg: '微信授权失败，请重新授权！',
+              url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxda47c8b3a3d7fdcc&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'}));
           }))
           .subscribe(
             (val) => {
@@ -55,7 +54,7 @@ export class AppComponent implements OnInit {
                 return;
               }
               if (val['status'] === 200) {
-                this.globalSrv.tokenSetObject('token', val['token']);
+                this.globalSrv.wxSessionSetObject('token', val['token']);
                 this.router.navigate(['/tab']);
                 return;
               }

@@ -86,9 +86,8 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
       })
     ).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
-          this.globalSrv.tokenSetObject('token', val.token);
+          this.globalSrv.wxSessionSetObject('token', val.token);
           this.router.navigate(['/registered/success']);
         }
       }

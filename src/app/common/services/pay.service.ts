@@ -24,6 +24,7 @@ export class PayService {
   }
   // weixin pay
   public payWeixinVerify(params): Observable<any> {
+    console.log(params);
     return this.http.post(`/orderPay/orderWxPay`, params);
   }
 }

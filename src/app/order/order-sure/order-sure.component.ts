@@ -21,11 +21,7 @@ export class OrderSureComponent implements OnInit {
       icon: ''
     }
   };
-  // goods
-  public goodsInfo = [
-   {mainImage: 'assets/images/weui-img.png', title: '八宝五胆药墨（一锭）', info: '八宝五胆药墨简介', originalPrice: 100.00, amount: 0},
-   {mainImage: 'assets/images/weui-img.png', title: '八宝五胆药墨（二锭）', info: '八宝五胆药墨简介', originalPrice: 200.00, amount: 0},
- ];
+  // data
   public orderDetail: Observable<any>;
   // scroll
   infiniteloaderConfig: InfiniteLoaderConfig = {
@@ -45,7 +41,6 @@ export class OrderSureComponent implements OnInit {
   }
   // order sure
   public orderSureClick(id) {
-    console.log(id);
     this.router.navigate(['/pay/sure'], {queryParams: {orderId: id}});
   }
 }
