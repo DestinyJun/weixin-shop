@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpRequest, HttpHandler, HttpInterceptor, HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {Observable} from 'rxjs';
+import {EMPTY, Observable, of} from 'rxjs';
 import {catchError, map, mergeMap} from 'rxjs/operators';
 import {GlobalService} from './global.service';
 import {Router} from '@angular/router';
@@ -13,19 +13,18 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(this.globalService.wxSessionGetObject('token'));
-    console.log(req.url);
-    /*const clonedRequest = req.clone({
+    const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLnjovkuIkiLCJleHAiOjE1NTUyMDkyOTR9.aZtx3xxogIkY9R1SepZMLOZffA1-qK5FuEWtQMcWPMiZ0302f75kEVe8SECtcpaEurcC8wtKaHkQEceyaRum8Q')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NTU5NjI1MH0.KGk3g_lLuRUKKOEE3-CHj5gSlm-3bdZB0ygjaekivz0lmexhJPqt7fb297Ud_Q10hkml1LcizPYzXFxkHQOEGA')
     });
     return next.handle(clonedRequest).pipe(
-      map((event: any, ) => {
-        if (event.status === 200) {
-          return event;
+      mergeMap((event: any) => {
+        if (event) {
+          return of(event);
         }
+        return EMPTY;
       }),
       catchError((err: HttpErrorResponse) => {
         this.globalService.remindEvent.next(false);
@@ -34,8 +33,8 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         return Observable.create(observer => observer.next(err));
       })
-    );*/
-    if (this.globalService.wxSessionGetObject('token')) {
+    );
+    /*if (this.globalService.wxSessionGetObject('token')) {
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -56,7 +55,8 @@ export class AuthInterceptor implements HttpInterceptor {
           return Observable.create(observer => observer.next(err));
         })
       );
-    } else {
+    }
+    else {
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -79,7 +79,7 @@ export class AuthInterceptor implements HttpInterceptor {
           return Observable.create(observer => observer.next(err));
         })
       );
-    }
+    }*/
   }
 
   /*mergeMap((event: any) => {

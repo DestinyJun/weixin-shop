@@ -19,25 +19,5 @@ export class TabHomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {}
-  public onLoadMore(comp: InfiniteLoaderComponent): void {
-    /*this.restartBtn = false;
-    timer(1500).subscribe(() => {
-      this.items.push(
-        ...Array(10)
-          .fill(this.items.length)
-          .map((v, i) => v + i),
-      );
-
-      if (this.items.length >= 50) {
-        this.restartBtn = true;
-        comp.setFinished();
-        return;
-      }
-      comp.resolveLoading();
-    });*/
-  }
-  public restart(): void {
-    this.il.restart();
-  }
-
+  public onLoadMore(comp: InfiniteLoaderComponent): void {}
 }

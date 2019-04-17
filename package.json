@@ -29,6 +29,7 @@
     "echarts": "^4.1.0",
     "font-awesome": "^4.7.0",
     "ngx-echarts": "^4.1.0",
+    "ngx-loading": "^3.0.1",
     "ngx-weui": "^7.0.0-rc.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",

@@ -53,6 +53,9 @@
           <p *ngIf="item?.number"><span class="left">税<span style="margin-left: 2rem;">号</span></span>{{item?.number}}</p>
         </div>
       </div>
+      <ng-container *ngIf="orderBill.datas.length === 0">
+        <p style="color: darkseagreen;font-size: 0.8rem;font-weight: bold; text-align: center">暂无发票，添加一个吧！</p>
+      </ng-container>
     </div>
     <ng-template #loading>
       <div style="color: #03A9F4;text-align: center;font-size: 0.8rem">

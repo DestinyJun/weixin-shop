@@ -72,6 +72,7 @@ export class AppComponent implements OnInit {
     );
     this.globalSrv.remindEvent.subscribe(
       (val: any) => {
+        console.log(val);
         if (val) {
           this.loading = true;
         } else {

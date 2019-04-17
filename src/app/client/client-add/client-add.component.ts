@@ -29,8 +29,8 @@ export class ClientAddComponent implements OnInit {
     phone: null,
     address: null,
   };
-  public clientAddressList: any[] = [];
-  public clientInvoiceList: any[] = [];
+  public clientAddressList: any = null;
+  public clientInvoiceList: any = null;
   public bottomBtnStatus = 'address';
   public clientId: string = null;
   public clientMaskTitle = '新增客户收获地址';

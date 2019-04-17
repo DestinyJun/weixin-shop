@@ -155,7 +155,6 @@ export class TabClientComponent implements OnInit {
   }
   // remind
   public dialogDelShow(type: SkinType, item: any) {
-    console.log(item);
     this.configDelDialog = Object.assign({}, <DialogConfig>{
       skin: type,
       confirm: '是',
@@ -164,7 +163,6 @@ export class TabClientComponent implements OnInit {
     });
     setTimeout(() => {
       (<DialogComponent>this[`${type}DelDialog`]).show().subscribe((res: any) => {
-        console.log(res);
         if (res.value) {
           this.tabService.tabDeleteClient(item.id).subscribe(
             (value) => {},
