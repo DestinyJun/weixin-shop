@@ -26,10 +26,11 @@ export class MineOrderComponent implements OnInit {
   };
   // order select
   public mOrderStatusList: any = [
-    {name: '全部', amount: 156, status: null},
-    {name: '待付款', amount: 156, status: 'pendingPayment'},
-    {name: '待收货', amount: 6, status: 'shippe'},
-    {name: '已完成', amount: 50, status: 'completed'},
+    {name: '全部', amount: 0, status: 'all'},
+    {name: '待付款', amount: 0, status: 'pendingPayment'},
+    {name: '待收货', amount: 0, status: 'shipped'},
+    {name: '已完成', amount: 0, status: 'completed'},
+    {name: '退货', amount: 0, status: 'return'},
   ];
   // order list
   public mOrderList: any = null;
@@ -64,6 +65,19 @@ export class MineOrderComponent implements OnInit {
 
   ngOnInit() {
     this.mOrderInit({currentPage: '1'});
+    this.mOrderSrv.mineOrdGetNum().subscribe(
+      (val) => {
+        if (val.status === 200) {
+          Object.keys(val.dataObject).forEach((prop) => {
+            this.mOrderStatusList.map((item) => {
+              if (item.status === prop) {
+                item.amount = val.dataObject[prop];
+              }
+            });
+          });
+        }
+      }
+    );
   }
   // init
   public mOrderInit(param): void {

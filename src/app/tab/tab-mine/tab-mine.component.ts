@@ -1,5 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
+import {MineService} from '../../common/services/mine.service';
 
 @Component({
   selector: 'app-tab-mine',
@@ -9,18 +10,38 @@ import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
 })
 export class TabMineComponent implements OnInit {
   @ViewChild('tel') public tel: ElementRef;
-  public orderList: any = [
-    {name: '待付款', amount: 156},
-    {name: '待收货', amount: 6},
-    {name: '已完成', amount: 50},
-    {name: '退货', amount: 6},
+  public orderNum: any = [
+    {name: '全部', amount: 0, status: 'all'},
+    {name: '待付款', amount: 0, status: 'pendingPayment'},
+    {name: '待收货', amount: 0, status: 'shipped'},
+    {name: '已完成', amount: 0, status: 'completed'},
+    {name: '退货', amount: 0, status: 'return'},
   ];
   // Dialog组件
   @ViewChild('iosDialog') iosDialog: DialogComponent;
   public configDialog: DialogConfig = {};
-  constructor() { }
+  constructor(
+    private mineSrv: MineService
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.tabMineDateInit();
+  }
+  public tabMineDateInit (): void {
+    this.mineSrv.mineGetOrderNum().subscribe(
+      (val) => {
+        if (val.status === 200) {
+          Object.keys(val.dataObject).forEach((prop) => {
+            this.orderNum.map((item) => {
+              if (item.status === prop) {
+                item.amount = val.dataObject[prop];
+              }
+            });
+          });
+        }
+      }
+    );
+  }
   public dialogShow(type: SkinType) {
     this.configDialog = Object.assign({}, <DialogConfig>{
       skin: type,

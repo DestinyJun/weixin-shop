@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
       url: environment.dev_test_url + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NTU5NjI1MH0.KGk3g_lLuRUKKOEE3-CHj5gSlm-3bdZB0ygjaekivz0lmexhJPqt7fb297Ud_Q10hkml1LcizPYzXFxkHQOEGA')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NTY4NjIyMH0.ksTyxXyGn7Gcn0EROzPhWtX8dYyYuaAUMv7k08iObikTt5k5m7I9ewLYni9EYqs2OKNCU4GVE7-idJFczzCRuw')
     });
     return next.handle(clonedRequest).pipe(
       mergeMap((event: any) => {

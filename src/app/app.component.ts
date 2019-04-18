@@ -26,9 +26,11 @@ export class AppComponent implements OnInit {
     const title = {
       '/registered': '请填写推荐人',
     };
-    console.log(environment.env);
+
   }
   ngOnInit(): void {
+    console.log(environment.env);
+    console.log('111');
     /*if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
       this.router.navigate(['/error']);
       return;
@@ -66,6 +68,13 @@ export class AppComponent implements OnInit {
             }
           );
       }
+    } else {
+      this.router.navigate(['/error'], {
+        queryParams: {
+          msg: '非法访问，请先登录！',
+          url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxda47c8b3a3d7fdcc&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect',
+          btn: '点击登录'
+        }});
     }
     this.router.events.subscribe(
       (event) => {

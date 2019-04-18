@@ -19,7 +19,10 @@ export class MineService {
   }
   // setting payPwd
   public mineSetPayPwd(params): Observable<any> {
-    console.log(params);
     return this.http.post('/member/setPayPwd', params);
+  }
+  // get order number
+  public mineGetOrderNum(): Observable<any> {
+    return this.http.post('/moayoOrder/selectOrderNum', {});
   }
 }
