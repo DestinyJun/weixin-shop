@@ -15,7 +15,6 @@ export class MineService {
   }
   // verify payPwd
   public mineVerifyPayPwd(params): Observable<any> {
-    console.log(params);
     return this.http.post('/orderPay/payPwd', params);
   }
   // setting payPwd

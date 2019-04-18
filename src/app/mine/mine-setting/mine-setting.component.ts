@@ -45,17 +45,12 @@ export class MineSettingComponent implements OnInit {
         if (val.status === 200) {
           this.router.navigate(['/mine/setting/paypwd']);
         } else {
-
+          this.onShow('ios', val.message);
         }
       }
     );
-    /*if (event.password === '123456') {
-      this.router.navigate(['/mine/setting/paypwd']);
-      return;
-    }
-    this.onShow('ios');*/
   }
-  public onShow(type: SkinType) {
+  public onShow(type: SkinType, msg) {
     this.settingConfig = Object.assign({}, <DialogConfig>{
       skin: type,
       cancel: '重试',

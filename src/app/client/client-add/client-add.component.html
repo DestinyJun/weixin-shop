@@ -38,21 +38,26 @@
         <article class="weui-article">
           <div class="client-tab-scroll">
             <weui-infiniteloader (loadmore)="clientAddLoadMore($event)" [config]="clientAddloaderConfig">
-              <ng-container *ngIf="clientAddressList; else addressLoading">
-                <h3 *ngIf="clientAddressList?.length === 0" style="text-align: center;color: #ADADB0;margin-top: 30%">暂无收货人信息</h3>
-                <div class="weui-cell" *ngFor="let item of clientAddressList" (click)="clientUpdateClick(item)">
-                  <div class="weui-cell__bd">
-                    <p>收<span>货</span>人：{{item?.name}}</p>
-                    <p>联系电话：{{item?.phone}}</p>
-                    <p>收获地址：{{item?.address}}</p>
+              <ng-container *ngIf="clientId !== 'null'; else clientIdShow">
+                <ng-container *ngIf="clientAddressList; else addressLoading">
+                  <h3 *ngIf="clientAddressList?.length === 0" style="text-align: center;color: #ADADB0;margin-top: 30%">暂无收货人信息</h3>
+                  <div class="weui-cell" *ngFor="let item of clientAddressList" (click)="clientUpdateClick(item)">
+                    <div class="weui-cell__bd">
+                      <p>收<span>货</span>人：{{item?.name}}</p>
+                      <p>联系电话：{{item?.phone}}</p>
+                      <p>收获地址：{{item?.address}}</p>
+                    </div>
+                    <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前收货地址？', item, $event)">
+                      <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
+                    </div>
                   </div>
-                  <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前收货地址？', item, $event)">
-                    <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
-                  </div>
-                </div>
+                </ng-container>
+                <ng-template #addressLoading>
+                  <app-loading></app-loading>
+                </ng-template>
               </ng-container>
-              <ng-template #addressLoading>
-                <app-loading></app-loading>
+              <ng-template #clientIdShow>
+                <p style="text-align: center;color: darkseagreen;margin-top: 30%">请新增新客户</p>
               </ng-template>
             </weui-infiniteloader>
           </div>
@@ -62,20 +67,25 @@
         <article class="weui-article">
           <div class="client-tab-scroll">
             <weui-infiniteloader (loadmore)="clientAddLoadMore($event)" [config]="clientAddloaderConfig">
-              <ng-container *ngIf="clientInvoiceList; else invoiceLoading">
-                <h3 *ngIf="clientInvoiceList?.length === 0" style="text-align: center;color: #ADADB0;margin-top: 30%">当前客户暂无发票信息</h3>
-                <div class="weui-cell" *ngFor="let item of clientInvoiceList" (click)="clientUpdateClick(item)">
-                  <div class="weui-cell__bd">
-                    <p>发票抬头：{{item?.title}}</p>
-                    <p>税<span>号</span>：{{item?.number}}</p>
+              <ng-container *ngIf="clientId !== 'null'; else clientIdShow">
+                <ng-container *ngIf="clientInvoiceList; else invoiceLoading">
+                  <h3 *ngIf="clientInvoiceList?.length === 0" style="text-align: center;color: #ADADB0;margin-top: 30%">当前客户暂无发票信息</h3>
+                  <div class="weui-cell" *ngFor="let item of clientInvoiceList" (click)="clientUpdateClick(item)">
+                    <div class="weui-cell__bd">
+                      <p>发票抬头：{{item?.title}}</p>
+                      <p *ngIf="item?.number">税<span>号</span>：{{item?.number}}</p>
+                    </div>
+                    <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前发票？', item, $event)">
+                      <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
+                    </div>
                   </div>
-                  <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前发票？', item, $event)">
-                    <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
-                  </div>
-                </div>
+                </ng-container>
+                <ng-template #invoiceLoading>
+                  <app-loading></app-loading>
+                </ng-template>
               </ng-container>
-              <ng-template #invoiceLoading>
-                <app-loading></app-loading>
+              <ng-template #clientIdShow>
+                <p style="text-align: center;color: darkseagreen;margin-top: 30%">请新增新客户</p>
               </ng-template>
             </weui-infiniteloader>
           </div>

@@ -32,7 +32,7 @@ export class ClientAddComponent implements OnInit {
   public clientAddressList: any = null;
   public clientInvoiceList: any = null;
   public bottomBtnStatus = 'address';
-  public clientId: string = null;
+  public clientId: any = null;
   public clientMaskTitle = '新增客户收获地址';
   public clientStatus: string = null;
   public clientSaveBtnStatus = 'add';
@@ -138,11 +138,11 @@ export class ClientAddComponent implements OnInit {
       this.srv.loading();
       this.clientSrv.clientAdd(this.addClient).subscribe(
         (val) => {
-          window.alert(JSON.stringify(val));
           if (val.status === 200) {
             this.srv.hide();
             this.clientMsg = val.message;
             this.clientId = val.data.id;
+            this.clientSelectClick();
             this.onShow('addClient');
           }
         }

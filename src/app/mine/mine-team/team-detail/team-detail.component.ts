@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angul
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {MaskComponent, PickerService} from 'ngx-weui';
 import {MineTeamService} from '../../../common/services/mine-team.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-team-detail',
@@ -50,7 +51,8 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   @ViewChild('teamDetailMask') teamDetailMask: MaskComponent;
   constructor(
     private mineTeamSrv: MineTeamService,
-    private srv: PickerService
+    private srv: PickerService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -75,6 +77,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   public detailDataInit(param, type: 'init' | 'search') {
     this.mineTeamSrv.mineTeamGetEarn(param).subscribe(
       (value) => {
+        console.log(value);
         if (value.status === 200) {
           if (type === 'init') {
             this.earningList = this.detailSerialization(value.datas);
@@ -82,6 +85,9 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
             this.filtersSearchList = this.detailSerialization(value.datas);
             console.log(this.filtersSearchList);
           }
+        }
+        if (value.status !== 200) {
+          this.router.navigate(['/error'], {queryParams: {msg: '页面加载错误，请重试'}});
         }
       }
     );

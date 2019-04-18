@@ -29,6 +29,10 @@ export class AppComponent implements OnInit {
     console.log(environment.env);
   }
   ngOnInit(): void {
+    /*if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
+      this.router.navigate(['/error']);
+      return;
+    }*/
     if (this.location.path() && this.location.path().split('?')[1] !== undefined) {
       if (this.location.path().split('?')[1].split('=')[0] === 'code') {
         const wx_url = '/wx/getOauth?';

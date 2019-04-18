@@ -1,6 +1,33 @@
-<div class="error">
-  <div class="error-text">
-    <span>{{errorMsg.msg}}</span>
-    <button class="weui-btn weui-btn_warn" (click)="errorResetClick()">请重试</button>
+<ng-container *ngIf="errorMsgStatus;else weixinmsg">
+  <div class="weui-msg">
+    <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
+    <div class="weui-msg__text-area">
+      <h2 class="weui-msg__title">{{errorMsg.msg}}</h2>
+      <!--<p class="weui-msg__desc">内容详情，可根据实际需要安排，如果换行则不超过规定长度，居中展现<a href="javascript:void(0);">文字链接</a></p>-->
+    </div>
+    <div class="weui-msg__opr-area">
+      <p class="weui-btn-area">
+        <button (click)="errorResetClick()" class="weui-btn weui-btn_plain-primary">{{errorMsg.btn}}</button>
+      </p>
+    </div>
+    <div class="weui-msg__extra-area">
+      <div class="weui-footer">
+        <p class="weui-footer__links">
+          <a href="javascript:void(0);" class="weui-footer__link">贵州墨药</a>
+        </p>
+        <p class="weui-footer__text">Copyright © 2008-2019 moyao</p>
+      </div>
+    </div>
   </div>
-</div>
+</ng-container>
+<ng-template #weixinmsg>
+  <div class="weui-msg">
+    <div class="weui-msg__icon-area">
+      <i class="weui-icon-info weui-icon_msg"></i>
+    </div>
+    <div class="weui-msg__text-area">
+      <h4 class="weui-msg__title">请在微信客户端打开链接</h4>
+    </div>
+  </div>
+</ng-template>
+
