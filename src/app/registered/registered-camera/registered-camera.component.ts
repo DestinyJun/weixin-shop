@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-registered-camera',
@@ -6,53 +6,43 @@ import {Component, ElementRef, OnInit} from '@angular/core';
   styleUrls: ['./registered-camera.component.less']
 })
 export class RegisteredCameraComponent implements OnInit {
-  // public navigator: Navigator;
-  constructor(
-    private el: ElementRef,
-  ) {
+  public constrains = {video: {width: {min: 1280}, height: {min: 720}}};
+  @ViewChild('video') public videos: ElementRef;
+  constructor() {
   }
 
   ngOnInit() {
-    console.log(this.el.nativeElement.childNodes[0].childNodes[0]);
-    console.log(window.navigator);
-    if (window.navigator.mediaDevices.getUserMedia || window.navigator.getUserMedia) {
-      // 调用用户媒体设备，访问摄像头
-      this.getUserMedia({
-        video: {
-          facingMode: {exact: 'environment'},
-          width: {min: 1920},
-          // height: {min: 400},
+    this.videoCamrea();
+  }
+  public videoCamrea() {
+    const that = this;
+    if (navigator.mediaDevices === undefined) {
+      console.log('你的浏览器不支持访问用户媒体设备');
+      return;
+    }
+    if (navigator.mediaDevices.getUserMedia === undefined) {
+      console.log('你的浏览器不支持访问用户媒体设备');
+      return;
+    }
+    navigator.mediaDevices.getUserMedia(this.constrains)
+      .then(function(stream) {
+        const video = that.videos.nativeElement;
+        // 旧的浏览器可能没有srcObject
+        if ('srcObject' in video) {
+          video.srcObject = stream;
+        } else {
+          // 防止在新的浏览器里使用它，应为它已经不再支持了
+          video.src = window.URL.createObjectURL(stream);
         }
-      }, this.success, this.error);
-    } else {
-      alert('你的浏览器不支持访问用户媒体设备');
-    }
-  }
-
-  // 访问用户媒体设备的兼容方法
-  public getUserMedia(constrains, success, error) {
-    if (window.navigator.mediaDevices.getUserMedia) {
-      // 最新标准API
-      window.navigator.mediaDevices.getUserMedia(constrains)
-        .then(success)
-        .catch(error);
-    }
-  }
-
-  // 成功的回调函数
-  public success(stream) {
-    // 兼容webkit内核浏览器
-    const CompatibleURL = window.URL;
-    // 将视频流设置为video元素的源
-    this.el.nativeElement.childNodes[0].childNodes[0].src = CompatibleURL.createObjectURL(stream);
-    // 播放视频
-    this.el.nativeElement.childNodes[0].childNodes[0].play();
-  }
-
-  // 异常的回调函数
-  public error(error) {
-    // window.alert(error);
-    console.log('访问用户媒体设备失败：', error.name, error.message);
+        video.onloadedmetadata = function(e) {
+          console.log(e);
+          video.play();
+        };
+      })
+      .catch(function(err) {
+        console.log('访问用户媒体设备失败');
+        console.log(err);
+      });
   }
   public goBack (): void {
     window.history.back();

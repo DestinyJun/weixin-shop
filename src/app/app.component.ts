@@ -69,12 +69,12 @@ export class AppComponent implements OnInit {
           );
       }
     } else {
-      this.router.navigate(['/error'], {
+      /*this.router.navigate(['/error'], {
         queryParams: {
           msg: '非法访问，请先登录！',
           url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxda47c8b3a3d7fdcc&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect',
           btn: '点击登录'
-        }});
+        }});*/
     }
     this.router.events.subscribe(
       (event) => {
