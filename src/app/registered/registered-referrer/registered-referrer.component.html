@@ -1,6 +1,6 @@
 <div class="reg-referrer">
   <div class="reg-referrer-input">
-    <input class="weui-input" type="number"  name="qq" pattern="[0-9]*" placeholder="请填写推荐人工号" [(ngModel)]="referrerNumber.workId">
+    <input class="weui-input" type="text"  name="workId" placeholder="请填写推荐人工号" [(ngModel)]="referrerNumber.workId">
     <i class="fa fa-bars" aria-hidden="true" (click)="actionSheetShow('ios', photo)"></i>
   </div>
   <div class="reg-referrer-scan">
@@ -8,7 +8,7 @@
   </div>
   <!--camera-->
   <div class="reg-referrer-camera">
-    <input #photo type="file" accept="image/*" style="display: none">
+    <input #photo type="file" accept="image/*" style="display: none" (change)="referrerUpImg($event)">
   </div>
   <footer class="reg-referrer-footer">
     <button class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled': !referrerNumber.workId}" [disabled]="!referrerNumber.workId" (click)="referrerClick()">下一步</button>

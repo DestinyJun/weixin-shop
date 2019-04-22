@@ -30,7 +30,6 @@
               "src/styles.less"
             ],
             "scripts": [
-              "./node_modules/g2-mobile/index.js",
               "./node_modules/echarts/dist/echarts.min.js"
             ]
           },

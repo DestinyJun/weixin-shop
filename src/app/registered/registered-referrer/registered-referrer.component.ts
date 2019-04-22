@@ -3,7 +3,7 @@ import {ActionSheetComponent, ActionSheetConfig, ActionSheetService, DialogCompo
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
 import {GlobalService} from '../../common/services/global.service';
-
+declare const qrcode: any;
 @Component({
   selector: 'app-registered-referrer',
   templateUrl: './registered-referrer.component.html',
@@ -93,5 +93,14 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
         this.dialogShow('ios');
       }
     );
+  }
+  // upload img code
+  public referrerUpImg(event): void {
+    const that = this;
+    const uploadFileURL = window.URL.createObjectURL(event.target.files[0]);
+    qrcode.decode(uploadFileURL);
+    qrcode.callback = function (imgMsg) {
+      that.referrerNumber.workId = imgMsg;
+    };
   }
 }
