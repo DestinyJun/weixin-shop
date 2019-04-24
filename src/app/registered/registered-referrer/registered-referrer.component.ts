@@ -57,7 +57,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
           return;
         }
         if (res.value === 'camera') {
-          this.router.navigate(['/registered/camera']);
+          // this.router.navigate(['/registered/camera']);
           return;
         }
       });
