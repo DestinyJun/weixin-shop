@@ -61,14 +61,14 @@ export class AppComponent implements OnInit {
               });*/
               this.wx_openid = props['openid'];
               this.globalSrv.wxSessionSetObject('openid', props['openid']);
-              // this.globalSrv.wxSessionSetObject('access_token', props['access_token']);
+              this.globalSrv.wxSessionSetObject('access_token', props['access_token']);
               this.globalSrv.wxSessionSetObject('refresh_token', props['refresh_token']);
-              this.http.get(`https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${props['access_token']}&type=jsapi`).subscribe(
+             /* this.http.get(`https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${props['access_token']}&type=jsapi`).subscribe(
                 (val) => {
                   console.log(val);
                 }
-              );
-              wx.config({
+              );*/
+            /*  wx.config({
                 debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
                 appId: 'wxbacad0ba65a80a3d', // 必填，公众号的唯一标识
                 timestamp: '', // 必填，生成签名的时间戳
@@ -83,8 +83,8 @@ export class AppComponent implements OnInit {
               wx.error(function(err) {
                 console.log(err);
                 // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-              });
-              // return this.http.post('/login', {wxid: props['openid']});
+              });*/
+              return this.http.post('/login', {wxid: props['openid']});
             }
             return Observable.create(observer => observer.next({
               status: 40444, msg: '微信授权失败，请重新授权！',
@@ -94,20 +94,20 @@ export class AppComponent implements OnInit {
             (val) => {
               console.log(val);
               if (val['status'] === 40444) {
-                // this.router.navigate(['/error'], {queryParams: val});
+                this.router.navigate(['/error'], {queryParams: val});
                 return;
               }
               if (val['status'] === 200) {
                 this.globalSrv.wxSessionSetObject('token', val['token']);
-                // this.router.navigate(['/tab']);
+                this.router.navigate(['/tab']);
                 return;
               }
-              // this.router.navigate(['/registered'], {queryParams: {openid: this.wx_openid}});
+              this.router.navigate(['/registered'], {queryParams: {openid: this.wx_openid}});
             }
           );
       }
     } else {
-      /*this.router.navigate(['/error'], {
+     /* this.router.navigate(['/error'], {
         queryParams: {
           msg: '非法访问，请先登录！',
           url: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxda47c8b3a3d7fdcc&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect',

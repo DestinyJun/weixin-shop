@@ -59,6 +59,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     this.detailDataInit({}, 'init');
     this.mineTeamSrv.mineTeamGetMember({}).subscribe(
       (value) => {
+        console.log(value);
         if (value.status === 200) {
           value.datas.unshift({nikeName: '全部', id: 0, actives: true});
           value.datas.map((param) => {

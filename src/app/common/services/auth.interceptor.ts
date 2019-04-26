@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpEvent, HttpRequest, HttpHandler, HttpInterceptor, HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {EMPTY, Observable, of} from 'rxjs';
-import {catchError, map, mergeMap} from 'rxjs/operators';
+import {catchError, mergeMap} from 'rxjs/operators';
 import {GlobalService} from './global.service';
 import {Router} from '@angular/router';
 
@@ -13,11 +13,11 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-   /* const clonedRequest = req.clone({
+    const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NTY4NjIyMH0.ksTyxXyGn7Gcn0EROzPhWtX8dYyYuaAUMv7k08iObikTt5k5m7I9ewLYni9EYqs2OKNCU4GVE7-idJFczzCRuw')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU2MjQ1MTQzMiIsImV4cCI6MTU1NjI4MzU0OX0.W7evDGD4DAQfB93osn2x-fj2QCOCdU6X_2ZZlPFrv-hvKYt2_DeOQ0mFRS1Q06qotBcRKd9Sz-RMpAWSa7EmNA')
     });
     return next.handle(clonedRequest).pipe(
       mergeMap((event: any) => {
@@ -29,12 +29,12 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         this.globalService.remindEvent.next(false);
         if (err.status === 0) {
-          this.router.navigate(['/error']);
+          this.router.navigate(['/error'], {queryParams: {status: 404, msg: '连接服务区失败，请检查网络！', url: null}});
         }
         return Observable.create(observer => observer.next(err));
       })
-    );*/
-    if (this.globalService.wxSessionGetObject('token')) {
+    );
+    /*if (this.globalService.wxSessionGetObject('token')) {
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -79,6 +79,6 @@ export class AuthInterceptor implements HttpInterceptor {
           return Observable.create(observer => observer.next(err));
         })
       );
-    }
+    }*/
   }
 }
