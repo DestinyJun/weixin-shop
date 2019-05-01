@@ -1,5 +1,5 @@
 {
-  "/sns/oauth2/access_token?": {
+  "/cgi-bin": {
     "target": "https://api.weixin.qq.com",
     "secure": "false"
   }

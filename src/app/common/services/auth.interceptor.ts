@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
       url: environment.dev_test_url + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMzU2MjQ1MTQzMiIsImV4cCI6MTU1NjI4MzU0OX0.W7evDGD4DAQfB93osn2x-fj2QCOCdU6X_2ZZlPFrv-hvKYt2_DeOQ0mFRS1Q06qotBcRKd9Sz-RMpAWSa7EmNA')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NjY5NTk1OH0.6nOPjMwNmBVhLZlbUZIupnbW8P7rXx_gLWFHrFtYQReN5UXZ_7906g8-IK4ou8gb8P6EP9Ih2cKxVquCNgL7Fg')
     });
     return next.handle(clonedRequest).pipe(
       mergeMap((event: any) => {
@@ -29,7 +29,13 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         this.globalService.remindEvent.next(false);
         if (err.status === 0) {
-          this.router.navigate(['/error'], {queryParams: {status: 404, msg: '连接服务区失败，请检查网络！', url: null}});
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: '连接服务区失败，请检查网络！',
+              url: null,
+              btn: '请重试'
+            }
+          });
         }
         return Observable.create(observer => observer.next(err));
       })
