@@ -15,7 +15,7 @@ export class RegisteredService {
     return this.http.post(`/member/recommenderWorkId`, params);
   }
   // registered
-  public regSignin(params): Observable<any> {
+  public regRegister(params): Observable<any> {
     return this.http.post(`/member/signin`, params);
   }
   // Landing
@@ -32,6 +32,7 @@ export class RegisteredService {
   }
   // get wx user info
   public regGetWxUserInfo(params): Observable<any> {
-    return this.http.get(`/wx/userinfo`, params);
+    console.log(params);
+    return this.http.get(`/wx/userinfo?access_token=${params.access_token}&openid=${params.openid}`);
   }
 }

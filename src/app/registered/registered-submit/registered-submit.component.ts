@@ -1,11 +1,10 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {DialogComponent, DialogConfig, SkinType, DialogService, ToastService} from 'ngx-weui';
+import {DialogComponent, DialogConfig, SkinType, DialogService, ToastService, ToptipsService} from 'ngx-weui';
 import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
 import {GlobalService} from '../../common/services/global.service';
 import {mergeMap} from 'rxjs/operators';
-import {EMPTY} from 'rxjs';
 
 @Component({
   selector: 'app-registered-submit',
@@ -41,6 +40,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     private regSrv: RegisteredService,
     private routerInfo: ActivatedRoute,
     private globalSrv: GlobalService,
+    private topSrv: ToptipsService
   ) {}
 
   ngOnInit() {
@@ -51,14 +51,52 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
       }
     );
   }
+  ngOnDestroy() {
+    this.srv.destroyAll();
+  }
   // send code
   public codeBtnClick() {
     this.regSrv.regSendSMS({phone: this.regSubmit.username}).subscribe(
       (val) => {
-         if (val.status === 200) {}
+        console.log(val);
+         if (val.status === 200) {
+           this.topSrv['primary'](val.message);
+           return;
+         }
+        this.topSrv['warn'](val.message);
       }
     );
   }
+  // reg submit
+  public onsubmit(): void {
+    this.regSrv.regVerifySMS({phone: this.regSubmit.username, smsCode: this.smsCode}).pipe(
+      mergeMap((val) => {
+        if (val.status === 200) {
+          console.log(val);
+          this.regSubmit.smsKey = val.backString;
+          return this.regSrv.regGetWxUserInfo({
+            access_token: this.globalSrv.wxSessionGetObject('access_token'),
+            openid: this.globalSrv.wxSessionGetObject('openid')
+          });
+        } else {
+          this.codeError = true;
+        }
+      })
+    )
+    .subscribe(
+      (val) => {
+        if (val) {
+          console.log(val);
+          this.regSubmit.nikeName = val.nickname;
+          this.regSubmit.headImage = val.headimgurl;
+          this.regSubmit.sex = val.sex;
+          this.regSubmit.address = val.country;
+          this.dialogPayShow = true;
+        }
+      }
+    );
+  }
+  // reg agree
   public dialogAgreeShow(type: SkinType) {
     this.configAgreeDialog = Object.assign({}, <DialogConfig>{
       cancel: null,
@@ -83,52 +121,21 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     }
     this.regSubmit.payPwd = event.password;
     console.log(this.regSubmit);
-    this.regSrv.regSignin(this.regSubmit).pipe(
+    this.regSrv.regRegister(this.regSubmit).pipe(
       mergeMap((res) => {
         console.log(res);
-        return this.regSrv.regLanding({wxid: res.data.wxid});
+        if (res.status === 200) {
+          return this.regSrv.regLanding({wxid: res.data.wxid});
+        }
       })
     ).subscribe(
       (val) => {
+        console.log(val);
         if (val.status === 200) {
           this.globalSrv.wxSessionSetObject('token', val.token);
           this.router.navigate(['/registered/success']);
         }
       }
     );
-  }
-  // reg submit
-  public onsubmit(): void {
-    this.regSrv.regVerifySMS({phone: this.regSubmit.username, smsCode: this.smsCode}).subscribe(
-      (val) => {
-        if (val.status === 200) {
-          this.regSubmit.smsKey = val.backString;
-          console.log(this.regSubmit);
-          this.regSrv.regGetWxUserInfo({
-            access_token: this.globalSrv.wxSessionGetObject('access_token'),
-            openid: this.globalSrv.wxSessionGetObject('openid')
-          }).subscribe(
-            (item) => {
-              console.log(item);
-              if (val.status === 200) {
-                console.log(item);
-                this.regSubmit.nikeName = item.data.nikeName;
-                this.regSubmit.headImage = item.data.headimgurl;
-                this.regSubmit.sex = item.data.sex;
-                this.regSubmit.address = item.data.country;
-                console.log(this.regSubmit);
-                this.dialogPayShow = true;
-                return EMPTY;
-              }
-            }
-          );
-        } else {
-          this.codeError = true;
-        }
-      }
-    );
-  }
-  ngOnDestroy() {
-    this.srv.destroyAll();
   }
 }

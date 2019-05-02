@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpEvent, HttpRequest, HttpHandler, HttpInterceptor, HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {EMPTY, Observable, of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {catchError, mergeMap, map} from 'rxjs/operators';
 import {GlobalService} from './global.service';
 import {Router} from '@angular/router';
@@ -49,9 +49,9 @@ export class AuthInterceptor implements HttpInterceptor {
           .set('token', this.globalService.wxSessionGetObject('token'))
       });
       return next.handle(clonedRequest).pipe(
-        map((event: any, ) => {
-          if (event.status === 200) {
-            return event;
+        mergeMap((event: any, ) => {
+          if (event) {
+            return of(event);
           }
         }),
         catchError((err: HttpErrorResponse) => {
@@ -69,12 +69,14 @@ export class AuthInterceptor implements HttpInterceptor {
           .set('Content-type', 'application/json; charset=UTF-8')
       });
       return next.handle(clonedRequest).pipe(
-        map((event: any, ) => {
-          if (event.status === 200) {
-            return event;
+        mergeMap((event: any) => {
+          console.log(event);
+          if (event) {
+             return of(event);
           }
         }),
         catchError((err: HttpErrorResponse) => {
+          console.log(err);
           this.globalService.remindEvent.next(false);
           if (err.status === 0) {
             this.router.navigate(['/error'], {queryParams: {status: 404, msg: '连接服务区失败，请检查网络！', url: null}});
@@ -82,7 +84,10 @@ export class AuthInterceptor implements HttpInterceptor {
           if (err.status === 403) {
             this.router.navigate(['/error'], {queryParams: {status: 403, msg: 'token认证失败！', url: null}});
           }
-          return Observable.create(observer => observer.next(err));
+          if (err.status === 400) {
+            console.log(err);
+            return of(err);
+          }
         })
       );
     }
