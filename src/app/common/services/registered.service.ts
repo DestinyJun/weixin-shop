@@ -26,10 +26,12 @@ export class RegisteredService {
   public regSendSMS(params): Observable<any> {
     return this.http.post(`/member/sendSMS`, params);
   }
+  // SMS verify
   public regVerifySMS(params): Observable<any> {
     return this.http.post(`/member/verifySMS`, params);
   }
-  public regVerifyPayCode(params): Observable<any> {
-    return this.http.post(`/member/setPayPwd`, params);
+  // get wx user info
+  public regGetWxUserInfo(params): Observable<any> {
+    return this.http.get(`/wx/userinfo`, params);
   }
 }

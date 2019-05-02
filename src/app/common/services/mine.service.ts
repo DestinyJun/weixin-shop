@@ -25,4 +25,8 @@ export class MineService {
   public mineGetOrderNum(): Observable<any> {
     return this.http.post('/moayoOrder/selectOrderNum', {});
   }
+  // get user info
+  public mineGetUserInfo(): Observable<any> {
+    return this.http.post(`/member/userInfo`, {});
+  }
 }

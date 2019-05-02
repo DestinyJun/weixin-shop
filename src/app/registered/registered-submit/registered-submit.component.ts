@@ -5,6 +5,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
 import {GlobalService} from '../../common/services/global.service';
 import {mergeMap} from 'rxjs/operators';
+import {EMPTY} from 'rxjs';
 
 @Component({
   selector: 'app-registered-submit',
@@ -21,14 +22,18 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   public dialogPayConfig = new DialogPay('请设置支付密码', true, ['', '', '', '', '', ''], false, true, false);
   // code
   public codeError = false;
+  public smsCode: any = null;
   public regSubmit: any = {
     username: null,
     payPwd: null,
     refereesId: null,
-    wxid: null
+    headImage: null,
+    nikeName: null,
+    sex: null,
+    address: null,
+    smsKey: null
   };
   public submitAgree = false;
-  // btn code
   constructor(
     private srv: DialogService,
     private toastService: ToastService,
@@ -48,11 +53,9 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   }
   // send code
   public codeBtnClick() {
-    this.regSrv.regSendSMS(this.regSubmit).subscribe(
+    this.regSrv.regSendSMS({phone: this.regSubmit.username}).subscribe(
       (val) => {
-         if (val.status === 200) {
-           console.log(val);
-         }
+         if (val.status === 200) {}
       }
     );
   }
@@ -79,6 +82,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
       return;
     }
     this.regSubmit.payPwd = event.password;
+    console.log(this.regSubmit);
     this.regSrv.regSignin(this.regSubmit).pipe(
       mergeMap((res) => {
         console.log(res);
@@ -92,26 +96,37 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
         }
       }
     );
-    /*this.regSrv.regVerifyPayCode({payPwd: event.password}).subscribe(
-  (val) => {
-    if (val.status === 200) {
-      this.router.navigate(['/registered/success']);
-    }
   }
-);*/
-  }
+  // reg submit
   public onsubmit(): void {
-    this.dialogPayShow = true;
-   /* this.regSrv.verifyCode(this.submitPhone).subscribe(
+    this.regSrv.regVerifySMS({phone: this.regSubmit.username, smsCode: this.smsCode}).subscribe(
       (val) => {
         if (val.status === 200) {
-          this.dialogPayShow = true;
+          this.regSubmit.smsKey = val.backString;
+          console.log(this.regSubmit);
+          this.regSrv.regGetWxUserInfo({
+            access_token: this.globalSrv.wxSessionGetObject('access_token'),
+            openid: this.globalSrv.wxSessionGetObject('openid')
+          }).subscribe(
+            (item) => {
+              console.log(item);
+              if (val.status === 200) {
+                console.log(item);
+                this.regSubmit.nikeName = item.data.nikeName;
+                this.regSubmit.headImage = item.data.headimgurl;
+                this.regSubmit.sex = item.data.sex;
+                this.regSubmit.address = item.data.country;
+                console.log(this.regSubmit);
+                this.dialogPayShow = true;
+                return EMPTY;
+              }
+            }
+          );
         } else {
           this.codeError = true;
-          this.submitPhone.smsCode = '';
         }
       }
-    );*/
+    );
   }
   ngOnDestroy() {
     this.srv.destroyAll();

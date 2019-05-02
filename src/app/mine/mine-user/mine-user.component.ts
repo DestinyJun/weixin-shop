@@ -5,11 +5,9 @@ import {
   ActionSheetConfig,
   DialogComponent,
   DialogConfig,
-  DialogService,
-  InputType,
   SkinType,
-  ToastService
 } from 'ngx-weui';
+import {MineService} from '../../common/services/mine.service';
 
 export const DATA = [
   {
@@ -16525,13 +16523,26 @@ export class MineUserComponent implements OnInit {
   // dialog
   @ViewChild('ios') iosAS: DialogComponent;
   config: DialogConfig = {};
+  // data
+  public tabMineUserInfo: any = null;
 
-  constructor() {
+  constructor(
+    private mineSrv: MineService
+  ) {
   }
 
   ngOnInit() {
+    this.tabMineDateInit();
   }
-
+  public tabMineDateInit (): void {
+    this.mineSrv.mineGetUserInfo().subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.tabMineUserInfo = val.data;
+        }
+      }
+    );
+  }
   public actionSheetShow(type: SkinType, element): void {
     this.configActionSheet.skin = type;
     this.configActionSheet = Object.assign({}, this.configActionSheet);

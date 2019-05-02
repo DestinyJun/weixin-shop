@@ -1,9 +1,9 @@
-<form  #registerForm="ngForm"  class="reg-submit" (ngSubmit)="onsubmit()" novalidate>
+<form  #registerForm="ngForm"  class="reg-submit" novalidate>
   <div class="reg-submit-form">
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell weui-cell_vcode">
         <div class="weui-cell__bd">
-          <input class="weui-input" type="tel" #mobile="ngModel" placeholder="请输入手机号" weui-input="mobile" weui-required [(ngModel)]="regSubmit.username" name="mobile" >
+          <input class="weui-input" type="tel" #mobile="ngModel" placeholder="请输入手机号" weui-input="mobile" weui-required [(ngModel)]="regSubmit.username" name="mobile">
         </div>
         <div class="weui-cell__ft">
           <i class="weui-icon-"></i>
@@ -14,10 +14,10 @@
       </div>
       <div class="weui-cell weui-cell_vcode">
         <div class="weui-cell__bd">
-          <input class="weui-input" type="tel" placeholder="请输入验证码" name="smsCode">
+          <input class="weui-input" type="tel" placeholder="请输入验证码" name="smsCode" [(ngModel)]="smsCode">
         </div>
         <div class="weui-cell__ft">
-          <button class="weui-vcode-btn" [ngStyle]="{'color':regSubmit.username?'#3CC51F':''}" [disabled]="!mobile.invalid" (click)="codeBtnClick()">获取验证码</button>
+          <button type="button" class="weui-vcode-btn" [ngStyle]="{'color':regSubmit.username?'#3CC51F':''}" [disabled]="mobile.invalid" (click)="codeBtnClick()">获取验证码</button>
         </div>
       </div>
       <div class="weui-cell weui-cell_vcode">
@@ -41,9 +41,10 @@
   </div>
   <div class="reg-submit-btn">
     <button
-      type="submit"
+      type="button"
       class="weui-btn weui-btn_primary"
-      [ngClass]="!(mobile.valid&&submitAgree) ?'weui-btn_disabled': ''"
-      [disabled]="!(mobile.valid&&submitAgree)">注册</button>
+      (click)="onsubmit()"
+      [ngClass]="!(mobile.valid&&submitAgree&&smsCode) ?'weui-btn_disabled': ''"
+      [disabled]="!(mobile.valid&&submitAgree&&smsCode)">注册</button>
   </div>
 </form>

@@ -5,31 +5,31 @@
       <div class="weui-cell weui-cell_access" (click)="actionSheetShow('ios', photo)">
         <div class="weui-cell__bd">头像</div>
         <div class="weui-cell__ft">
-          <img class="weui-media-box__thumb" style="width: auto;height:50px;display: block;border-radius: 50%" [src]="'assets/images/weui-img.png'" alt="">
+          <img class="weui-media-box__thumb" style="width: auto;height:50px;display: block;border-radius: 50%" [src]="tabMineUserInfo?.headImage" alt="">
         </div>
       </div>
       <div class="weui-cell weui-cell_access" [routerLink]="['/mine/proname']">
         <div class="weui-cell__bd">用户名</div>
         <div class="weui-cell__ft">
-          <span style="vertical-align:middle;">王明</span>
+          <span style="vertical-align:middle;">{{tabMineUserInfo?.username}}</span>
         </div>
       </div>
       <div class="weui-cell weui-cell_access" (click)="onShow('ios')">
         <div class="weui-cell__bd">性别</div>
         <div class="weui-cell__ft">
-          <span style="vertical-align:middle;">男</span>
+          <span style="vertical-align:middle;">{{tabMineUserInfo?.headImage}}</span>
         </div>
       </div>
       <div class="weui-cell">
         <div class="weui-cell__bd">手机号</div>
         <div class="weui-cell__ft">
-          <span style="vertical-align:middle;color: #CBCBCB;">13888888888</span>
+          <span style="vertical-align:middle;color: #CBCBCB;">{{tabMineUserInfo?.phone}}</span>
         </div>
       </div>
       <div class="weui-cell">
         <div class="weui-cell__bd">工号</div>
         <div class="weui-cell__ft">
-          <span style="vertical-align:middle;color: #CBCBCB;">100001</span>
+          <span style="vertical-align:middle;color: #CBCBCB;">{{tabMineUserInfo?.workId}}</span>
         </div>
       </div>
       <div class="weui-cell weui-cell_access">

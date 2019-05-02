@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
 import {MineService} from '../../common/services/mine.service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-tab-mine',
@@ -20,6 +21,7 @@ export class TabMineComponent implements OnInit {
   // Dialog组件
   @ViewChild('iosDialog') iosDialog: DialogComponent;
   public configDialog: DialogConfig = {};
+  public mineUserInfo: any = null;
   constructor(
     private mineSrv: MineService
   ) { }
@@ -28,16 +30,18 @@ export class TabMineComponent implements OnInit {
     this.tabMineDateInit();
   }
   public tabMineDateInit (): void {
-    this.mineSrv.mineGetOrderNum().subscribe(
+    forkJoin([this.mineSrv.mineGetOrderNum(), this.mineSrv.mineGetUserInfo()]).subscribe(
       (val) => {
-        if (val.status === 200) {
-          Object.keys(val.dataObject).forEach((prop) => {
+        if (val) {
+          Object.keys(val[0].dataObject).forEach((prop) => {
             this.orderNum.map((item) => {
               if (item.status === prop) {
-                item.amount = val.dataObject[prop];
+                item.amount = val[0].dataObject[prop];
               }
             });
           });
+          this.mineUserInfo = val[1].data;
+          console.log(this.mineUserInfo);
         }
       }
     );

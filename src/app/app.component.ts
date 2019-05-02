@@ -53,14 +53,15 @@ export class AppComponent implements OnInit {
       }
     );
     // weixin auth
-    // this.wxAuth(this.location.path());
+    this.wxAuth(this.location.path());
   }
   public wxAuth (url): void {
-    if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
+    /*if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
       this.router.navigate(['/error']);
       return;
-    }
+    }*/
     if ( url && url.split('?')[1] !== undefined) {
+      console.log(url);
       if (url.split('?')[1].split('=')[0] === 'code') {
         const wx_url = '/wx/getOauth?';
         const wx_appid = 'wxbacad0ba65a80a3d';
@@ -69,22 +70,24 @@ export class AppComponent implements OnInit {
         const wx_grant_type = 'authorization_code';
         this.http.get(`${wx_url}appid=${wx_appid}&secret=${wx_secret}&code=${wx_code}&grant_type=${wx_grant_type}`)
           .pipe(mergeMap((props) => {
+            console.log(props);
             if (props['openid']) {
               this.wx_openid = props['openid'];
               this.globalSrv.wxSessionSetObject('openid', props['openid']);
               this.globalSrv.wxSessionSetObject('access_token', props['access_token']);
               this.globalSrv.wxSessionSetObject('refresh_token', props['refresh_token']);
               return this.http.post('/login', {wxid: props['openid']});
+            } else {
+              return Observable.create(observer => observer.next({
+                status: 40444, msg: '微信授权失败，请重新授权！',
+                url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${this.moyao_url}${this.wx_auth_string}`}));
             }
-            return Observable.create(observer => observer.next({
-              status: 40444, msg: '微信授权失败，请重新授权！',
-              url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${this.moyao_url}${this.wx_auth_string}`}));
           }))
           .subscribe(
             (val) => {
               console.log(val);
               if (val['status'] === 40444) {
-                this.router.navigate(['/error'], {queryParams: val});
+                // this.router.navigate(['/error'], {queryParams: val});
                 return;
               }
               if (val['status'] === 200) {
@@ -92,7 +95,11 @@ export class AppComponent implements OnInit {
                 this.router.navigate(['/tab']);
                 return;
               }
-              this.router.navigate(['/registered'], {queryParams: {openid: this.wx_openid}});
+              if (val['status'] === 40000) {
+                console.log('11111');
+                this.router.navigate(['/registered'], {queryParams: {openid: this.wx_openid}});
+                return;
+              }
             }
           );
         return;

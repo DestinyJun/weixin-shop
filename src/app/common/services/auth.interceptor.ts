@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpEvent, HttpRequest, HttpHandler, HttpInterceptor, HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {EMPTY, Observable, of} from 'rxjs';
-import {catchError, mergeMap} from 'rxjs/operators';
+import {catchError, mergeMap, map} from 'rxjs/operators';
 import {GlobalService} from './global.service';
 import {Router} from '@angular/router';
 
@@ -13,11 +13,12 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const clonedRequest = req.clone({
-      url: environment.dev_test_url + req.url,
+    /*const clonedRequest = req.clone({
+      // url: environment.dev_test_url + req.url,
+      url: 'http://192.168.1.9' + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NjY5NTk1OH0.6nOPjMwNmBVhLZlbUZIupnbW8P7rXx_gLWFHrFtYQReN5UXZ_7906g8-IK4ou8gb8P6EP9Ih2cKxVquCNgL7Fg')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1Njc3NDA1MH0.-UjYtjSHsVDs1zF75y18r8_woU6Y3oGMtISwVG-EuYVSMZgy8au4iZSHwiaiqln0lfoFPHsa_G1K0vHecwZ99g')
     });
     return next.handle(clonedRequest).pipe(
       mergeMap((event: any) => {
@@ -39,8 +40,8 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         return Observable.create(observer => observer.next(err));
       })
-    );
-    /*if (this.globalService.wxSessionGetObject('token')) {
+    );*/
+    if (this.globalService.wxSessionGetObject('token')) {
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -61,8 +62,7 @@ export class AuthInterceptor implements HttpInterceptor {
           return Observable.create(observer => observer.next(err));
         })
       );
-    }
-    else {
+    } else {
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -85,6 +85,6 @@ export class AuthInterceptor implements HttpInterceptor {
           return Observable.create(observer => observer.next(err));
         })
       );
-    }*/
+    }
   }
 }
