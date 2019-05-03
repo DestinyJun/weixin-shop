@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="recharge-button">
-    <button class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled': !rechargeAmount}" [disabled]="!rechargeAmount" (click)="this.rechargeMask.show()">立即充值</button>
+    <button class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled': !rechargeAmount}" [disabled]="!rechargeAmount" (click)="this.rechargeClick()">立即充值</button>
   </div>
   <div class="recharge-mask">
     <weui-mask #rechargeMask>
@@ -30,7 +30,7 @@
             <span style="vertical-align: middle">订单号</span>
           </div>
           <div class="weui-cell__ft">
-            <span style="vertical-align: middle">654784275457</span>
+            <span style="vertical-align: middle">{{rechargeOrderSn}}</span>
           </div>
         </div>
         <div class="weui-cell">
@@ -46,7 +46,7 @@
             <span style="vertical-align: middle">需付款</span>
           </div>
           <div class="weui-cell__ft">
-            <span style="vertical-align: middle">￥4568.00</span>
+            <span style="vertical-align: middle">￥{{rechargeAmount}}</span>
           </div>
         </div>
         <div class="weui-cell" (click)="rechargePayClick()">
@@ -56,5 +56,16 @@
         </div>
       </div>
     </weui-mask>
+  </div>
+  <div class="weui-dialog-pay">
+    <app-dialog-pay
+      *ngIf="mineWalletPayShow"
+      [config]="mineWalletPayConfig"
+      (dialogPayOnchange)="onDialogPayClick($event)"
+      (dialogPayDestroy)="onDialogPayClick($event)">
+    </app-dialog-pay>
+  </div>
+  <div class="wallet-recharge-dialog">
+    <weui-dialog #iosPayWay [config]="iosPayWayConfig" ></weui-dialog>
   </div>
 </div>

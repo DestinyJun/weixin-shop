@@ -14,7 +14,7 @@ export class PayService {
   public payOrdGetDetail(params): Observable<any> {
     return this.http.post(`/moayoOrder/orderItem`, params);
   }
-  // pay order detail
+  // verify password
   public payPwdVerify(params): Observable<any> {
     return this.http.post(`/orderPay/payPwd`, params);
   }

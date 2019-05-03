@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   public title = '魔药系统';
   public msg: string;
   public wx_openid: string;
-  public wx_appid = 'wxda47c8b3a3d7fdcc';
+  public wx_appid = 'wxbacad0ba65a80a3d';
   public wx_auth_url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
   public wx_auth_string = '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
   public moyao_url = 'http://1785s28l17.iask.in/moyaoView';
@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
       }
     );
     // weixin auth
-    this.wxAuth(this.location.path());
+    // this.wxAuth(this.location.path());
   }
   public wxAuth (url): void {
     /*if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {

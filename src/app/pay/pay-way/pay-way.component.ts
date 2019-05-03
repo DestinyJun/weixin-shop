@@ -111,6 +111,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.radioRes.radio === 'wallet') {
+      console.log('wallet');
       this.paySrv.payPwdVerify({payPwd: event.password})
         .pipe(mergeMap((key) => {
           if (key.status === 200) {
@@ -120,6 +121,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
           }
         }))
         .subscribe((val) => {
+          console.log(val);
           if (val.status === 200) {
             this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
           } else {
