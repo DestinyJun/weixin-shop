@@ -13,12 +13,12 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const clonedRequest = req.clone({
+    /*const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       // url: 'http://192.168.1.9' + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODc5ODcyMzkwMSIsImV4cCI6MTU1Njg4MzQ2Nn0.SkGMCmGFbWEy6Z68CHxHD4l3jYDnZprjMM7rUpYO8uYiYcsqTQpTVLqxY91hWNQoHOvoPfKoXdM8o94ihtvbtQ')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NzA0NDA4N30.V7yk5_-14FmghXRq_-nbNIOr7MRAwEa7L9p-OqnJDvi1c2nW1BPR421vQsgYDkVgrSnFlDUur9RvZ4z7uizdkw')
     });
     return next.handle(clonedRequest).pipe(
       mergeMap((event: any) => {
@@ -40,8 +40,8 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         return Observable.create(observer => observer.next(err));
       })
-    );
-   /* if (this.globalService.wxSessionGetObject('token')) {
+    );*/
+    if (this.globalService.wxSessionGetObject('token')) {
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -90,6 +90,6 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         })
       );
-    }*/
+    }
   }
 }

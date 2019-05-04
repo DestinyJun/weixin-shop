@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   env: '开发环境中.........................',
-  // dev_test_url: 'http://1785s28l17.iask.in:19568',
   dev_test_url: 'http://1785s28l17.iask.in',
+  // dev_test_url: 'www.e2jtv.com',
 };
 
 /*

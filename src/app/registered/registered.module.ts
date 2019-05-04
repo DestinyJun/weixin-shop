@@ -9,9 +9,10 @@ import { RegisteredCameraComponent } from './registered-camera/registered-camera
 import { RegisteredSuccessComponent } from './registered-success/registered-success.component';
 import {FormsModule} from '@angular/forms';
 import {DialogPayModule} from '../common/components/dialog-pay/dialog-pay.module';
+import { RegisteredScanComponent } from './registered-scan/registered-scan.component';
 
 @NgModule({
-  declarations: [RegisteredReferrerComponent, RegisteredSubmitComponent, RegisteredCameraComponent, RegisteredSuccessComponent],
+  declarations: [RegisteredReferrerComponent, RegisteredSubmitComponent, RegisteredCameraComponent, RegisteredSuccessComponent, RegisteredScanComponent],
   imports: [
     CommonModule,
     RegisteredRoutingModule,

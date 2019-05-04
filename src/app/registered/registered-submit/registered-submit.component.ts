@@ -4,7 +4,9 @@ import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
 import {GlobalService} from '../../common/services/global.service';
-import {mergeMap} from 'rxjs/operators';
+import {map, mergeMap} from 'rxjs/operators';
+import {Observable, timer} from 'rxjs';
+let that: any;
 
 @Component({
   selector: 'app-registered-submit',
@@ -44,6 +46,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    that = this;
     this.routerInfo.queryParams.subscribe(
       (params: Params) => {
         this.regSubmit.wxid =  params.openid;
@@ -72,7 +75,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     this.regSrv.regVerifySMS({phone: this.regSubmit.username, smsCode: this.smsCode}).pipe(
       mergeMap((val) => {
         if (val.status === 200) {
-          console.log(val);
           this.regSubmit.smsKey = val.backString;
           return this.regSrv.regGetWxUserInfo({
             access_token: this.globalSrv.wxSessionGetObject('access_token'),
@@ -137,5 +139,12 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+  // btn
+  public onSendCode(): Observable<boolean> {
+    that.codeBtnClick();
+    return timer(1000).pipe(map((v, i) => {
+      return true;
+    }));
   }
 }

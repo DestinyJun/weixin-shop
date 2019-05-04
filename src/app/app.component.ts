@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
   public wx_appid = 'wxbacad0ba65a80a3d';
   public wx_auth_url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
   public wx_auth_string = '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
-  public moyao_url = 'http://1785s28l17.iask.in/moyaoView';
   constructor(
     private router: Router,
     private routerInfo: ActivatedRoute,
@@ -53,7 +52,7 @@ export class AppComponent implements OnInit {
       }
     );
     // weixin auth
-    // this.wxAuth(this.location.path());
+    this.wxAuth(this.location.path());
   }
   public wxAuth (url): void {
     /*if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
@@ -80,7 +79,7 @@ export class AppComponent implements OnInit {
             } else {
               return Observable.create(observer => observer.next({
                 status: 40444, msg: '微信授权失败，请重新授权！',
-                url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${this.moyao_url}${this.wx_auth_string}`}));
+                url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${environment.dev_test_url}${this.wx_auth_string}`}));
             }
           }))
           .subscribe(
@@ -97,7 +96,7 @@ export class AppComponent implements OnInit {
               }
               if (val['status'] === 40000) {
                 console.log('11111');
-                this.router.navigate(['/registered'], {queryParams: {openid: this.wx_openid}});
+                this.router.navigate(['/registered']);
                 return;
               }
             }
@@ -109,7 +108,7 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/error'], {
       queryParams: {
         msg: '非法访问，请先登录！',
-        url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${this.moyao_url}${this.wx_auth_string}`,
+        url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${environment.dev_test_url}${this.wx_auth_string}`,
         btn: '点击登录'
       }});
   }
