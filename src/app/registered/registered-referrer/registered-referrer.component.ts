@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActionSheetComponent, ActionSheetConfig, ActionSheetService, DialogComponent, DialogConfig, SkinType, ToastService} from 'ngx-weui';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
@@ -7,6 +7,8 @@ import {mergeMap} from 'rxjs/operators';
 import {hex_sha1} from '../../common/tools/hex_sha1';
 import {isNumber} from '../../common/tools/is_number';
 import {random_word} from '../../common/tools/random_word';
+import {Location} from '@angular/common';
+import {is_ios} from '../../common/tools/is_ios';
 declare const qrcode: any;
 declare const wx: any;
 @Component({
@@ -38,7 +40,8 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     private router: Router,
     private routerInfo: ActivatedRoute,
     private registeredService: RegisteredService,
-    private globalSrv: GlobalService
+    private globalSrv: GlobalService,
+    private location: Location,
   ) { }
 
   ngOnInit() {
@@ -59,7 +62,11 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {
         if (res.value === 'photo') {
           this.referrerImage();
-          // element.click();
+         /* if (is_ios()) {
+            this.referrerImage();
+          } else {
+            element.click();
+          }*/
           return;
         }
         if (res.value === 'camera') {
@@ -120,6 +127,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   public referrerWxTicket(): void {
     this.registeredService.regGetWxToken().pipe(
       mergeMap((val) => {
+        window.alert(JSON.stringify(val));
         if (val) {
           this.globalSrv.wxSessionSetObject('js_access_token', val.access_token);
           return  this.registeredService.regGetWxticket({ access_token: val.access_token});
@@ -127,6 +135,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       })
     ) .subscribe(
       (val) => {
+        window.alert(JSON.stringify(val));
         this.globalSrv.wxSessionSetObject('ticket', val.ticket);
         this.referrerVerifyWxSdk();
       }
@@ -134,11 +143,17 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   }
   // verify wxSDK
   public referrerVerifyWxSdk(): void {
+    let url = '';
+    if (is_ios()) {
+     url = this.globalSrv.wxSessionGetObject('ios_url');
+    } else {
+      url = window.location.href;
+    }
+    window.alert(url);
     if (this.globalSrv.wxSessionGetObject('ticket')) {
       const jsapi_ticket = this.globalSrv.wxSessionGetObject('ticket');
       const noncestr = random_word(32);
       const timestamp = (Math.round(new Date().getTime() / 1000)).toString();
-      const url = 'http://1785s28l17.iask.in/moyaoView/registered';
       const sdkstring = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
       const signature = hex_sha1(sdkstring);
       wx.config({
@@ -152,9 +167,9 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
           'chooseImage'
         ] // 必填，需要使用的JS接口列表
       });
-    } else {
-      window.alert('调用摄像头失败，请重试');
+      return;
     }
+    window.alert('调用摄像头失败，请重试');
   }
   // wx scan
   public referrerScan(): void {
@@ -168,12 +183,14 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
         needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
         scanType: ['qrCode', 'barCode'], // 可以指定扫二维码还是一维码，默认二者都有
         success: function (videoRes) {
+          window.alert(JSON.stringify(videoRes));
           // 当needResult 为 1 时，扫码返回的结果
           that.referrerClick(videoRes.resultStr);
         }
       });
     });
     wx.error(function(err) {
+      alert(err.errMsg);
       // config信息验证失败会执行error函数，如签名过期导致验证失败，
       // 具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，
       // 对于SPA可以在这里更新签名。
@@ -191,9 +208,9 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
           window.alert(JSON.stringify(img_res.localIds));
           const localIds = img_res.localIds;
           wx.getLocalImgData({
-            localId: localIds, // 图片的localID
+            localId: localIds[0], // 图片的localID
             success: function (img_down_res) {
-              window.alert(img_down_res.localData); // localData是图片的base64数据，可以用img标签显示
+              window.alert(img_down_res); // localData是图片的base64数据，可以用img标签显示
             }
           });
         }

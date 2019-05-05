@@ -32,6 +32,8 @@ export class AppComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    console.log(window.location.href);
+    this.globalSrv.wxSessionSetObject('ios_url', window.location.href);
     console.log(environment.env);
     // 路由事件
     this.router.events.subscribe(
@@ -82,7 +84,7 @@ export class AppComponent implements OnInit {
               return Observable.create(observer => observer.next({
                 status: 40444,
                 msg: '微信授权失败，请重新授权！',
-                url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${environment.dev_test_url}${this.wx_auth_string}`,
+                url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${environment.dev_test_url}/moyaoView${this.wx_auth_string}`,
                 btn: '点击授权'
               }));
             }
@@ -112,7 +114,7 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/error'], {
       queryParams: {
         msg: '非法访问，请先登录！',
-        url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${environment.dev_test_url}${this.wx_auth_string}`,
+        url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${environment.dev_test_url}/moyaoView${this.wx_auth_string}`,
         btn: '点击登录'
       }});
   }
