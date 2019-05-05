@@ -18,7 +18,8 @@ export class AuthInterceptor implements HttpInterceptor {
       // url: 'http://192.168.1.9' + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NzA0NDA4N30.V7yk5_-14FmghXRq_-nbNIOr7MRAwEa7L9p-OqnJDvi1c2nW1BPR421vQsgYDkVgrSnFlDUur9RvZ4z7uizdkw')
+        // .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1NzA0NzkxNX0.0YeNu7-kExYnZs1evQPs1ItToxccIX5nnLclr2fS3WkSvezgQnkYjFWIDRcQRT_qloz-ct47Yi1Tzh80TW1HXA')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU1NzA1MDk4MX0.P1tcJHWsSyN5eGMvoLP3DA6Ogin2L2TVpH8UKFZF2MVMxEVR1mSXGOTckmMuSLLnWehaf7IWh79XM83RPtTMYQ')
     });
     return next.handle(clonedRequest).pipe(
       mergeMap((event: any) => {
@@ -38,7 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }
           });
         }
-        return Observable.create(observer => observer.next(err));
+        return of(err);
       })
     );*/
     if (this.globalService.wxSessionGetObject('token')) {

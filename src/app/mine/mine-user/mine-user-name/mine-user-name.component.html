@@ -1,9 +1,9 @@
 <div class="mine-user-name">
-  <app-header [option]="headerOption"></app-header>
+  <app-header [option]="headerOption" (headerRightClick)="mineUserNicUpdate()"></app-header>
   <div class="weui-cells">
     <div class="weui-cell">
       <div class="weui-cell__bd">
-        <input class="weui-input" type="text" placeholder="请输入新的名称">
+        <input class="weui-input" type="text" placeholder="请输入新的名称" [(ngModel)]="nikeName.nikeName">
       </div>
     </div>
   </div>

@@ -55,12 +55,14 @@ export class AppComponent implements OnInit {
     this.wxAuth(this.location.path());
   }
   public wxAuth (url): void {
-    /*if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
+    if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
       this.router.navigate(['/error']);
       return;
-    }*/
+    }
+    if (this.globalSrv.wxSessionGetObject('access_token')) {
+      return;
+    }
     if ( url && url.split('?')[1] !== undefined) {
-      console.log(url);
       if (url.split('?')[1].split('=')[0] === 'code') {
         const wx_url = '/wx/getOauth?';
         const wx_appid = 'wxbacad0ba65a80a3d';
@@ -78,15 +80,17 @@ export class AppComponent implements OnInit {
               return this.http.post('/login', {wxid: props['openid']});
             } else {
               return Observable.create(observer => observer.next({
-                status: 40444, msg: '微信授权失败，请重新授权！',
-                url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${environment.dev_test_url}${this.wx_auth_string}`}));
+                status: 40444,
+                msg: '微信授权失败，请重新授权！',
+                url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${environment.dev_test_url}${this.wx_auth_string}`,
+                btn: '点击授权'
+              }));
             }
           }))
           .subscribe(
             (val) => {
-              console.log(val);
               if (val['status'] === 40444) {
-                // this.router.navigate(['/error'], {queryParams: val});
+                this.router.navigate(['/error'], {queryParams: val});
                 return;
               }
               if (val['status'] === 200) {

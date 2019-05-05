@@ -19,9 +19,15 @@ export class MineUserNameComponent implements OnInit {
       color: '#39A12D'
     }
   };
+  // data
+  public nikeName = {
+    nikeName: ''
+  };
   constructor() { }
 
   ngOnInit() {
   }
-
+  public mineUserNicUpdate(): void {
+    console.log(this.nikeName);
+  }
 }

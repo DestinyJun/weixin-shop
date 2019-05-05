@@ -1,7 +1,9 @@
 <div class="reg-referrer">
   <div class="reg-referrer-input">
     <input class="weui-input" type="text"  name="workId" placeholder="请填写推荐人工号" [(ngModel)]="referrerNumber.workId">
-    <i class="fa fa-bars" aria-hidden="true" (click)="actionSheetShow('ios', photo)"></i>
+    <div class="icon" (click)="actionSheetShow('ios', photo)">
+      <i class="fa fa-bars" aria-hidden="true"></i>
+    </div>
   </div>
   <div class="reg-referrer-scan">
     <weui-actionsheet #iosActionSheet [menus]="actionSheetMenus" [config]="configActionSheet"></weui-actionsheet>

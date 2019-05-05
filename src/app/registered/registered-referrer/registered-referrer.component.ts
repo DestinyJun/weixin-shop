@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActionSheetComponent, ActionSheetConfig, ActionSheetService, DialogComponent, DialogConfig, SkinType, ToastService} from 'ngx-weui';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
@@ -6,6 +6,7 @@ import {GlobalService} from '../../common/services/global.service';
 import {mergeMap} from 'rxjs/operators';
 import {hex_sha1} from '../../common/tools/hex_sha1';
 import {isNumber} from '../../common/tools/is_number';
+import {random_word} from '../../common/tools/random_word';
 declare const qrcode: any;
 declare const wx: any;
 @Component({
@@ -14,7 +15,7 @@ declare const wx: any;
   styleUrls: ['./registered-referrer.component.less'],
   encapsulation: ViewEncapsulation.None
 })
-export class RegisteredReferrerComponent implements OnInit, OnDestroy, OnChanges {
+export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   // ActionSheet
   @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
   public actionSheetMenus: any[] = [
@@ -47,12 +48,6 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy, OnChanges
       this.referrerWxTicket();
     }
   }
-  ngOnChanges(number): void {
-    if (number) {
-      window.alert(number);
-      this.referrerNumber.workId = number;
-    }
-  }
   ngOnDestroy() {
     this.actionSheetService.destroyAll();
   }
@@ -63,11 +58,12 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy, OnChanges
     setTimeout(() => {
       (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {
         if (res.value === 'photo') {
-          element.click();
+          this.referrerImage();
+          // element.click();
           return;
         }
         if (res.value === 'camera') {
-          this.referrerVerifyWxSdk();
+          this.referrerScan();
           return;
         }
       });
@@ -131,30 +127,38 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy, OnChanges
       })
     ) .subscribe(
       (val) => {
-        console.log(val);
         this.globalSrv.wxSessionSetObject('ticket', val.ticket);
+        this.referrerVerifyWxSdk();
       }
     );
   }
   // verify wxSDK
   public referrerVerifyWxSdk(): void {
+    if (this.globalSrv.wxSessionGetObject('ticket')) {
+      const jsapi_ticket = this.globalSrv.wxSessionGetObject('ticket');
+      const noncestr = random_word(32);
+      const timestamp = (Math.round(new Date().getTime() / 1000)).toString();
+      const url = 'http://1785s28l17.iask.in/moyaoView/registered';
+      const sdkstring = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
+      const signature = hex_sha1(sdkstring);
+      wx.config({
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: 'wxbacad0ba65a80a3d', // 必填，公众号的唯一标识
+        timestamp: timestamp, // 必填，生成签名的时间戳
+        nonceStr: noncestr, // 必填，生成签名的随机串
+        signature: signature, // 必填，签名
+        jsApiList: [
+          'scanQRCode',
+          'chooseImage'
+        ] // 必填，需要使用的JS接口列表
+      });
+    } else {
+      window.alert('调用摄像头失败，请重试');
+    }
+  }
+  // wx scan
+  public referrerScan(): void {
     const that = this;
-    const jsapi_ticket = this.globalSrv.wxSessionGetObject('ticket');
-    const noncestr = this.referrerRandomWoed(32);
-    const timestamp = (Math.round(new Date().getTime() / 1000)).toString();
-    const url = 'http://1785s28l17.iask.in/moyaoView/registered';
-    const sdkstring = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
-    const signature = hex_sha1(sdkstring);
-    wx.config({
-      // debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-      appId: 'wxbacad0ba65a80a3d', // 必填，公众号的唯一标识
-      timestamp: timestamp, // 必填，生成签名的时间戳
-      nonceStr: noncestr, // 必填，生成签名的随机串
-      signature: signature, // 必填，签名
-      jsApiList: [
-        'scanQRCode'
-      ] // 必填，需要使用的JS接口列表
-    });
     wx.ready(function(res) {
       // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，
       // config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，
@@ -175,25 +179,25 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy, OnChanges
       // 对于SPA可以在这里更新签名。
     });
   }
-  // random Word
-  public referrerRandomWoed(num): string {
-    let str = '';
-    const range = num;
-    const arr = [
-      '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-      'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-      'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
-      'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-      'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
-    ];
-    // 随机产生
-   /* if (randomFlag) {
-      range = Math.round(Math.random() * (max - min)) + min;
-    }*/
-    for (let i = 0; i < range; i++) {
-      const pos = Math.round(Math.random() * (arr.length - 1));
-      str += arr[pos];
-    }
-    return str;
+  // wx image
+  public referrerImage(): void {
+    const that = this;
+    wx.ready(function(res) {
+      wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (img_res) {
+          window.alert(JSON.stringify(img_res.localIds));
+          const localIds = img_res.localIds;
+          wx.getLocalImgData({
+            localId: localIds, // 图片的localID
+            success: function (img_down_res) {
+              window.alert(img_down_res.localData); // localData是图片的base64数据，可以用img标签显示
+            }
+          });
+        }
+      });
+    });
   }
 }

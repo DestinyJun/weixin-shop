@@ -5,7 +5,6 @@ import {ClientRoutingModule} from './client-routing.module';
 import {HeaderModule} from '../common/components/header/header.module';
 import {WeUiModule} from 'ngx-weui';
 import {FormsModule} from '@angular/forms';
-import {WjDialogModule} from '../common/components/wj-dialog/wj-dialog.module';
 import {LoadingModule} from '../common/components/loading/loading.module';
 
 @NgModule({
@@ -16,7 +15,6 @@ import {LoadingModule} from '../common/components/loading/loading.module';
     HeaderModule,
     WeUiModule.forRoot(),
     FormsModule,
-    WjDialogModule,
     LoadingModule
   ]
 })

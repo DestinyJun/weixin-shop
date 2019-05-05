@@ -11,13 +11,17 @@
       <div class="weui-cell weui-cell_access" [routerLink]="['/mine/proname']">
         <div class="weui-cell__bd">用户名</div>
         <div class="weui-cell__ft">
-          <span style="vertical-align:middle;">{{tabMineUserInfo?.username}}</span>
+          <span style="vertical-align:middle;">
+            {{tabMineUserInfo?.nikeName}}
+          </span>
         </div>
       </div>
       <div class="weui-cell weui-cell_access" (click)="onShow('ios')">
         <div class="weui-cell__bd">性别</div>
         <div class="weui-cell__ft">
-          <span style="vertical-align:middle;">{{tabMineUserInfo?.headImage}}</span>
+          <span style="vertical-align:middle;">
+            {{tabMineUserInfo?.sex === 'Man'? '男':'女'}}
+          </span>
         </div>
       </div>
       <div class="weui-cell">

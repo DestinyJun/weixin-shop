@@ -88,7 +88,13 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
           }
         }
         if (value.status !== 200) {
-          this.router.navigate(['/error'], {queryParams: {msg: '页面加载错误，请重试'}});
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: '页面加载错!',
+              url: '/tab/home',
+              btn: '返回首页'
+            }
+          });
         }
       }
     );

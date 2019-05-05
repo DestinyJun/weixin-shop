@@ -36,7 +36,7 @@ export class MineOrderComponent implements OnInit {
   public mOrderList: any = null;
   // order status
   public orderStates: any = {
-    shippe: {name: '待收货', color: '#7FB56E', operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: ''}]},
+    shipped: {name: '待收货', color: '#7FB56E', operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: ''}]},
     pendingPayment: {name: '待付款', color: 'red', operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
     completed: {name: '已完成', color: '#7FB56E', operating: [{title: '删除订单', routes: ''}, {title: '再下一单', routes: ''}]},
     canceled: {name: '已取消', color: '#A0A0A0', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: ''}]},
@@ -84,6 +84,7 @@ export class MineOrderComponent implements OnInit {
     this.mOrderList = null;
     this.mOrderSrv.getMineOrderList(param).subscribe(
       (val) => {
+        console.log(val);
         if (val.status === 200 ) {
           this.mOrderSerialization(val.datas);
         } else {
