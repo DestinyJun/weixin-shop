@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import {MineUserComponent} from './mine-user/mine-user.component';
 import {MineSharedComponent} from './mine-shared/mine-shared.component';
 import {MineUserNameComponent} from './mine-user/mine-user-name/mine-user-name.component';
-import {MineUserAddressComponent} from './mine-user/mine-user-address/mine-user-address.component';
 const tabRoutes: Routes = [
   {path: 'order', loadChildren: './mine-order/mine-order.module#MineOrderModule'},
   {path: 'setting', loadChildren: './mine-setting/mine-setting.module#MineSettingModule'},
@@ -11,7 +10,6 @@ const tabRoutes: Routes = [
   {path: 'team', loadChildren: './mine-team/mine-team.module#MineTeamModule'},
   {path: 'profile', component: MineUserComponent},
   {path: 'proname', component: MineUserNameComponent},
-  {path: 'proaddress', component: MineUserAddressComponent},
   {path: 'wallet', loadChildren: './mine-wallet/mine-wallet.module#MineWalletModule'},
 ];
 @NgModule({

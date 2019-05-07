@@ -84,7 +84,7 @@
           </div>
           <div class="weui-cell__bd">
             <p style="">下单</p>
-            <p style="font-size: 12px;">客户下达</p>
+            <p style="font-size: 12px;">客户下单</p>
           </div>
         </div>
       </div>
@@ -105,9 +105,9 @@
     <div class="weui-cells__title title">销售排行榜</div>
     <div class="weui-mine">
       <div class="weui-cell">
-        <div class="weui-cell__hd">{{tabHome[1].data?tabHome[1].data[0]?.Ranks: ''}}</div>
-        <div class="weui-cell__bd">{{tabHome[1].data?tabHome[1].data[0]?.nikeName:'没有关键字'}}</div>
-        <div class="weui-cell__ft">￥{{tabHome[1].data?tabHome[1].data[0]?.sumPaid: ''}}</div>
+        <div class="weui-cell__hd">{{tabHome[1]?.data?tabHome[1]?.data[0]?.Ranks: ''}}</div>
+        <div class="weui-cell__bd">{{tabHome[1]?.data?tabHome[1]?.data[0]?.nikeName:'没有关键字'}}</div>
+        <div class="weui-cell__ft">￥{{tabHome[1]?.data?tabHome[1]?.data[0]?.sumPaid: ''}}</div>
       </div>
     </div>
   </div>

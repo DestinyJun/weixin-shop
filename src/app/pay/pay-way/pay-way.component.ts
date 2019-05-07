@@ -6,6 +6,7 @@ import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
 import {PayService} from '../../common/services/pay.service';
 import {mergeMap} from 'rxjs/internal/operators/mergeMap';
 import {GlobalService} from '../../common/services/global.service';
+import {EMPTY} from 'rxjs';
 declare let WeixinJSBridge;
 
 @Component({
@@ -118,6 +119,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
             return this.paySrv.payWalletVerify({payPwd: key.backString, orderId: this.payDetailsData.id});
           } else {
             this.onShow('ios', key.message);
+            return EMPTY;
           }
         }))
         .subscribe((val) => {

@@ -70,10 +70,15 @@ export class MineTeamComponent implements OnInit, OnDestroy {
           if (val.data.team.length !== 0) {
             this.maxData = val.data.team[val.data.team.length - 1].sum_amount_paid;
           }
-          console.log(val.data);
         } else {
           this.listLoading = false;
-          window.alert(val.message);
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: `服务器处理失败，错误代码：${val.status}！`,
+              url: null,
+              btn: '请重试'
+            }
+          });
         }
       }
     );

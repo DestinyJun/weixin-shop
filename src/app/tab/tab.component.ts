@@ -43,7 +43,16 @@ export class TabComponent implements OnInit {
   ngOnInit() {
     forkJoin([this.tabSrc.tabGetPersonIncome({name: 1}), this.tabSrc.tabGetTeamTop({name: 2})]).subscribe(
       (res) => {
-        this.tabHome = res;
+        if (res) {
+          this.tabHome = res;
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: `服务器处理失败！`,
+              url: null,
+              btn: '请重试',
+            }});
+        }
       }
     );
     this.titleServices.setTitle('首页');

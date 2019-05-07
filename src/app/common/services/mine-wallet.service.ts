@@ -27,4 +27,8 @@ export class MineWalletService {
     window.alert(JSON.stringify(params));
     return this.http.post(`/orderPay/orderWxPay`, params);
   }
+  // get balapay
+  public mineWalletBalaPay(params): Observable<any> {
+    return this.http.post('/earnings/earningsList', params);
+  }
 }

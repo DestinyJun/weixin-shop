@@ -10,7 +10,7 @@
             <span>{{orderPlaceAddressInfo.name}}</span>
             <span style="margin-left: 4rem">{{orderPlaceAddressInfo.phone}}</span>
            </p>
-          <p [ngStyle]="{'font-size':orderPlaceAddressInfo?'0.9rem':'1rem'}">{{orderPlaceAddressInfo?orderPlaceAddressInfo.address:'请选择一个收获地址'}}</p>
+          <p [ngStyle]="{'font-size':orderPlaceAddressInfo?'0.9rem':'1rem'}">{{orderPlaceAddressInfo?orderPlaceAddressInfo.address:'请选择一个收货地址'}}</p>
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@
   <div class="order-place-toast">
     <weui-toast #success [text]="'请先填写收货地址'" [icon]="''" [time]="1000"></weui-toast>
   </div>
-  <div class="weui-footer weui-footer_fixed-bottom" *ngIf="totalPrice">
+  <div class="weui-footer weui-footer_fixed-bottom" *ngIf="totalPrice&&orderPlaceAddressInfo">
     <div class="weui-flex">
       <div class="weui-flex__item">
         <span style="color: #2A2A2A;font-size: 1.1rem">共计</span>

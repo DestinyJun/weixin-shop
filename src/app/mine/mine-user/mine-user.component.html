@@ -36,11 +36,17 @@
           <span style="vertical-align:middle;color: #CBCBCB;">{{tabMineUserInfo?.workId}}</span>
         </div>
       </div>
-      <div class="weui-cell weui-cell_access">
+      <div class="weui-cell weui-cell_access" (click)="mineUserAddressClick()">
         <div class="weui-cell__bd">地区</div>
         <div class="weui-cell__ft">
-          <weui-city-picker required placeholder="Pick a City" [(ngModel)]="res.city" name="city"
-                            [data]="cityData" (change)="cityChange($event)"></weui-city-picker>
+          <span style="vertical-align:middle;">
+            {{tabMineUserInfo?.address}}
+          </span>
+         <!-- <weui-city-picker
+            required placeholder="Pick a City"
+            [(ngModel)]="res.city" name="city"
+            [data]="cityData" (change)="cityChange($event)">
+          </weui-city-picker>-->
         </div>
       </div>
     </div>
@@ -52,5 +58,8 @@
   </div>
   <div class="mine-user-gender">
     <weui-dialog #ios [config]="config"></weui-dialog>
+  </div>
+  <div class="mine-user-toast">
+    <weui-toast #success [text]="updateSexMsg" [icon]="''" [time]="1000"></weui-toast>
   </div>
 </div>

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
+import {MineService} from '../../../common/services/mine.service';
+import {ToastComponent} from 'ngx-weui';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-mine-user-name',
@@ -7,7 +10,9 @@ import {HeaderContent} from '../../../common/components/header/header.model';
   styleUrls: ['./mine-user-name.component.less']
 })
 export class MineUserNameComponent implements OnInit {
-// header
+  // toast
+  @ViewChild('success') successToast: ToastComponent;
+  // header
   public headerOption: HeaderContent = {
     title: '更改名字',
     leftContent: {
@@ -23,11 +28,32 @@ export class MineUserNameComponent implements OnInit {
   public nikeName = {
     nikeName: ''
   };
-  constructor() { }
+  public updateNicMsg: string;
+  constructor(
+    private mineSrv: MineService
+  ) { }
 
   ngOnInit() {
   }
   public mineUserNicUpdate(): void {
-    console.log(this.nikeName);
+    this.mineSrv.mineUpdateUserName(this.nikeName).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.updateNicMsg = '修改成功';
+          this.onToastShow('success');
+          timer(1000).subscribe(
+            (time) => {
+              window.history.back();
+            }
+          );
+          return;
+        }
+        this.updateNicMsg = `修改失败，错误代码：${val.status}`;
+        this.onToastShow('success');
+      }
+    );
+  }
+  public onToastShow(type: 'success' | 'loading') {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
   }
 }

@@ -26,7 +26,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   };
   // filter
   public filters: any = {};
-  public filtersSearchList: any = null;
+  public filtersSearchList: any = [];
   public filtersName: any = '';
   public filterStatus: any[] = [
     {label: '全部', value: 'noEarning', actives: true},
@@ -40,7 +40,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   };
   public filterMember: any[] = [];
   // earning list
-  public earningList: any = null;
+  public earningList: any = [];
   public earningStatusList: any = {
     noEarning: ['没有收益', '#7F7F7F'],
     earning: ['入账中', '#F9C22B'],
@@ -68,6 +68,14 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
             }
           });
           this.filterMember = value.datas;
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: `服务器处理失败，错误代码：${value.status}！`,
+              url: null,
+              btn: '请重试'
+            }
+          });
         }
       }
     );
@@ -90,9 +98,9 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
         if (value.status !== 200) {
           this.router.navigate(['/error'], {
             queryParams: {
-              msg: '页面加载错!',
-              url: '/tab/home',
-              btn: '返回首页'
+              msg: `服务器处理失败，错误代码：${value.status}！`,
+              url: null,
+              btn: '请重试'
             }
           });
         }

@@ -29,4 +29,9 @@ export class MineService {
   public mineGetUserInfo(): Observable<any> {
     return this.http.post(`/member/userInfo`, {});
   }
+  // update user info
+  public mineUpdateUserName(params): Observable<any> {
+    console.log(params);
+    return this.http.post(`/member/updateUserInfo`, params);
+  }
 }

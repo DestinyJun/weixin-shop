@@ -35,6 +35,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     smsKey: null
   };
   public submitAgree = false;
+  public workId: string = null;
   constructor(
     private srv: DialogService,
     private toastService: ToastService,
@@ -127,7 +128,15 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
       mergeMap((res) => {
         console.log(res);
         if (res.status === 200) {
+          this.workId = res.data.workId;
           return this.regSrv.regLanding({wxid: res.data.wxid});
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: '注册失败！',
+              url: null,
+              btn: '请重试',
+            }});
         }
       })
     ).subscribe(
@@ -135,7 +144,11 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
         console.log(val);
         if (val.status === 200) {
           this.globalSrv.wxSessionSetObject('token', val.token);
-          this.router.navigate(['/registered/success']);
+          this.router.navigate(['/registered/success'], {
+            queryParams: {
+              workId: `${this.workId}`,
+            }
+          });
         }
       }
     );

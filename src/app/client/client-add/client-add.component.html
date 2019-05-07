@@ -57,7 +57,7 @@
                 </ng-template>
               </ng-container>
               <ng-template #clientIdShow>
-                <p style="text-align: center;color: darkseagreen;margin-top: 30%">请新增新客户</p>
+                <p style="text-align: center;color: #B4B4B4;margin-top: 30%">暂无客户，请您新增新客户</p>
               </ng-template>
             </weui-infiniteloader>
           </div>
@@ -183,7 +183,7 @@
   </div>
   <div class="client-add-button" (click)="bottomBtnClick()">
     <div class="weui-footer weui-footer_fixed-bottom">
-      <button class="weui-btn weui-btn_primary" weui-button>{{bottomBtnStatus === 'address'?'新增客户收获地址': '新增客户发票信息'}}</button>
+      <button class="weui-btn weui-btn_primary" weui-button>{{bottomBtnStatus === 'address'?'新增客户收货地址': '新增客户发票信息'}}</button>
     </div>
   </div>
 </div>

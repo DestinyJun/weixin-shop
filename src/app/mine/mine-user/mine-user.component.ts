@@ -5,10 +5,213 @@ import {
   ActionSheetConfig,
   DialogComponent,
   DialogConfig,
-  SkinType,
+  SkinType, ToastComponent,
 } from 'ngx-weui';
 import {MineService} from '../../common/services/mine.service';
+import {is_ios} from '../../common/tools/is_ios';
+import {random_word} from '../../common/tools/random_word';
+import {hex_sha1} from '../../common/tools/hex_sha1';
+import {GlobalService} from '../../common/services/global.service';
+declare const wx: any;
+@Component({
+  selector: 'app-mine-user',
+  templateUrl: './mine-user.component.html',
+  styleUrls: ['./mine-user.component.less'],
+  encapsulation: ViewEncapsulation.None
+})
+export class MineUserComponent implements OnInit {
+  // header
+  public headerOption: HeaderContent = {
+    title: '个人资料',
+    leftContent: {
+      icon: 'fa fa-chevron-left'
+    },
+    rightContent: {
+      icon: ''
+    }
+  };
+  // picker
+  res: any = {
+    city: '520102',
+    date: new Date()
+  };
+  cityData: any = DATA;
+  // ActionSheet
+  @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
+  public actionSheetMenus: any[] = [
+    {text: '拍照', value: 'camera'},
+    {text: '从手机相册选择', value: 'photo'},
+  ];
+  public configActionSheet: ActionSheetConfig = <ActionSheetConfig>{};
+  // dialog
+  @ViewChild('ios') iosAS: DialogComponent;
+  // toast
+  @ViewChild('success') successToast: ToastComponent;
+  config: DialogConfig = {};
+  // data
+  public tabMineUserInfo: any = null;
+  public updateSexMsg = '修改成功';
+  constructor(
+    private mineSrv: MineService,
+    private globalSrv: GlobalService
+  ) {
+  }
 
+  ngOnInit() {
+    this.tabMineDateInit();
+    this.mineUserWxSdk();
+  }
+  public tabMineDateInit (): void {
+    this.mineSrv.mineGetUserInfo().subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.tabMineUserInfo = val.data;
+        }
+      }
+    );
+  }
+  public actionSheetShow(type: SkinType, element): void {
+    this.configActionSheet.skin = type;
+    this.configActionSheet = Object.assign({}, this.configActionSheet);
+    setTimeout(() => {
+      (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {
+        if (res.value === 'photo') {
+          wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'],
+            sourceType: ['album'],
+            success: function (img_res) {
+              window.alert(JSON.stringify(img_res));
+              const localIds = img_res.localIds;
+              wx.uploadImage({
+                localId: localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function (upload_res) {
+                  window.alert(JSON.stringify(upload_res));
+                  console.log(upload_res);
+                }
+              });
+            }
+          });
+          return;
+        }
+        if (res.value === 'camera') {
+          // 调用手机相机
+          wx.chooseImage({
+            count: 1, // 默认9
+            sizeType: ['original', 'compressed'],
+            sourceType: ['camera'],
+            success: function (img_res) {
+              window.alert(JSON.stringify(img_res));
+              const localIds = img_res.localIds;
+              wx.uploadImage({
+                localId: localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+                isShowProgressTips: 1, // 默认为1，显示进度提示
+                success: function (upload_res) {
+                  window.alert(JSON.stringify(upload_res));
+                  console.log(upload_res);
+                }
+              });
+            }
+          });
+        }
+      });
+    }, 10);
+  }
+  public cityChange(item: any) {
+    console.log(item);
+  }
+  public onShow(type: SkinType) {
+    this.config = Object.assign({}, <DialogConfig>{
+      skin: type,
+      type: 'prompt',
+      title: '请选择性别',
+      cancel: null,
+      confirm: '确定',
+      btns: null,
+      input: 'radio',
+      content: null,
+      inputOptions: [
+        {text: '男', value: '1'},
+        {text: '女', value: '0'},
+      ]
+    });
+    setTimeout(() => {
+      (<DialogComponent>this[`${type}AS`]).show().subscribe((res: any) => {
+        console.log('type', res);
+        this.mineSrv.mineUpdateUserName({sex: res.result.value}).subscribe(
+          (val) => {
+            console.log(val);
+            if (val.status === 200) {
+              this.updateSexMsg = '修改成功';
+              this.tabMineDateInit();
+              this.onToastShow('success');
+              return;
+            }
+            this.updateSexMsg = `修改失败，错误代码：${val.status}`;
+            this.onToastShow('success');
+          }
+        );
+      });
+    }, 10);
+    return false;
+  }
+  // address click
+  public mineUserAddressClick(): void {
+    wx.getLocation({
+      type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+      success: function (res) {
+        const latitudes = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+        const longitudes = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+        wx.ready(function() {
+          wx.openLocation({
+            latitude: latitudes, // 纬度，浮点数，范围为90 ~ -90
+            longitude: longitudes, // 经度，浮点数，范围为180 ~ -180。
+            name: '', // 位置名
+            address: '', // 地址详情说明
+            scale: 28, // 地图缩放级别,整形值,范围从1~28。默认为最大
+            infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+          });
+
+        });
+      }
+    });
+  }
+  public onToastShow(type: 'success' | 'loading') {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
+  }
+  // verify wxSDK
+  public mineUserWxSdk(): void {
+    let url = '';
+    if (is_ios()) {
+      url = this.globalSrv.wxSessionGetObject('ios_url');
+    } else {
+      url = window.location.href;
+    }
+    if (this.globalSrv.wxSessionGetObject('ticket')) {
+      const jsapi_ticket = this.globalSrv.wxSessionGetObject('ticket');
+      const noncestr = random_word(32);
+      const timestamp = (Math.round(new Date().getTime() / 1000)).toString();
+      const sdkstring = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
+      const signature = hex_sha1(sdkstring);
+      wx.config({
+        // debug: true,
+        appId: 'wxbacad0ba65a80a3d',
+        timestamp: timestamp,
+        nonceStr: noncestr,
+        signature: signature,
+        jsApiList: [
+          'scanQRCode',
+          'chooseImage',
+          'openLocation',
+          'getLocation',
+        ]
+      });
+      return;
+    }
+    window.alert('调用摄像头失败，请重试');
+  }
+}
 export const DATA = [
   {
     'name': '北京',
@@ -16489,98 +16692,3 @@ export const DATA = [
     ]
   }
 ];
-
-@Component({
-  selector: 'app-mine-user',
-  templateUrl: './mine-user.component.html',
-  styleUrls: ['./mine-user.component.less'],
-  encapsulation: ViewEncapsulation.None
-})
-export class MineUserComponent implements OnInit {
-  // header
-  public headerOption: HeaderContent = {
-    title: '个人资料',
-    leftContent: {
-      icon: 'fa fa-chevron-left'
-    },
-    rightContent: {
-      icon: ''
-    }
-  };
-  // picker
-  res: any = {
-    city: '520102',
-    date: new Date()
-  };
-  cityData: any = DATA;
-  // ActionSheet
-  @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
-  public actionSheetMenus: any[] = [
-    {text: '扫描二维码', value: 'camera'},
-    {text: '从手机相册选择', value: 'photo'},
-  ];
-  public configActionSheet: ActionSheetConfig = <ActionSheetConfig>{};
-  // dialog
-  @ViewChild('ios') iosAS: DialogComponent;
-  config: DialogConfig = {};
-  // data
-  public tabMineUserInfo: any = null;
-
-  constructor(
-    private mineSrv: MineService
-  ) {
-  }
-
-  ngOnInit() {
-    this.tabMineDateInit();
-  }
-  public tabMineDateInit (): void {
-    this.mineSrv.mineGetUserInfo().subscribe(
-      (val) => {
-        if (val.status === 200) {
-          this.tabMineUserInfo = val.data;
-        }
-      }
-    );
-  }
-  public actionSheetShow(type: SkinType, element): void {
-    this.configActionSheet.skin = type;
-    this.configActionSheet = Object.assign({}, this.configActionSheet);
-    setTimeout(() => {
-      (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {
-        if (res.value === 'photo') {
-          element.click();
-          return;
-        }
-        if (res.value === 'camera') {
-          // 调用手机相机
-        }
-      });
-    }, 10);
-  }
-  public cityChange(item: any) {
-    console.log(item);
-  }
-  public onShow(type: SkinType) {
-    this.config = Object.assign({}, <DialogConfig>{
-      skin: type,
-      type: 'prompt',
-      title: '请选择性别',
-      cancel: null,
-      confirm: '确定',
-      btns: null,
-      input: 'radio',
-      content: null,
-      inputOptions: [
-        {text: '男', value: 'man'},
-        {text: '女', value: 'woman'},
-      ]
-    });
-    setTimeout(() => {
-      (<DialogComponent>this[`${type}AS`]).show().subscribe((res: any) => {
-        console.log('type', res);
-      });
-    }, 10);
-    return false;
-  }
-}
