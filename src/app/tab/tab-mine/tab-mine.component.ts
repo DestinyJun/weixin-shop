@@ -41,7 +41,6 @@ export class TabMineComponent implements OnInit {
             });
           });
           this.mineUserInfo = val[1].data;
-          console.log(this.mineUserInfo);
         }
       }
     );

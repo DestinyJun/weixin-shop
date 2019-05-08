@@ -126,8 +126,15 @@ export class PayWayComponent implements OnInit, OnDestroy {
           console.log(val);
           if (val.status === 200) {
             this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
-          } else {
-            window.alert(val.message);
+            return;
+          }
+          if (val.status === 40009) {
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: `余额不足，请充值后重新支付`,
+                url: '/mine/wallet/recharge',
+                btn: '点击充值'
+              }});
           }
         });
       return;
@@ -147,7 +154,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
           }
         }))
         .subscribe((val) => {
-          window.alert(JSON.stringify(val));
+          // window.alert(JSON.stringify(val));
           console.log(val);
           if (val.status === 200) {
             this.onBridgeReady(val.dataObject);

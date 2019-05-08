@@ -7,7 +7,8 @@
     </div>
     <div class="weui-msg__opr-area">
       <p class="weui-btn-area">
-        <button (click)="errorResetClick()" class="weui-btn weui-btn_plain-primary">{{errorMsg.btn}}</button>
+        <button (click)="errorResetClick()" class="weui-btn weui-btn_primary">{{errorMsg.btn}}</button>
+        <button [routerLink]="['/tab']" class="weui-btn weui-btn_default">返回主页</button>
       </p>
     </div>
     <div class="weui-msg__extra-area">

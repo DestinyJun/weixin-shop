@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, ViewEncapsulation} from '@angular/core';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
 
 @Component({
@@ -7,7 +7,7 @@ import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
   styleUrls: ['./tab-home.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class TabHomeComponent implements OnInit {
+export class TabHomeComponent implements OnInit, OnChanges {
   // base
   @Input() public tabHome: any = null;
   // scroll
@@ -20,4 +20,8 @@ export class TabHomeComponent implements OnInit {
 
   ngOnInit() {}
   public onLoadMore(comp: InfiniteLoaderComponent): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.tabHome);
+  }
 }

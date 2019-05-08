@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 @Component({
   selector: 'app-error-remind',
   templateUrl: './error-remind.component.html',
@@ -10,6 +10,7 @@ export class ErrorRemindComponent implements OnInit {
   public errorMsgStatus: boolean;
   constructor(
     private routerInfo: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -21,8 +22,12 @@ export class ErrorRemindComponent implements OnInit {
     );
   }
   public errorResetClick (): void {
-    if (this.errorMsg.url) {
+    if (this.errorMsg.url.indexOf('open.weixin')) {
       window.location.href = this.errorMsg.url;
+      return;
+    }
+    if (this.errorMsg.url) {
+      this.router.navigate([this.errorMsg.url]);
       return;
     }
     window.history.back();

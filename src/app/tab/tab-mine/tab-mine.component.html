@@ -3,7 +3,7 @@
     <div class="weui-cells weui-cell_access">
       <div class="weui-cell">
         <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-          <img [src]="mineUserInfo?.headImage" style="width: 66px;display: block;border-radius: 50%;">
+          <img *ngIf="mineUserInfo?.headImage" [src]="mineUserInfo?.headImage" style="width: 66px;display: block;border-radius: 50%;">
         </div>
         <div class="weui-cell__bd">
           <p>

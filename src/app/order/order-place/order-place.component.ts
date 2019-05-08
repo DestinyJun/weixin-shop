@@ -18,7 +18,7 @@ export class OrderPlaceComponent implements OnInit {
   public orderPlaceInvoiceInfo: any = null;
   public orderPlaceInfo: any = {
     addressId: '',
-    invoiceId: '',
+    // invoiceId: '',
     goodsItem: [],
     remark: ''
   };
@@ -130,7 +130,13 @@ export class OrderPlaceComponent implements OnInit {
         if (val.status === 200) {
           // this.globalService.orderPlaceDel();
           this.router.navigate(['/order/sure', val.data.id]);
+          return;
         }
+        this.router.navigate(['/error'], {queryParams: {
+          msg: `下单失败，错误代码${val.status}`,
+          url: null,
+          btn: '请重试'
+          }});
       }
     );
   }
