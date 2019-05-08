@@ -127,7 +127,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
           if (val.status === 200) {
             this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
           } else {
-            console.log(val);
+            window.alert(val.message);
           }
         });
       return;

@@ -8,7 +8,10 @@ import {hex_sha1} from '../../common/tools/hex_sha1';
 import {isNumber} from '../../common/tools/is_number';
 import {random_word} from '../../common/tools/random_word';
 import {is_ios} from '../../common/tools/is_ios';
-import {base64DataToBlob, dataURLtoFile, readBlobAsDataURL} from '../../common/tools/readBlobAsDataURL';
+import {
+  blobToDataURL,
+  noHeaderBase64DataToBlob,
+} from '../../common/tools/readBlobAsDataURL';
 declare const qrcode: any;
 declare const wx: any;
 @Component({
@@ -62,7 +65,6 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       (<ActionSheetComponent>this[`${type}ActionSheet`]).show().subscribe((res: any) => {
         if (res.value === 'photo') {
           this.referrerImage();
-          // element.click();
           return;
         }
         if (res.value === 'camera') {
@@ -113,18 +115,12 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   // upload img code
   public referrerUpImg(img_dada): void {
     const that = this;
-    window.alert(img_dada);
-    const up_image = base64DataToBlob(img_dada);
-    window.alert(up_image);
+    qrcode.decode(img_dada);
+    qrcode.callback = function (imgMsg) {
+      window.alert(imgMsg);
+      that.referrerNumber.workId = imgMsg;
+    };
     // const uploadFileURL = window.URL.createObjectURL(up_image);
-    readBlobAsDataURL(up_image, (dada_res) => {
-      window.alert(dada_res);
-      qrcode.decode(dada_res);
-      qrcode.callback = function (imgMsg) {
-        window.alert(imgMsg);
-        that.referrerNumber.workId = imgMsg;
-      };
-    });
     // const uploadFileURL = window.URL.createObjectURL(event.target.files[0]);
    /* readBlobAsDataURL(event.target.files[0], (res) => {
       console.log(res);
@@ -209,7 +205,10 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
           wx.getLocalImgData({
             localId: localIds[0], // 图片的localID
             success: function (img_down_res) {
-              that.referrerUpImg(img_down_res.localData);
+              const a_blob = noHeaderBase64DataToBlob(img_down_res.localData);
+              blobToDataURL(a_blob, (dataUrl_res) => {
+                that.referrerUpImg(dataUrl_res);
+              });
             }
           });
         }

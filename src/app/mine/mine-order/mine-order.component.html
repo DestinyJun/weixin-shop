@@ -58,8 +58,10 @@
             </div>
             <div class="weui-panel__ft">
               <div class="weui-flex">
-                <div class="weui-flex__item" *ngFor="let param of orderStates[childItem?.status]?.operating">
-                  <span [routerLink]="[param?.routes]" [queryParams]="{orderId: childItem?.id}">{{param?.title}}</span>
+                <div class="weui-flex__item"
+                     *ngFor="let param of orderStates[childItem?.status]?.operating"
+                     (click)="mineOrderOperate(param, childItem)">
+                  <span >{{param?.title}}</span>
                 </div>
               </div>
             </div>

@@ -1,12 +1,30 @@
 <div class="tab">
   <weui-tabbar>
-    <weui-tab style="height: 100%" heading="首页" [active]="tabActive === 'home'" [icon]="'<img src=./assets/images/home.png>'" (select)="onSelect('home')">
+    <weui-tab
+      style="height: 100%" heading="首页"
+      [active]="tabActive === 'home'"
+      [icon]="'<img src=./assets/images/home-ac.png>'"
+      (select)="onSelect('home', $event)"
+      (deselect)="onDeselect($event)"
+    >
       <app-tab-home [tabHome]="tabHome"></app-tab-home>
     </weui-tab>
-    <weui-tab style="height: 100%" heading="客户" [active]="tabActive === 'client'" [icon]="'<img src=./assets/images/client.png>'" (select)="onSelect('client')">
+    <weui-tab
+      style="height: 100%" heading="客户"
+      [active]="tabActive === 'client'"
+      [icon]="'<img src=./assets/images/client-ac.png>'"
+      (select)="onSelect('client', $event)"
+      (deselect)="onDeselect($event)"
+    >
       <app-tab-client [headerOption]="clientHeader" [routerStatus]="rouStatus"></app-tab-client>
     </weui-tab>
-    <weui-tab style="height: 100%" heading="我的" [active]="tabActive === 'mine'" [icon]="'<img src=./assets/images/mine.png>'" (select)="onSelect('mine')">
+    <weui-tab
+      style="height: 100%" heading="我的"
+      [active]="tabActive === 'mine'"
+      [icon]="'<img src=./assets/images/mine-ac.png>'"
+      (select)="onSelect('mine', $event)"
+      (deselect)="onDeselect($event)"
+    >
       <app-tab-mine></app-tab-mine>
     </weui-tab>
   </weui-tabbar>

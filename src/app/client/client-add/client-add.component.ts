@@ -12,6 +12,7 @@ import {
 } from 'ngx-weui';
 import {ClientService} from '../../common/services/client.service';
 import {ActivatedRoute, Params} from '@angular/router';
+import {parse} from '../../common/tools/is_address';
 
 @Component({
   selector: 'app-client-add',
@@ -29,6 +30,7 @@ export class ClientAddComponent implements OnInit {
     phone: null,
     address: null,
   };
+  public description: any;
   public clientAddressList: any = null;
   public clientInvoiceList: any = null;
   public bottomBtnStatus = 'address';
@@ -395,5 +397,18 @@ export class ClientAddComponent implements OnInit {
   }
   public onShow(type: string) {
     (<ToastComponent>this[`${type}Toast`]).onShow();
+  }
+  // Address recognition
+  public clientAddChange(event): void {
+    const addressInfo = parse(event);
+    if (addressInfo['city'] === addressInfo['province']) {
+      this.addAddressRes.address = addressInfo['province'] + addressInfo['area'] + addressInfo['addr'];
+      this.addAddressRes.phone = addressInfo['phone'] || addressInfo['mobile'];
+      this.addAddressRes.name = addressInfo['name'];
+      return;
+    }
+    this.addAddressRes.address = addressInfo['province'] + '省' + addressInfo['city'] + '市' + addressInfo['area'] + addressInfo['addr'];
+    this.addAddressRes.phone = addressInfo['phone'] || addressInfo['mobile'];
+    this.addAddressRes.name = addressInfo['name'];
   }
 }

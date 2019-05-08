@@ -80,17 +80,33 @@ export class TabComponent implements OnInit {
       };
     }
   }
-  public onSelect(name): void {
+  public onSelect(name, event): void {
     this.router.navigate([`/tab/${name}`]);
     if (name === 'home') {
+      event.icon = `<img src=./assets/images/home-ac.png>`;
       this.titleServices.setTitle('首页');
     }
     if (name === 'client') {
+      event.icon = `<img src=./assets/images/client-ac.png>`;
       this.titleServices.setTitle('客户');
       return;
     }
     if (name === 'mine') {
+      event.icon = `<img src=./assets/images/mine-ac.png>`;
       this.titleServices.setTitle('我的');
+      return;
+    }
+  }
+  public onDeselect(event): void {
+    if (event.heading === '首页') {
+      event.icon = `<img src=./assets/images/home.png>`;
+    }
+    if (event.heading === '客户') {
+      event.icon = `<img src=./assets/images/client.png>`;
+      return;
+    }
+    if (event.heading === '我的') {
+      event.icon = `<img src=./assets/images/mine.png>`;
       return;
     }
   }

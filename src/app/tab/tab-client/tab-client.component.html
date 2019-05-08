@@ -77,9 +77,9 @@
         </div>
         <div class="scroll">
           <div class="scroll-remind" *ngIf="clientAddressList?.length === 0">
-            <p>该客户暂无收货地址</p>
+            <p style="color: #ADADB0;">该客户暂无收货地址</p>
           </div>
-          <div class="scroll-content" *ngFor="let item of clientAddressList" (click)="scrollAddressClick(item)">
+          <div class="scroll-content" style="border-bottom: 1px solid #E6E6E6;padding-bottom: 5px;" *ngFor="let item of clientAddressList" (click)="scrollAddressClick(item)">
             <p>收货人：{{item?.name}}</p>
             <p><span>电</span><span style="margin-left: 16px;">话</span>：{{item?.phone}}</p>
             <p><span>地</span><span style="margin-left: 16px;">址</span>：{{item?.address}}</p>

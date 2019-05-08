@@ -1,4 +1,4 @@
-<div class=" order-refund" *ngIf="orderDetailsData | async as detailsData; else loading">
+<div class=" order-refund" *ngIf="detailsData; else loading">
   <div class="order-refund-header">
     <app-header [option]="headerOption"></app-header>
   </div>
@@ -53,7 +53,7 @@
         <div class="weui-panel__ft">
           <div class="weui-cell">
             <div class="weui-cell__bd">
-              <p>退款金额：<span style="color: #FF6464;">{{detailsData?.data?.amountPaid}}元</span></p>
+              <p>退款金额：<span style="color: #FF6464;">{{detailsData?.data?.amount}}元</span></p>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@
           <span style="vertical-align: middle">退款说明：</span>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" type="text" placeholder="请填写退款原因" name="txt">
+          <input class="weui-input" type="text" placeholder="请填写退款原因" name="txt" [(ngModel)]="orderRefundRemark" (ngModelChange)="orderRefundRemarkChange($event)">
         </div>
       </div>
       <div class="weui-cell">
@@ -76,7 +76,7 @@
           <span style="vertical-align: middle">退款金额：</span>
         </div>
         <div class="weui-cell__bd">
-          <p style="color: #FF6464;">{{detailsData?.data?.amountPaid}}元</p>
+          <p style="color: #FF6464;">{{detailsData?.data?.amount}}元</p>
         </div>
       </div>
       <div class="weui-cell">

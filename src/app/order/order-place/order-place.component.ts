@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
 
@@ -13,6 +13,7 @@ import {GlobalService} from '../../common/services/global.service';
 })
 export class OrderPlaceComponent implements OnInit {
   // data
+  public orderId: any = null;
   public orderPlaceAddressInfo: any = null;
   public orderPlaceInvoiceInfo: any = null;
   public orderPlaceInfo: any = {
@@ -44,12 +45,23 @@ export class OrderPlaceComponent implements OnInit {
   public goodsInfo: any = null;
   constructor(
     private router: Router,
+    private routeInfo: ActivatedRoute,
     private orderSrv: OrderService,
     private globalService: GlobalService
   ) {
   }
 
   ngOnInit() {
+    this.routeInfo.queryParams.subscribe(
+      (params: Params) => {
+        this.orderId = params.orderId;
+        this.orderSrv.orderGetDetail(params).subscribe(
+          (val) => {
+            console.log(val);
+          }
+        );
+      }
+    );
     this.orderPlaceAddressInfo = this.globalService.addressEvent;
     this.orderPlaceInvoiceInfo = this.globalService.invoiceEvent;
     if (this.orderPlaceAddressInfo) {
@@ -75,7 +87,10 @@ export class OrderPlaceComponent implements OnInit {
             }
             this.totalPrice += item.originalPrice * item.amount;
           });
+          // this.goodsInfo = val.datas.filter((prop) => prop.id = this.orderId);
+          console.log(this.goodsInfo);
           this.goodsInfo = val.datas;
+          console.log(this.goodsInfo);
         }
       }
     );
@@ -108,8 +123,10 @@ export class OrderPlaceComponent implements OnInit {
 
   // order place
   public submitOrder() {
+    console.log(this.orderPlaceInfo);
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
+        console.log(val);
         if (val.status === 200) {
           // this.globalService.orderPlaceDel();
           this.router.navigate(['/order/sure', val.data.id]);

@@ -1,5 +1,5 @@
 // blob 转 dataURL
-export function readBlobAsDataURL(blob, callback) {
+export function blobToDataURL(blob, callback) {
   const a = new FileReader();
   a.onload = function (e) {
     callback(e.target['result']);
@@ -20,11 +20,11 @@ export function dataURLtoFile(dataurl, filename) {
   return new File([u8arr], filename, {type: mime});
 }
 
-// base64 转 blob
-export function base64DataToBlob(base64Data) {
+// image/jpeg base64 转 blob
+export function headerBase64DataToBlob(base64Data) {
   let blob = null;
   const format = 'image/jpeg';
-  const code = window.atob(base64Data.split(',')[1]);
+  const code = atob(base64Data.split(',')[1]);
   const aBuffer = new ArrayBuffer(code.length);
   const uBuffer = new Uint8Array(aBuffer);
   for (let i = 0; i < code.length; i++) {
@@ -33,4 +33,15 @@ export function base64DataToBlob(base64Data) {
   blob = new Blob([uBuffer], {type: format});
   return blob;
 }
+
+// no image/jpeg base64 转 blob
+export function noHeaderBase64DataToBlob(urlData) {
+  const binary = atob(urlData);
+  const array = [];
+  for (let i = 0, len = binary.length; i < len; i++) {
+    array.push(binary.charCodeAt(i));
+  }
+  return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+}
+
 

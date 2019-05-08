@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
       }
     );
     // weixin auth
-    this.wxAuth(this.location.path());
+    // this.wxAuth(this.location.path());
     // wx sdk
     if (!this.globalSrv.wxSessionGetObject('ticket')) {
       this.getWxTicket();

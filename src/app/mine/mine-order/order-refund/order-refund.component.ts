@@ -4,7 +4,8 @@ import {InfiniteLoaderConfig, Uploader, UploaderOptions} from 'ngx-weui';
 import {Observable} from 'rxjs';
 import {MineOrderService} from '../../../common/services/mine-order.service';
 import {ActivatedRoute} from '@angular/router';
-
+// formdate
+const orderRefundImg: FormData = new FormData();
 @Component({
   selector: 'app-order-refund',
   templateUrl: './order-refund.component.html',
@@ -27,7 +28,9 @@ export class OrderRefundComponent implements OnInit {
     height: 'auto'
   };
   // details
-  public orderDetailsData: Observable<any>;
+  public detailsData: any = null;
+  public orderRefund: any = {};
+  public orderRefundRemark: any = null;
   // upload
   @Input() url = 'example';
   img: any;
@@ -53,9 +56,9 @@ export class OrderRefundComponent implements OnInit {
     //     });
     // },
     onFileQueued: function () {
-      console.log('onFileQueued', arguments);
       if (arguments) {
-        console.log(this);
+        console.log(arguments[0]._file);
+        // orderRefund.append('file', arguments[0]._file);
       }
     },
     onFileDequeued: function () {
@@ -92,7 +95,6 @@ export class OrderRefundComponent implements OnInit {
       console.log('onError', arguments);
     }
   });
-
   constructor(
     private mOrderSrv: MineOrderService,
     private routerInfo: ActivatedRoute
@@ -100,11 +102,24 @@ export class OrderRefundComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.routerInfo.params.subscribe(params => this.mineOrdRefundInit(params.id));
+    this.routerInfo.params.subscribe((params) => {
+      console.log(params);
+      this.mineOrdRefundInit(params.id);
+      this.orderRefund.orderId = params.id;
+      this.orderRefund.refundType = params.type;
+    });
   }
 
   public mineOrdRefundInit(id): void {
-    this.orderDetailsData = this.mOrderSrv.mineOrdGetDetail({orderId: id});
+     this.mOrderSrv.mineOrdGetDetail({orderId: id}).subscribe(
+       (val) => {
+         console.log(val);
+         if (val.status === 200) {
+           this.detailsData = val;
+           this.orderRefund.refundamount = val.data.amount;
+         }
+       }
+     );
   }
   public onGallery(item: any) {
     this.img = [{file: item._file, item: item}];
@@ -118,7 +133,17 @@ export class OrderRefundComponent implements OnInit {
     }
     this.uploader.removeFromQueue(item.item);
   }
+  // ngmodule
+  public orderRefundRemarkChange(event): void {
+    this.orderRefund.refundRemark = event;
+  }
   public ordRefSubClick() {
-    this.uploader.uploadAll();
+    console.log(this.orderRefund);
+    this.mOrderSrv.mineOrdReturn(this.orderRefund).subscribe(
+      (val) => {
+        console.log(val);
+      }
+    );
+    // this.uploader.uploadAll();
   }
 }

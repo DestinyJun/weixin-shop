@@ -21,4 +21,12 @@ export class MineOrderService {
   public mineOrdGetNum(): Observable<any> {
     return this.http.post('/moayoOrder/selectOrderNum', {});
   }
+  // finish order
+  public mineOrdFinish(params): Observable<any> {
+    return this.http.post('/moayoOrder/finishOrder', params);
+  }
+  // order return
+  public mineOrdReturn(params): Observable<any> {
+    return this.http.post('/moayoOrder/refund', params);
+  }
 }

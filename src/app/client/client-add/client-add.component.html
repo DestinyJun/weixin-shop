@@ -85,7 +85,7 @@
                 </ng-template>
               </ng-container>
               <ng-template #clientIdShow>
-                <p style="text-align: center;color: darkseagreen;margin-top: 30%">请新增新客户</p>
+                <p style="text-align: center;color: #ADADB0;margin-top: 30%">请新增新客户</p>
               </ng-template>
             </weui-infiniteloader>
           </div>
@@ -116,7 +116,9 @@
             <input class="weui-input" type="text" placeholder="请输入收货人姓名" [(ngModel)]="addAddressRes.name" name="name">
             <input class="weui-input" type="tel" placeholder="请输入收货人手机号码"  weui-input="mobile" weui-required [(ngModel)]="addAddressRes.phone" name="mobile">
             <input class="weui-input" type="text" placeholder="请输入收货人详细地址" [(ngModel)]="addAddressRes.address" name="address">
-            <input class="weui-input" type="text" placeholder="粘贴整段地址,自动识别姓名、电话和地址" name="description">
+            <input class="weui-input" type="text"
+                   placeholder="粘贴整段地址,自动识别姓名、电话和地址，如：北京市朝阳区富康路姚家园3楼1351111111马云"
+                   name="description" [(ngModel)]="description" (ngModelChange)='clientAddChange($event)'>
           </div>
         </div>
         <div class="weui-cell">
