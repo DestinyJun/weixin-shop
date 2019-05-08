@@ -123,12 +123,14 @@ export class OrderPlaceComponent implements OnInit {
 
   // order place
   public submitOrder() {
+    if (!this.orderPlaceAddressInfo) {
+      return;
+    }
     console.log(this.orderPlaceInfo);
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
         console.log(val);
         if (val.status === 200) {
-          // this.globalService.orderPlaceDel();
           this.router.navigate(['/order/sure', val.data.id]);
           return;
         }

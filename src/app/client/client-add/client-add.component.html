@@ -103,11 +103,11 @@
   <div class="client-add-address">
     <weui-mask #clientAddMask [backdrop]="false">
       <div class="weui-cells">
-        <div class="weui-cell">
+        <div class="weui-cell" style="padding:  10px 0 10px 15px;">
           <div class="weui-cell__bd" style="text-align: center">
             <span style="vertical-align: middle;color: #000;">{{clientMaskTitle}}</span>
           </div>
-          <div class="weui-cell__ft" (click)="closeAddressMask();">
+          <div class="weui-cell__ft" style="height: 100%;width: 2rem;text-align: center" (click)="closeAddressMask();">
             <i class="fa fa-times" aria-hidden="true"></i>
           </div>
         </div>
@@ -124,10 +124,12 @@
         <div class="weui-cell">
           <div class="weui-cell__bd">
             <button
-              class="weui-btn"
+              class="weui-btn weui-btn_primary"
               [disabled]="!addAddressRes.name || !addAddressRes.phone || !addAddressRes.address"
               (click)="saveBtnClick(clientSaveBtnStatus)"
-              [ngClass]="{'weui-btn_primary': addAddressRes.name && addAddressRes.phone && addAddressRes.address}"
+              [ngClass]="{
+              'weui-btn_disabled': !addAddressRes.name || !addAddressRes.phone || !addAddressRes.address
+              }"
             >保存</button>
           </div>
         </div>
@@ -136,11 +138,11 @@
   </div>
   <div class="client-add-individual" *ngIf="clientIndividualShow">
     <div class="weui-cells weui-cells_checkbox">
-      <div class="weui-cell">
+      <div class="weui-cell" style="padding:  10px 0 10px 15px;">
         <div class="weui-cell__bd" style="text-align: center">
           <span style="vertical-align: middle;color: #000;">{{clientMaskTitle}}</span>
         </div>
-        <div class="weui-cell__ft" (click)="clientIndividualShow=false">
+        <div class="weui-cell__ft" style="height: 100%;width: 2rem;text-align: center" (click)="clientIndividualShow=false">
           <i class="fa fa-times" aria-hidden="true"></i>
         </div>
       </div>

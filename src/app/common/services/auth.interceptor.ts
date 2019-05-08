@@ -13,7 +13,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const clonedRequest = req.clone({
+   /* const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       // url: 'http://192.168.1.9' + req.url,
       headers: req.headers
@@ -32,18 +32,18 @@ export class AuthInterceptor implements HttpInterceptor {
         console.log(err);
         this.globalService.remindEvent.next(false);
         if (err.status === 0) {
-          /*this.router.navigate(['/error'], {
+          /!*this.router.navigate(['/error'], {
             queryParams: {
               msg: '连接服务器失败，请检查网络！',
               url: null,
               btn: '请重试'
             }
-          });*/
+          });*!/
         }
         return of(err);
       })
-    );
-  /*  if (this.globalService.wxSessionGetObject('token')) {
+    );*/
+    if (this.globalService.wxSessionGetObject('token')) {
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -104,6 +104,6 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         })
       );
-    }*/
+    }
   }
 }

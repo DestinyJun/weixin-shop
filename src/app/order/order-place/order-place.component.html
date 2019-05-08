@@ -63,7 +63,7 @@
   <div class="order-place-toast">
     <weui-toast #success [text]="'请先填写收货地址'" [icon]="''" [time]="1000"></weui-toast>
   </div>
-  <div class="weui-footer weui-footer_fixed-bottom" *ngIf="totalPrice&&orderPlaceAddressInfo">
+  <div class="weui-footer weui-footer_fixed-bottom" *ngIf="totalPrice">
     <div class="weui-flex">
       <div class="weui-flex__item">
         <span style="color: #2A2A2A;font-size: 1.1rem">共计</span>
