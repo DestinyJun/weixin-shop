@@ -3,7 +3,7 @@ import {MaskComponent, ToastComponent, ToptipsService} from 'ngx-weui';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {MineService} from '../../../common/services/mine.service';
 import {Observable, timer} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {map, mergeMap} from 'rxjs/operators';
 import {MineSettingService} from '../../../common/services/mine-setting.service';
 import {Router} from '@angular/router';
 export class PwdDialogPay {
@@ -51,6 +51,7 @@ export class SettingPaypwdComponent implements OnInit {
   public mobilePhone: any = null;
   public mobilePhoneString: any = null;
   public mineSetMobileSMS: any = null;
+  public smsBackString: any = null;
   constructor(
     private mineSrv: MineService,
     private mineSetSrv: MineSettingService,
@@ -63,83 +64,7 @@ export class SettingPaypwdComponent implements OnInit {
     this.maskContent.show();
     this.minePhoneSetInit();
   }
-  public onPsswordInput(event): void {
-    this.errorShow = false;
-    if (event.target.value.length > 6) {
-      event.target.value =  this.inputPws;
-      return;
-    }
-    this.passwordConfig.value = ['', '', '', '', '', ''];
-    this.passwordConfig.inputDisabled = false;
-    this.inputPws = event.target.value;
-    for (let i = 0; i < this.inputPws.length; i++) {
-      this.passwordConfig.value[i] = '❂';
-    }
-    if (this.inputPws.length === 6) {
-      this.inputShow = true;
-      this.passwordShow = true;
-      this.passwordConfig.inputDisabled = true;
-      setTimeout(() => {
-        this.inputShow = false;
-      }, 50);
-    }
-  }
-  public onFirePsswordInput(event): void {
-    if (event.target.value.length > 6) {
-      event.target.value =  this.inputFirePws;
-      return;
-    }
-    this.firpasswordConfig.value = ['', '', '', '', '', ''];
-    this.firpasswordConfig.inputDisabled = false;
-    this.inputFirePws = event.target.value;
-    for (let i = 0; i < this.inputFirePws.length; i++) {
-      this.firpasswordConfig.value[i] = '❂';
-    }
-    if (this.inputFirePws.length === 6) {
-      this.inputShow = true;
-      this.firpasswordConfig.inputDisabled = true;
-      if (this.inputPws === this.inputFirePws) {
-        this.mineSrv.mineSetPayPwd({payPwd: this.inputFirePws}).subscribe(
-          (val) => {
-            if (val.status === 200) {
-              this.setPwdToastTxt = val.message;
-              this.onToastShow('success');
-            } else {
-              this.setPwdToastTxt = val.message;
-              this.onToastShow('success');
-            }
-          }
-        );
-      } else {
-        this.errorShow = true;
-      }
-      setTimeout(() => {
-        this.inputShow = false;
-        this.passwordShow = false;
-        this.inputPws = null;
-        this.inputFirePws = null;
-        this.firpasswordConfig.value = ['', '', '', '', '', ''];
-        this.passwordConfig.value = ['', '', '', '', '', ''];
-      }, 50);
-    }
-  }
-  public onToastShow(type: 'success' | 'loading') {
-    (<ToastComponent>this[`${type}Toast`]).onShow();
-  }
-  public onSendCode(): Observable<boolean> {
-    console.log(that.mobilePhone);
-    that.mineSetSrv.mineSetSendSMS({phone: that.mobilePhone}).subscribe(
-      (val) => {
-        console.log(val);
-        if (val.status === 200) {
-          that.topSrv['primary'](val.message);
-          return;
-        }
-        that.topSrv['warn'](val.message);
-      }
-    );
-    return timer(1000).pipe(map((v, i) => true));
-  }
+  // init phone
   public minePhoneSetInit(): void {
     this.mineSetSrv.mineSetUserInfo().subscribe(
       (val) => {
@@ -161,16 +86,108 @@ export class SettingPaypwdComponent implements OnInit {
       }
     );
   }
+  // send sms
+  public onSendCode(): Observable<boolean> {
+    return that.mineSetSrv.mineSetSendSMS({phone: that.mobilePhone}).pipe(
+      mergeMap((val) => {
+          console.log(val['status']);
+          if (val['status'] === 200) {
+            that.topSrv['primary'](val['message']);
+            return timer(50).pipe(map((v, i) => true));
+          }
+          that.topSrv['warn'](val['message']);
+          return timer(50).pipe(map((v, i) => false));
+        }
+      )
+    );
+  }
+  // verify SMS
   public setMobileCodeClick(): void {
     this.mineSetSrv.mineSetVerifySMS({phone: this.mobilePhone, smsCode: this.mineSetMobileSMS}).subscribe(
       (val) => {
         if (val.status === 200) {
           console.log(val);
+          this.smsBackString = val.backString;
           this.maskContent.hide();
         } else {
           this.topSrv['warn'](`验证失败，错误代码：${val.status}`);
         }
       }
     );
+  }
+  // enter pwd
+  public onPsswordInput(event): void {
+    this.errorShow = false;
+    if (event.target.value.length > 6) {
+      event.target.value =  this.inputPws;
+      return;
+    }
+    this.passwordConfig.value = ['', '', '', '', '', ''];
+    this.passwordConfig.inputDisabled = false;
+    this.inputPws = event.target.value;
+    for (let i = 0; i < this.inputPws.length; i++) {
+      this.passwordConfig.value[i] = '❂';
+    }
+    if (this.inputPws.length === 6) {
+      this.inputShow = true;
+      this.passwordShow = true;
+      this.passwordConfig.inputDisabled = true;
+      setTimeout(() => {
+        this.inputShow = false;
+      }, 50);
+    }
+  }
+  // enter pwd again
+  public onFirePsswordInput(event): void {
+    if (event.target.value.length > 6) {
+      event.target.value =  this.inputFirePws;
+      return;
+    }
+    this.firpasswordConfig.value = ['', '', '', '', '', ''];
+    this.firpasswordConfig.inputDisabled = false;
+    this.inputFirePws = event.target.value;
+    for (let i = 0; i < this.inputFirePws.length; i++) {
+      this.firpasswordConfig.value[i] = '❂';
+    }
+    if (this.inputFirePws.length === 6) {
+      this.inputShow = true;
+      this.firpasswordConfig.inputDisabled = true;
+      if (this.inputPws === this.inputFirePws) {
+        this.mineSrv.mineSetPayPwd({payPwd: this.inputFirePws, smsKey: this.smsBackString}).subscribe(
+          (val) => {
+            console.log(val);
+            if (val.status === 200) {
+              this.setPwdToastTxt = val.message;
+              this.onToastShow('success');
+              setTimeout(() => {
+                this.inputShow = false;
+                this.passwordShow = false;
+                this.inputPws = null;
+                this.inputFirePws = null;
+                this.firpasswordConfig.value = ['', '', '', '', '', ''];
+                this.passwordConfig.value = ['', '', '', '', '', ''];
+                window.history.back();
+              }, 1000);
+            } else {
+              this.router.navigate(['/error'], {
+                queryParams: {
+                  msg: `修改失败，请稍后重试，错误代码：${val.status}`,
+                  btn: '请重试',
+                  url: '/mine/setting'
+                }
+              });
+              this.setPwdToastTxt = val.message;
+              this.onToastShow('success');
+            }
+          }
+        );
+      } else {
+        this.errorShow = true;
+      }
+    }
+  }
+  // toast
+  public onToastShow(type: 'success' | 'loading') {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
   }
 }

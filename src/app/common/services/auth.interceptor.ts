@@ -13,13 +13,12 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const clonedRequest = req.clone({
+    /*const clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       // url: 'http://192.168.1.9' + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
-        // .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1NzA0NzkxNX0.0YeNu7-kExYnZs1evQPs1ItToxccIX5nnLclr2fS3WkSvezgQnkYjFWIDRcQRT_qloz-ct47Yi1Tzh80TW1HXA')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1NzM0NDkwMH0.eBKSrBupoZL6werZpv4jYmNzxSAhe80Y0zmIGne7bg6RfqeA_qsy4pCHVhb7ArOdFgOYgvgzQ-C39jYXxDtWbA')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1NzQ1NjQyOX0.n8ClXRz7neZ2TImBlfmdtnkQzlWDJuTkePHn6Gj0AocCT5EAnQ0rjzEXZEVH20mK8kRDbqPgJSWO_T-YK1Xj6A')
     });
     return next.handle(clonedRequest).pipe(
       mergeMap((event: any) => {
@@ -32,18 +31,18 @@ export class AuthInterceptor implements HttpInterceptor {
         console.log(err);
         this.globalService.remindEvent.next(false);
         if (err.status === 0) {
-          /*this.router.navigate(['/error'], {
+          /!*this.router.navigate(['/error'], {
             queryParams: {
               msg: '连接服务器失败，请检查网络！',
               url: null,
               btn: '请重试'
             }
-          });*/
+          });*!/
         }
         return of(err);
       })
-    );
-    /*if (this.globalService.wxSessionGetObject('token')) {
+    );*/
+    if (this.globalService.wxSessionGetObject('token')) {
       const clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -89,7 +88,12 @@ export class AuthInterceptor implements HttpInterceptor {
               }});
           }
           if (err.status === 403) {
-            this.router.navigate(['/error'], {queryParams: {status: 403, msg: 'token认证失败！', url: null}});
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: 'token认证失败，请重新登陆！',
+                url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
+                btn: '点击登陆'
+              }});
           }
           if (err.status === 400) {
             return of(err);
@@ -104,6 +108,6 @@ export class AuthInterceptor implements HttpInterceptor {
           }
         })
       );
-    }*/
+    }
   }
 }

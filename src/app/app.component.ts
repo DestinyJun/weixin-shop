@@ -6,7 +6,9 @@ import {HttpClient} from '@angular/common/http';
 import {Location} from '@angular/common';
 import {mergeMap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+
 declare const wx: any;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,6 +22,7 @@ export class AppComponent implements OnInit {
   public wx_appid = 'wxbacad0ba65a80a3d';
   public wx_auth_url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
   public wx_auth_string = '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+
   constructor(
     private router: Router,
     private routerInfo: ActivatedRoute,
@@ -32,12 +35,15 @@ export class AppComponent implements OnInit {
     };
 
   }
+
   ngOnInit(): void {
+    this.screen_udgment();
     this.globalSrv.wxSessionSetObject('ios_url', window.location.href);
     console.log(environment.env);
     // 路由事件
     this.router.events.subscribe(
       (event) => {
+        console.log(event);
         if (event instanceof NavigationEnd) {
           /* titleSrv.setTitle(title[event.urlAfterRedirects]);*/
         }
@@ -54,13 +60,14 @@ export class AppComponent implements OnInit {
       }
     );
     // weixin auth
-    this.wxAuth(this.location.path());
+    // this.wxAuth(this.location.path());
     // wx sdk
     if (!this.globalSrv.wxSessionGetObject('ticket')) {
       this.getWxTicket();
     }
   }
-  public wxAuth (url): void {
+
+  public wxAuth(url): void {
     if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
       this.router.navigate(['/error']);
       return;
@@ -68,7 +75,7 @@ export class AppComponent implements OnInit {
     if (this.globalSrv.wxSessionGetObject('access_token')) {
       return;
     }
-    if ( url && url.split('?')[1] !== undefined) {
+    if (url && url.split('?')[1] !== undefined) {
       if (url.split('?')[1].split('=')[0] === 'code') {
         const wx_url = '/wx/getOauth?';
         const wx_appid = 'wxbacad0ba65a80a3d';
@@ -120,22 +127,42 @@ export class AppComponent implements OnInit {
         msg: '非法访问，请先登录！',
         url: `${this.wx_auth_url}?appid=${this.wx_appid}&redirect_uri=${environment.dev_test_url}/moyaoView${this.wx_auth_string}`,
         btn: '点击登录'
-      }});
+      }
+    });
   }
+
   // get wx ticket
   public getWxTicket(): void {
     this.http.get(`/wx/gettoken`).pipe(
       mergeMap((val) => {
         if (val) {
           this.globalSrv.wxSessionSetObject('js_access_token', val['access_token']);
-          return  this.http.get(`/wx/getticket?access_token=${val['access_token']}`);
+          return this.http.get(`/wx/getticket?access_token=${val['access_token']}`);
         }
       })
-    ) .subscribe(
+    ).subscribe(
       (val) => {
         this.globalSrv.wxSessionSetObject('ticket', val['ticket']);
       }
     );
+  }
+
+  //
+  public screen_udgment(): void {
+    const that = this;
+    window.addEventListener('orientationchange', function (event) {
+      if (screen.orientation.angle === 90) {
+        that.router.navigate(['/error'], {
+          queryParams: {
+            msg: '为保证浏览效果，请竖屏访问！',
+            btn: null,
+            url: null
+          }});
+      } else {
+        window.history.back();
+      }
+      console.log(screen.orientation.angle);
+    }, true);
   }
 }
 
