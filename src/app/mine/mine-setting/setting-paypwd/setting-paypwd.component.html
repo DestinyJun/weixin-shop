@@ -27,5 +27,44 @@
   <div class="setting-mobile-toast">
     <weui-toast #success [text]="setPwdToastTxt" [icon]="''" [time]="2000"></weui-toast>
   </div>
+  <div class="setting-paypwd-mask">
+    <weui-mask #maskContent>
+      <div class="weui-cells" style="width: 95vw">
+        <div class="weui-cell__title">
+          <p style="text-align: center;padding: 10px">为了安全，请验证身份</p>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__hd">
+            <label class="weui-label">当前手机号：</label></div>
+          <div class="weui-cell__bd">
+            <span>{{mobilePhoneString}}</span>
+          </div>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="tel" placeholder="请输入验证码" [(ngModel)]="mineSetMobileSMS">
+          </div>
+          <div class="weui-cell__ft">
+            <button class="weui-vcode-btn"
+                    [weui-vcode]="onSendCode"
+                    weui-seconds="60"
+                    weui-tpl="${num}s"
+                    weui-error="重新发送">获取验证码
+            </button>
+          </div>
+        </div>
+        <div class="weui-cell">
+          <button
+            [disabled]="!mineSetMobileSMS"
+            class="weui-btn weui-btn_primary"
+            [ngClass]="{'weui-btn_disabled': !mineSetMobileSMS}"
+            (click)="setMobileCodeClick()"
+          >
+            下一步
+          </button>
+        </div>
+      </div>
+    </weui-mask>
+  </div>
 </div>
 

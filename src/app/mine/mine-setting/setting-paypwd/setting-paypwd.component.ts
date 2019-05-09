@@ -1,7 +1,11 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {ToastComponent} from 'ngx-weui';
+import {MaskComponent, ToastComponent, ToptipsService} from 'ngx-weui';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {MineService} from '../../../common/services/mine.service';
+import {Observable, timer} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {MineSettingService} from '../../../common/services/mine-setting.service';
+import {Router} from '@angular/router';
 export class PwdDialogPay {
   value?: Array<string>;
   inputDisabled?: boolean;
@@ -10,6 +14,7 @@ export class PwdDialogPay {
     this.inputDisabled = _inputDisabled;
   }
 }
+let that: any;
 @Component({
   selector: 'app-setting-paypwd',
   templateUrl: './setting-paypwd.component.html',
@@ -20,6 +25,8 @@ export class SettingPaypwdComponent implements OnInit {
   // toast
   @ViewChild('success') successToast: ToastComponent;
   public setPwdToastTxt: string;
+  // mask
+  @ViewChild('maskContent') maskContent: MaskComponent;
   // header
   public headerOption: HeaderContent = {
     title: '修改支付密码',
@@ -40,11 +47,21 @@ export class SettingPaypwdComponent implements OnInit {
     password: '',
     firpassword: ''
   };
+  // dada
+  public mobilePhone: any = null;
+  public mobilePhoneString: any = null;
+  public mineSetMobileSMS: any = null;
   constructor(
-    private mineSrv: MineService
+    private mineSrv: MineService,
+    private mineSetSrv: MineSettingService,
+    private router: Router,
+    private topSrv: ToptipsService
   ) { }
 
   ngOnInit() {
+    that = this;
+    this.maskContent.show();
+    this.minePhoneSetInit();
   }
   public onPsswordInput(event): void {
     this.errorShow = false;
@@ -108,5 +125,52 @@ export class SettingPaypwdComponent implements OnInit {
   }
   public onToastShow(type: 'success' | 'loading') {
     (<ToastComponent>this[`${type}Toast`]).onShow();
+  }
+  public onSendCode(): Observable<boolean> {
+    console.log(that.mobilePhone);
+    that.mineSetSrv.mineSetSendSMS({phone: that.mobilePhone}).subscribe(
+      (val) => {
+        console.log(val);
+        if (val.status === 200) {
+          that.topSrv['primary'](val.message);
+          return;
+        }
+        that.topSrv['warn'](val.message);
+      }
+    );
+    return timer(1000).pipe(map((v, i) => true));
+  }
+  public minePhoneSetInit(): void {
+    this.mineSetSrv.mineSetUserInfo().subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.mobilePhone = val.data.phone;
+          const phone = this.mobilePhone.split('');
+          const phoneLength = this.mobilePhone.split('').length;
+          this.mobilePhoneString = `
+          ${phone[0]}${phone[1]}${phone[2]} ****
+          ${phone[phoneLength - 4]}${phone[phoneLength - 3]}${phone[phoneLength - 2]}${phone[phoneLength - 1]}`;
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: `服务器处理失败！错误代码：${val.status}`,
+              url: null,
+              btn: '请重试',
+            }});
+        }
+      }
+    );
+  }
+  public setMobileCodeClick(): void {
+    this.mineSetSrv.mineSetVerifySMS({phone: this.mobilePhone, smsCode: this.mineSetMobileSMS}).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          console.log(val);
+          this.maskContent.hide();
+        } else {
+          this.topSrv['warn'](`验证失败，错误代码：${val.status}`);
+        }
+      }
+    );
   }
 }

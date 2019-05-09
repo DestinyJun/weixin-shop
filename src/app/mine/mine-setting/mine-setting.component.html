@@ -2,7 +2,7 @@
   <app-header [option]="headerOption"></app-header>
   <div class="number">
     <div class="weui-cells">
-      <div class="weui-cell weui-cell_access" (click)="dialogPayShow=true">
+      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/setting/paypwd']">
         <div class="weui-cell__bd">修改支付密码</div>
         <div class="weui-cell__ft"></div>
       </div>
