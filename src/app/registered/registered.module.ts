@@ -5,21 +5,25 @@ import {RegisteredRoutingModule} from './registered-routing.module';
 import { RegisteredSubmitComponent } from './registered-submit/registered-submit.component';
 import {WeUiModule} from 'ngx-weui';
 import {HeaderModule} from '../common/components/header/header.module';
-import { RegisteredCameraComponent } from './registered-camera/registered-camera.component';
 import { RegisteredSuccessComponent } from './registered-success/registered-success.component';
 import {FormsModule} from '@angular/forms';
 import {DialogPayModule} from '../common/components/dialog-pay/dialog-pay.module';
-import { RegisteredScanComponent } from './registered-scan/registered-scan.component';
+import {LoadingModule} from '../common/components/loading/loading.module';
 
 @NgModule({
-  declarations: [RegisteredReferrerComponent, RegisteredSubmitComponent, RegisteredCameraComponent, RegisteredSuccessComponent, RegisteredScanComponent],
+  declarations: [
+    RegisteredReferrerComponent,
+    RegisteredSubmitComponent,
+    RegisteredSuccessComponent
+  ],
   imports: [
     CommonModule,
     RegisteredRoutingModule,
-    WeUiModule.forRoot(),
     HeaderModule,
     FormsModule,
-    DialogPayModule
+    DialogPayModule,
+    WeUiModule.forRoot(),
+    LoadingModule
   ]
 })
 export class RegisteredModule { }

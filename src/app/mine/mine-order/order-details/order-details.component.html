@@ -86,7 +86,15 @@
   </div>
   <div class="order-details-footer">
     <div class="weui-footer weui-footer_fixed-bottom">
-      <span *ngFor="let item of orderDetailStates[detailsData?.data?.status]?.operating" [routerLink]="['/pay/sure']" [queryParams]="{orderId: detailsData?.data?.id}">{{item.title}}</span>
+      <span
+        *ngFor="let item of orderDetailStates[detailsData?.data?.status]?.operating"
+        [routerLink]="['/pay/sure']" [queryParams]="{orderId: detailsData?.data?.id}"
+        [ngStyle]="{
+          'color':item?.title === '再下一单'?'white':'',
+          'background-color':item?.title === '再下一单'?'#7FB56E':'',
+          'border-color':item?.title === '再下一单'?'#7FB56E':''
+         }"
+      >{{item.title}}</span>
     </div>
   </div>
 </div>

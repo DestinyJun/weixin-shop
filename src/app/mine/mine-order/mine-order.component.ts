@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
+import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent, ToastService} from 'ngx-weui';
 import {MineOrderService} from '../../common/services/mine-order.service';
 import {GlobalService} from '../../common/services/global.service';
 import {Router} from '@angular/router';
@@ -33,13 +33,14 @@ export class MineOrderComponent implements OnInit {
     {name: '已完成', amount: 0, status: 'completed'},
     {name: '退货', amount: 0, status: 'return'},
   ];
+  public orderSelectStatus: any = 'all';
   // order list
   public mOrderList: any = null;
   // order status
   public orderStates: any = {
     shipped: {name: '待收货', color: '#7FB56E', operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: null}]},
     pendingPayment: {name: '待付款', color: 'red', operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
-    completed: {name: '已完成', color: '#7FB56E', operating: [{title: '删除订单', routes: ''}, {title: '再下一单', routes: '/order'}]},
+    completed: {name: '已完成', color: '#7FB56E', operating: [{title: '再下一单', routes: '/order'}]},
     canceled: {name: '已取消', color: '#A0A0A0', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
     refundding: {name: '退款中', color: 'red', operating: [{title: '再次购买', routes: ''}, {title: '退款进度', routes: null}]},
     goodsReturning: {name: '退货中', color: 'red', operating: [{title: '再次购买', routes: ''}, {title: '退款进度', routes: null}]},
@@ -57,16 +58,24 @@ export class MineOrderComponent implements OnInit {
   mOrderLoaderConfig: InfiniteLoaderConfig = {
     height: '100%'
   };
+  // toast
+  @ViewChild('mineOrderToast') mineOrderToast: ToastComponent;
+  public mineOrderMsg: string;
 
   constructor(
     private globalSrv: GlobalService,
     private mOrderSrv: MineOrderService,
     private router: Router,
+    private srv: ToastService,
   ) {
   }
 
   ngOnInit() {
     this.mOrderInit({currentPage: '1'});
+  }
+  // init
+  public mOrderInit(param): void {
+    this.mOrderList = null;
     this.mOrderSrv.mineOrdGetNum().subscribe(
       (val) => {
         if (val.status === 200) {
@@ -80,10 +89,6 @@ export class MineOrderComponent implements OnInit {
         }
       }
     );
-  }
-  // init
-  public mOrderInit(param): void {
-    this.mOrderList = null;
     this.mOrderSrv.getMineOrderList(param).subscribe(
       (val) => {
         console.log(val);
@@ -128,6 +133,7 @@ export class MineOrderComponent implements OnInit {
   // select status
   public mOrderStatusSelect (status): void {
     console.log(status);
+    this.orderSelectStatus = status;
     if (!status) {
       this.mOrderInit({currentPage: '1'});
       return;
@@ -140,6 +146,7 @@ export class MineOrderComponent implements OnInit {
   }
   // order operate
   public mineOrderOperate(param, childItem): void {
+    console.log(param);
     console.log(childItem);
     if (param.title === '去付款') {
       this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
@@ -163,5 +170,44 @@ export class MineOrderComponent implements OnInit {
       this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
       return;
     }
+    if (param.title === '取消订单') {
+      this.srv.loading();
+      this.mOrderSrv.mineOrdCancel({orderId: childItem.id}).subscribe(
+        (val) => {
+          this.srv.hide();
+          console.log(val);
+          if (val.status === 200) {
+            this.mineOrderMsg = val.message;
+            this.onShow('mineOrder');
+            this.mOrderInit({currentPage: '1'});
+            return;
+          }
+          this.mineOrderMsg = val.message;
+          this.onShow('mineOrder');
+        }
+      );
+      return;
+    }
+    if (param.title === '删除订单') {
+      this.srv.loading();
+      this.mOrderSrv.mineOrdDelete({orderId: childItem.id}).subscribe(
+        (val) => {
+          this.srv.hide();
+          console.log(val);
+          if (val.status === 200) {
+            this.mineOrderMsg = val.message;
+            this.onShow('mineOrder');
+            this.mOrderInit({currentPage: '1'});
+            return;
+          }
+          this.mineOrderMsg = val.message;
+          this.onShow('mineOrder');
+        }
+      );
+      return;
+    }
+  }
+  public onShow(type: string) {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
   }
 }

@@ -114,6 +114,9 @@
       <button class="weui-btn weui-btn_primary" weui-button>提交申请</button>
     </div>
   </div>
+  <div>
+    <input type="file" name="file" (change)="onChange($event)">
+  </div>
 </div>
 <ng-template #loading>
   <div class="order-refund-mask">

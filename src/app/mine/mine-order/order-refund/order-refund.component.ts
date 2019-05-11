@@ -4,8 +4,7 @@ import {InfiniteLoaderConfig, Uploader, UploaderOptions} from 'ngx-weui';
 import {Observable} from 'rxjs';
 import {MineOrderService} from '../../../common/services/mine-order.service';
 import {ActivatedRoute} from '@angular/router';
-// formdate
-const orderRefundImg: FormData = new FormData();
+const img_upload: FormData = new FormData();
 @Component({
   selector: 'app-order-refund',
   templateUrl: './order-refund.component.html',
@@ -33,9 +32,9 @@ export class OrderRefundComponent implements OnInit {
   public orderRefundRemark: any = null;
   // upload
   @Input() url = 'example';
-  img: any;
-  imgShow = false;
-  uploader: Uploader = new Uploader(<UploaderOptions>{
+  public img: any;
+  public imgShow = false;
+  public uploader: Uploader = new Uploader(<UploaderOptions>{
     url: './upload.php',
     headers: [
       {name: 'auth', value: 'test'}
@@ -56,9 +55,11 @@ export class OrderRefundComponent implements OnInit {
     //     });
     // },
     onFileQueued: function () {
+      console.log(arguments);
       if (arguments) {
-        console.log(arguments[0]._file);
-        // orderRefund.append('file', arguments[0]._file);
+        for (let i = 0; i < arguments.length; i++) {
+          img_upload.append('file', arguments[i].file);
+        }
       }
     },
     onFileDequeued: function () {
@@ -138,12 +139,20 @@ export class OrderRefundComponent implements OnInit {
     this.orderRefund.refundRemark = event;
   }
   public ordRefSubClick() {
-    console.log(this.orderRefund);
-    this.mOrderSrv.mineOrdReturn(this.orderRefund).subscribe(
+    console.log(img_upload.get('file'));
+    this.mOrderSrv.mineOrdImgUpload(img_upload).subscribe(
       (val) => {
         console.log(val);
       }
     );
+   /* this.mOrderSrv.mineOrdReturn(this.orderRefund).subscribe(
+      (val) => {
+        console.log(val);
+      }
+    );*/
     // this.uploader.uploadAll();
+  }
+  public onChange(e): void {
+    console.log(e);
   }
 }

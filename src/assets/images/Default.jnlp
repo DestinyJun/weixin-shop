@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://1785s28l17.iask.in:36629/FVJV/">
+<information>
+<title>FTP Voyager JV</title>
+<vendor>SolarWinds Worldwide LLC</vendor>
+<icon href="http://1785s28l17.iask.in:36629/FVJV/Images/FVJV_64x64.png" width="64" height="64" />
+<icon href="http://1785s28l17.iask.in:36629/FVJV/Images/FVJV_48x48.png" width="48" height="48" />
+<icon href="http://1785s28l17.iask.in:36629/FVJV/Images/FVJV_32x32.png" width="32" height="32" />
+<icon href="http://1785s28l17.iask.in:36629/FVJV/Images/FVJV_24x24.png" width="24" height="24" />
+</information>
+<security>
+<all-permissions/>
+</security>
+<resources>
+<j2se version="1.6+"/>
+<jar href="http://1785s28l17.iask.in:36629/FVJV/FTP_Voyager_JV.jar" main="true"/>
+<jar href="http://1785s28l17.iask.in:36629/Common/Java/Libs/RhinoJavaCore.jar"/>
+<jar href="http://1785s28l17.iask.in:36629/FVJV/lib/jide-action.jar"/>
+<jar href="http://1785s28l17.iask.in:36629/FVJV/lib/jide-common.jar"/>
+<jar href="http://1785s28l17.iask.in:36629/FVJV/lib/jide-dock.jar"/>
+</resources>
+<application-desc main-class="com.rhinosoft.app.CApp">
+<argument>-hh,1785s28l17.iask.in</argument>			
+<argument>-sp,8001</argument>			
+<argument>-hp,36629</argument>			
+<argument>-esi,_b81bc9b8a7c3665e6fbbc094961cb058799addf5e67e2350d53b06199c482f71debd2f51508c5defd91064f8e785cda88f5c30dd378a14690754581406246bf8</argument>		
+<argument>-si,5631125</argument>			
+<argument>-li,wwj</argument>				
+<argument>-hl,zh,CN</argument>		
+<argument>-sl,</argument>			
+<argument>-hu,http://1785s28l17.iask.in:36629</argument>			
+<argument>-is,0</argument>			
+<argument>-ccp,0</argument>	
+<argument>-ila,0</argument>		
+<argument>-uea,</argument>	
+<argument>-csea,0</argument>		
+</application-desc>
+</jnlp>

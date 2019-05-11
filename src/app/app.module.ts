@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './common/services/auth.interceptor';
 import { ErrorRemindComponent } from './error-remind/error-remind.component';
-import {LoadingModule} from './common/components/loading/loading.module';
 
 @NgModule({
   declarations: [
@@ -18,9 +17,9 @@ import {LoadingModule} from './common/components/loading/loading.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    LoadingModule
   ],
   providers: [
+    // 使用http拦截器
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     ],
   bootstrap: [AppComponent]

@@ -177,7 +177,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
         if (!res.value) {
           this.dialogPayShow = true;
         } else {
-          this.router.navigate(['/pay/resetpwd']);
+          this.router.navigate(['/mine/setting/paypwd']);
         }
       });
     }, 10);
@@ -185,27 +185,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
   }
   // weixin pay
   public onBridgeReady(obj) {
-    const timeStamp = (new Date().getTime()) / 1000;
-   /* const  payReq = {
-      appId: obj.sub_appid, // 公众号名称，由商户传入
-      timeStamp: timeStamp,  // 时间戳，自1970年以来的秒数
-      nonceStr: obj.nonce_str, // 随机串
-      package: `prepay_id=${obj.prepay_id}`,
-      signType: `HMAC-SHA256`,
-      paySign: obj.sign
-    };*/
-    console.log(obj);
-   /* if (typeof WeixinJSBridge == 'undefined') {
-      if (document.addEventListener) {
-        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-      } else if (document.attachEvent) {
-        document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-      }
-    } else {
-      onBridgeReady();
-    }*/
-
     WeixinJSBridge.invoke(
       'getBrandWCPayRequest', obj,
       function (res) {
@@ -214,7 +193,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
           // 使用以上方式判断前端返回,微信团队郑重提示：
           // res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-          console.log(res);
+          // console.log(res);
         }
       });
   }

@@ -110,6 +110,4 @@ export class TabComponent implements OnInit {
       return;
     }
   }
-
-
 }

@@ -3,12 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import {RegisteredReferrerComponent} from './registered-referrer/registered-referrer.component';
 import {RegisteredSubmitComponent} from './registered-submit/registered-submit.component';
 import {RegisteredSuccessComponent} from './registered-success/registered-success.component';
-import {RegisteredScanComponent} from './registered-scan/registered-scan.component';
 const registeredRoutes: Routes = [
   {path: '', component: RegisteredReferrerComponent},
   {path: 'submit', component: RegisteredSubmitComponent},
   {path: 'success', component: RegisteredSuccessComponent},
-  {path: 'scan', component: RegisteredScanComponent},
 ];
 @NgModule({
   imports: [RouterModule.forChild(registeredRoutes)],

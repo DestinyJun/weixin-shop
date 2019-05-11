@@ -124,6 +124,7 @@ export class OrderPlaceComponent implements OnInit {
   // order place
   public submitOrder() {
     if (!this.orderPlaceAddressInfo) {
+      this.onToastShow('success');
       return;
     }
     console.log(this.orderPlaceInfo);
@@ -131,6 +132,9 @@ export class OrderPlaceComponent implements OnInit {
       (val) => {
         console.log(val);
         if (val.status === 200) {
+          this.goodsInfo.map((item, index) => {
+            this.globalService.wxSessionSetObject(`goods${index}`, 0);
+          });
           this.router.navigate(['/order/sure', val.data.id]);
           return;
         }

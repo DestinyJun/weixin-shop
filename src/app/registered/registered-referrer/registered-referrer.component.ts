@@ -1,9 +1,8 @@
-import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ActionSheetComponent, ActionSheetConfig, ActionSheetService, DialogComponent, DialogConfig, SkinType, ToastService} from 'ngx-weui';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
 import {GlobalService} from '../../common/services/global.service';
-import {mergeMap} from 'rxjs/operators';
 import {hex_sha1} from '../../common/tools/hex_sha1';
 import {isNumber} from '../../common/tools/is_number';
 import {random_word} from '../../common/tools/random_word';
@@ -30,12 +29,15 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   public configActionSheet: ActionSheetConfig = <ActionSheetConfig>{};
   // Dialog
   @ViewChild('iosDialog') iosDialog: DialogComponent;
+  // workId
+  @ViewChild('workId') workId: ElementRef;
   public configDialog: DialogConfig = {};
   // data
   public referrerNumber: any = {
     workId: null,
     openid: null
   };
+  public loading_show = false;
 
   constructor(
     private actionSheetService: ActionSheetService,
@@ -47,11 +49,9 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.referrerNumber.openid = this.globalSrv.wxSessionGetObject('openid');
-    this.referrerVerifyWxSdk();
-    // wx sdk
-    if (!this.globalSrv.wxSessionGetObject('ticket')) {
-      // this.referrerWxTicket();
+    if (this.globalSrv.wxSessionGetObject('openid')) {
+      this.referrerNumber.openid = this.globalSrv.wxSessionGetObject('openid');
+      this.referrerVerifyWxSdk();
     }
   }
   ngOnDestroy() {
@@ -89,60 +89,14 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     }, 10);
     return false;
   }
-  // workId click
-  public referrerClick(id?: any): void {
-    if (id) {
-      this.referrerNumber.workId = id;
-    }
-    if (!isNumber(this.referrerNumber.workId)) {
-      window.alert('工号只能为数字');
-      return;
-    }
-    this.globalSrv.remindEvent.next(true);
-    this.registeredService.verifyReferrer({workId: this.referrerNumber.workId}).subscribe(
-      (val) => {
-        this.globalSrv.remindEvent.next(false);
-        if (val.status === 200) {
-          this.referrerNumber.workId = val.data.workId;
-          this.router.navigate(['/registered/submit'], {queryParams: this.referrerNumber});
-          return;
-        }
-        this.referrerNumber.workId = '';
-        window.alert(val.message);
-      }
-    );
-  }
   // upload img code
   public referrerUpImg(img_dada): void {
     const that = this;
     qrcode.decode(img_dada);
     qrcode.callback = function (imgMsg) {
       window.alert(imgMsg);
-      that.referrerNumber.workId = imgMsg;
+      that.workId.nativeElement.value = imgMsg;
     };
-    // const uploadFileURL = window.URL.createObjectURL(up_image);
-    // const uploadFileURL = window.URL.createObjectURL(event.target.files[0]);
-   /* readBlobAsDataURL(event.target.files[0], (res) => {
-      console.log(res);
-    });*/
-  }
-  // get wx ticket
-  public referrerWxTicket(): void {
-    this.registeredService.regGetWxToken().pipe(
-      mergeMap((val) => {
-        window.alert(JSON.stringify(val));
-        if (val) {
-          this.globalSrv.wxSessionSetObject('js_access_token', val.access_token);
-          return  this.registeredService.regGetWxticket({ access_token: val.access_token});
-        }
-      })
-    ) .subscribe(
-      (val) => {
-        window.alert(JSON.stringify(val));
-        this.globalSrv.wxSessionSetObject('ticket', val.ticket);
-        // this.referrerVerifyWxSdk();
-      }
-    );
   }
   // verify wxSDK
   public referrerVerifyWxSdk(): void {
@@ -159,7 +113,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       const sdkstring = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
       const signature = hex_sha1(sdkstring);
       wx.config({
-        // debug: true,
+        debug: true,
         appId: 'wxbacad0ba65a80a3d',
         timestamp: timestamp,
         nonceStr: noncestr,
@@ -181,7 +135,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
         needResult: 1,
         scanType: ['qrCode', 'barCode'],
         success: function (videoRes) {
-          that.referrerClick(videoRes.resultStr);
+          that.referrerClick(videoRes.resultStr.workId);
         }
       });
     });
@@ -199,7 +153,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       wx.chooseImage({
         count: 1, // 默认9
         sizeType: ['original', 'compressed'],
-        sourceType: ['album', 'camera'],
+        sourceType: ['album'],
         success: function (img_res) {
           const localIds = img_res.localIds;
           wx.getLocalImgData({
@@ -214,5 +168,28 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+  // workId click
+  public referrerClick(id?: any): void {
+    if (id) {
+      this.referrerNumber.workId = id;
+    }
+    if (!isNumber(this.referrerNumber.workId)) {
+      window.alert('工号只能为数字');
+      return;
+    }
+    this.loading_show = true;
+    this.registeredService.verifyReferrer({workId: this.referrerNumber.workId}).subscribe(
+      (val) => {
+        this.loading_show = false;
+        if (val.status === 200) {
+          this.referrerNumber.workId = val.data.workId;
+          this.router.navigate(['/registered/submit'], {queryParams: this.referrerNumber});
+          return;
+        }
+        this.referrerNumber.workId = '';
+        window.alert(val.message);
+      }
+    );
   }
 }

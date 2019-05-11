@@ -77,6 +77,7 @@ export class PayPasswordComponent implements OnInit {
         this.errorShow = true;
       }
       setTimeout(() => {
+        console.log('11111');
         this.inputShow = false;
         this.passwordShow = false;
         this.inputPws = null;

@@ -167,7 +167,7 @@ export class SettingPaypwdComponent implements OnInit {
                 this.firpasswordConfig.value = ['', '', '', '', '', ''];
                 this.passwordConfig.value = ['', '', '', '', '', ''];
                 window.history.back();
-              }, 1000);
+              }, 2000);
             } else {
               this.router.navigate(['/error'], {
                 queryParams: {
@@ -182,6 +182,14 @@ export class SettingPaypwdComponent implements OnInit {
           }
         );
       } else {
+        setTimeout(() => {
+          this.inputShow = false;
+          this.passwordShow = false;
+          this.inputPws = null;
+          this.inputFirePws = null;
+          this.firpasswordConfig.value = ['', '', '', '', '', ''];
+          this.passwordConfig.value = ['', '', '', '', '', ''];
+        }, 50);
         this.errorShow = true;
       }
     }

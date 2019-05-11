@@ -232,7 +232,7 @@ export class MineUserComponent implements OnInit {
       });
       return;
     }
-    window.alert('调用摄像头失败，请重试');
+    window.alert('微信SDK认证失败');
   }
 }
 export const DATA = [

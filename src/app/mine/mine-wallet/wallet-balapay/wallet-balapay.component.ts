@@ -22,7 +22,7 @@ export class WalletBalapayComponent implements OnInit, OnDestroy {
       icon: 'fa fa-chevron-left'
     },
     rightContent: {
-      icon: 'fa fa-address-card-o',
+      icon: 'icon iconfont icon-shaixuan',
       color: '#39A12D'
     }
   };

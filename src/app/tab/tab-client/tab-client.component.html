@@ -2,31 +2,16 @@
   <app-header [option]="headerOption" (headerRightClick)="onHeaderRightClick()"></app-header>
   <div class="tab-client-search">
     <weui-searchbar
-      [placeholder]="'请输入你想输入的内容'"
+      [placeholder]="'请输入你想查找的内容'"
       (search)="onBarSearch($event)"
       (cancel)="onBarClear()"
       (clear)="onBarCancel()">
     </weui-searchbar>
-   <!-- <div class="weui-panel" style="margin-top: 0;" *ngIf="searchKeyword">
-      <div class="weui-panel__hd">查询关键字：【{{searchKeyword}}】</div>
-      <div class="weui-panel__bd" *ngIf="searchItems | async; let searchItems; else loading">
-        <div class="weui-cell weui-cell_access" *ngFor="let item of searchItems.datas">
-          <div class="weui-cell__bd weui-cell_primary">
-            <p>{{item.name}}</p>
-          </div>
-        </div>
-        <div class="weui-media-box weui-media-box_text" *ngIf="searchItems.datas?.length === 0">查不到相关数据</div>
-      </div>
-      <ng-template #loading>
-        <div class="weui-panel__bd">
-          <div class="weui-media-box weui-media-box_text">搜索中...</div>
-        </div>
-      </ng-template>
-    </div>-->
   </div>
   <div class="tab-client-alphabet">
     <ul>
-      <li *ngFor="let item of clientList;let i = index">
+      <li *ngFor="let item of clientList;let i = index" (click)="goTo(item?.name)">
+      <!--<li *ngFor="let item of clientList;let i = index" routerLink="/tab/client/" [fragment]="item?.name">-->
         <span>{{item?.name}}</span>
       </li>
     </ul>
@@ -35,6 +20,7 @@
      <weui-infiniteloader (loadmore)="clientLoadMore($event)" [config]="clientloaderConfig">
        <ng-container *ngIf="clientList;else loading">
          <ng-container *ngIf="clientList.length !== 0;else remind">
+           <div class="stikcy-fix" style=" position: static;visibility: hidden;margin-top: -2.5em;" id='A'></div>
            <div class="client-list" *ngFor="let item of clientList">
              <div class="weui-cells__title" [id]="item?.name">{{item?.name}}</div>
              <div class="weui-cells" >

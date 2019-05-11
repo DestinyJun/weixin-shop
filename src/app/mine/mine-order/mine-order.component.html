@@ -5,10 +5,21 @@
   <div class="mine-order-select">
     <div class="weui-cells">
       <div class="weui-flex">
-        <div class="weui-flex__item" *ngFor="let item of mOrderStatusList" (click)="mOrderStatusSelect(item.status)">
+        <div class="weui-flex__item"
+           *ngFor="let item of mOrderStatusList"
+           (click)="mOrderStatusSelect(item?.status)"
+           [ngStyle]="{
+           'background-color':orderSelectStatus === item?.status?'#85B875':'',
+           'color':orderSelectStatus === item?.status?'white':''
+           }"
+        >
           <div class="placeholder">
             <p style="font-size: 1rem">{{item?.name}}</p>
-            <p style="font-size: 0.8rem;color: #BEBEBE;">{{item?.amount}}</p>
+            <p
+              [ngStyle]="{
+           'color':orderSelectStatus === item?.status?'white':''
+           }"
+              style="font-size: 0.8rem;">{{item?.amount}}</p>
           </div>
         </div>
       </div>
@@ -61,7 +72,10 @@
                 <div class="weui-flex__item"
                      *ngFor="let param of orderStates[childItem?.status]?.operating"
                      (click)="mineOrderOperate(param, childItem)">
-                  <span >{{param?.title}}</span>
+                  <span
+                    [ngStyle]="{
+           'color':param?.title === '再下一单'?'#85B875':''}"
+                  >{{param?.title}}</span>
                 </div>
               </div>
             </div>
@@ -75,5 +89,8 @@
     <ng-template #loading>
       <app-loading></app-loading>
     </ng-template>
+  </div>
+  <div class="mine-order-toast">
+    <weui-toast #mineOrderToast [type]="'success'" [text]="mineOrderMsg" [icon]="''" [time]="2000"></weui-toast>
   </div>
 </div>

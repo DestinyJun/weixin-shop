@@ -15,7 +15,7 @@
       <div class="weui-dialog-footer" *ngIf="config.btnShow">
         <button class="weui-btn weui-btn_primary" [ngClass]="!config.inputDisabled?'weui-btn_disabled': ''" (click)="onSubmit()" [disabled]="!config.inputDisabled">确认</button>
       </div>
-      <div class="weui-dialog-pwd" *ngIf="config.pwdShow" [routerLink]="['/pay/resetpwd']">
+      <div class="weui-dialog-pwd" *ngIf="config.pwdShow" [routerLink]="['/mine/setting/paypwd']">
         <div class="weui-cell__bd"></div>
         <div class="weui-cell__ft">忘记支付密码</div>
       </div>

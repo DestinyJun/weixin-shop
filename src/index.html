@@ -36,21 +36,6 @@
   </app-root>
 </body>
 <script type="text/javascript">
-  function IsPC() {
-    // 判断是那个端
-    var userAgentInfo = navigator.userAgent;
-    var Agents = ["Android", "iPhone",
-      "SymbianOS", "Windows Phone",
-      "iPad", "iPod"];
-    var flag = false;
-    for (var v = 0; v < Agents.length; v++) {
-      if (userAgentInfo.indexOf(Agents[v]) > 0) {
-        flag = true;
-        break;
-      }
-    }
-    return flag;
-  }
   (function (doc, win) {
     var docEl = doc.documentElement;
     var resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';
@@ -63,15 +48,5 @@
     win.addEventListener(resizeEvt, recalc, false);
     doc.addEventListener('DOMContentLoaded', recalc, false);
   })(document, window);
-  /*var fontSizeAuto = function(oriWidth){
-    return function(){
-      var viewportWidth = document.documentElement.clientWidth;
-      if(viewportWidth > oriWidth){ viewportWidth = oriWidth; }
-      if(viewportWidth < 320){ viewportWidth = 320; }
-      document.documentElement.style.fontSize = viewportWidth/(oriWidth) +'px';
-    }
-  };
-  fontSizeAuto(640)();
-  window.onresize = fontSizeAuto(640);*/
 </script>
 </html>

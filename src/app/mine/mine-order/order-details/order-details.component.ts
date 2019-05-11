@@ -41,7 +41,7 @@ export class OrderDetailsComponent implements OnInit {
     pendingPayment: {name: '待付款', bgColor: ['#B66F6E', '#F49C9A'], services: '',
       operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
     completed: {name: '已完成', bgColor: ['#80B66F', '#B0F49A'], services: '申请退款',
-      operating: [{title: '删除订单', routes: ''}, {title: '再下一单', routes: ''}]},
+      operating: [{title: '再下一单', routes: ''}]},
     canceled: {name: '已取消', bgColor: ['#8E8E8E', '#C2C2C2'], services: '',
       operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: ''}]},
     refundding: {name: '退款中', bgColor: ['#B66F6E', '#F49C9A'], services: '',
