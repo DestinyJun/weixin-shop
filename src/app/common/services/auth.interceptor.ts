@@ -108,13 +108,13 @@ export class AuthInterceptor implements HttpInterceptor {
       );
     }
     if (this.globalService.wxSessionGetObject('token')) {
-      clonedRequest = req.clone({
+      this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
           .set('Content-type', 'application/json; charset=UTF-8')
           .set('token', this.globalService.wxSessionGetObject('token'))
       });
-      return next.handle(clonedRequest).pipe(
+      return next.handle(this.clonedRequest).pipe(
         mergeMap((event: any, ) => {
           if (event) {
             return of(event);
