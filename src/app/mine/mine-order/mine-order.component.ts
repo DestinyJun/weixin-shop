@@ -38,20 +38,22 @@ export class MineOrderComponent implements OnInit {
   public mOrderList: any = null;
   // order status
   public orderStates: any = {
-    shipped: {name: '待收货', color: '#7FB56E', operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: null}]},
     pendingPayment: {name: '待付款', color: 'red', operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
+    pendingShipment: {name: '待发货', color: '#7FB56E', operating: []},
+    shipped: {name: '待收货', color: '#7FB56E', operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: null}]},
+    received: {name: '已收货', color: 'red', operating: []},
     completed: {name: '已完成', color: '#7FB56E', operating: [{title: '再下一单', routes: '/order'}]},
     canceled: {name: '已取消', color: '#A0A0A0', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
-    refundding: {name: '退款中', color: 'red', operating: [{title: '再次购买', routes: ''}, {title: '退款进度', routes: null}]},
-    goodsReturning: {name: '退货中', color: 'red', operating: [{title: '再次购买', routes: ''}, {title: '退款进度', routes: null}]},
 
-    pendingShipment: {name: '待发货', color: '#7FB56E', operating: []},
-    pendingReview: {name: '待审核', color: 'red', operating: []},
-    received: {name: '已收货', color: 'red', operating: []},
-    refundReview: {name: '退款审核', color: 'red', operating: []},
-    refundded: {name: '已退款', color: 'red', operating: []},
     goodsReturnReview: {name: '退货审核', color: 'red', operating: []},
+    goodsReturning: {name: '退货中', color: 'red', operating: [{title: '再次购买', routes: ''}, {title: '退款进度', routes: null}]},
     goodsReturned: {name: '已退货', color: 'red', operating: []},
+
+    refundReview: {name: '退款审核', color: 'red', operating: []},
+    refundding: {name: '退款中', color: 'red', operating: [{title: '再次购买', routes: ''}, {title: '退款进度', routes: null}]},
+    refundded: {name: '已退款', color: 'red', operating: []},
+
+    pendingReview: {name: '待审核', color: 'red', operating: []},
   };
   // scroll
   @ViewChild(InfiniteLoaderComponent) il;

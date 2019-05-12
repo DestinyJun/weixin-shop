@@ -1,10 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {InfiniteLoaderConfig, Uploader, UploaderOptions} from 'ngx-weui';
-import {Observable} from 'rxjs';
+import {InfiniteLoaderConfig, ToastComponent, ToastService, Uploader, UploaderOptions} from 'ngx-weui';
 import {MineOrderService} from '../../../common/services/mine-order.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {EMPTY, timer} from 'rxjs';
+import {mergeMap} from 'rxjs/operators';
 const img_upload: FormData = new FormData();
+const file_num = [];
 @Component({
   selector: 'app-order-refund',
   templateUrl: './order-refund.component.html',
@@ -23,94 +25,49 @@ export class OrderRefundComponent implements OnInit {
     }
   };
   // scroll
-  ordAftScrollConfig: InfiniteLoaderConfig = {
+  public ordAftScrollConfig: InfiniteLoaderConfig = {
     height: 'auto'
   };
   // details
   public detailsData: any = null;
   public orderRefund: any = {};
   public orderRefundRemark: any = null;
+  // toast
+  @ViewChild('mineOrderRefundToast') mineOrderRefundToast: ToastComponent;
+  public mineOrderRefundMsg: string;
   // upload
   @Input() url = 'example';
   public img: any;
   public imgShow = false;
   public uploader: Uploader = new Uploader(<UploaderOptions>{
-    url: './upload.php',
-    headers: [
-      {name: 'auth', value: 'test'}
-    ],
-    params: {
-      a: 1,
-      b: new Date(),
-      c: 'test',
-      d: 12.123
-    },
-    // 自定义transport
-    // uploadTransport: function(item: FileItem) {
-    //     return Observable.create(observer => {
-    //         setTimeout(() => {
-    //             observer.next(true);
-    //             observer.complete();
-    //         }, 1000 * 3);
-    //     });
-    // },
     onFileQueued: function () {
-      console.log(arguments);
-      if (arguments) {
-        for (let i = 0; i < arguments.length; i++) {
-          img_upload.append('file', arguments[i].file);
-        }
-      }
+      file_num.push(arguments[0]._file);
     },
     onFileDequeued: function () {
-      console.log('onFileDequeued', arguments);
+      const file_arguments = arguments;
+      file_num.forEach((value, key) => {
+        if (value.name === file_arguments[0]._file.name) {
+          file_num.splice(key, 1);
+        }
+      });
     },
-    onStart: function () {
-      console.log('onStart', arguments);
-    },
-    onCancel: function () {
-      console.log('onCancel', arguments);
-    },
-    onFinished: function () {
-      console.log('onFinished', arguments);
-    },
-    onUploadStart: function () {
-      console.log('onUploadStart', arguments);
-    },
-    onUploadProgress: function () {
-      console.log('onUploadProgress', arguments);
-    },
-    onUploadSuccess: function () {
-      console.log('onUploadSuccess', arguments);
-    },
-    onUploadError: function () {
-      console.log('onUploadError', arguments);
-    },
-    onUploadComplete: function () {
-      console.log('onUploadComplete', arguments);
-    },
-    onUploadCancel: function () {
-      console.log('onUploadCancel', arguments);
-    },
-    onError: function () {
-      console.log('onError', arguments);
-    }
   });
   constructor(
     private mOrderSrv: MineOrderService,
-    private routerInfo: ActivatedRoute
+    private routerInfo: ActivatedRoute,
+    private router: Router,
+    private srv: ToastService,
   ) {
   }
 
   ngOnInit() {
     this.routerInfo.params.subscribe((params) => {
-      console.log(params);
       this.mineOrdRefundInit(params.id);
       this.orderRefund.orderId = params.id;
       this.orderRefund.refundType = params.type;
     });
   }
-
+  // order data init
   public mineOrdRefundInit(id): void {
      this.mOrderSrv.mineOrdGetDetail({orderId: id}).subscribe(
        (val) => {
@@ -118,10 +75,13 @@ export class OrderRefundComponent implements OnInit {
          if (val.status === 200) {
            this.detailsData = val;
            this.orderRefund.refundamount = val.data.amount;
+         } else {
+
          }
        }
      );
   }
+  // img gallery
   public onGallery(item: any) {
     this.img = [{file: item._file, item: item}];
     this.imgShow = true;
@@ -138,21 +98,52 @@ export class OrderRefundComponent implements OnInit {
   public orderRefundRemarkChange(event): void {
     this.orderRefund.refundRemark = event;
   }
+  // upload click
   public ordRefSubClick() {
-    console.log(img_upload.get('file'));
-    this.mOrderSrv.mineOrdImgUpload(img_upload).subscribe(
+    img_upload.delete('file');
+    file_num.forEach((value) => {
+      img_upload.append('file', value);
+    });
+    this.srv.loading();
+    if (img_upload.get('file')  === null) {
+       this.mOrderSrv.mineOrdReturn(this.orderRefund).subscribe(
       (val) => {
+        this.srv.hide();
         console.log(val);
+        if (val.status === 200) {
+          this.mineOrderRefundMsg = val.message;
+          this.onShow('mineOrderRefund');
+          timer(2000).subscribe(() => window.history.back());
+        } else {
+          this.mineOrderRefundMsg = val.message;
+          this.onShow('mineOrderRefund');
+        }
+        });
+       return;
+    }
+    this.mOrderSrv.mineOrdImgUpload(img_upload).pipe(
+      mergeMap((val) => {
+        if (val.status === 200) {
+          return this.mOrderSrv.mineOrdReturn(this.orderRefund);
+        }
+        this.mineOrderRefundMsg = val.message;
+        this.onShow('mineOrderRefund');
+        return EMPTY;
+      })
+    ).subscribe((val) => {
+      this.srv.hide();
+      if (val.status === 200) {
+        this.mineOrderRefundMsg = val.message;
+        this.onShow('mineOrderRefund');
+        timer(2000).subscribe(() => window.history.back());
+      } else {
+        this.mineOrderRefundMsg = val.message;
+        this.onShow('mineOrderRefund');
       }
-    );
-   /* this.mOrderSrv.mineOrdReturn(this.orderRefund).subscribe(
-      (val) => {
-        console.log(val);
-      }
-    );*/
-    // this.uploader.uploadAll();
+    });
   }
-  public onChange(e): void {
-    console.log(e);
+  // toast
+  public onShow(type: string) {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
   }
 }

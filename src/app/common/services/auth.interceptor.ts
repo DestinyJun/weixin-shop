@@ -8,40 +8,106 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  public clonedRequest: any;
   constructor(
     private globalService: GlobalService,
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let clonedRequest;
-    clonedRequest = req.clone({
-      url: environment.dev_test_url + req.url,
-      // url: 'http://192.168.1.88' + req.url,
-      headers: req.headers
-        .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1NzYyOTM5Nn0.aOZdEIjRB_j_POoYDgx82b7Yc293ZOXeOAxuyeO0YI-h90MQh6HBwVU_iHirHlq7mibBnuK7XsXXk-k8VbSNfQ')
-    });
-    return next.handle(clonedRequest).pipe(
-      mergeMap((event: any) => {
-        if (event.status === 200) {
-          return of(event);
-        }
-        return EMPTY;
-      }),
-      catchError((err: HttpErrorResponse) => {
-        if (err.status === 0) {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: '连接服务器失败，请检查网络！',
-              url: null,
-              btn: '请重试'
-            }
-          });
-        }
-        return EMPTY;
-      })
-    );
-    /*if (this.globalService.wxSessionGetObject('token')) {
+    return this.debug_http(req, next);
+  }
+  public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.url.indexOf('imageFileUpload') >= 0) {
+      this.clonedRequest = req.clone({
+        // url: environment.dev_test_url + req.url,
+        url: 'http://192.168.1.88' + req.url,
+      });
+      return next.handle(this.clonedRequest).pipe(
+        mergeMap((event: any) => {
+          if (event.status === 200) {
+            return of(event);
+          }
+          return EMPTY;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 0) {
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: '连接服务器失败，请检查网络！',
+                url: null,
+                btn: '请重试'
+              }
+            });
+          }
+          return EMPTY;
+        })
+      );
+    } else {
+      this.clonedRequest = req.clone({
+        // url: environment.dev_test_url + req.url,
+        url: 'http://192.168.1.88' + req.url,
+        headers: req.headers
+          .set('Content-type', 'application/json; charset=UTF-8')
+          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1NzczOTM4NX0.vv8JGtdiHvKXer3Cuiv-t6U8s61VbdKa25GjzFHl2iohcUrPikDM-vZ_W0WVbRXQtQdBVEx7FVQ4S4lq9TxbMw')
+      });
+      return next.handle(this.clonedRequest).pipe(
+        mergeMap((event: any) => {
+          if (event.status === 200) {
+            return of(event);
+          }
+          return EMPTY;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 0) {
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: '连接服务器失败，请检查网络！',
+                url: null,
+                btn: '请重试'
+              }
+            });
+          }
+          return EMPTY;
+        })
+      );
+    }
+  }
+  public prod_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.url.indexOf('imageFileUpload') >= 0) {
+      this.clonedRequest = req.clone({
+        url: environment.dev_test_url + req.url,
+      });
+      return next.handle(this.clonedRequest).pipe(
+        mergeMap((event: any) => {
+          if (event.status === 200) {
+            return of(event);
+          }
+          return EMPTY;
+        }),
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 0) {
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: '连接服务器失败，请检查网络！',
+                url: null,
+                btn: '请重试'
+              }
+            });
+          }
+          if (err.status === 500) {
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: '图片上传失败，请重试！',
+                url: null,
+                btn: '请重试'
+              }
+            });
+          }
+          return EMPTY;
+        })
+      );
+    }
+    if (this.globalService.wxSessionGetObject('token')) {
       clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -62,12 +128,12 @@ export class AuthInterceptor implements HttpInterceptor {
         })
       );
     }
-    clonedRequest = req.clone({
+    this.clonedRequest = req.clone({
       url: environment.dev_test_url + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
     });
-    return next.handle(clonedRequest).pipe(
+    return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {
         if (event.status === 200) {
           return of(event);
@@ -103,6 +169,6 @@ export class AuthInterceptor implements HttpInterceptor {
             }});
         }
       })
-    );*/
+    );
   }
 }

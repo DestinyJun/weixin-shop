@@ -114,8 +114,8 @@
       <button class="weui-btn weui-btn_primary" weui-button>提交申请</button>
     </div>
   </div>
-  <div>
-    <input type="file" name="file" (change)="onChange($event)">
+  <div class="order-refund-toast">
+    <weui-toast #mineOrderRefundToast [type]="'success'" [text]="mineOrderRefundMsg" [icon]="''" [time]="2000"></weui-toast>
   </div>
 </div>
 <ng-template #loading>
