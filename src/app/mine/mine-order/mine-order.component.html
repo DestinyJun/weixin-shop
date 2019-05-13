@@ -48,7 +48,9 @@
             <div class="weui-panel__bd" [routerLink]="['/mine/order/detail', childItem.id]">
               <div class="weui-cell" *ngFor="let props of childItem?.moyaoOrderItemModels; let i = index">
                 <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-                  <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="props?.goods?.imgs"
+                  <img *ngIf="props?.goods?.imgs.indexOf('http')>=0" class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="props?.goods?.imgs"
+                       alt="图片无效">
+                  <img *ngIf="!(props?.goods?.imgs.indexOf('http')>=0)" class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" src="/assets/images/recharge.png"
                        alt="图片无效">
                 </div>
                 <div class="weui-cell__bd">
@@ -62,7 +64,7 @@
               </div>
               <div class="weui-total">
                 <p class="pull-right">
-                  <span>共两件商品 合计：</span>
+                  <span>共{{childItem.moyaoOrderItemModels.length}}件商品 合计：</span>
                   <span style="color: #FF4343;">￥{{childItem?.price}}</span>
                 </p>
               </div>
@@ -71,7 +73,7 @@
               <div class="weui-flex">
                 <div class="weui-flex__item"
                      *ngFor="let param of orderStates[childItem?.status]?.operating"
-                     (click)="mineOrderOperate(param, childItem)">
+                     (click)="mineOrderOperate(param, childItem, childItem?.status)">
                   <span
                     [ngStyle]="{
            'color':param?.title === '再下一单'?'#85B875':''}"

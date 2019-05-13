@@ -9,8 +9,8 @@ const tabRoutes: Routes = [
   {path: '', component: MineOrderComponent},
   {path: 'detail/:id', component: OrderDetailsComponent},
   {path: 'aftsale/:id', component: OrderAftsaleComponent},
-  {path: 'refund/:id/:type', component: OrderRefundComponent},
-  {path: 'return/:id/:type', component: OrderReturnComponent},
+  {path: 'refund/:id/:type/:status', component: OrderRefundComponent},
+  {path: 'return/:id/:type/:status', component: OrderReturnComponent},
 ];
 @NgModule({
   imports: [RouterModule.forChild(tabRoutes)],

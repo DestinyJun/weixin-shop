@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
     this.appInit();
   }
   public appInit(): void {
+    this.globalSrv.wxSessionSetObject('orderSelectStatus', 'all');
     if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
       // this.router.navigate(['/error']);
       // return;
@@ -66,6 +67,7 @@ export class AppComponent implements OnInit {
     // weixin auth
     this.routerInfo.queryParams.subscribe((params: Params) => {
       if ('code' in params) {
+        console.log('进来了');
         this.wx_code = params.code;
         this.wxAuth();
       }

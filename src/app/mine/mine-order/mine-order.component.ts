@@ -33,7 +33,7 @@ export class MineOrderComponent implements OnInit {
     {name: '已完成', amount: 0, status: 'completed'},
     {name: '退货', amount: 0, status: 'return'},
   ];
-  public orderSelectStatus: any = 'all';
+  public orderSelectStatus: any = null;
   // order list
   public mOrderList: any = null;
   // order status
@@ -45,13 +45,19 @@ export class MineOrderComponent implements OnInit {
     completed: {name: '已完成', color: '#7FB56E', operating: [{title: '再下一单', routes: '/order'}]},
     canceled: {name: '已取消', color: '#A0A0A0', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
 
-    goodsReturnReview: {name: '退货审核', color: 'red', operating: []},
-    goodsReturning: {name: '退货中', color: 'red', operating: [{title: '再次购买', routes: ''}, {title: '退款进度', routes: null}]},
-    goodsReturned: {name: '已退货', color: 'red', operating: []},
+    goodsReturnReview: {name: '退货退款审核', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
+    goodsReturning: {name: '退货中', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
+    goodsReturned: {name: '已退货', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
 
-    refundReview: {name: '退款审核', color: 'red', operating: []},
-    refundding: {name: '退款中', color: 'red', operating: [{title: '再次购买', routes: ''}, {title: '退款进度', routes: null}]},
-    refundded: {name: '已退款', color: 'red', operating: []},
+    refundReview: {name: '退款审核', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
+    refundding: {name: '退款中', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
+    refundded: {name: '已退款', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
 
     pendingReview: {name: '待审核', color: 'red', operating: []},
   };
@@ -73,7 +79,12 @@ export class MineOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mOrderInit({currentPage: '1'});
+    this.orderSelectStatus = this.globalSrv.wxSessionGetObject('orderSelectStatus');
+    if (this.orderSelectStatus === 'all') {
+      this.mOrderInit({currentPage: '1'});
+    } else {
+      this.mOrderInit({currentPage: '1', status: this.orderSelectStatus});
+    }
   }
   // init
   public mOrderInit(param): void {
@@ -129,12 +140,13 @@ export class MineOrderComponent implements OnInit {
         }
       });
       this.mOrderList.push({times: val, value: c });
-      console.log(this.mOrderList);
     });
+    console.log(this.mOrderList);
   }
   // select status
   public mOrderStatusSelect (status): void {
     console.log(status);
+    this.globalSrv.wxSessionSetObject('orderSelectStatus', status);
     this.orderSelectStatus = status;
     if (!status) {
       this.mOrderInit({currentPage: '1'});
@@ -147,9 +159,18 @@ export class MineOrderComponent implements OnInit {
     this.mOrderInit({currentPage: '1', status: status});
   }
   // order operate
-  public mineOrderOperate(param, childItem): void {
-    console.log(param);
+  public mineOrderOperate(param, childItem, status): void {
+    // console.log(status);
+    // console.log(param);
     console.log(childItem);
+    if (param.title === '退款进度') {
+      if (status === 'refundReview' || status === 'refundding' || status === 'refundded') {
+        this.router.navigate([param.routes, childItem.id, 0, status]);
+        return;
+      }
+      this.router.navigate([param.routes, childItem.id, 1, status]);
+      return;
+    }
     if (param.title === '去付款') {
       this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
       return;
@@ -165,11 +186,24 @@ export class MineOrderComponent implements OnInit {
       return;
     }
     if (param.title === '再下一单') {
-      this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
+      childItem.moyaoOrderItemModels.map((prop, index) => {
+        this.globalSrv.wxSessionSetObject(`goods${index}`, prop.quantity);
+      });
+      this.router.navigate([param.routes]);
+      return;
+    }
+    if (param.title === '再次购买') {
+      childItem.moyaoOrderItemModels.map((prop, index) => {
+        this.globalSrv.wxSessionSetObject(`goods${index}`, prop.quantity);
+      });
+      this.router.navigate([param.routes]);
       return;
     }
     if (param.title === '重新购买') {
-      this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
+      childItem.moyaoOrderItemModels.map((prop, index) => {
+        this.globalSrv.wxSessionSetObject(`goods${index}`, prop.quantity);
+      });
+      this.router.navigate([param.routes]);
       return;
     }
     if (param.title === '取消订单') {

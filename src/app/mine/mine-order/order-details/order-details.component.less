@@ -88,20 +88,19 @@
       }
     }
   }
-}
-.order-sure-mask{
-  position: fixed;
-  z-index: 1000;
-  height: 100vh;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  .loading{
-    color: white;
-    text-align: center;
-    font-size: 0.8rem;
-    line-height: 100vh;
+  .order-details-toast{
+    .weui-toast{
+      min-width: 1em;
+      min-height: 1em;
+      width: unset;
+      padding: 15px 10px;
+      top: 30%;
+      .weui-icon_toast {
+        display: none;
+      }
+      .weui-toast__content {
+        margin: 0;
+      }
+    }
   }
 }

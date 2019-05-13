@@ -3,7 +3,7 @@ import {HeaderContent} from '../../../common/components/header/header.model';
 import {InfiniteLoaderConfig} from 'ngx-weui';
 import {Observable} from 'rxjs';
 import {MineOrderService} from '../../../common/services/mine-order.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-order-aftsale',
@@ -27,16 +27,31 @@ export class OrderAftsaleComponent implements OnInit {
     height: 'auto'
   };
   // details
-  public orderDetailsData: Observable<any>;
+  public detailsData: any = null;
   constructor(
     private mOrderSrv: MineOrderService,
-    private routerInfo: ActivatedRoute
+    private routerInfo: ActivatedRoute,
+    public router: Router
   ) { }
 
   ngOnInit() {
     this.routerInfo.params.subscribe(params => this.mineOrdDetailInit(params.id));
   }
   public mineOrdDetailInit (id): void {
-    this.orderDetailsData = this.mOrderSrv.mineOrdGetDetail({orderId: id});
+   this.mOrderSrv.mineOrdGetDetail({orderId: id}).subscribe(
+     (val) => {
+       if (val.status === 200) {
+         this.detailsData = val;
+         return;
+       }
+       this.router.navigate(['/error'], {
+         queryParams: {
+           msg: '获取订单详情失败，错误代码',
+           url: null,
+           btn: '请重试'
+         }
+       });
+     }
+   );
   }
 }

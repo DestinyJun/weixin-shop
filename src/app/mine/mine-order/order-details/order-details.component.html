@@ -85,10 +85,11 @@
     </div>
   </div>
   <div class="order-details-footer">
+    <!-- [routerLink]="[item.routes, detailsData?.data?.id, 0, detailsData?.data?.status]"-->
     <div class="weui-footer weui-footer_fixed-bottom">
       <span
         *ngFor="let item of orderDetailStates[detailsData?.data?.status]?.operating"
-        [routerLink]="['/pay/sure']" [queryParams]="{orderId: detailsData?.data?.id}"
+        (click)="orderDetailOpeClick(item, detailsData?.data, detailsData?.data?.status)"
         [ngStyle]="{
           'color':item?.title === '再下一单'?'white':'',
           'background-color':item?.title === '再下一单'?'#7FB56E':'',
@@ -96,6 +97,9 @@
          }"
       >{{item.title}}</span>
     </div>
+  </div>
+  <div class="order-details-toast">
+    <weui-toast #mineOrderToast [type]="'success'" [text]="mineOrderMsg" [icon]="''" [time]="2000"></weui-toast>
   </div>
 </div>
 <ng-template #loading>

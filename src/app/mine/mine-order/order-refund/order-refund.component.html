@@ -5,19 +5,13 @@
   <div class="order-refund-progress">
     <div class="weui-cells">
       <div class="weui-cell">
-        <div class="circle-box">
-          <p class="circle"></p>
-          <p>填写申请</p>
-          <div class="line"></div>
-        </div>
-        <div class="circle-box">
-          <p class="circle"></p>
-          <p>等待审核</p>
-          <div class="line"></div>
-        </div>
-        <div class="circle-box">
-          <p class="circle"></p>
-          <p>退款成功</p>
+        <div class="circle-box" *ngFor="let item of orderRefundProgress;let i = index">
+          <p class="circle" [ngStyle]="
+          {'background-color': item.color,
+            'box-shadow': item.shadow
+          }"></p>
+          <p [ngStyle]="{'color': item.color}">{{item.title}}</p>
+          <div *ngIf="!(i === 2)" class="line" [ngStyle]="{'background-color':orderRefundProgress[i+1].color}"></div>
         </div>
       </div>
     </div>
@@ -68,7 +62,11 @@
           <span style="vertical-align: middle">退款说明：</span>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" type="text" placeholder="请填写退款原因" name="txt" [(ngModel)]="orderRefundRemark" (ngModelChange)="orderRefundRemarkChange($event)">
+          <input *ngIf="orderRefundSubmitShow" class="weui-input" type="text" placeholder="请填写退款原因" name="txt" [(ngModel)]="orderRefundRemark" (ngModelChange)="orderRefundRemarkChange($event)">
+          <input
+            *ngIf="!orderRefundSubmitShow"
+            class="weui-input" type="text" disabled name="txt"
+            [value]="detailsData?.data?.orderRefundRemark === undefined?'无':detailsData?.data?.orderRefundRemark">
         </div>
       </div>
       <div class="weui-cell">
@@ -80,7 +78,7 @@
         </div>
       </div>
       <div class="weui-cell">
-        <div class="weui-cell__bd" style="padding-left: 0">
+        <div class="weui-cell__bd" *ngIf="orderRefundSubmitShow" style="padding-left: 0">
           <div class="weui-uploader">
             <div class="weui-uploader__bd">
               <ul class="weui-uploader__files">
@@ -104,12 +102,23 @@
           <weui-gallery [imgs]="img" [(show)]="imgShow" (delete)="onDel($event)"></weui-gallery>
         </div>
       </div>
-     <!-- <div class="weui-btn-area">
-        <button weui-button (click)="uploader.uploadAll()" [disabled]="uploader.isUploading">上传</button>
-      </div>-->
     </div>
   </div>
-  <div class="order-refund-submit" (click)="ordRefSubClick()">
+  <div class="order-refund-image" *ngIf="!orderRefundSubmitShow">
+    <div class="weui-cells" style="margin-top: 0">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <img class="weui-media-box__thumb"
+               *ngFor="let item of orderRefundImages"
+               [src]="item"
+               (click)="orderRefundGalleryImg=item;orderRefundGallery=true"
+               alt="">
+          <weui-gallery [imgs]="orderRefundGalleryImg" [(show)]="orderRefundGallery" [canDelete]="false"></weui-gallery>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="order-refund-submit" *ngIf="orderRefundSubmitShow"  (click)="ordRefSubClick()" >
     <div class="weui-footer weui-footer_fixed-bottom">
       <button class="weui-btn weui-btn_primary" weui-button>提交申请</button>
     </div>
@@ -119,9 +128,5 @@
   </div>
 </div>
 <ng-template #loading>
-  <div class="order-refund-mask">
-    <div class="loading">
-      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-    </div>
-  </div>
+  <app-loading></app-loading>
 </ng-template>

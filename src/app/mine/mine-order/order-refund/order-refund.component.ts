@@ -35,6 +35,17 @@ export class OrderRefundComponent implements OnInit {
   // toast
   @ViewChild('mineOrderRefundToast') mineOrderRefundToast: ToastComponent;
   public mineOrderRefundMsg: string;
+  // data
+  public orderRefundImages: any = [];
+  public orderRefundStatus: any = null;
+  public orderRefundSubmitShow = true;
+  public orderRefundGallery = false;
+  public orderRefundGalleryImg: any = null;
+  public orderRefundProgress: any = [
+    {title: '填写申请', color: '#7FB56E', shadow: '0 0 0 3px #BFDAB6'},
+    {title: '等待审核', color: '#969696', shadow: '0 0 0 3px #969696'},
+    {title: '退款成功', color: '#969696', shadow: '0 0 0 3px #969696'},
+  ];
   // upload
   @Input() url = 'example';
   public img: any;
@@ -65,6 +76,17 @@ export class OrderRefundComponent implements OnInit {
       this.mineOrdRefundInit(params.id);
       this.orderRefund.orderId = params.id;
       this.orderRefund.refundType = params.type;
+      this.orderRefundStatus = params.status;
+      if (this.orderRefundStatus === 'refundReview') {
+        this.orderRefundSubmitShow = false;
+        this.orderRefundProgress[1].color = '#7FB56E';
+        this.orderRefundProgress[1].shadow = '0 0 0 3px #BFDAB6';
+      }
+      if (this.orderRefundStatus === 'refundded') {
+        this.orderRefundSubmitShow = false;
+        this.orderRefundProgress[2].color = '#7FB56E';
+        this.orderRefundProgress[2].shadow = '0 0 0 3px #BFDAB6';
+      }
     });
   }
   // order data init
@@ -75,14 +97,25 @@ export class OrderRefundComponent implements OnInit {
          if (val.status === 200) {
            this.detailsData = val;
            this.orderRefund.refundamount = val.data.amount;
+           if (val.data.refundImage) {
+             this.orderRefundImages = val.data.refundImage.split(',');
+           }
+           console.log(val.data.orderRefundRemark );
          } else {
-
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: `查询订单详情失败，错误码${val.status}`,
+                url: null,
+                btn: '点击重试'
+              }
+            });
          }
        }
      );
   }
   // img gallery
   public onGallery(item: any) {
+    console.log(item._file);
     this.img = [{file: item._file, item: item}];
     this.imgShow = true;
   }
@@ -106,7 +139,7 @@ export class OrderRefundComponent implements OnInit {
     });
     this.srv.loading();
     if (img_upload.get('file')  === null) {
-       this.mOrderSrv.mineOrdReturn(this.orderRefund).subscribe(
+       this.mOrderSrv.mineOrdReFund(this.orderRefund).subscribe(
       (val) => {
         this.srv.hide();
         console.log(val);
@@ -123,8 +156,15 @@ export class OrderRefundComponent implements OnInit {
     }
     this.mOrderSrv.mineOrdImgUpload(img_upload).pipe(
       mergeMap((val) => {
+        console.log(val);
         if (val.status === 200) {
-          return this.mOrderSrv.mineOrdReturn(this.orderRefund);
+          let img_string = '';
+          val.dataObject.map((prop) => {
+            img_string = img_string + prop + ',';
+          });
+          this.orderRefund.refundImage = img_string.substring(0, img_string.length - 1);
+          console.log(this.orderRefund);
+          return this.mOrderSrv.mineOrdReFund(this.orderRefund);
         }
         this.mineOrderRefundMsg = val.message;
         this.onShow('mineOrderRefund');

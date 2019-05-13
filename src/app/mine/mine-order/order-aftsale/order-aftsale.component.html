@@ -1,4 +1,4 @@
-<div class=" order-aftsale" *ngIf="orderDetailsData | async as detailsData; else loading">
+<div class=" order-aftsale" *ngIf="detailsData; else loading">
   <div class="order-aftsale-header">
     <app-header [option]="headerOption"></app-header>
   </div>
@@ -35,7 +35,7 @@
   </div>
   <div class="order-aftsal-select">
     <div class="weui-cells">
-      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/order/refund', detailsData?.data?.id, 0]">
+      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/order/refund', detailsData?.data?.id, 0, detailsData?.data?.status]">
         <div class="weui-cell__hd">
           <i class="fa fa-amazon" aria-hidden="true"></i>
         </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="weui-cell__ft"></div>
       </div>
-      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/order/return', detailsData?.data?.id, 1]">
+      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/order/return', detailsData?.data?.id, 1, detailsData?.data?.status]">
         <div class="weui-cell__hd">
           <i class="fa fa-amazon" aria-hidden="true"></i>
         </div>
@@ -63,9 +63,5 @@
   </div>
 </div>
 <ng-template #loading>
-  <div class="order-aftsale-mask">
-    <div class="loading">
-      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-    </div>
-  </div>
+  <app-loading></app-loading>
 </ng-template>

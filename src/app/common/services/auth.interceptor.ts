@@ -19,36 +19,8 @@ export class AuthInterceptor implements HttpInterceptor {
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('imageFileUpload') >= 0) {
       this.clonedRequest = req.clone({
-        // url: environment.dev_test_url + req.url,
-        url: 'http://192.168.1.88' + req.url,
-      });
-      return next.handle(this.clonedRequest).pipe(
-        mergeMap((event: any) => {
-          if (event.status === 200) {
-            return of(event);
-          }
-          return EMPTY;
-        }),
-        catchError((err: HttpErrorResponse) => {
-          if (err.status === 0) {
-            this.router.navigate(['/error'], {
-              queryParams: {
-                msg: '连接服务器失败，请检查网络！',
-                url: null,
-                btn: '请重试'
-              }
-            });
-          }
-          return EMPTY;
-        })
-      );
-    } else {
-      this.clonedRequest = req.clone({
-        // url: environment.dev_test_url + req.url,
-        url: 'http://192.168.1.88' + req.url,
-        headers: req.headers
-          .set('Content-type', 'application/json; charset=UTF-8')
-          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1NzczOTM4NX0.vv8JGtdiHvKXer3Cuiv-t6U8s61VbdKa25GjzFHl2iohcUrPikDM-vZ_W0WVbRXQtQdBVEx7FVQ4S4lq9TxbMw')
+        url: environment.dev_test_url + req.url,
+        // url: 'http://192.168.1.88' + req.url,
       });
       return next.handle(this.clonedRequest).pipe(
         mergeMap((event: any) => {
@@ -71,6 +43,33 @@ export class AuthInterceptor implements HttpInterceptor {
         })
       );
     }
+    this.clonedRequest = req.clone({
+      url: environment.dev_test_url + req.url,
+      // url: 'http://192.168.1.88' + req.url,
+      headers: req.headers
+        .set('Content-type', 'application/json; charset=UTF-8')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1NzgyNjAyM30.f7kMMRI_BlgrYDx15DK7u81YcvnYugAb12_OeVTAWnniME8VxFyDC_ccJ28_LXZEzEkLD3-I0B6yoJoWUeCugQ')
+    });
+    return next.handle(this.clonedRequest).pipe(
+      mergeMap((event: any) => {
+        if (event.status === 200) {
+          return of(event);
+        }
+        return EMPTY;
+      }),
+      catchError((err: HttpErrorResponse) => {
+        if (err.status === 0) {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: '连接服务器失败，请检查网络！',
+              url: null,
+              btn: '请重试'
+            }
+          });
+        }
+        return EMPTY;
+      })
+    );
   }
   public prod_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('imageFileUpload') >= 0) {

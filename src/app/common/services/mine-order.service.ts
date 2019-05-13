@@ -26,7 +26,7 @@ export class MineOrderService {
     return this.http.post('/moayoOrder/finishOrder', params);
   }
   // order return
-  public mineOrdReturn(params): Observable<any> {
+  public mineOrdReFund(params): Observable<any> {
     return this.http.post('/moayoOrder/refund', params);
   }
   // order return image upload

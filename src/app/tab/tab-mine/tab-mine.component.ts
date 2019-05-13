@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angu
 import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
 import {MineService} from '../../common/services/mine.service';
 import {forkJoin} from 'rxjs';
+import {GlobalService} from '../../common/services/global.service';
 
 @Component({
   selector: 'app-tab-mine',
@@ -23,7 +24,7 @@ export class TabMineComponent implements OnInit {
   public configDialog: DialogConfig = {};
   public mineUserInfo: any = null;
   constructor(
-    private mineSrv: MineService
+    private mineSrv: MineService,
   ) { }
 
   ngOnInit() {
