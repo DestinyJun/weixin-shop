@@ -100,7 +100,6 @@ export class OrderRefundComponent implements OnInit {
            if (val.data.refundImage) {
              this.orderRefundImages = val.data.refundImage.split(',');
            }
-           console.log(val.data.orderRefundRemark );
          } else {
             this.router.navigate(['/error'], {
               queryParams: {
@@ -163,7 +162,6 @@ export class OrderRefundComponent implements OnInit {
             img_string = img_string + prop + ',';
           });
           this.orderRefund.refundImage = img_string.substring(0, img_string.length - 1);
-          console.log(this.orderRefund);
           return this.mOrderSrv.mineOrdReFund(this.orderRefund);
         }
         this.mineOrderRefundMsg = val.message;
