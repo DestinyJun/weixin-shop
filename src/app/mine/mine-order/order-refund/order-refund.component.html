@@ -66,7 +66,7 @@
           <input
             *ngIf="!orderRefundSubmitShow"
             class="weui-input" type="text" disabled name="txt"
-            [value]="detailsData?.data?.orderRefundRemark === undefined?'无':detailsData?.data?.orderRefundRemark">
+            [value]="detailsData?.data?.refundRemark === undefined?'无':detailsData?.data?.refundRemark">
         </div>
       </div>
       <div class="weui-cell">
@@ -121,6 +121,11 @@
   <div class="order-refund-submit" *ngIf="orderRefundSubmitShow"  (click)="ordRefSubClick()" >
     <div class="weui-footer weui-footer_fixed-bottom">
       <button class="weui-btn weui-btn_primary" weui-button>提交申请</button>
+    </div>
+  </div>
+  <div class="order-refund-submit" *ngIf="!orderRefundSubmitShow"  (click)="ordRefSubClick()" >
+    <div class="weui-footer weui-footer_fixed-bottom">
+      <button class="weui-btn weui-btn_primary" weui-button>撤销申请</button>
     </div>
   </div>
   <div class="order-refund-toast">

@@ -32,7 +32,20 @@
         <div class="weui-panel__bd">
           <div class="weui-cell" *ngFor="let item of detailsData?.data?.moyaoOrderItemModels; let i = index">
             <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item?.goods?.mainImage" alt="">
+             <!-- <img class="weui-media-box__thumb"
+                   style="width: auto;height:10vh;display: block"
+                   [src]="item?.goods?.imgs" alt="">-->
+              <img
+                *ngIf="item?.goods?.imgs.indexOf('http')>=0"
+                class="weui-media-box__thumb"
+                style="width: auto;height:10vh;display: block"
+                [src]="item?.goods?.imgs"
+                 alt="图片无效">
+              <img
+                *ngIf="!(item?.goods?.imgs.indexOf('http')>=0)"
+                 class="weui-media-box__thumb"
+                 style="width: auto;height:10vh;display: block" src="/assets/images/recharge.png"
+                 alt="图片无效">
             </div>
             <div class="weui-cell__bd">
               <p style="font-size: 1.1rem;">{{item?.goods?.title}}</p>
@@ -63,7 +76,7 @@
         <div class="weui-cell__bd">
           <p>订单编号：{{detailsData?.data?.sn}}</p>
           <p>订单时间：{{detailsData?.data?.createdDate}}</p>
-          <p>发货时间：2018-11-23 08:31:14</p>
+          <!--<p>发货时间：2018-11-23 08:31:14</p>-->
         </div>
       </div>
       <div class="weui-cell">

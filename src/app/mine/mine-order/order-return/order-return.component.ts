@@ -1,10 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {InfiniteLoaderConfig, Uploader, UploaderOptions} from 'ngx-weui';
+import {InfiniteLoaderConfig, ToastService, Uploader, UploaderOptions} from 'ngx-weui';
 import {Observable} from 'rxjs';
 import {MineOrderService} from '../../../common/services/mine-order.service';
-import {ActivatedRoute} from '@angular/router';
-
+import {ActivatedRoute, Router} from '@angular/router';
+const img_upload: FormData = new FormData();
+const file_num = [];
 @Component({
   selector: 'app-order-return',
   templateUrl: './order-return.component.html',
@@ -28,77 +29,58 @@ export class OrderReturnComponent implements OnInit {
   };
   // details
   public orderDetailsData: Observable<any>;
+  public orderReturn: any = {};
+  // data
+  public orderReturnStatus: any = null;
+  public orderReturnSubmitShow = true;
+  public orderReturnProgress: any = [
+    {title: '填写申请', color: '#7FB56E', shadow: '0 0 0 3px #BFDAB6'},
+    {title: '等待审核', color: '#969696', shadow: '0 0 0 3px #969696'},
+    {title: '货物寄回', color: '#969696', shadow: '0 0 0 3px #969696'},
+    {title: '商家收货', color: '#969696', shadow: '0 0 0 3px #969696'},
+    {title: '退款成功', color: '#969696', shadow: '0 0 0 3px #969696'},
+  ];
   // upload
   @Input() url = 'example';
-  img: any;
-  imgShow = false;
-  uploader: Uploader = new Uploader(<UploaderOptions>{
-    url: './upload.php',
-    headers: [
-      {name: 'auth', value: 'test'}
-    ],
-    params: {
-      a: 1,
-      b: new Date(),
-      c: 'test',
-      d: 12.123
-    },
-    // 自定义transport
-    // uploadTransport: function(item: FileItem) {
-    //     return Observable.create(observer => {
-    //         setTimeout(() => {
-    //             observer.next(true);
-    //             observer.complete();
-    //         }, 1000 * 3);
-    //     });
-    // },
+  public img: any;
+  public imgShow = false;
+  public uploader: Uploader = new Uploader(<UploaderOptions>{
     onFileQueued: function () {
-      console.log('onFileQueued', arguments);
-      if (arguments) {
-        console.log(this);
-      }
+      file_num.push(arguments[0]._file);
     },
     onFileDequeued: function () {
-      console.log('onFileDequeued', arguments);
+      const file_arguments = arguments;
+      file_num.forEach((value, key) => {
+        if (value.name === file_arguments[0]._file.name) {
+          file_num.splice(key, 1);
+        }
+      });
     },
-    onStart: function () {
-      console.log('onStart', arguments);
-    },
-    onCancel: function () {
-      console.log('onCancel', arguments);
-    },
-    onFinished: function () {
-      console.log('onFinished', arguments);
-    },
-    onUploadStart: function () {
-      console.log('onUploadStart', arguments);
-    },
-    onUploadProgress: function () {
-      console.log('onUploadProgress', arguments);
-    },
-    onUploadSuccess: function () {
-      console.log('onUploadSuccess', arguments);
-    },
-    onUploadError: function () {
-      console.log('onUploadError', arguments);
-    },
-    onUploadComplete: function () {
-      console.log('onUploadComplete', arguments);
-    },
-    onUploadCancel: function () {
-      console.log('onUploadCancel', arguments);
-    },
-    onError: function () {
-      console.log('onError', arguments);
-    }
   });
   constructor(
     private mOrderSrv: MineOrderService,
-    private routerInfo: ActivatedRoute
+    private routerInfo: ActivatedRoute,
+    private router: Router,
+    private srv: ToastService,
   ) { }
 
   ngOnInit() {
-    this.routerInfo.params.subscribe(params => this.mineOrdReturnInit(params.id));
+    this.routerInfo.params.subscribe(params => {
+      this.mineOrdReturnInit(params.id);
+      this.orderReturn.orderId = params.id;
+      this.orderReturn.refundType = params.type;
+      this.orderReturnStatus = params.status;
+      if (this.orderReturnStatus === 'refundReview') {
+        this.orderReturnSubmitShow = false;
+        this.orderReturnProgress[1].color = '#7FB56E';
+        this.orderReturnProgress[1].shadow = '0 0 0 3px #BFDAB6';
+      }
+      if (this.orderReturnStatus === 'refundded') {
+        this.orderReturnSubmitShow = false;
+        this.orderReturnProgress[2].color = '#7FB56E';
+        this.orderReturnProgress[2].shadow = '0 0 0 3px #BFDAB6';
+      }
+    });
   }
   public mineOrdReturnInit(id): void {
     this.orderDetailsData = this.mOrderSrv.mineOrdGetDetail({orderId: id});

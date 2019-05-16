@@ -49,7 +49,7 @@ export class AuthInterceptor implements HttpInterceptor {
       // url: 'http://192.168.1.88' + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1NzgyNjAyM30.f7kMMRI_BlgrYDx15DK7u81YcvnYugAb12_OeVTAWnniME8VxFyDC_ccJ28_LXZEzEkLD3-I0B6yoJoWUeCugQ')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1ODA1MTk2Nn0.cV4tfOXEEeTJeXNLpPXtLdhzr7UdFr7cjLdsJiU7haw6fvlIGz0DRUNK_9jRANVqkxvz4wqqxrOiciXUTHlIDg')
     });
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {

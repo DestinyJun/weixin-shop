@@ -215,7 +215,7 @@ export class MineOrderComponent implements OnInit {
           if (val.status === 200) {
             this.mineOrderMsg = val.message;
             this.onShow('mineOrder');
-            this.mOrderInit({currentPage: '1'});
+            this.mOrderInit({currentPage: '1', status: this.orderSelectStatus});
             return;
           }
           this.mineOrderMsg = val.message;
