@@ -39,6 +39,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     endDate: '结束时间',
   };
   public filterMember: any[] = [];
+  public filterEarning: any = null;
   // earning list
   public earningList: any = [];
   public earningStatusList: any = {
@@ -84,15 +85,20 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     this.srv.destroyAll();
   }
   public detailDataInit(param, type: 'init' | 'search') {
+    console.log(param);
     this.mineTeamSrv.mineTeamGetEarn(param).subscribe(
       (value) => {
         console.log(value);
         if (value.status === 200) {
           if (type === 'init') {
             this.earningList = this.detailSerialization(value.datas);
+            console.log(this.earningList);
           } else {
-            this.filtersSearchList = this.detailSerialization(value.datas);
-            console.log(this.filtersSearchList);
+            this.filterEarning = 0;
+            this.filtersSearchList = value.datas;
+            value.datas.map((prop) => {
+              this.filterEarning = this.filterEarning + prop.earning;
+            });
           }
         }
         if (value.status !== 200) {
@@ -147,34 +153,15 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
       }
     }
   }
-  // team detail Serialization
-  public detailSerialization(params): any {
-    const res = [];
-    const a = [];
-    const b = [];
-    params.map((item) => {
-      b.push(item.createdDate.slice(0, 10));
-    });
-    for (const s in b) {
-      if (b) {
-        if (a.indexOf(b[s]) < 0) {
-          a.push(b[s]);
-        }
-      }
-    }
-    a.map((val) => {
-      const c = [];
-      params.map((pItem) => {
-        if (pItem.createdDate.slice(0, 10) === val) {
-          c.push(pItem);
-        }
-      });
-      res.push({times: val, value: c });
-    });
-    return res;
-  }
   // filter delete
   public detailDelFilterClick(item: string) {
+    if (item.split(',').length === 2) {
+      const items = item.split(',');
+      delete this.filters[items[0]];
+      delete this.filters[items[1]];
+      this.detailDataInit(this.filters, 'search');
+      return;
+    }
     delete this.filters[item];
     this.detailDataInit(this.filters, 'search');
   }
@@ -201,5 +188,31 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     if (type === 'sure') {
       this.detailDataInit(this.filters, 'search');
     }
+  }
+  // team detail Serialization
+  public detailSerialization(params): any {
+    const res = [];
+    const a = [];
+    const b = [];
+    params.map((item) => {
+      b.push(item.createdDate.slice(0, 10));
+    });
+    for (const s in b) {
+      if (b) {
+        if (a.indexOf(b[s]) < 0) {
+          a.push(b[s]);
+        }
+      }
+    }
+    a.map((val) => {
+      const c = [];
+      params.map((pItem) => {
+        if (pItem.createdDate.slice(0, 10) === val) {
+          c.push(pItem);
+        }
+      });
+      res.push({times: val, value: c });
+    });
+    return res;
   }
 }

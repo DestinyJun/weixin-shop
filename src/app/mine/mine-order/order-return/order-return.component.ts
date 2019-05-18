@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {InfiniteLoaderConfig, ToastService, Uploader, UploaderOptions} from 'ngx-weui';
-import {Observable} from 'rxjs';
+import {InfiniteLoaderConfig, ToastComponent, ToastService, Uploader, UploaderOptions} from 'ngx-weui';
+import {EMPTY, timer} from 'rxjs';
 import {MineOrderService} from '../../../common/services/mine-order.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {mergeMap} from 'rxjs/operators';
 const img_upload: FormData = new FormData();
 const file_num = [];
 @Component({
@@ -28,17 +29,22 @@ export class OrderReturnComponent implements OnInit {
     height: 'auto'
   };
   // details
-  public orderDetailsData: Observable<any>;
+  public detailsData: any = null;
   public orderReturn: any = {};
+  public orderReturnRemark: any = null;
+  // toast
+  @ViewChild('mineOrderReturnToast') mineOrderReturnToast: ToastComponent;
+  public mineOrderReturnMsg: string;
   // data
+  public orderReturnImages: any = [];
   public orderReturnStatus: any = null;
-  public orderReturnSubmitShow = true;
+  public orderReturnGallery = false;
+  public orderReturnGalleryImg: any = null;
   public orderReturnProgress: any = [
-    {title: '填写申请', color: '#7FB56E', shadow: '0 0 0 3px #BFDAB6'},
-    {title: '等待审核', color: '#969696', shadow: '0 0 0 3px #969696'},
-    {title: '货物寄回', color: '#969696', shadow: '0 0 0 3px #969696'},
-    {title: '商家收货', color: '#969696', shadow: '0 0 0 3px #969696'},
-    {title: '退款成功', color: '#969696', shadow: '0 0 0 3px #969696'},
+    {title: '填写申请', subtitle: false, color: '#7FB56E', shadow: '0 0 0 3px #BFDAB6', },
+    {title: '货物寄回', subtitle: false, color: '#969696', shadow: '0 0 0 3px #969696', },
+    {title: '商家收货', subtitle: false, color: '#969696', shadow: '0 0 0 3px #969696', },
+    {title: '退款成功', subtitle: false, color: '#969696', shadow: '0 0 0 3px #969696', },
   ];
   // upload
   @Input() url = 'example';
@@ -71,20 +77,34 @@ export class OrderReturnComponent implements OnInit {
       this.orderReturn.refundType = params.type;
       this.orderReturnStatus = params.status;
       if (this.orderReturnStatus === 'refundReview') {
-        this.orderReturnSubmitShow = false;
         this.orderReturnProgress[1].color = '#7FB56E';
         this.orderReturnProgress[1].shadow = '0 0 0 3px #BFDAB6';
       }
       if (this.orderReturnStatus === 'refundded') {
-        this.orderReturnSubmitShow = false;
         this.orderReturnProgress[2].color = '#7FB56E';
         this.orderReturnProgress[2].shadow = '0 0 0 3px #BFDAB6';
       }
     });
   }
   public mineOrdReturnInit(id): void {
-    this.orderDetailsData = this.mOrderSrv.mineOrdGetDetail({orderId: id});
+    this.mOrderSrv.mineOrdGetDetail({orderId: id}).subscribe(
+      (val) => {
+        console.log(val);
+        if (val.status === 200) {
+          this.detailsData = val;
+          return;
+        }
+        this.router.navigate(['/error'], {
+          queryParams: {
+            msg: `查询订单详情失败，错误码${val.status}`,
+            url: null,
+            btn: '点击重试'
+          }
+        });
+      }
+    );
   }
+  // img gallery
   public onGallery(item: any) {
     this.img = [{file: item._file, item: item}];
     this.imgShow = true;
@@ -97,7 +117,82 @@ export class OrderReturnComponent implements OnInit {
     }
     this.uploader.removeFromQueue(item.item);
   }
-  public ordRefSubClick() {
-    this.uploader.uploadAll();
+  // ngmodule
+  public orderRefundRemarkChange(event): void {
+    this.orderReturn.refundRemark = event;
+  }
+  // upload click
+  public ordRefSubClick(type?: string) {
+    if (this.orderReturnStatus === 'uploadVoucher') {
+      this.orderReturn.refundType = 2;
+    }
+    if (type === 'cancel') {
+      this.mOrderSrv.mineOrdCancelReFund({orderId: this.orderReturn.orderId }).subscribe((val) => {
+        this.srv.hide();
+        console.log(val);
+        if (val.status === 200) {
+          this.mineOrderReturnMsg = val.message;
+          this.onShow('mineOrderRefund');
+          timer(2000).subscribe(() => window.history.back());
+        } else {
+          this.mineOrderReturnMsg = val.message;
+          this.onShow('mineOrderRefund');
+        }
+      });
+      return;
+    }
+    img_upload.delete('file');
+    file_num.forEach((value) => {
+      img_upload.append('file', value);
+    });
+    this.srv.loading();
+    if (img_upload.get('file')  === null) {
+      this.mOrderSrv.mineOrdReFund(this.orderReturn).subscribe(
+        (val) => {
+          this.srv.hide();
+          console.log(val);
+          if (val.status === 200) {
+            this.mineOrderReturnMsg = val.message;
+            this.onShow('mineOrderReturn');
+            timer(2000).subscribe(() => window.history.back());
+          } else {
+            this.mineOrderReturnMsg = val.message;
+            this.onShow('mineOrderReturn');
+          }
+        });
+      return;
+    }
+    this.mOrderSrv.mineOrdImgUpload(img_upload).pipe(
+      mergeMap((val) => {
+        console.log(val);
+        if (val.status === 200) {
+          let img_string = '';
+          val.dataObject.map((prop) => {
+            img_string = img_string + prop + ',';
+          });
+          this.orderReturn.refundImage = img_string.substring(0, img_string.length - 1);
+          console.log(this.orderReturn);
+          return this.mOrderSrv.mineOrdReFund(this.orderReturn);
+        }
+        this.mineOrderReturnMsg = val.message;
+        this.onShow('mineOrderReturn');
+        return EMPTY;
+      })
+    ).subscribe((val) => {
+      console.log(val);
+      this.srv.hide();
+      if (val.status === 200) {
+        this.mineOrderReturnMsg = val.message;
+        this.onShow('mineOrderReturn');
+        timer(2000).subscribe(() => window.history.back());
+      } else {
+        this.mineOrderReturnMsg = val.message;
+        this.onShow('mineOrderReturn');
+      }
+    });
+  }
+  // toast
+  public onShow(type: string) {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
   }
 }

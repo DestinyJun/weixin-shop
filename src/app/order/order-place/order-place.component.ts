@@ -132,6 +132,8 @@ export class OrderPlaceComponent implements OnInit {
       (val) => {
         console.log(val);
         if (val.status === 200) {
+        this.orderPlaceAddressInfo = null;
+        this.orderPlaceInvoiceInfo = null;
           this.goodsInfo.map((item, index) => {
             this.globalService.wxSessionSetObject(`goods${index}`, 0);
           });

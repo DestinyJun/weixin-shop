@@ -42,8 +42,8 @@ export class OrderDetailsComponent implements OnInit {
   public orderDetailStates: any = {
     pendingPayment: {name: '待付款', bgColor: ['#B66F6E', '#F49C9A'], services: '',
       operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
-    pendingShipment: {name: '待发货', bgColor: ['#B66F6E', '#F49C9A'], services: '', operating: []},
-    shippe: {name: '待收货', bgColor: ['#80B66F', '#B0F49A'], services: '申请退款',
+    pendingShipment: {name: '待发货', bgColor: ['#B66F6E', '#F49C9A'], services: '申请退款', operating: []},
+    shipped: {name: '待收货', bgColor: ['#80B66F', '#B0F49A'], services: '申请退款',
       operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: ''}]},
     received: {name: '已收货', bgColor: [], operating: ['#80B66F', '#B0F49A']},
     completed: {name: '已完成', bgColor: ['#80B66F', '#B0F49A'], services: '申请退款',

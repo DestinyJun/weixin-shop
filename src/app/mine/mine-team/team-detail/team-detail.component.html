@@ -8,7 +8,7 @@
         <div class="weui-cells__title">
           <p style="font-size: 1.1rem">{{item?.times === (tDetailNewDate | date: 'yyyy-MM-dd')? '今日业绩': item?.times}}</p>
         </div>
-        <div class="weui-cell" *ngFor="let prop of item.value" [routerLink]="['/mine/team/personal', {id: prop?.id}]">
+        <div class="weui-cell" *ngFor="let prop of item.value" [routerLink]="['/mine/team/personal', {id: prop?.user.id}]">
           <div class="weui-cell__bd">
             <p>{{prop?.user?.nikeName}}</p>
             <p style="font-size: 0.9rem;color: #888888;">
@@ -32,29 +32,29 @@
       <span *ngIf="filters?.earningStatus">{{earningStatusList[filters?.earningStatus][0]}}<i class="fa fa-times" (click)="detailDelFilterClick('earningStatus')"></i></span>
       <span *ngIf="filters?.startDate">
         {{filters?.startDate}}-{{filters?.endDate?filters?.endDate: '至今'}}
-        <i class="fa fa-times" (click)="detailDelFilterClick('startDate')"></i>
+        <i class="fa fa-times" (click)="detailDelFilterClick('startDate,endDate')"></i>
       </span>
     </div>
     <ng-container *ngIf="filtersSearchList.length !== 0">
       <div class="weui-cells">
         <div class="weui-cell" style="background-color: #F2F1F0;">
           <div class="weui-cell__bd" style="color: #999999;">
-            总计收益：￥23653.00
+            总计收益：￥{{filterEarning}}
           </div>
           <div class="weui-cell__ft">
-            168单
+            {{filtersSearchList.length}}单
           </div>
         </div>
-        <div class="weui-cell" [routerLink]="['/mine/team/personal', {id: 2}]">
+        <div class="weui-cell" *ngFor="let item of filtersSearchList" [routerLink]="['/mine/team/personal', {id: item.user.id}]">
           <div class="weui-cell__bd">
-            <p>梳理名</p>
-            <p style="font-size: 0.8rem;color: #888888;">
-              <span>2019-03-01 19:58:43</span>
+            <p>{{item?.user?.nikeName}}</p>
+            <p style="font-size: 0.9rem;color: #888888;">
+              <span>{{item?.createdDate}}</span>
             </p>
           </div>
           <div class="weui-cell__ft">
-            <p style="color: #F9C847;">+650.00</p>
-            <p style="color: #F9C847;font-size: 0.8rem">入账中</p>
+            <p [ngStyle]="{'color': earningStatusList[item?.earningStatus][1]}">+{{item?.earning}}</p>
+            <p [ngStyle]="{'color': earningStatusList[item?.earningStatus][1],'font-size': '0.9rem'}">{{earningStatusList[item?.earningStatus][0]}}</p>
           </div>
         </div>
       </div>

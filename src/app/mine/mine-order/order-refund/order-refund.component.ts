@@ -38,7 +38,6 @@ export class OrderRefundComponent implements OnInit {
   // data
   public orderRefundImages: any = [];
   public orderRefundStatus: any = null;
-  public orderRefundSubmitShow = true;
   public orderRefundGallery = false;
   public orderRefundGalleryImg: any = null;
   public orderRefundProgress: any = [
@@ -78,12 +77,10 @@ export class OrderRefundComponent implements OnInit {
       this.orderRefund.refundType = params.type;
       this.orderRefundStatus = params.status;
       if (this.orderRefundStatus === 'refundReview') {
-        this.orderRefundSubmitShow = false;
         this.orderRefundProgress[1].color = '#7FB56E';
         this.orderRefundProgress[1].shadow = '0 0 0 3px #BFDAB6';
       }
       if (this.orderRefundStatus === 'refundded') {
-        this.orderRefundSubmitShow = false;
         this.orderRefundProgress[2].color = '#7FB56E';
         this.orderRefundProgress[2].shadow = '0 0 0 3px #BFDAB6';
       }
@@ -114,7 +111,6 @@ export class OrderRefundComponent implements OnInit {
   }
   // img gallery
   public onGallery(item: any) {
-    console.log(item._file);
     this.img = [{file: item._file, item: item}];
     this.imgShow = true;
   }
@@ -130,8 +126,24 @@ export class OrderRefundComponent implements OnInit {
   public orderRefundRemarkChange(event): void {
     this.orderRefund.refundRemark = event;
   }
-  // upload click
-  public ordRefSubClick() {
+  // submit click
+  public ordRefSubClick(type?: string) {
+    if (type === 'cancel') {
+      console.log({orderId: this.orderRefund.orderId});
+      this.mOrderSrv.mineOrdCancelReFund({orderId: this.orderRefund.orderId}).subscribe((val) => {
+        this.srv.hide();
+        console.log(val);
+        if (val.status === 200) {
+          this.mineOrderRefundMsg = val.message;
+          this.onShow('mineOrderRefund');
+          timer(2000).subscribe(() => window.history.back());
+        } else {
+          this.mineOrderRefundMsg = val.message;
+          this.onShow('mineOrderRefund');
+        }
+      });
+      return;
+    }
     img_upload.delete('file');
     file_num.forEach((value) => {
       img_upload.append('file', value);

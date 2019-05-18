@@ -200,6 +200,7 @@ export class TabClientComponent implements OnInit {
       });
       this.clientList.push({name: val, value: c });
     });
+    console.log(this.clientList);
   }
   // go to
   public goTo(location: string): void {

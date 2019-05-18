@@ -22,11 +22,11 @@ export class ErrorRemindComponent implements OnInit {
     );
   }
   public errorResetClick (): void {
-    if (this.errorMsg.url.indexOf('open.weixin')) {
-      window.location.href = this.errorMsg.url;
-      return;
-    }
     if (this.errorMsg.url) {
+      if (this.errorMsg.url.indexOf('open.weixin')) {
+        window.location.href = this.errorMsg.url;
+        return;
+      }
       this.router.navigate([this.errorMsg.url]);
       return;
     }

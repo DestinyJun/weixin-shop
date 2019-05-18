@@ -1,36 +1,28 @@
-<div class="order-return" *ngIf="orderDetailsData | async as detailsData; else loading">
+<div class="order-return" *ngIf="detailsData; else loading">
   <div class="order-return-header">
     <app-header [option]="headerOption"></app-header>
   </div>
   <div class="order-return-progress">
     <div class="weui-cells">
       <div class="weui-cell">
-        <div class="circle-box">
-          <p class="circle"></p>
-          <p>填写申请</p>
-          <div class="line">
-            <p class="small-circle"></p>
-            <p class="small-text">等待审核</p>
+        <div class="circle-box" *ngFor="let item of orderReturnProgress;let i = index">
+          <p class="circle" [ngStyle]="
+          {'background-color': item.color,
+            'box-shadow': item.shadow
+          }"></p>
+          <p [ngStyle]="{'color': item.color}">{{item.title}}</p>
+          <div
+            class="line"
+            *ngIf="!(i === 3)"
+            [ngStyle]="{'background-color':orderReturnProgress[i+1].color}">
+            <p *ngIf="item.subtitle" class="small-circle"></p>
+            <p *ngIf="item.subtitle" class="small-text">等待审核</p>
           </div>
-        </div>
-        <div class="circle-box">
-          <p class="circle"></p>
-          <p>货物寄回</p>
-          <div class="line"></div>
-        </div>
-        <div class="circle-box">
-          <p class="circle"></p>
-          <p>商家收货</p>
-          <div class="line"></div>
-        </div>
-        <div class="circle-box">
-          <p class="circle"></p>
-          <p>退款成功</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="order-return-ems">
+  <div class="order-return-ems" *ngIf="orderReturnStatus === 'uploadVoucher'">
     <div class="weui-cells">
       <div class="weui-cell">
         <div class="weui-cell__hd">
@@ -38,7 +30,9 @@
           <span style="vertical-align: middle">快递公司：</span>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" type="text" placeholder="请填写快递公司名称" name="txt">
+          <input class="weui-input" type="text"
+             placeholder="请填写快递公司名称" name="txt"
+             [(ngModel)]="orderReturn.expressCompany">
         </div>
       </div>
       <div class="weui-cell">
@@ -47,7 +41,9 @@
           <span style="vertical-align: middle">运单号码：</span>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" type="text" placeholder="请填写运单号码" name="txt">
+          <input class="weui-input" type="text"
+             placeholder="请填写运单号码" name="txt"
+                 [(ngModel)]="orderReturn.expressNum">
         </div>
       </div>
       <div class="weui-cell">
@@ -75,9 +71,6 @@
           <weui-gallery [imgs]="img" [(show)]="imgShow" (delete)="onDel($event, '')"></weui-gallery>
         </div>
       </div>
-      <!-- <div class="weui-btn-area">
-         <button weui-button (click)="uploader.uploadAll()" [disabled]="uploader.isUploading">上传</button>
-       </div>-->
     </div>
   </div>
   <div class="order-return-product">
@@ -126,7 +119,20 @@
           <span style="vertical-align: middle">退款说明：</span>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" type="text" placeholder="请填写退款原因" name="txt">
+          <input
+            *ngIf="orderReturnStatus === 'pendingShipment' || orderReturnStatus === 'shipped' || orderReturnStatus === 'received' || orderReturnStatus === 'completed'"
+            class="weui-input" type="text" placeholder="请填写退款原因" name="txt"
+            [(ngModel)]="orderReturnRemark"
+            (ngModelChange)="orderRefundRemarkChange($event)">
+          <input
+            *ngIf="
+            orderReturnStatus === 'goodsReturnReview' ||
+            orderReturnStatus === 'uploadVoucher' ||
+             orderReturnStatus === 'receiveGoodsReturn' ||
+             orderReturnStatus === 'goodsReturning' ||
+              orderReturnStatus === 'goodsReturned'"
+            class="weui-input" type="text" disabled name="txt"
+            [value]="detailsData?.data?.refundRemark === undefined?'无':detailsData?.data?.refundRemark">
         </div>
       </div>
       <div class="weui-cell">
@@ -138,7 +144,9 @@
         </div>
       </div>
       <div class="weui-cell">
-        <div class="weui-cell__bd" style="padding-left: 0">
+        <div class="weui-cell__bd"
+             *ngIf="orderReturnStatus === 'pendingShipment' || orderReturnStatus === 'shipped' || orderReturnStatus === 'received' || orderReturnStatus === 'completed'"
+             style="padding-left: 0">
           <div class="weui-uploader">
             <div class="weui-uploader__bd">
               <ul class="weui-uploader__files">
@@ -162,21 +170,44 @@
           <weui-gallery [imgs]="img" [(show)]="imgShow" (delete)="onDel($event)"></weui-gallery>
         </div>
       </div>
-      <!-- <div class="weui-btn-area">
-         <button weui-button (click)="uploader.uploadAll()" [disabled]="uploader.isUploading">上传</button>
-       </div>-->
+    </div>
+  </div>
+  <div class="order-return-image"
+       *ngIf="
+            orderReturnStatus === 'goodsReturnReview' ||
+            orderReturnStatus === 'uploadVoucher' ||
+             orderReturnStatus === 'receiveGoodsReturn' ||
+             orderReturnStatus === 'goodsReturning' ||
+              orderReturnStatus === 'goodsReturned'">
+    <div class="weui-cells" style="margin-top: 0">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <img class="weui-media-box__thumb"
+               *ngFor="let item of orderReturnImages"
+               [src]="item"
+               (click)="orderReturnGalleryImg=item;orderReturnGallery=true"
+               alt="">
+          <weui-gallery [imgs]="orderRefundGalleryImg" [(show)]="orderReturnGallery" [canDelete]="false"></weui-gallery>
+        </div>
+      </div>
     </div>
   </div>
   <div class="order-return-submit" (click)="ordRefSubClick()">
     <div class="weui-footer weui-footer_fixed-bottom">
-      <button class="weui-btn weui-btn_primary" weui-button>提交申请</button>
+      <button
+        *ngIf="orderReturnStatus === 'pendingShipment' || orderReturnStatus === 'shipped' || orderReturnStatus === 'received' || orderReturnStatus === 'completed'"
+        class="weui-btn weui-btn_primary"
+        weui-button>提交申请</button>
+      <button class="weui-btn weui-btn_primary"
+              *ngIf="orderReturnStatus === 'goodsReturnReview'"
+              style="background-color: #FF6464"
+              weui-button>撤销申请</button>
     </div>
+  </div>
+  <div class="order-return-toast">
+    <weui-toast #mineOrderReturnToast [type]="'success'" [text]="mineOrderReturnMsg" [icon]="''" [time]="2000"></weui-toast>
   </div>
 </div>
 <ng-template #loading>
-  <div class="order-return-mask">
-    <div class="loading">
-      <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-    </div>
-  </div>
+  <app-loading></app-loading>
 </ng-template>

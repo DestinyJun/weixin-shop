@@ -75,6 +75,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
     const endDate = new Date(); // 结束时间
     const totalDate = 900000; // 结束时间
     const t = totalDate - (endDate.getTime() - startDate.getTime()); // 时间差
+    // window.alert(`${startDate},${totalDate},${t}`);
     let d = 0,
       h = 0,
       m = 0,

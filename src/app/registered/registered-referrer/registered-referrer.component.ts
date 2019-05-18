@@ -31,6 +31,8 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   @ViewChild('iosDialog') iosDialog: DialogComponent;
   // workId
   @ViewChild('workId') workId: ElementRef;
+  // workId
+  @ViewChild('referrerBtn') referrerBtn: ElementRef;
   public configDialog: DialogConfig = {};
   // data
   public referrerNumber: any = {
@@ -96,6 +98,8 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     qrcode.callback = function (imgMsg) {
       window.alert(imgMsg);
       that.workId.nativeElement.value = imgMsg;
+      that.referrerBtn.nativeElement.disabled = false;
+      that.referrerBtn.nativeElement.style.backgroundColor = '#1AAD19';
     };
   }
   // verify wxSDK

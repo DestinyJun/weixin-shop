@@ -45,19 +45,23 @@ export class MineOrderComponent implements OnInit {
     completed: {name: '已完成', color: '#7FB56E', operating: [{title: '再下一单', routes: '/order'}]},
     canceled: {name: '已取消', color: '#A0A0A0', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
 
-    goodsReturnReview: {name: '退货退款审核', color: 'red',
-      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
-    goodsReturning: {name: '退货中', color: 'red',
-      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
-    goodsReturned: {name: '已退货', color: 'red',
-      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
-
     refundReview: {name: '退款审核', color: 'red',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
     refundding: {name: '退款中', color: 'red',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
     refundded: {name: '已退款', color: 'red',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
+
+    goodsReturnReview: {name: '退货退款审核', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
+    uploadVoucher: {name: '上传凭证', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
+    receiveGoodsReturn: {name: '卖家收到退货', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
+    goodsReturning: {name: '退货中', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
+    goodsReturned: {name: '已退货', color: 'red',
+      operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
 
     pendingReview: {name: '待审核', color: 'red', operating: []},
   };
