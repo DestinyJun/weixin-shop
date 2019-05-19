@@ -3,6 +3,7 @@ import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
 import {MineService} from '../../common/services/mine.service';
 import {forkJoin} from 'rxjs';
 import {GlobalService} from '../../common/services/global.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-tab-mine',
@@ -25,6 +26,7 @@ export class TabMineComponent implements OnInit {
   public mineUserInfo: any = null;
   constructor(
     private mineSrv: MineService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -42,6 +44,13 @@ export class TabMineComponent implements OnInit {
             });
           });
           this.mineUserInfo = val[1].data;
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: `获取数据失败，请检查网络后重试！`,
+              url: null,
+              btn: '请重试',
+            }});
         }
       }
     );

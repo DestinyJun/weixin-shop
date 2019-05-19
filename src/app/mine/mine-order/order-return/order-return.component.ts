@@ -92,6 +92,7 @@ export class OrderReturnComponent implements OnInit {
         console.log(val);
         if (val.status === 200) {
           this.detailsData = val;
+          this.orderReturn.refundamount  = val.data.amount;
           return;
         }
         this.router.navigate(['/error'], {

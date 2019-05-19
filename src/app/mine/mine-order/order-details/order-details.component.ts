@@ -33,11 +33,6 @@ export class OrderDetailsComponent implements OnInit {
   public mineOrderMsg: string;
   // details list
   public detailsData: Observable<any>;
-  // order list
-  public goodsInfo = [
-    {imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（一锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 100.00, amount: 0},
-    {imgURL: 'assets/images/weui-img.png', goodsName: '八宝五胆药墨（二锭）', goodsDesc: '八宝五胆药墨简介', goodsPrice: 200.00, amount: 0},
-  ];
   // order status
   public orderDetailStates: any = {
     pendingPayment: {name: '待付款', bgColor: ['#B66F6E', '#F49C9A'], services: '',

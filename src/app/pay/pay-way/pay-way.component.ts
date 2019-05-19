@@ -66,6 +66,13 @@ export class PayWayComponent implements OnInit, OnDestroy {
              this.timer = this.timerInit(val.data.createdDate);
            }, 1000);
          }
+       } else {
+         this.router.navigate(['/error'], {
+           queryParams: {
+             msg: `获取数据失败，请检查网络后重试！`,
+             url: null,
+             btn: '请重试',
+           }});
        }
     });
   }
@@ -113,7 +120,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.radioRes.radio === 'wallet') {
-      console.log('wallet');
       this.paySrv.payPwdVerify({payPwd: event.password})
         .pipe(mergeMap((key) => {
           if (key.status === 200) {
@@ -129,14 +135,12 @@ export class PayWayComponent implements OnInit, OnDestroy {
             this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
             return;
           }
-          if (val.status === 40009) {
-            this.router.navigate(['/error'], {
-              queryParams: {
-                msg: `余额不足，请充值后重新支付`,
-                url: '/mine/wallet/recharge',
-                btn: '点击充值'
-              }});
-          }
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: `${val.message},错误码：${val.status}`,
+              url: '/mine/wallet/recharge',
+              btn: '点击充值'
+            }});
         });
       return;
     }
@@ -155,12 +159,17 @@ export class PayWayComponent implements OnInit, OnDestroy {
           }
         }))
         .subscribe((val) => {
-          // window.alert(JSON.stringify(val));
           console.log(val);
           if (val.status === 200) {
             this.onBridgeReady(val.dataObject);
-            // this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
+            return;
           }
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: `${val.message},错误码：${val.status}`,
+              url: null,
+              btn: '请重试'
+            }});
         });
       return;
     }
@@ -186,15 +195,12 @@ export class PayWayComponent implements OnInit, OnDestroy {
   }
   // weixin pay
   public onBridgeReady(obj) {
+    const that = this;
     WeixinJSBridge.invoke(
       'getBrandWCPayRequest', obj,
       function (res) {
-        window.alert(JSON.stringify(res));
-        console.log(res);
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
-          // 使用以上方式判断前端返回,微信团队郑重提示：
-          // res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-          // console.log(res);
+          that.router.navigate(['/pay/success'], {queryParams: {orderId: that.payDetailsData.id}});
         }
       });
   }

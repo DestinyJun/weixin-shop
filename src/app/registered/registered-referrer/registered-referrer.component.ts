@@ -85,9 +85,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       content: msg
     });
     setTimeout(() => {
-      (<DialogComponent>this[`${type}Dialog`]).show().subscribe((res: any) => {
-        // console.log('type', res);
-      });
+      (<DialogComponent>this[`${type}Dialog`]).show().subscribe((res: any) => {});
     }, 10);
     return false;
   }
@@ -179,7 +177,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       this.referrerNumber.workId = id;
     }
     if (!isNumber(this.referrerNumber.workId)) {
-      window.alert('工号只能为数字');
+      this.dialogShow('ios', '工号只能为数字');
       return;
     }
     this.loading_show = true;
@@ -192,7 +190,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
           return;
         }
         this.referrerNumber.workId = '';
-        window.alert(val.message);
+        this.dialogShow('ios', val.message);
       }
     );
   }

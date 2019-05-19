@@ -143,6 +143,22 @@
           <p style="color: #FF6464;">{{detailsData?.data?.amount}}元</p>
         </div>
       </div>
+      <div class="weui-cell" *ngIf="detailsData?.data?.expressCompany">
+        <div class="weui-cell__hd">
+          <span style="vertical-align: middle">快递公司：</span>
+        </div>
+        <div class="weui-cell__bd">
+          <p style="color: #FF6464;">{{detailsData?.data?.expressCompany}}</p>
+        </div>
+      </div>
+      <div class="weui-cell" *ngIf="detailsData?.data?.expressNum">
+        <div class="weui-cell__hd">
+          <span style="vertical-align: middle">快递单号：</span>
+        </div>
+        <div class="weui-cell__bd">
+          <p style="color: #FF6464;">{{detailsData?.data?.expressNum }}</p>
+        </div>
+      </div>
       <div class="weui-cell">
         <div class="weui-cell__bd"
              *ngIf="orderReturnStatus === 'pendingShipment' || orderReturnStatus === 'shipped' || orderReturnStatus === 'received' || orderReturnStatus === 'completed'"
@@ -187,7 +203,7 @@
                [src]="item"
                (click)="orderReturnGalleryImg=item;orderReturnGallery=true"
                alt="">
-          <weui-gallery [imgs]="orderRefundGalleryImg" [(show)]="orderReturnGallery" [canDelete]="false"></weui-gallery>
+          <weui-gallery [imgs]="orderReturnGalleryImg" [(show)]="orderReturnGallery" [canDelete]="false"></weui-gallery>
         </div>
       </div>
     </div>

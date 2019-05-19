@@ -24,4 +24,8 @@ export class MineTeamService {
   public mineTeamGetMemberEarn(params): Observable<any> {
     return this.http.post('/team/teamEarningsItem', params);
   }
+  // mine team order detail
+  public mineTeamGetDetail(params): Observable<any> {
+    return this.http.post(`/moayoOrder/orderItem`, params);
+  }
 }

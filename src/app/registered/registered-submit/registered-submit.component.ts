@@ -126,7 +126,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     console.log(this.regSubmit);
     this.regSrv.regRegister(this.regSubmit).pipe(
       mergeMap((res) => {
-        console.log(res);
         if (res.status === 200) {
           this.workId = res.data.workId;
           return this.regSrv.regLanding({wxid: res.data.wxid});
@@ -141,7 +140,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
       })
     ).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           this.globalSrv.wxSessionSetObject('token', val.token);
           this.router.navigate(['/registered/success'], {
@@ -149,6 +147,13 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
               workId: `${this.workId}`,
             }
           });
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: 'token认证失败，请重新登陆！',
+              url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
+              btn: '点击登陆'
+            }});
         }
       }
     );

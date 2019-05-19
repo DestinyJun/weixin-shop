@@ -5,7 +5,7 @@
       <div class="weui-cell weui-cell_access" (click)="actionSheetShow('ios', photo)">
         <div class="weui-cell__bd">头像</div>
         <div class="weui-cell__ft">
-          <img class="weui-media-box__thumb" style="width: auto;height:50px;display: block;border-radius: 50%" [src]="tabMineUserInfo?.headImage" alt="">
+          <img *ngIf="tabMineUserInfo?.headImage" class="weui-media-box__thumb" style="width: auto;height:50px;display: block;border-radius: 50%" [src]="tabMineUserInfo?.headImage" alt="">
         </div>
       </div>
       <div class="weui-cell weui-cell_access" [routerLink]="['/mine/proname']">
@@ -42,11 +42,6 @@
           <span style="vertical-align:middle;">
             {{tabMineUserInfo?.address}}
           </span>
-         <!-- <weui-city-picker
-            required placeholder="Pick a City"
-            [(ngModel)]="res.city" name="city"
-            [data]="cityData" (change)="cityChange($event)">
-          </weui-city-picker>-->
         </div>
       </div>
     </div>

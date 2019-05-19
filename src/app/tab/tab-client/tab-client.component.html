@@ -11,7 +11,6 @@
   <div class="tab-client-alphabet">
     <ul>
       <li *ngFor="let item of clientList;let i = index" (click)="goTo(item?.name)">
-      <!--<li *ngFor="let item of clientList;let i = index" routerLink="/tab/client/" [fragment]="item?.name">-->
         <span>{{item?.name}}</span>
       </li>
     </ul>

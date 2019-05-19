@@ -64,6 +64,13 @@ export class TabClientComponent implements OnInit {
           });
           this.clientList = value['datas'];
           this.clientSerialization(value['datas']);
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: `获取数据失败，错误码${value.status}`,
+              url: null,
+              btn: '请重试',
+            }});
         }
       }
     );
@@ -74,7 +81,6 @@ export class TabClientComponent implements OnInit {
   }
   // search
   public onBarSearch(term: string) {
-    // this.searchKeyword = term;
     if (term) {
       this.tabService.tabSearchClientList({name: term}).subscribe(
         (value) => {

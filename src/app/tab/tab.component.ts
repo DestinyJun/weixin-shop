@@ -48,7 +48,7 @@ export class TabComponent implements OnInit {
         } else {
           this.router.navigate(['/error'], {
             queryParams: {
-              msg: `服务器处理失败！`,
+              msg: `获取数据失败，请检查网络后重试！`,
               url: null,
               btn: '请重试',
             }});
