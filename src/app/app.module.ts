@@ -6,11 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './common/services/auth.interceptor';
 import { ErrorRemindComponent } from './error-remind/error-remind.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorRemindComponent
+    ErrorRemindComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
