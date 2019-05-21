@@ -44,6 +44,7 @@ export class MineOrderComponent implements OnInit {
     received: {name: '已收货', color: 'red', operating: []},
     completed: {name: '已完成', color: '#7FB56E', operating: [{title: '再下一单', routes: '/order'}]},
     canceled: {name: '已取消', color: '#A0A0A0', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
+    failed: {name: '已取消', color: '#A0A0A0', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
 
     refundReview: {name: '退款审核', color: 'red',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},

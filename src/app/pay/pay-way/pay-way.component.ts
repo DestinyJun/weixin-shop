@@ -7,6 +7,7 @@ import {PayService} from '../../common/services/pay.service';
 import {mergeMap} from 'rxjs/internal/operators/mergeMap';
 import {GlobalService} from '../../common/services/global.service';
 import {EMPTY} from 'rxjs';
+import {is_ios} from '../../common/tools/is_ios';
 declare let WeixinJSBridge;
 
 @Component({
@@ -78,11 +79,16 @@ export class PayWayComponent implements OnInit, OnDestroy {
   }
   // time init
   public timerInit (startTime): any {
-    const startDate = new Date(startTime); // 开始时间
-    const endDate = new Date(); // 结束时间
+    let startDates;
+    if (is_ios()) {
+      startDates = new Date(startTime.replace(/-/g, '/')).getTime(); // 开始时间
+    } else {
+      startDates = new Date(startTime).getTime(); // 开始时间
+    }
+    const endDates = new Date().getTime(); // 结束时间
     const totalDate = 900000; // 结束时间
-    const t = totalDate - (endDate.getTime() - startDate.getTime()); // 时间差
-    // window.alert(`${startDate},${totalDate},${t}`);
+    const t = totalDate - (endDates - startDates); // 时间差
+    // window.alert(`${startDates},${endDates},${totalDate},${t}`);
     let d = 0,
       h = 0,
       m = 0,

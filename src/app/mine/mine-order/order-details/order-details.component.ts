@@ -45,6 +45,8 @@ export class OrderDetailsComponent implements OnInit {
       operating: [{title: '再下一单', routes: '/order'}]},
     canceled: {name: '已取消', bgColor: ['#8E8E8E', '#C2C2C2'], services: '',
       operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: ''}]},
+    failed: {name: '已取消', bgColor: ['#8E8E8E', '#C2C2C2'], services: '',
+      operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: ''}]},
 
     goodsReturnReview: {name: '退货退款审核中...', bgColor: ['#B66F6E', '#F49C9A'],
       operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
