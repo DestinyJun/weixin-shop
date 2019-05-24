@@ -71,7 +71,7 @@
       </div>
     </div>
   </div>
-  <div class="weui-footer weui-footer_fixed-bottom">
+  <div class="weui-footer weui-footer_fixed-bottom" *ngIf="orderDetail?.data?.status === 'pendingPayment'">
     <div class="weui-flex">
       <div class="weui-flex__item">
         <span style="color: #2A2A2A;font-size: 1.1rem">实付</span>

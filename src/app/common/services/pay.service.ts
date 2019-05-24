@@ -27,4 +27,9 @@ export class PayService {
     console.log(params);
     return this.http.post(`/orderPay/orderWxPay`, params);
   }
+  // Confirm payment status
+  public payWeixinConfirm(params): Observable<any> {
+    console.log(params);
+    return this.http.post(`/orderPay/confirmWxPay`, params);
+  }
 }

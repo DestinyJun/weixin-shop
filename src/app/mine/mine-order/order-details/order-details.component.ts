@@ -82,6 +82,14 @@ export class OrderDetailsComponent implements OnInit {
   // order operate
   public orderDetailOpeClick(param, childItem, status): void {
     console.log(childItem);
+    if (param.title === '退货进度') {
+      if (status === 'refundReview' || status === 'refundding' || status === 'refundded') {
+        this.router.navigate([param.routes, childItem.id, 0, status]);
+        return;
+      }
+      this.router.navigate([param.routes, childItem.id, 1, status]);
+      return;
+    }
     if (param.title === '退款进度') {
       if (status === 'refundReview' || status === 'refundding' || status === 'refundded') {
         this.router.navigate([param.routes, childItem.id, 0, status]);

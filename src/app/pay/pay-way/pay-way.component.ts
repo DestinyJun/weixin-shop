@@ -8,6 +8,7 @@ import {mergeMap} from 'rxjs/internal/operators/mergeMap';
 import {GlobalService} from '../../common/services/global.service';
 import {EMPTY} from 'rxjs';
 import {is_ios} from '../../common/tools/is_ios';
+import {subscribeOn} from 'rxjs/operators';
 declare let WeixinJSBridge;
 
 @Component({
@@ -42,6 +43,8 @@ export class PayWayComponent implements OnInit, OnDestroy {
   // dialog
   @ViewChild('iosPayWay') iosPayWay: DialogComponent;
   public iosPayWayConfig: DialogConfig = {};
+  // data
+  public orderId: any = null;
 
   constructor(
     private router: Router,
@@ -52,8 +55,8 @@ export class PayWayComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routerInfo.queryParams.subscribe((params: Params) => {
-      console.log(params);
       this.payOrdDetailInit(params);
+      this.orderId = params;
     });
   }
   // data init
@@ -206,7 +209,11 @@ export class PayWayComponent implements OnInit, OnDestroy {
       'getBrandWCPayRequest', obj,
       function (res) {
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
-          that.router.navigate(['/pay/success'], {queryParams: {orderId: that.payDetailsData.id}});
+          that.paySrv.payWeixinConfirm(that.orderId).subscribe(
+            (val) => {
+              that.router.navigate(['/pay/success'], {queryParams: {orderId: that.payDetailsData.id}});
+            }
+          );
         }
       });
   }

@@ -168,6 +168,14 @@ export class MineOrderComponent implements OnInit {
     // console.log(status);
     // console.log(param);
     console.log(childItem);
+    if (param.title === '退货进度') {
+      if (status === 'refundReview' || status === 'refundding' || status === 'refundded') {
+        this.router.navigate([param.routes, childItem.id, 0, status]);
+        return;
+      }
+      this.router.navigate([param.routes, childItem.id, 1, status]);
+      return;
+    }
     if (param.title === '退款进度') {
       if (status === 'refundReview' || status === 'refundding' || status === 'refundded') {
         this.router.navigate([param.routes, childItem.id, 0, status]);
@@ -212,6 +220,7 @@ export class MineOrderComponent implements OnInit {
       return;
     }
     if (param.title === '取消订单') {
+      console.log(this.orderSelectStatus);
       this.srv.loading();
       this.mOrderSrv.mineOrdCancel({orderId: childItem.id}).subscribe(
         (val) => {

@@ -3,6 +3,7 @@ import {HeaderContent} from '../../../common/components/header/header.model';
 import {MineService} from '../../../common/services/mine.service';
 import {ToastComponent} from 'ngx-weui';
 import {timer} from 'rxjs';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-mine-user-name',

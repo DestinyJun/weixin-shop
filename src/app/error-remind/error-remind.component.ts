@@ -14,6 +14,7 @@ export class ErrorRemindComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(document.referrer);
     this.routerInfo.queryParams.subscribe(
       (params: Params) => {
         this.errorMsgStatus = 'msg' in params;
