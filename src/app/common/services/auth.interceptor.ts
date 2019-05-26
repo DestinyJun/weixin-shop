@@ -14,8 +14,8 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.prod_http(req, next);
-    // return this.debug_http(req, next);
+    // return this.prod_http(req, next);
+    return this.debug_http(req, next);
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('imageFileUpload') >= 0) {
@@ -49,7 +49,7 @@ export class AuthInterceptor implements HttpInterceptor {
       // url: 'http://192.168.1.88' + req.url,
       headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1ODY4MzIwMX0.eHpEPE6dqr46VDEWASKu-991nKVqQgqYoxY4LWbzweVIrg3p7IHuOZsQyeodWTGnxEAmL6aYMpY1UWWbcvt1Sw')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1ODkyOTUwOX0.Xhd8hC7hzO_2YjcJE7um4UgxKF-Z1E11yeQXLFZ_XJXLRX0XYXLA2iW3lpwpeRtKpMFBxOWb_bQV66WLbTf0ug')
     });
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {

@@ -1,5 +1,7 @@
 .tab-mine{
-  background: #F1F1F1;
+  background: #ECECEC;
+  overflow: scroll;
+  padding-bottom: 55px;
   .weui-cells{
     font-size: 1rem;
     .weui-cell{
@@ -8,46 +10,81 @@
     }
   }
   .tab-mine-profile{
-    .weui-cell_access{
-      margin-top: 0;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      .weui-cell__bd{
-        p{
+    margin-top: 0;
+    color: #fff;
+    text-align: center;
+    min-width: 180px;
+    .tab-mine-profile-top{
+      background: linear-gradient(to right,#F28A7F,#F37F92);
+      border-radius: 0 0 20px 20px;
+      padding-top: 28px;
+      padding-bottom: 83px;
+      .profile-top-head{
+        padding-bottom: 5px;
+        .profile-top-head-img{
+          display: inline-block;
           position: relative;
           .weui-badge{
+            position: absolute;
+            top: 0;
+            right: -38px;
+            color: #BABABA;
+            background-color: #FFFFFF;
             border-radius: 3px;
+            font-size: 0.7rem;
+          }
+        }
+      }
+    }
+    .tab-mine-profile-bottom{
+      height: 50px;
+      background: #ECECEC;
+      position: relative;
+      color: #9F9F9F;
+      .profile-bottom-order{
+        position: absolute;
+        top: -70px;
+        left: 15px;
+        right: 15px;
+        bottom: 0;
+        z-index: 999;
+        .weui-cells{
+          margin-top: 0;
+          border-radius: 3px;
+          .weui-cell{
+            .weui-cell__bd{
+              text-align: left;
+            }
+          }
+          .weui-flex{
+            text-align: center;
+            position: relative;
+            .weui-flex__item{
+              padding-top: 10px;
+              padding-bottom: 10px;
+            }
+            &:after{
+              content: " ";
+              position: absolute;
+              left: 15px;
+              top: 0;
+              right: 15px;
+              height: 1px;
+              border-top: 1px solid #F4F4F4;
+              color: #e5e5e5;
+              -webkit-transform-origin: 0 0;
+              transform-origin: 0 0;
+              -webkit-transform: scaleY(0.5);
+              transform: scaleY(0.5);
+              z-index: 2;
+            }
           }
         }
       }
     }
   }
-  .tab-mine-order{
-    .weui-cells{
-      .weui-flex{
-        text-align: center;
-        position: relative;
-        .weui-flex__item{
-          padding-top: 10px;
-          padding-bottom: 10px;
-        }
-        &:after{
-          content: " ";
-          position: absolute;
-          left: 15px;
-          top: 0;
-          right: 0;
-          height: 1px;
-          border-top: 1px solid #F4F4F4;
-          color: #e5e5e5;
-          -webkit-transform-origin: 0 0;
-          transform-origin: 0 0;
-          -webkit-transform: scaleY(0.5);
-          transform: scaleY(0.5);
-          z-index: 2;
-        }
-      }
-    }
+  .tab-mine-list{
+    color: #969696;
   }
   .tab-mine-condialog{
     .weui-dialog{

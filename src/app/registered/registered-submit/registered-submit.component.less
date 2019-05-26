@@ -1,24 +1,44 @@
 .reg-submit{
   min-height: 100vh;
-  background: #F1F1F1;
+  background: #F5F5F5;
   position: relative;
   .reg-submit-form{
-    .weui-cells_form{
+    ::placeholder{
+      color: #E0E0E0;
+    }
+    .weui-cells{
       background: none;
-      padding: 15px;
+      padding: 15px 15px 0 15px;
       margin: 0;
+      font-size:1rem;
+      &:after{
+        content: unset;
+      }
       :nth-child(2){
-        margin-top: 1vh;
+        margin-top: 1px;
+      }
+      .weui-cell{
+        &:before{
+          content: unset;
+        }
       }
       .weui-cell_vcode{
         background: white;
+        .weui-input{
+          height: 60px;
+        }
       }
-      input{
-        height: 50px;
-      }
+
       .weui-vcode-btn{
         color: #959595;
+        font-size: 0.84rem;
+        border: none;
       }
+    }
+  }
+  .reg-submit-agree{
+    .reg-submit-agree{
+      padding: 0.5em 15px 0 15px;
     }
   }
   .reg-submit-dialog-agree{
@@ -41,6 +61,15 @@
     }
   }
   .reg-submit-btn{
+    .weui-btn_disabled.weui-btn_primary {
+      background: #D0D0D0;
+      color: #6C6C6C;
+      font-size: 0.9rem;
+    }
+    .weui-btn_primary{
+      background: linear-gradient(to right,#F19270,#F478A1);
+      color: #fff;
+    }
     padding: 1vh 3vw 0 3vw;
   }
 }

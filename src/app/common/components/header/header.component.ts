@@ -1,4 +1,4 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HeaderContent} from './header.model';
 
 @Component({
@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   @Output() public headerLeftClick = new EventEmitter<any>();
   @Output() public headerCenterClick = new EventEmitter<any>();
   @Output() public headerRightClick = new EventEmitter<any>();
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) { }
+  constructor() { }
 
   ngOnInit() {}
   public leftClick (): void {

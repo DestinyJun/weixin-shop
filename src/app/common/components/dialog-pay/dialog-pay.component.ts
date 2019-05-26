@@ -40,7 +40,7 @@ export class DialogPayComponent implements OnInit {
     this.config.inputDisabled = false;
     this.inputPws = event.target.value;
     for (let i = 0; i < this.inputPws.length; i++) {
-      this.config.value[i] = '❂';
+      this.config.value[i] = '#5E5E5E';
     }
     if (this.inputPws.length === 6) {
       if (!this.config.btnShow) {

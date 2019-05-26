@@ -1,0 +1,95 @@
+<div class="order-place" *ngIf="goodsInfo;else loading">
+  <div class="order-place-header">
+    <app-header [option]="headerOption"></app-header>
+  </div>
+  <div class="order-place-address">
+    <div class="weui-cells" [routerLink]="['/client/list', {status: 'order'}]">
+      <div class="weui-cell" [ngStyle]="{'color':orderPlaceAddressInfo?'#636363':'#C1C1C1'}">
+        <div class="weui-cell__bd">
+          <p *ngIf="orderPlaceAddressInfo">
+            <span>{{orderPlaceAddressInfo.name}}</span>
+            <span style="margin-left: 4rem">{{orderPlaceAddressInfo.phone}}</span>
+           </p>
+          <p style="font-size:0.8rem" [ngStyle]="{'line-height':orderPlaceAddressInfo?'unset':'44px'}">{{orderPlaceAddressInfo?orderPlaceAddressInfo.address:'请选择一个收货地址'}}</p>
+        </div>
+        <div class="weui-cell__ft">
+          <i class="icon iconfont icon-system-moreb" style="color: #B2B2B2;"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="order-place-goods">
+    <div class="weui-panel weui-panel_access commodity">
+      <div class="weui-panel__hd" style="font-size: 0.9rem;color: #969696;">商品信息</div>
+      <weui-infiniteloader [config]="infiniteloaderConfig">
+        <div class="weui-panel__bd">
+          <ng-container *ngFor="let item of goodsInfo; let i = index">
+            <div class="weui-cell" >
+              <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.mainImage"
+                     alt="暂无">
+              </div>
+              <div class="weui-cell__bd">
+                <p style="font-size: 1rem;">{{item.title}}</p>
+                <p style="font-size: 0.8rem;color: #888888;">{{item.info}}</p>
+                <p style="font-size: 1rem;color: #FF2D2D;margin-top: 1vh">￥{{item.originalPrice}}</p>
+              </div>
+              <div class="weui-cell__ft"></div>
+            </div>
+            <div class="weui-stepper-s">
+              <span style="font-size: 0.8rem;color:#8B8B8B;">购买数量</span>
+              <div class="pull-right">
+                <weui-stepper [(ngModel)]="goodsInfo[i].amount" [min]="0" [max]="1000000" (change)="goodsTotalCount($event, i)"></weui-stepper>
+              </div>
+            </div>
+          </ng-container>
+
+        </div>
+      </weui-infiniteloader>
+    </div>
+  </div>
+  <div class="order-place-bill">
+    <div class="weui-cells">
+      <div class="weui-cell" (click)="getInvoiceClick()">
+        <div class="weui-cell__hd">
+          <span>发票</span>
+        </div>
+        <div class="weui-cell__bd"  style="padding-left: 20px">
+          <span>{{(!orderPlaceInvoiceInfo || orderPlaceInvoiceInfo?.invoiceType === 'noinvoice')?'不需要发票':''}}</span>
+          <p style="color: #676767;font-size: 0.8rem">{{orderPlaceInvoiceInfo?.title}}</p>
+          <p style="color: #676767;font-size: 0.8rem" *ngIf="orderPlaceInvoiceInfo?.number">{{orderPlaceInvoiceInfo?.number}}</p>
+        </div>
+        <div class="weui-cell__ft">
+          <i class="icon iconfont icon-system-moreb" style="color: #B2B2B2;"></i>
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd">
+          <span>备注</span>
+        </div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="点击添加备注" name="txt" [(ngModel)]="orderPlaceInfo.remark">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="order-place-toast">
+    <weui-toast #success [text]="'请先填写收货地址'" [icon]="''" [time]="1000"></weui-toast>
+  </div>
+  <div class="weui-footer weui-footer_fixed-bottom" *ngIf="totalPrice">
+    <div class="weui-flex">
+      <div class="weui-flex__item">
+        <span style="color: #858585;font-size: 0.85rem">共计</span>
+        <span style="color: #F38C8C;font-size: 0.9rem">￥{{totalPrice}}</span>
+      </div>
+      <div class="weui-flex__item" (click)="submitOrder();">
+        <span style="color: white;font-size: 0.85rem">提交订单</span>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>
+
+

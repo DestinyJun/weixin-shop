@@ -6,9 +6,13 @@ import {HeaderModule} from '../common/components/header/header.module';
 import {WeUiModule} from 'ngx-weui';
 import {FormsModule} from '@angular/forms';
 import {LoadingModule} from '../common/components/loading/loading.module';
+import {ClientListComponent} from './client-list/client-list.component';
 
 @NgModule({
-  declarations: [ClientAddComponent],
+  declarations: [
+    ClientAddComponent,
+    ClientListComponent
+  ],
   imports: [
     CommonModule,
     ClientRoutingModule,

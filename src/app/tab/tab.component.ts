@@ -81,14 +81,20 @@ export class TabComponent implements OnInit {
     }
   }
   public onSelect(name, event): void {
+    console.log(event);
     this.router.navigate([`/tab/${name}`]);
     if (name === 'home') {
       event.icon = `<img src=./assets/images/home-ac.png>`;
       this.titleServices.setTitle('首页');
     }
-    if (name === 'client') {
-      event.icon = `<img src=./assets/images/client-ac.png>`;
-      this.titleServices.setTitle('客户');
+    if (name === 'order') {
+      event.icon = `<img src=./assets/images/order-ac.png>`;
+      this.titleServices.setTitle('商品预约');
+      return;
+    }
+    if (name === 'product') {
+      event.icon = `<img src=./assets/images/product-ac.png>`;
+      this.titleServices.setTitle('产品知识');
       return;
     }
     if (name === 'mine') {
@@ -101,8 +107,12 @@ export class TabComponent implements OnInit {
     if (event.heading === '首页') {
       event.icon = `<img src=./assets/images/home.png>`;
     }
-    if (event.heading === '客户') {
-      event.icon = `<img src=./assets/images/client.png>`;
+    if (event.heading === '商品预约') {
+      event.icon = `<img src=./assets/images/order.png>`;
+      return;
+    }
+    if (event.heading === '产品知识') {
+      event.icon = `<img src=./assets/images/product.png>`;
       return;
     }
     if (event.heading === '我的') {

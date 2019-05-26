@@ -1,3 +1,61 @@
+.dialog-pay{
+  .weui-mask{
+    background: rgba(0, 0, 0, 0.5);
+    .weui-dialog{
+      animation:mymove 0.2s ease-in-out forwards ;
+      -moz-animation:mymove 0.2s ease-in-out forwards; /* Firefox */
+      -webkit-animation:mymove 0.2s ease-in-out forwards; /* Safari and Chrome */
+      -o-animation:mymove 0.2s ease-in-out forwards; /* Opera */
+      .weui-dialog-title{
+        font-size: 1rem;
+        color: #848484;
+        .t-float{
+          cursor: pointer;
+        }
+      }
+      .weui-dialog-content{
+        padding-top: 2.5vh;
+        padding-bottom: 2.5vh;
+        position: relative;
+        display: flex;
+        justify-content: space-around;
+        label{
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        .c-n{
+          //background-color: #5E5E5E;
+          border-radius: 50%;
+          border: 1px solid #CECECE;
+          display: inline-block;
+          height: 4vw;
+          width: 4vw;
+          line-height: 4vw;
+          vertical-align: top;
+          /*border-left: 1px solid #CECECE;
+          border-top: 1px solid #CECECE;
+          border-bottom: 1px solid #CECECE;*/
+        }
+        :last-child{
+          //border-right: 1px solid #CECECE;
+        }
+        #password{
+          width: 200%;
+          height: 100%;
+          color:transparent;
+          position: absolute;
+          text-indent: -100em; /*文本向左缩进*/
+          margin-left: -100%; /*输入框光标起始点向左左移*/
+          top: 0;
+          left: 0;
+          opacity: 0;
+          border: 0;
+        }
+      }
+    }
+  }
+}
 @keyframes mymove
 {
   from {top:100%;}
@@ -20,50 +78,4 @@
 {
   from {top:100%;}
   to {top:50%;}
-}
-.dialog-pay{
-  .weui-mask{
-    .weui-dialog{
-      animation:mymove 0.2s ease-in-out forwards ;
-      -moz-animation:mymove 0.2s ease-in-out forwards; /* Firefox */
-      -webkit-animation:mymove 0.2s ease-in-out forwards; /* Safari and Chrome */
-      -o-animation:mymove 0.2s ease-in-out forwards; /* Opera */
-      .weui-dialog-title{
-        font-size: 1rem;
-        .t-float{
-          cursor: pointer;
-        }
-      }
-      .weui-dialog-content{
-        padding-top: 2.5vh;
-        padding-bottom: 2.5vh;
-        position: relative;
-        .c-n{
-          display: inline-block;
-          height: 14vw;
-          width: 14vw;
-          line-height: 14vw;
-          vertical-align: top;
-          border-left: 1px solid #CECECE;
-          border-top: 1px solid #CECECE;
-          border-bottom: 1px solid #CECECE;
-        }
-        :last-child{
-          border-right: 1px solid #CECECE;
-        }
-        #password{
-          width: 200%;
-          height: 100%;
-          color:transparent;
-          position: absolute;
-          text-indent: -100em; /*文本向左缩进*/
-          margin-left: -100%; /*输入框光标起始点向左左移*/
-          top: 0;
-          left: 0;
-          opacity: 0;
-          border: 0;
-        }
-      }
-    }
-  }
 }

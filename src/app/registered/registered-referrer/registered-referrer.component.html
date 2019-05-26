@@ -16,7 +16,7 @@
     <input #photo type="file" accept="image/*" style="display: none" (change)="referrerUpImg($event)">
   </div>
   <footer class="reg-referrer-footer">
-    <button #referrerBtn class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled': !referrerNumber.workId}" [disabled]="!referrerNumber.workId" (click)="referrerClick()">下一步</button>
+    <button #referrerBtn class="weui-btn weui-btn_primary" [disabled]="!referrerNumber.workId" (click)="referrerClick()">下一步</button>
   </footer>
   <div class="reg-referrer-dialog">
     <weui-dialog #iosDialog [config]="configDialog"></weui-dialog>

@@ -9,9 +9,6 @@
           <i class="weui-icon-"></i>
         </div>
       </div>
-      <div class="weui-cell" style="padding: 0 15px 10px 15px">
-        <p *ngIf="mobile.touched && mobile.invalid" style="color: red;font-size: 0.8rem;">请输入正确格式的手机号</p>
-      </div>
       <div class="weui-cell weui-cell_vcode">
         <div class="weui-cell__bd">
           <input class="weui-input" type="tel" placeholder="请输入验证码" name="smsCode" [(ngModel)]="smsCode">
@@ -23,21 +20,26 @@
                   [disabled]="mobile.invalid"
                   [weui-vcode]="onSendCode"
                   weui-seconds="60"
-                  weui-tpl="${num}s"
+                  weui-tpl="${num}s后重新获取"
                   weui-error="重新发送">获取验证码</button>
           <!--<button type="button" class="weui-vcode-btn" [ngStyle]="{'color':regSubmit.username?'#3CC51F':''}" [disabled]="mobile.invalid" (click)="codeBtnClick()">获取验证码</button>-->
         </div>
       </div>
-      <div class="weui-cell" style="padding: 0 15px 10px 15px;">
-        <p *ngIf="codeError" style="color: red;font-size: 0.8rem;">验证码不正确</p>
+      <div *ngIf="mobile.touched && mobile.invalid" class="weui-cell" style="padding: 0.5em 0 0 0;">
+        <p style="color: #F19170;font-size: 0.8rem;">请输入正确格式的手机号</p>
+      </div>
+      <div *ngIf="codeError" class="weui-cell" style="padding: 0.5em 0 0 0;">
+        <p style="color: #F19170;font-size: 0.8rem;">验证码不正确</p>
       </div>
     </div>
   </div>
   <div class="reg-submit-agree">
-    <label for="weuiAgree" class="weui-agree">
-      <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox" [(ngModel)]="submitAgree" name="agree">
+    <label class="weui-agree">
+      <!--<input id="weuiAgree" type="checkbox" class="weui-agree__checkbox" [(ngModel)]="submitAgree" name="agree">-->
       <span class="weui-agree__text">
-                注册既代表服务条款 和 <a (click)="dialogAgreeShow('ios')">隐私条款</a>
+        注册既代表同意
+        <span style="color: #9DC5F2;" (click)="dialogAgreeShow('ios')">服务条款</span> 和
+        <span style="color: #9DC5F2;" (click)="dialogAgreeShow('ios')">隐私条款</span>
             </span>
     </label>
   </div>
@@ -52,7 +54,7 @@
       type="button"
       class="weui-btn weui-btn_primary"
       (click)="onsubmit()"
-      [ngClass]="!(mobile.valid&&submitAgree&&smsCode) ?'weui-btn_disabled': ''"
-      [disabled]="!(mobile.valid&&submitAgree&&smsCode)">注册</button>
+      [ngClass]="!(mobile.valid&&smsCode) ?'weui-btn_disabled': ''"
+      [disabled]="!(mobile.valid&&smsCode)">注册</button>
   </div>
 </form>

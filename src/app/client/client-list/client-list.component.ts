@@ -7,17 +7,17 @@ import {
   InfiniteLoaderConfig, MaskComponent,
   SkinType
 } from 'ngx-weui';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TabService} from '../../common/services/tab.service';
 import {GlobalService} from '../../common/services/global.service';
 
 @Component({
-  selector: 'app-tab-client',
-  templateUrl: './tab-client.component.html',
-  styleUrls: ['./tab-client.component.less'],
+  selector: 'app-client-lit',
+  templateUrl: './client-list.component.html',
+  styleUrls: ['./client-listcomponent.less'],
   encapsulation: ViewEncapsulation.None
 })
-export class TabClientComponent implements OnInit {
+export class ClientListComponent implements OnInit {
   // swipt
   public touchStartX: number;
   public touchMoveX: number;
@@ -29,9 +29,19 @@ export class TabClientComponent implements OnInit {
   // mask
   @ViewChild('tabClientMask') tabClientMask: MaskComponent;
   // header
-  @Input() public headerOption: HeaderContent = {};
+  @Input() public headerOption: HeaderContent = {
+    title: '客户',
+    leftContent: {
+      icon: ''
+    },
+    rightContent: {
+      title: '新增',
+      color: '#86B876'
+    }
+  };
   // router
-  @Input() public routerStatus: string = null;
+  // @Input() public routerStatus: string = null;
+  public routerStatus: string = null;
   // client
   public clientList: any = null;
   public clientAddressList: any[];
@@ -46,11 +56,18 @@ export class TabClientComponent implements OnInit {
   constructor(
     private router: Router,
     private tabService: TabService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private routerInfo: ActivatedRoute
   ) {
   }
 
   ngOnInit() {
+    this.routerInfo.params.subscribe(
+      (val) => {
+        console.log(val);
+        this.routerStatus = val.status;
+      }
+    );
    this.tabClientInitialize();
   }
   // initialize

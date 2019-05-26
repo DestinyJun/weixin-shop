@@ -10,13 +10,22 @@
       <app-tab-home [tabHome]="tabHome"></app-tab-home>
     </weui-tab>
     <weui-tab
-      style="height: 100%" heading="客户"
-      [active]="tabActive === 'client'"
-      [icon]="'<img src=./assets/images/client-ac.png>'"
-      (select)="onSelect('client', $event)"
+      style="height: 100%" heading="商品预约"
+      [active]="tabActive === 'order'"
+      [icon]="'<img src=./assets/images/order-ac.png>'"
+      (select)="onSelect('order', $event)"
       (deselect)="onDeselect($event)"
     >
-      <app-tab-client [headerOption]="clientHeader" [routerStatus]="rouStatus"></app-tab-client>
+      <app-tab-order></app-tab-order>
+    </weui-tab>
+    <weui-tab
+      style="height: 100%" heading="产品知识"
+      [active]="tabActive === 'product'"
+      [icon]="'<img src=./assets/images/product-ac.png>'"
+      (select)="onSelect('product', $event)"
+      (deselect)="onDeselect($event)"
+    >
+      <app-tab-product></app-tab-product>
     </weui-tab>
     <weui-tab
       style="height: 100%" heading="我的"

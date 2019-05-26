@@ -5,7 +5,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
 import {GlobalService} from '../../common/services/global.service';
 import {map, mergeMap} from 'rxjs/operators';
-import {Observable, timer} from 'rxjs';
+import {EMPTY, Observable, timer} from 'rxjs';
 let that: any;
 
 @Component({
@@ -20,7 +20,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   public configAgreeDialog: DialogConfig = {};
   // dialogPay
   public dialogPayShow = false;
-  public dialogPayConfig = new DialogPay('请设置支付密码', true, ['', '', '', '', '', ''], false, true, false);
+  public dialogPayConfig = new DialogPay('设置支付密码', true, ['', '', '', '', '', ''], false, false, false);
   // code
   public codeError = false;
   public smsCode: any = null;
@@ -34,7 +34,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     address: null,
     smsKey: null
   };
-  public submitAgree = false;
   public workId: string = null;
   constructor(
     private srv: DialogService,
@@ -73,6 +72,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   }
   // reg submit
   public onsubmit(): void {
+    this.toastService['loading']('请求中...');
     this.regSrv.regVerifySMS({phone: this.regSubmit.username, smsCode: this.smsCode}).pipe(
       mergeMap((val) => {
         if (val.status === 200) {
@@ -83,19 +83,22 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
           });
         } else {
           this.codeError = true;
+          return EMPTY;
         }
       })
     )
     .subscribe(
       (val) => {
-        if (val) {
-          console.log(val);
+        this.toastService.hide();
+        if (val.status === 200) {
           this.regSubmit.nikeName = val.nickname;
           this.regSubmit.headImage = val.headimgurl;
           this.regSubmit.sex = val.sex;
           this.regSubmit.address = val.country;
           this.dialogPayShow = true;
+          return;
         }
+        this.topSrv['warn']('获取微信信息失败');
       }
     );
   }
@@ -162,6 +165,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   public onSendCode(): Observable<boolean> {
     that.codeBtnClick();
     return timer(1000).pipe(map((v, i) => {
+      console.log(v);
       return true;
     }));
   }

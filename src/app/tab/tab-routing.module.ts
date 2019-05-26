@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {TabComponent} from './tab.component';
 import {TabHomeComponent} from './tab-home/tab-home.component';
-import {TabClientComponent} from './tab-client/tab-client.component';
 import {TabMineComponent} from './tab-mine/tab-mine.component';
+import {TabProductComponent} from './tab-product/tab-product.component';
+import {TabOrderComponent} from './tab-order/tab-order.component';
 const tabRoutes: Routes = [
   {
     path: '',
@@ -11,7 +12,8 @@ const tabRoutes: Routes = [
     children: [
       {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: 'home', component: TabHomeComponent},
-      {path: 'client', component: TabClientComponent},
+      {path: 'order', component: TabOrderComponent},
+      {path: 'product', component: TabProductComponent},
       {path: 'mine', component: TabMineComponent},
     ]
   },
