@@ -1,129 +1,32 @@
-<div class="home" *ngIf="tabHome;else loading">
-  <div class="home-income">
-    <div class="weui-panel weui-panel_access">
-      <div class="weui-panel__bd">
-        <div class="weui-media-box weui-media-box_text">
-          <h5 class="weui-media-box__title">总收益</h5>
-          <h3 class="weui-media-box__desc">￥{{tabHome[0]['dataObject']?.all}}</h3>
-        </div>
-      </div>
+<div class="tab-home">
+  <div class="tab-user">
+    <div class="tab-user-info">
+      <p>
+        <img *ngIf="tabUserInfo" [src]="tabUserInfo.headImage" alt="">
+        <span style="color: #FCE237;margin: 0 15px 0 10px">{{tabUserInfo?.nikeName}}</span>
+        <span>早上好</span>
+      </p>
+      <p style="font-size: 1rem;margin-top: 10px;letter-spacing: 2px">欢迎登陆墨药店员系统</p>
     </div>
   </div>
-  <div class="home-personal">
-    <div class="weui-grids">
-      <div class="weui-grid">
-        <div class="weui-flex top">
-          <div class="weui-flex__item">
-            <div class="time" style="background-color: #FF6565;">今天</div>
-          </div>
-          <div class="weui-flex__item">
-            <div class="amount">{{tabHome[0]['dataObject']?.today?.total || 0}}笔</div>
-          </div>
-        </div>
-        <div class="weui-flex center">
-          <div class="weui-flex__item">
-            <div class="placeholder">￥{{tabHome[0]['dataObject']?.today?.sum_amount || 0}}</div>
-          </div>
-        </div>
-        <div class="weui-flex bottom">
-          <div class="weui-flex__item" style="padding-top: 1vh">
-            <div class="placeholder time">{{tabHome[0]['dataObject']?.today?.startDay}}</div>
-          </div>
+  <div class="tab-swiper">
+    <div class="swiper-container"
+      [swiper]="config"
+      (indexChange)="onIndexChange($event)"
+      (swiperTransitionStart)="onSwiperEvent('transitionStart')"
+      (swiperTransitionEnd)="onSwiperEvent('transitionEnd')"
+       (autoplayStart)="onSwiperEvent($event)"
+    >
+      <div class="swiper-wrapper">
+        <div *ngFor="let slide of slides" class="swiper-slide" style="margin-right: 0">
+          <!--<img [src]="slide" alt="" style="height: 100%;width: auto">-->
+          <div class="swiper-wrapper-img" [ngStyle]="{'background-image': 'url('+slide+')'}"></div>
         </div>
       </div>
-      <div class="weui-grid">
-        <div class="weui-flex top">
-          <div class="weui-flex__item">
-            <div class="time" style="background-color: #65D2FF;">本月</div>
-          </div>
-          <div class="weui-flex__item">
-            <div class="amount">{{tabHome[0]['dataObject']?.month?.total || 0}}笔</div>
-          </div>
-        </div>
-        <div class="weui-flex center">
-          <div class="weui-flex__item">
-            <div class="placeholder">￥{{tabHome[0]['dataObject']?.month['sum_amount'] || '0'}}</div>
-          </div>
-        </div>
-        <div class="weui-flex bottom">
-          <div class="weui-flex__item">
-            <div class="placeholder time">{{tabHome[0]['dataObject']?.month['startDay']}}</div>
-            <div class="placeholder time">{{tabHome[0]['dataObject']?.month['endDay']}}</div>
-          </div>
-        </div>
-      </div>
-      <div class="weui-grid">
-        <div class="weui-flex top">
-          <div class="weui-flex__item">
-            <div class="time" style="background-color: #7E65FF;">本年</div>
-          </div>
-          <div class="weui-flex__item">
-            <div class="amount">{{tabHome[0]['dataObject']?.year?.total || 0}}笔</div>
-          </div>
-        </div>
-        <div class="weui-flex center">
-          <div class="weui-flex__item">
-            <div class="placeholder">￥{{tabHome[0]['dataObject']?.year['sum_amount'] || '0'}}</div>
-          </div>
-        </div>
-        <div class="weui-flex bottom">
-          <div class="weui-flex__item">
-            <div class="placeholder time">{{tabHome[0]['dataObject']?.year['startDay'] || '0'}}</div>
-            <div class="placeholder time">{{tabHome[0]['dataObject']?.year['endDay'] || '0'}}</div>
-          </div>
-        </div>
-      </div>
+      <div class="swiper-scrollbar" [hidden]="config.scrollbar === false"></div>
+      <div class="swiper-pagination" [hidden]="config.pagination === false"></div>
+      <div class="swiper-button-prev" [hidden]="config.navigation === false"></div>
+      <div class="swiper-button-next" [hidden]="config.navigation === false"></div>
     </div>
-  </div>
-  <div class="home-card">
-    <div class="weui-flex">
-      <div class="weui-flex__item" [routerLink]="['/order']">
-        <div class="weui-cell">
-          <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-            <i class="icon iconfont icon-shouye-xiadan" aria-hidden="true" style="font-size: 10vw"></i>
-          </div>
-          <div class="weui-cell__bd" style="margin-left: 10px">
-            <p style="">下单</p>
-            <p style="font-size: 12px;">客户下单</p>
-          </div>
-        </div>
-      </div>
-      <div class="weui-flex__item" [routerLink]="['/mine/wallet/withdrawal']">
-        <div class="weui-cell">
-          <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-            <i class="icon iconfont icon-shouye-tixian" aria-hidden="true" style="font-size: 10vw"></i>
-          </div>
-          <div class="weui-cell__bd" style="margin-left: 10px">
-            <p style="">提现</p>
-            <p style="font-size: 12px;">收款提现</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="home-rank">
-    <div class="weui-cells__title title">销售排行榜</div>
-    <div class="weui-mine">
-      <div class="weui-cell">
-        <div class="weui-cell__hd">{{tabHome[1]?.data?tabHome[1]?.data[0]?.Ranks: ''}}</div>
-        <div class="weui-cell__bd">{{tabHome[1]?.data?tabHome[1]?.data[0]?.nikeName:'没有关键字'}}</div>
-        <div class="weui-cell__ft">￥{{tabHome[1]?.data?tabHome[1]?.data[0]?.sumPaid: ''}}</div>
-      </div>
-    </div>
-  </div>
-  <div class="home-scroll">
-    <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
-      <div class="weui-cells" style="margin-top: 0 ">
-        <div class="weui-cell" *ngFor="let item of tabHome[1].data?.slice(1); let i = index">
-          <div class="weui-cell__hd">NO.{{item?.Ranks}}</div>
-          <div class="weui-cell__bd">{{item?.nikeName}}</div>
-          <div class="weui-cell__ft">￥{{item?.sumPaid}}</div>
-        </div>
-      </div>
-    </weui-infiniteloader>
   </div>
 </div>
-<ng-template #loading>
-  <app-loading></app-loading>
-</ng-template>
-

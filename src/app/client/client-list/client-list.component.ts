@@ -32,11 +32,11 @@ export class ClientListComponent implements OnInit {
   @Input() public headerOption: HeaderContent = {
     title: '客户',
     leftContent: {
-      icon: ''
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '新增',
-      color: '#86B876'
+      color: '#6AABF1'
     }
   };
   // router
@@ -64,7 +64,6 @@ export class ClientListComponent implements OnInit {
   ngOnInit() {
     this.routerInfo.params.subscribe(
       (val) => {
-        console.log(val);
         this.routerStatus = val.status;
       }
     );

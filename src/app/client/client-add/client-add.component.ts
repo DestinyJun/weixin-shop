@@ -62,11 +62,11 @@ export class ClientAddComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '保存',
-      color: '#86B876'
+      color: '#6AABF1'
     }
   };
   constructor(

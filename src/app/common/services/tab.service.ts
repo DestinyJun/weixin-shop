@@ -26,4 +26,8 @@ export class TabService {
   public tabGetClientAdrs(params): Observable<any> {
     return this.http.post(`/address/ListFindById`, params);
   }
+  // get user info
+  public tabGetUserInfo(): Observable<any> {
+    return this.http.post(`/member/userInfo`, {});
+  }
 }

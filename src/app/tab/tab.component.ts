@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Location} from '@angular/common';
 import {NavigationEnd, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
@@ -28,13 +28,15 @@ export class TabComponent implements OnInit {
     private router: Router,
     private location: Location,
     private titleServices: Title,
-    private tabSrc: TabService
+    private tabSrc: TabService,
   ) {
      router.events.subscribe(
        (event) => {
          if (event instanceof NavigationEnd) {
-           this.rouStatus = event.urlAfterRedirects.slice(-5);
-           this.tabActive = event.urlAfterRedirects.slice(5, 11);
+           console.log(event);
+           this.tabActive = event.urlAfterRedirects.split('/')[2];
+           this.rouStatus = event.urlAfterRedirects.split('/')[2];
+           console.log(this.tabActive, this.rouStatus);
          }
        }
      );
@@ -81,7 +83,6 @@ export class TabComponent implements OnInit {
     }
   }
   public onSelect(name, event): void {
-    console.log(event);
     this.router.navigate([`/tab/${name}`]);
     if (name === 'home') {
       event.icon = `<img src=./assets/images/home-ac.png>`;

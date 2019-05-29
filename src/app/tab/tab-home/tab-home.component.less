@@ -1,159 +1,47 @@
-.home{
+.tab-home{
   height: 100%;
-  overflow: hidden;
-  position: relative;
-  background-color: #F1F1F1;
-  .home-income{
-    .weui-panel_access{
-      height: 12vh;
-      background-image: url(/assets/images/home_bg.png);
-      background-repeat: no-repeat;
-      -webkit-background-size: auto 100%;
-      background-size: auto 100%;
-      background-position: center right;
-      .weui-panel__bd{
-        .weui-media-box{
-          .weui-media-box__title{
-            font-size: 1rem;
-            color: #CACACA;
-          }
-          .weui-media-box__desc{
-            color: #424242;
-            font-size: 1.333rem;
-            font-min-size: 15px;
-            letter-spacing: 1px;
-          }
+  .tab-user{
+    height: 46%;
+    width: 100vw;
+    background: linear-gradient(135deg,#F19270,#F478A1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .tab-user-info{
+      text-align: center;
+      color: #fff;
+      font-size: 0.8rem;
+      p{
+        img{
+          height: 35px;
+          width: auto;
+          vertical-align: middle;
+          border-radius: 50%;
         }
       }
     }
   }
-  .home-personal{
-    height: 14vh;
-    overflow: hidden;
-    .weui-grids{
-      margin-top: 1vh;
-      margin-left: 4vw;
-      margin-right: 4vw;
-      :nth-child(2){
-        margin: 0 1vw;
-      }
-      .weui-grid{
-        padding: 0 0 1vh 0;
-        background-color: #fff;
-        width: 30vw;
-        .weui-flex{
-          .weui-flex__item{
-            .time{
-              color: white;
-              font-size: 1rem;
-              text-align: center;
-            }
-            .amount{
-              color: #AEAEAE;
-              font-size: 0.8rem;
-              text-align: center;
-            }
-            .placeholder{
-              text-align: center;
-              font-size: 1rem;
-              font-weight: bold;
-            }
-            .placeholder.time{
-              font-size: 0.7rem;
-              color: #AEAEAE;
-            }
-          }
-        }
-        .weui-flex.top{
-          :nth-child(2) {
-            flex: 2;
-          }
-        }
-        .top{
-          height: 3vh;
-          line-height: 3vh;
-        }
-        .center{
-          height: 5vh;
-          line-height: 5vh;
-        }
-        .bottom{
-          height: 4vh;
-          line-height: 2vh;
+  .tab-swiper{
+    margin-top: 3%;
+    height: 52%;
+    .swiper-container{
+      height: 100%;
+      .swiper-wrapper{
+        .swiper-wrapper-img{
+          height: 100%;
+          width: 100%;
+          background-size: 100% 100%;
+          background-position: center center;
+          background-repeat: no-repeat;
         }
       }
-    }
-  }
-  .home-card{
-    height: 11vh;
-    overflow: hidden;
-    .weui-flex{
-      margin: 1vh 4vw 0 4vw;
-      .weui-flex__item:nth-child(1){
-        background-color: #7FB56E;
-      }
-      .weui-flex__item:nth-child(2){
-        background-color: #4670DB;
-        margin-left: 2vw;
-      }
-      .weui-flex__item{
-        height: 11vh;
-        text-align: left;
-        color: white;
-        .weui-cell{
-          padding: 8px 15px;
+      .swiper-pagination{
+        ::ng-deep .swiper-pagination-bullet.swiper-pagination-bullet-active {
+          opacity: 0.5;
+          background: #000;
         }
-      }
-    }
-  }
-
-  .home-rank{
-    height: 10vh;
-    overflow: hidden;
-    margin-top: 1vh;
-    background-color: #fff;
-    position: relative;
-    .weui-cells__title{
-      height: 4vh;
-      line-height: 4vh;
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-    .title{
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: black;
-    }
-    .weui-mine{
-      font-size: 1rem;
-      color: #7FB56E;
-      .weui-cell{
-        .weui-cell__hd{
-          width: 60px;
-        }
-        .weui-cell__bd{
-          margin-left: 50px;
-        }
-      }
-    }
-  }
-  .home-scroll{
-    background-color: #fff;
-    position: absolute;
-    top: 48vh;
-    left: 0;
-    right: 0;
-    bottom: 5px;
-    .weui-infiniteloader__content{
-      .weui-cells{
-        font-size: 1rem;
-        .weui-cell{
-          .weui-cell__hd{
-            width: 60px;
-          }
-          .weui-cell__bd{
-            margin-left: 50px;
-          }
+        ::ng-deep .swiper-pagination-bullet{
+          opacity: 0.3;
         }
       }
     }

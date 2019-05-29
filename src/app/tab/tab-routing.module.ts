@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {TabComponent} from './tab.component';
-import {TabHomeComponent} from './tab-home/tab-home.component';
 import {TabMineComponent} from './tab-mine/tab-mine.component';
 import {TabProductComponent} from './tab-product/tab-product.component';
 import {TabOrderComponent} from './tab-order/tab-order.component';
+import {TabHomeComponent} from './tab-home/tab-home.component';
 const tabRoutes: Routes = [
   {
     path: '',
