@@ -1,0 +1,88 @@
+.order-place{
+  height: 100vh;
+  background-color: #F1F1F1;
+  .order-place-address{
+    //color: ;
+    font-size: 1rem;
+  }
+  .order-place-goods{
+    .weui-panel.weui-panel_access.commodity{
+      margin-top: 1.17647059em;
+      //margin-bottom: 50px;
+      .weui-panel__bd{
+        .weui-cell{
+          .weui-cell__ft{
+            span.minus > em{
+              font-size: 3rem;
+            }
+            em{
+              font-style:normal;
+              font-size: 2rem;
+            }
+            span{
+              border: none;
+              height: 40px;
+              line-height: 40px;
+            }
+            .input{
+              line-height: 30px;
+            }
+
+          }
+        }
+      }
+    }
+  }
+  .order-place-bill{
+    margin-bottom: 50px;
+    .weui-cells{
+      .weui-cell{
+        font-size: 1rem;
+        .weui-cell__bd{
+          .weui-input{
+            &::placeholder{
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+  .weui-footer{
+    bottom: 0;
+    z-index: 999;
+    .weui-flex{
+      .weui-flex__item{
+        height: 50px;
+        line-height: 50px;
+      }
+      .weui-flex__item:nth-child(1){
+        text-align: left;
+        flex: 2;
+        background: white;
+        padding-left: 15px;
+      }
+      .weui-flex__item:nth-child(2){
+        background: #7FB56E;
+      }
+    }
+  }
+  .order-place-toast{
+    .weui-toast {
+      height: 15vh;
+      line-height: 15vh;
+      font-size: 1rem;
+      min-height: 0;
+      width: 80vw;
+      margin-left: -40vw;
+      border-radius: 10px;
+      top: 50%;
+      transform: translateY(-70%);
+      .weui-icon_toast{
+        margin: 0;
+      }
+    }
+  }
+}
+
+

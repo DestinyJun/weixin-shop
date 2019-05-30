@@ -43,12 +43,12 @@
                   <h3 *ngIf="clientAddressList?.length === 0" style="text-align: center;color: #ADADB0;margin-top: 30%">暂无收货人信息</h3>
                   <div class="weui-cell" *ngFor="let item of clientAddressList" (click)="clientUpdateClick(item)">
                     <div class="weui-cell__bd">
-                      <p>收<span>货</span>人：{{item?.name}}</p>
-                      <p>联系电话：{{item?.phone}}</p>
-                      <p>收获地址：{{item?.address}}</p>
+                      <p><span>收<b>货</b>人</span> {{item?.name}}</p>
+                      <p><span>联系电话</span> {{item?.phone}}</p>
+                      <p><span>收获地址</span> {{item?.address}}</p>
                     </div>
                     <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前收货地址？', item, $event)">
-                      <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
+                      <span class="weui-badge icon iconfont icon-guanbi" style="position: absolute;top: 0.3em;right: 0.5em;font-size: 0.6rem"></span>
                     </div>
                   </div>
                 </ng-container>
@@ -72,11 +72,11 @@
                   <h3 *ngIf="clientInvoiceList?.length === 0" style="text-align: center;color: #ADADB0;margin-top: 30%">当前客户暂无发票信息</h3>
                   <div class="weui-cell" *ngFor="let item of clientInvoiceList" (click)="clientUpdateClick(item)">
                     <div class="weui-cell__bd">
-                      <p>发票抬头：{{item?.title}}</p>
-                      <p *ngIf="item?.number">税<span>号</span>：{{item?.number}}</p>
+                      <p><span>发票抬头</span>{{item?.title}}</p>
+                      <p *ngIf="item?.number"><span>税<b style="margin: 0 0 0 25px;">号</b></span> {{item?.number}}</p>
                     </div>
                     <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前发票？', item, $event)">
-                      <span class="weui-badge fa fa-times" style="position: absolute;top: 0.3em;right: 0.5em;"></span>
+                      <span class="weui-badge icon iconfont icon-guanbi" style="position: absolute;top: 0.3em;right: 0.5em;font-size: 0.6rem"></span>
                     </div>
                   </div>
                 </ng-container>
@@ -105,18 +105,18 @@
       <div class="weui-cells">
         <div class="weui-cell" style="padding:  10px 0 10px 15px;">
           <div class="weui-cell__bd" style="text-align: center">
-            <span style="vertical-align: middle;color: #000;">{{clientMaskTitle}}</span>
+            <span style="vertical-align: middle;color: #737373;font-size: 0.85rem">{{clientMaskTitle}}</span>
           </div>
           <div class="weui-cell__ft" style="height: 100%;width: 2rem;text-align: center" (click)="closeAddressMask();">
-            <i class="fa fa-times" aria-hidden="true"></i>
+            <i class="icon iconfont icon-guanbi" aria-hidden="true" style="font-size: 0.5rem;color: #ADADAD;"></i>
           </div>
         </div>
-        <div class="weui-cell">
+        <div class="weui-cell" style="padding: 0 15px 10px 15px;">
           <div class="weui-cell__bd">
             <input class="weui-input" type="text" placeholder="请输入收货人姓名" [(ngModel)]="addAddressRes.name" name="name">
-            <input class="weui-input" type="tel" placeholder="请输入收货人手机号码"  weui-input="mobile" weui-required [(ngModel)]="addAddressRes.phone" name="mobile">
-            <input class="weui-input" type="text" placeholder="请输入收货人详细地址" [(ngModel)]="addAddressRes.address" name="address">
-            <input class="weui-input" type="text"
+            <input class="weui-input" style="margin-top: 15px" type="tel" placeholder="请输入收货人手机号码"  weui-input="mobile" weui-required [(ngModel)]="addAddressRes.phone" name="mobile">
+            <input class="weui-input" style="margin-top: 15px" type="text" placeholder="请输入收货人详细地址" [(ngModel)]="addAddressRes.address" name="address">
+            <input class="weui-input" style="margin-top: 15px" type="text"
                    placeholder="粘贴整段地址,自动识别姓名、电话和地址，如：北京市朝阳区富康路姚家园3楼1351111111马云"
                    name="description" [(ngModel)]="description" (ngModelChange)='clientAddChange($event)'>
           </div>
@@ -124,11 +124,11 @@
         <div class="weui-cell">
           <div class="weui-cell__bd">
             <button
-              class="weui-btn weui-btn_primary"
-              [disabled]="!addAddressRes.name || !addAddressRes.phone || !addAddressRes.address"
+              class="weui-btn"
+              [disabled]="(addAddressRes.name || !addAddressRes.phone || !addAddressRes.address)"
               (click)="saveBtnClick(clientSaveBtnStatus)"
               [ngClass]="{
-              'weui-btn_disabled': !addAddressRes.name || !addAddressRes.phone || !addAddressRes.address
+              'weui-btn_primary': (addAddressRes.name && addAddressRes.phone && addAddressRes.address)
               }"
             >保存</button>
           </div>
@@ -140,14 +140,14 @@
     <div class="weui-cells weui-cells_checkbox">
       <div class="weui-cell" style="padding:  10px 0 10px 15px;">
         <div class="weui-cell__bd" style="text-align: center">
-          <span style="vertical-align: middle;color: #000;">{{clientMaskTitle}}</span>
+          <span style="vertical-align: middle;color: #737373;font-size: 0.85rem">{{clientMaskTitle}}</span>
         </div>
         <div class="weui-cell__ft" style="height: 100%;width: 2rem;text-align: center" (click)="clientIndividualShow=false">
-          <i class="fa fa-times" aria-hidden="true"></i>
+          <i class="icon iconfont icon-guanbi" aria-hidden="true" style="font-size: 0.5rem;color: #ADADAD;"></i>
         </div>
       </div>
-      <div class="weui-cell">
-        <label class="weui-cell__hd weui-check__label" for="s12" style="margin-right: 20px">
+      <div class="weui-cell" style="justify-content: space-around">
+        <label class="weui-cell__hd weui-check__label" for="s12" style="margin-right:36vw">
           <input type="radio" class="weui-check" name="checkbox" id="s12" value="individual" [(ngModel)]="clientAddRadioRes.invoiceType">
           <i class="weui-icon-checked"></i>
           <span>个人</span>
@@ -169,7 +169,7 @@
             <input class="weui-input" type="text" placeholder="请填写发票抬头" [(ngModel)]="clientAddRadioRes.title" name="title">
           </div>
         </div>
-        <div class="weui-cell">
+        <div class="weui-cell" style="padding: 0 15px 10px 15px;">
           <div class="weui-cell__bd">
             <input class="weui-input" type="text" placeholder="请填写纳税人识别号" [(ngModel)]="clientAddRadioRes.number" name="number">
           </div>

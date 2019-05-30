@@ -74,8 +74,17 @@
             }
           }
           p{
+            color: #6C6C6C;
             margin: 0;
-            font-size: 1rem;
+            font-size: 0.8rem;
+            span{
+              color: #C8C8C8;
+              margin-right: 10px;
+              b{
+                margin: 0 6px;
+                font-weight: 500;
+              }
+            }
           }
         }
       }
@@ -116,15 +125,25 @@
   }
   .client-add-dialog{
     .weui-dialog{
+      max-width: unset;
+      width: 90%;
       .weui-dialog__bd{
-        font-size: 1rem;
-        :nth-child(2){
-          margin-top: 5px;
-        }
+        font-size: 0.85rem;
+        padding: 0;
+        height: 4rem;
+        line-height: 4rem;
+        color: #686868;
       }
       .weui-dialog__ft{
+        line-height: 36px;
+        .weui-dialog__btn{
+          font-size: 0.85rem;
+        }
         .weui-dialog__btn.weui-dialog__btn_primary{
           color: #FF7676;
+        }
+        .weui-dialog__btn.weui-dialog__btn_default{
+          color: #818181;
         }
       }
     }
@@ -134,21 +153,36 @@
       .weui-mask__content{
         .weui-cells{
           margin-top: 0;
-          margin-left: 10px;
-          margin-right: 10px;
+          margin-left: 15px;
+          margin-right: 15px;
           border-radius: 5px;
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
           left: 0;
           right: 0;
-          font-size: 1rem;
           color: #A1A1A1;
-          padding-bottom: 15px;
+          padding-bottom: 0;
           .weui-cell{
             .weui-input{
               margin-top: 5px;
-              color: #D3D3D3;
+              font-size: 0.8rem;
+              color: #6F6F6F;
+              &::placeholder{
+                font-size: 0.8rem;
+                color: #D2D2D2;
+              }
+            }
+            .weui-btn{
+              background-color: #fff;
+              color: #D2D2D2;
+              font-size: 0.88rem;
+              &:after{
+                content: unset;
+              }
+            }
+            .weui-btn.weui-btn_primary{
+              color: #61A5F1;
             }
           }
         }
@@ -166,19 +200,28 @@
     transition-duration: 0.3s;
     .weui-cells{
       margin-top: 0;
-      margin-left: 10px;
-      margin-right: 10px;
+      margin-left: 15px;
+      margin-right: 15px;
       border-radius: 5px;
       position: absolute;
       top: 50%;
-      transform: translateY(-50%);
-      min-height: 230px;
       left: 0;
       right: 0;
-      font-size: 1rem;
+      transform: translateY(-50%);
+      min-height: 230px;
       color: #A1A1A1;
       padding-bottom: 15px;
       z-index: 1002;
+      .personal-input,.company-input{
+        .weui-input{
+          font-size: 0.8rem;
+          color: #6F6F6F;
+          &::placeholder{
+            font-size: 0.8rem;
+            color: #D2D2D2;
+          }
+        }
+      }
       .weui-cell_btn{
         position: absolute;
         left: 0;
@@ -186,13 +229,37 @@
         bottom: 10px;
         z-index: 1003;
         padding: 0 15px;
+        .weui-btn{
+          background-color: #fff;
+          color: #D2D2D2;
+          font-size: 0.88rem;
+          &:after{
+            content: unset;
+          }
+        }
+        .weui-btn.weui-btn_primary{
+          color: #61A5F1;
+        }
       }
       .weui-cell{
+        .weui-check__label{
+          flex: unset;
+          span{
+            font-size: 0.8rem;
+          }
+        }
         .weui-input{
           margin-top: 5px;
           color: #757575;
         }
+        .weui-check:checked + .weui-icon-checked:before {
+          color: #559FF0;
+        }
       }
+    }
+    .weui-cells_checkbox .weui-icon-checked:before {
+      font-size: 1rem;
+      margin-right: 10px;
     }
   }
 }

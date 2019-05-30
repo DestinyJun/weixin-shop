@@ -10,7 +10,7 @@ import {LoadingModule} from '../common/components/loading/loading.module';
 import { TabProductComponent } from './tab-product/tab-product.component';
 import {TabOrderComponent} from './tab-order/tab-order.component';
 import { TabHomeComponent } from './tab-home/tab-home.component';
-import {SWIPER_CONFIG, SwiperConfigInterface, SwiperDirective, SwiperModule} from 'ngx-swiper-wrapper';
+import {SWIPER_CONFIG, SwiperConfigInterface, SwiperModule} from 'ngx-swiper-wrapper';
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
   slidesPerView: 'auto',

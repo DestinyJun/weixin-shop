@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
 
@@ -22,7 +22,6 @@ export class OrderPlaceComponent implements OnInit {
     goodsItem: [],
     remark: ''
   };
-  public goodsIndex: any = null;
   // toast
   @ViewChild('success') successToast: ToastComponent;
   // scroll
@@ -32,9 +31,9 @@ export class OrderPlaceComponent implements OnInit {
   @ViewChild(InfiniteLoaderComponent) il;
   // header
   public headerOption: HeaderContent = {
-    title: '下单',
+    title: '商品预约',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       icon: ''
@@ -52,7 +51,7 @@ export class OrderPlaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.routeInfo.queryParams.subscribe(
+   /* this.routeInfo.queryParams.subscribe(
       (params: Params) => {
         this.orderId = params.orderId;
         this.orderSrv.orderGetDetail(params).subscribe(
@@ -61,7 +60,7 @@ export class OrderPlaceComponent implements OnInit {
           }
         );
       }
-    );
+    );*/
     this.orderPlaceAddressInfo = this.globalService.addressEvent;
     this.orderPlaceInvoiceInfo = this.globalService.invoiceEvent;
     if (this.orderPlaceAddressInfo) {
@@ -76,6 +75,7 @@ export class OrderPlaceComponent implements OnInit {
   public orderPlaceInitialize (): void {
     this.orderSrv.orderGetGoods({}).subscribe(
       (val) => {
+        console.log(val);
         if (val.status === 200) {
           val.datas.map((item, index) => {
             item['amount'] = parseInt(this.globalService.wxSessionGetObject('goods' + index), 10);
@@ -88,7 +88,6 @@ export class OrderPlaceComponent implements OnInit {
             this.totalPrice += item.originalPrice * item.amount;
           });
           // this.goodsInfo = val.datas.filter((prop) => prop.id = this.orderId);
-          console.log(this.goodsInfo);
           this.goodsInfo = val.datas;
           console.log(this.goodsInfo);
         }
@@ -111,7 +110,6 @@ export class OrderPlaceComponent implements OnInit {
       this.totalPrice += item.originalPrice * item.amount;
     });
   }
-
   // get Invoice
   public getInvoiceClick(): void {
     if (this.orderPlaceAddressInfo) {
@@ -120,7 +118,6 @@ export class OrderPlaceComponent implements OnInit {
     }
     this.onToastShow('success');
   }
-
   // order place
   public submitOrder() {
     if (!this.orderPlaceAddressInfo) {
@@ -148,7 +145,6 @@ export class OrderPlaceComponent implements OnInit {
       }
     );
   }
-
   // toast
   public onToastShow(type: 'success' | 'loading') {
     (<ToastComponent>this[`${type}Toast`]).onShow();

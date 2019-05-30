@@ -3,13 +3,9 @@
   <div class="order-invoice-select">
     <div class="weui-cells weui-cells_checkbox">
       <label class="weui-cell weui-check__label" for="s11">
-        <div class="weui-cell__hd">
-          <input type="radio" class="weui-check" name="checkbox" id="s11" value="noinvoice" [(ngModel)]="orderAddRadioRes.invoiceType" (change)="radioResChanges()">
-          <i class="weui-icon-checked"></i>
-        </div>
-        <div class="weui-cell__bd">
-          <p>不需要发票</p>
-        </div>
+        <input type="radio" class="weui-check" name="checkbox" id="s11" value="noinvoice" [(ngModel)]="orderAddRadioRes.invoiceType" (change)="radioResChanges()">
+        <i class="weui-icon-checked"></i>
+        <span>不需要发票</span>
       </label>
     </div>
     <div class="weui-cells weui-cells_checkbox">

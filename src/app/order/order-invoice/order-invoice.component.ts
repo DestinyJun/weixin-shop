@@ -16,11 +16,11 @@ export class OrderInvoiceComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '发票信息',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
-      title: '提交',
-      color: '#8C8C8C'
+      title: '保存',
+      color: '#6AABF1'
     }
   };
   // radio

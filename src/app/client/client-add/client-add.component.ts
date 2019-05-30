@@ -11,7 +11,7 @@ import {
   ToastService
 } from 'ngx-weui';
 import {ClientService} from '../../common/services/client.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {parse} from '../../common/tools/is_address';
 
 @Component({
@@ -72,7 +72,8 @@ export class ClientAddComponent implements OnInit {
   constructor(
     private clientSrv: ClientService,
     private srv: ToastService,
-    private routerInfo: ActivatedRoute
+    private routerInfo: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -198,7 +199,15 @@ export class ClientAddComponent implements OnInit {
                  };
                  this.onShow('addClient');
                  this.clientSelectClick();
+                 return;
                }
+               this.router.navigate(['/error'], {
+                 queryParams: {
+                   msg: `操作失败，${value.message}`,
+                   url: null,
+                   btn: '请重试'
+                 }
+               });
              }
            );
          } else {
@@ -220,7 +229,15 @@ export class ClientAddComponent implements OnInit {
                        };
                        this.onShow('addClient');
                        this.clientSelectClick();
+                       return;
                      }
+                     this.router.navigate(['/error'], {
+                       queryParams: {
+                         msg: `操作失败，${value.message}`,
+                         url: null,
+                         btn: '请重试'
+                       }
+                     });
                    }
                  );
                }
@@ -244,7 +261,15 @@ export class ClientAddComponent implements OnInit {
               };
               this.onShow('addClient');
               this.clientSelectClick();
+              return;
             }
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: `操作失败，${val.message}`,
+                url: null,
+                btn: '请重试'
+              }
+            });
           }
         );
         return;
@@ -268,7 +293,15 @@ export class ClientAddComponent implements OnInit {
                 this.clientIndividualShow = false;
                 this.onShow('addClient');
                 this.clientSelectClick();
+                return;
               }
+              this.router.navigate(['/error'], {
+                queryParams: {
+                  msg: `操作失败，${value.message}`,
+                  url: null,
+                  btn: '请重试'
+                }
+              });
             }
           );
         } else {
@@ -291,7 +324,15 @@ export class ClientAddComponent implements OnInit {
                       this.clientIndividualShow = false;
                       this.onShow('addClient');
                       this.clientSelectClick();
+                      return;
                     }
+                    this.router.navigate(['/error'], {
+                      queryParams: {
+                        msg: `操作失败，${value.message}`,
+                        url: null,
+                        btn: '请重试'
+                      }
+                    });
                   }
                 );
               }
@@ -315,7 +356,15 @@ export class ClientAddComponent implements OnInit {
               };
               this.onShow('addClient');
               this.clientSelectClick();
+              return;
             }
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: `操作失败，${val.message}`,
+                url: null,
+                btn: '请重试'
+              }
+            });
           }
         );
       }

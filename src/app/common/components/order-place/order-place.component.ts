@@ -1,17 +1,17 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {HeaderContent} from '../../common/components/header/header.model';
+import {HeaderContent} from '../header/header.model';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
-import {ActivatedRoute, Router} from '@angular/router';
-import {OrderService} from '../../common/services/order.service';
-import {GlobalService} from '../../common/services/global.service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {OrderService} from '../../services/order.service';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
-  selector: 'app-tab-order',
-  templateUrl: './tab-order.component.html',
-  styleUrls: ['./tab-order.component.less'],
+  selector: 'app-order-place',
+  templateUrl: './order-place.component.html',
+  styleUrls: ['./order-place.component.less'],
   encapsulation: ViewEncapsulation.None
 })
-export class TabOrderComponent implements OnInit {
+export class OrderPlaceComponent implements OnInit {
   // data
   public orderId: any = null;
   public orderPlaceAddressInfo: any = null;
@@ -22,6 +22,7 @@ export class TabOrderComponent implements OnInit {
     goodsItem: [],
     remark: ''
   };
+  public goodsIndex: any = null;
   // toast
   @ViewChild('success') successToast: ToastComponent;
   // scroll
@@ -31,9 +32,9 @@ export class TabOrderComponent implements OnInit {
   @ViewChild(InfiniteLoaderComponent) il;
   // header
   public headerOption: HeaderContent = {
-    title: '商品预约',
+    title: '下单',
     leftContent: {
-      icon: 'icon iconfont icon-fanhui'
+      icon: 'fa fa-chevron-left'
     },
     rightContent: {
       icon: ''
@@ -51,7 +52,7 @@ export class TabOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-   /* this.routeInfo.queryParams.subscribe(
+    this.routeInfo.queryParams.subscribe(
       (params: Params) => {
         this.orderId = params.orderId;
         this.orderSrv.orderGetDetail(params).subscribe(
@@ -60,7 +61,7 @@ export class TabOrderComponent implements OnInit {
           }
         );
       }
-    );*/
+    );
     this.orderPlaceAddressInfo = this.globalService.addressEvent;
     this.orderPlaceInvoiceInfo = this.globalService.invoiceEvent;
     if (this.orderPlaceAddressInfo) {
@@ -75,7 +76,6 @@ export class TabOrderComponent implements OnInit {
   public orderPlaceInitialize (): void {
     this.orderSrv.orderGetGoods({}).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           val.datas.map((item, index) => {
             item['amount'] = parseInt(this.globalService.wxSessionGetObject('goods' + index), 10);
@@ -88,6 +88,7 @@ export class TabOrderComponent implements OnInit {
             this.totalPrice += item.originalPrice * item.amount;
           });
           // this.goodsInfo = val.datas.filter((prop) => prop.id = this.orderId);
+          console.log(this.goodsInfo);
           this.goodsInfo = val.datas;
           console.log(this.goodsInfo);
         }
@@ -110,6 +111,7 @@ export class TabOrderComponent implements OnInit {
       this.totalPrice += item.originalPrice * item.amount;
     });
   }
+
   // get Invoice
   public getInvoiceClick(): void {
     if (this.orderPlaceAddressInfo) {
@@ -118,6 +120,7 @@ export class TabOrderComponent implements OnInit {
     }
     this.onToastShow('success');
   }
+
   // order place
   public submitOrder() {
     if (!this.orderPlaceAddressInfo) {
@@ -145,6 +148,7 @@ export class TabOrderComponent implements OnInit {
       }
     );
   }
+
   // toast
   public onToastShow(type: 'success' | 'loading') {
     (<ToastComponent>this[`${type}Toast`]).onShow();

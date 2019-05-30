@@ -9,6 +9,7 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'registered', canActivate: [LoginGuard], loadChildren: './registered/registered.module#RegisteredModule'},
   {path: 'tab', canActivate: [LoginGuard], loadChildren: './tab/tab.module#TabModule'},
+  {path: 'product', canActivate: [LoginGuard], loadChildren: './product/product.module#ProductModule'},
   {path: 'order', canActivate: [LoginGuard], loadChildren: './order/order.module#OrderModule'},
   {path: 'pay', canActivate: [LoginGuard], loadChildren: './pay/pay.module#PayModule'},
   {path: 'mine', canActivate: [LoginGuard], loadChildren: './mine/mine.module#MineModule'},
