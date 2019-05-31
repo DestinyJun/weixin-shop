@@ -60,7 +60,10 @@ export class TabMineComponent implements OnInit {
       skin: type,
       cancel: '取消',
       confirm: '一键拨号',
-      content: '<p>服务电话</p><p>400-8485-5577</p>'
+      content: '<p>' +
+        '<span>服务电话</span><br>' +
+        '<span>400-8485-5577</span>' +
+        '</p>'
     });
     setTimeout(() => {
       (<DialogComponent>this[`${type}Dialog`]).show().subscribe((res: any) => {

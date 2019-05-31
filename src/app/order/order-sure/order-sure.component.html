@@ -1,5 +1,4 @@
-<div class="order-sure" *ngIf="orderDetail | async as orderDetail; else loading">
-  <!--{{orderDetail.data | json}}-->
+<div class="order-sure" *ngIf="orderDetail; else loading">
   <div class="order-sure-header">
     <app-header [option]="headerOption"></app-header>
   </div>
@@ -7,18 +6,21 @@
     <div class="weui-cells">
       <div class="weui-cell">
         <div class="weui-cell__bd">
-          <p>
-            <span>{{orderDetail?.data?.addressModel?.name}}</span>
-            <span style="margin-left: 4rem">{{orderDetail?.data?.addressModel?.phone}}</span>
+          <p *ngIf="orderDetail">
+            <span style="font-size: 0.9rem;color: #848484;">{{orderDetail?.data?.addressModel?.name}}</span>
+            <span style="margin-left: 1rem;font-size: 0.5rem;color: #BFBFBF;">{{orderDetail?.data?.addressModel?.phone}}</span>
           </p>
-          <p style="font-size:0.9rem">{{orderDetail?.data?.addressModel?.address}}</p>
+          <p style="font-size:0.6rem;color: #A4A4A4;">{{orderDetail?.data?.addressModel?.address}}</p>
+        </div>
+        <div class="weui-cell__ft">
+          <!--<i class="icon iconfont icon-system-moreb" style="color: #ACACAC;font-size: 0.85rem;"></i>-->
         </div>
       </div>
     </div>
   </div>
   <div class="order-sure-goods">
     <div class="weui-panel weui-panel_access commodity">
-      <div class="weui-panel__hd" style="font-size: 1rem">商品信息</div>
+      <div class="weui-panel__hd" style="font-size: 0.85rem;color: #969696;">商品信息</div>
       <weui-infiniteloader [config]="infiniteloaderConfig">
         <div class="weui-panel__bd">
           <div class="weui-cell" *ngFor="let item of orderDetail?.data?.moyaoOrderItemModels; let i = index">
@@ -27,15 +29,17 @@
                    alt="暂无">
             </div>
             <div class="weui-cell__bd">
-              <p style="font-size: 1.1rem;">{{item?.goods?.title}}</p>
-              <p style="font-size: 0.8rem;color: #888888;">{{item?.goods?.info}}</p>
-              <p style="font-size: 1.1rem;color: #FF2D2D;margin-top: 1vh">
+              <p style="font-size: 0.85rem;color: #8C8C8C;">
+                {{item?.goods?.title}}
+                <span class="pull-right" style="font-size: 0.7rem;vertical-align: bottom;color: #666666;">x{{item?.quantity}}</span>
+              </p>
+              <p style="font-size: 0.7rem;color: #C2C2C2;">{{item?.goods?.info}}</p>
+              <p style="font-size: 1rem;color: #F28988;margin-top: 1vh">
                 <span>￥{{item?.goods?.originalPrice}}</span>
-                <span class="pull-right" style="vertical-align: bottom;color: #666666;">x{{item?.quantity}}</span>
               </p>
             </div>
           </div>
-          <div class="weui-total">
+          <!--<div class="weui-total">
             <div style="padding-top: 0.3rem">
               <span>共计：</span>
               <span>￥{{orderDetail?.data?.price}}</span>
@@ -44,28 +48,31 @@
               <p>实付￥{{orderDetail?.data?.amount}}</p>
               <p>提成<span style="color: #FF2525;">￥{{orderDetail?.data?.earning}}</span></p>
             </div>
-          </div>
+          </div>-->
         </div>
       </weui-infiniteloader>
     </div>
   </div>
   <div class="order-sure-bill">
     <div class="weui-cells">
-      <div class="weui-cell">
-        <div class="weui-cell__bd">
-          <span style="vertical-align: middle">发票</span>
+      <div class="weui-cell" style="align-items: unset;">
+        <div class="weui-cell__hd">
+          <span>发票</span>
         </div>
-        <div class="weui-cell__ft">
+        <div class="weui-cell__bd"  style="padding-left: 20px">
           <span>{{(!orderDetail?.data?.invoiceModel || orderDetail?.data?.invoiceModel?.invoiceType === 'noinvoice')?'不需要发票':''}}</span>
           <p style="color: #676767;font-size: 0.8rem">{{orderDetail?.data?.invoiceModel?.title}}</p>
           <p style="color: #676767;font-size: 0.8rem" *ngIf="orderDetail?.data?.invoiceModel?.number">{{orderDetail?.data?.invoiceModel?.number}}</p>
         </div>
+        <div class="weui-cell__ft">
+          <!--<i class="icon iconfont icon-system-moreb" style="color: #B2B2B2;"></i>-->
+        </div>
       </div>
       <div class="weui-cell">
         <div class="weui-cell__hd">
-          <span>备注：</span>
+          <span>备注</span>
         </div>
-        <div class="weui-cell__bd">
+        <div class="weui-cell__bd" style="text-indent: 20px;">
           <input class="weui-input" type="text" placeholder="无" name="txt" [value]="orderDetail?.data?.remark" disabled>
         </div>
       </div>
@@ -74,11 +81,11 @@
   <div class="weui-footer weui-footer_fixed-bottom" *ngIf="orderDetail?.data?.status === 'pendingPayment'">
     <div class="weui-flex">
       <div class="weui-flex__item">
-        <span style="color: #2A2A2A;font-size: 1.1rem">实付</span>
-        <span style="color: #FF3535;font-size: 1.1rem">￥{{orderDetail?.data?.amount}}</span>
+        <span style="color: #858585;font-size: 0.85rem">实付</span>
+        <span style="color: #F38C8C;font-size: 0.9rem">￥{{orderDetail?.data?.amount}}</span>
       </div>
       <div class="weui-flex__item" (click)="orderSureClick(orderDetail?.data?.id);">
-        <span style="color: white;font-size: 1.1rem">结算</span>
+        <span style="color: white;font-size: 0.85rem">结算</span>
       </div>
     </div>
   </div>

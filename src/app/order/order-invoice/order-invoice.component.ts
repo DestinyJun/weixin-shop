@@ -51,10 +51,7 @@ export class OrderInvoiceComponent implements OnInit {
   }
   // radio change
   public radioResChanges() {
-    if (this.orderAddRadioRes.invoiceType !== 'noinvoice') {
-      this.headerOption.rightContent.color = '#86B876';
-    } else {
-      this.headerOption.rightContent.color = '#8C8C8C';
+    if (this.orderAddRadioRes.invoiceType === 'noinvoice') {
       window.history.back();
     }
   }

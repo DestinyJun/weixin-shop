@@ -3,7 +3,6 @@ import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderConfig} from 'ngx-weui';
 import {OrderService} from '../../common/services/order.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-order-sure',
@@ -22,7 +21,8 @@ export class OrderSureComponent implements OnInit {
     }
   };
   // data
-  public orderDetail: Observable<any>;
+  public orderDetail: any = null;
+  public orderParentId: any = null;
   // scroll
   infiniteloaderConfig: InfiniteLoaderConfig = {
     height: 'auto'
@@ -34,10 +34,28 @@ export class OrderSureComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.routerInfo.params.subscribe(params => this.orderSureInit(params.id));
+    this.routerInfo.params.subscribe(params => {
+      this.orderParentId = params['parentId'];
+      this.orderSureInit(params.id);
+    });
   }
   public orderSureInit (id): void {
-    this.orderDetail = this.orderSrv.orderGetDetail({orderId: id});
+    this.orderSrv.orderGetDetail({orderId: id}).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          console.log(val);
+          this.orderDetail  = val;
+          return;
+        }
+        this.router.navigate(['/error'], {
+          queryParams: {
+            msg: `获取数据失败，错误码${val.status}`,
+            url: null,
+            btn: '请重试'
+          }
+        });
+      }
+    );
   }
   // order sure
   public orderSureClick(id) {

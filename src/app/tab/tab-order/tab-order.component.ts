@@ -124,7 +124,6 @@ export class TabOrderComponent implements OnInit {
       this.onToastShow('success');
       return;
     }
-    console.log(this.orderPlaceInfo);
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
         console.log(val);

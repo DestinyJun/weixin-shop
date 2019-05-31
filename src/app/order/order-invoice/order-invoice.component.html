@@ -41,12 +41,18 @@
     </div>
   </div>
   <div class="order-invoice-history">
-    <div class="weui-cells__title">已有发票信息</div>
+    <div class="weui-cells__title" style="font-size: 0.85rem">已有发票信息</div>
     <div class="weui-cells" *ngIf="orderBill | async as orderBill; else loading">
       <div class="weui-cell" *ngFor="let item of orderBill?.datas" (click)="orderBillClick(item)">
         <div class="weui-cell__bd">
-          <p><span class="left">发票抬头</span>{{item?.title}}</p>
-          <p *ngIf="item?.number"><span class="left">税<span style="margin-left: 2rem;">号</span></span>{{item?.number}}</p>
+          <p>
+            <span class="left">发票抬头</span>
+            <span style="color: #8F8F8F;">{{item?.title}}</span>
+          </p>
+          <p *ngIf="item?.number">
+            <span class="left">税<span style="margin-left: 2rem;">号</span></span>
+            <span style="color: #8F8F8F;">{{item?.number}}</span>
+          </p>
         </div>
       </div>
       <ng-container *ngIf="orderBill.datas.length === 0">
