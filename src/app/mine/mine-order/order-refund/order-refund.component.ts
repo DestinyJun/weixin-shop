@@ -17,7 +17,7 @@ export class OrderRefundComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '申请退款',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '',
@@ -41,9 +41,9 @@ export class OrderRefundComponent implements OnInit {
   public orderRefundGallery = false;
   public orderRefundGalleryImg: any = null;
   public orderRefundProgress: any = [
-    {title: '填写申请', color: '#7FB56E', shadow: '0 0 0 3px #BFDAB6'},
-    {title: '等待审核', color: '#969696', shadow: '0 0 0 3px #969696'},
-    {title: '退款成功', color: '#969696', shadow: '0 0 0 3px #969696'},
+    {title: '填写申请', color: '#559FF0', shadow: '0 0 0 3px #B9DAFF'},
+    {title: '等待审核', color: '#A6A6A6', shadow: '0 0 0 3px #D0D0D0'},
+    {title: '退款成功', color: '#A6A6A6', shadow: '0 0 0 3px #D0D0D0'},
   ];
   // upload
   @Input() url = 'example';
@@ -77,12 +77,12 @@ export class OrderRefundComponent implements OnInit {
       this.orderRefund.refundType = params.type;
       this.orderRefundStatus = params.status;
       if (this.orderRefundStatus === 'refundReview') {
-        this.orderRefundProgress[1].color = '#7FB56E';
-        this.orderRefundProgress[1].shadow = '0 0 0 3px #BFDAB6';
+        this.orderRefundProgress[1].color = '#559FF0';
+        this.orderRefundProgress[1].shadow = '0 0 0 3px #B9DAFF';
       }
       if (this.orderRefundStatus === 'refundded') {
-        this.orderRefundProgress[2].color = '#7FB56E';
-        this.orderRefundProgress[2].shadow = '0 0 0 3px #BFDAB6';
+        this.orderRefundProgress[2].color = '#559FF0';
+        this.orderRefundProgress[2].shadow = '0 0 0 3px #B9DAFF';
       }
     });
   }

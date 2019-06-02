@@ -77,12 +77,12 @@ export class OrderReturnComponent implements OnInit {
       this.orderReturn.refundType = params.type;
       this.orderReturnStatus = params.status;
       if (this.orderReturnStatus === 'refundReview') {
-        this.orderReturnProgress[1].color = '#7FB56E';
-        this.orderReturnProgress[1].shadow = '0 0 0 3px #BFDAB6';
+        this.orderReturnProgress[1].color = '#559FF0';
+        this.orderReturnProgress[1].shadow = '0 0 0 3px #B9DAFF';
       }
       if (this.orderReturnStatus === 'refundded') {
-        this.orderReturnProgress[2].color = '#7FB56E';
-        this.orderReturnProgress[2].shadow = '0 0 0 3px #BFDAB6';
+        this.orderReturnProgress[2].color = '#559FF0';
+        this.orderReturnProgress[2].shadow = '0 0 0 3px #B9DAFF';
       }
     });
   }
@@ -93,6 +93,9 @@ export class OrderReturnComponent implements OnInit {
         if (val.status === 200) {
           this.detailsData = val;
           this.orderReturn.refundamount  = val.data.amount;
+          if (val.data.refundImage) {
+            this.orderReturnImages = val.data.refundImage.split(',');
+          }
           return;
         }
         this.router.navigate(['/error'], {

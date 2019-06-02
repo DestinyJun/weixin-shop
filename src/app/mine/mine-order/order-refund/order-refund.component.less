@@ -1,10 +1,12 @@
 .order-refund{
   height: 100vh;
-  background-color: #F1F1F1;
+  background-color: #F5F5F5;
   position: relative;
   padding-bottom: 85px;
   .order-refund-progress{
+    padding: 0 15px;
     .weui-cells{
+      margin-top: 10px;
       .weui-cell{
         justify-content: center;
         padding: 20px 15px;
@@ -36,11 +38,13 @@
     }
   }
   .order-refund-product{
-    margin-top: 15px;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    padding: 0 15px;
+    color: #C4C4C4;
     .weui-panel{
       .weui-panel__hd{
-        color: #000000;
-        font-size: 1rem;
+        color: #C4C4C4;
         .weui-cell{
           padding: 0;
         }
@@ -48,11 +52,15 @@
     }
   }
   .order-refund-remark{
+    margin-bottom: 50px;
+    padding: 0 15px;
     .weui-cells{
+      margin-top: 10px;
       .weui-cell{
-        font-size: 1rem;
+        font-size: 0.85rem;
         .weui-cell__hd{
           position: relative;
+          color: #787878;
           .badge{
             position: absolute;
             top: 0;
@@ -61,13 +69,19 @@
           }
         }
         .weui-cell__bd{
-          padding-left: 15px;
+          color: #DADADA;
+          .weui-input{
+            &::placeholder{
+              color: #E5E5E5;
+            }
+          }
           .weui-uploader{
             .weui-uploader__bd{
               padding-top: 6px;
               .weui-uploader__files{
                 .weui-uploader__file{
                   position: relative;
+                  border-radius: 5px;
                   .del-icon{
                     font-size: 10px;
                     height: 13px;
@@ -86,19 +100,31 @@
                 }
               }
               .weui-uploader__input-box{
+                border: 1px solid transparent;
                 border-radius: 5px;
+                line-height: 77px;
+                text-align: center;
+                padding-left: 15px;
+                i{
+                  font-size: 77px;
+                }
+                &:before{
+                  content: unset;
+                }
+                &:after{
+                  content: unset;
+                }
               }
             }
           }
         }
       }
     }
-  }
-  .order-refund-image{
     .weui-media-box__thumb{
       height: 80px;
       width: auto;
       margin-right: 10px;
+      border-radius: 5px;
     }
   }
   .order-refund-submit{
@@ -107,6 +133,11 @@
       z-index: 999;
       .weui-btn{
         border-radius: 0;
+      }
+      .weui-btn.weui-btn_primary{
+        background-color: #559FF0;
+        font-size: 0.85rem;
+        padding: 10px 0;
       }
     }
   }

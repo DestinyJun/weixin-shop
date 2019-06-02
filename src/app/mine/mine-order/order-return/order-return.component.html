@@ -10,7 +10,7 @@
           {'background-color': item.color,
             'box-shadow': item.shadow
           }"></p>
-          <p [ngStyle]="{'color': item.color}">{{item.title}}</p>
+          <p [ngStyle]="{'color': item.color,'margin-top': '10px','font-size': '0.75rem'}">{{item.title}}</p>
           <div
             class="line"
             *ngIf="!(i === 3)"
@@ -160,9 +160,12 @@
           <p style="color: #FF6464;">{{detailsData?.data?.expressNum }}</p>
         </div>
       </div>
-      <div class="weui-cell">
+      <div class="weui-cell" *ngIf="
+        orderReturnStatus === 'pendingShipment' ||
+        orderReturnStatus === 'shipped' ||
+        orderReturnStatus === 'received' ||
+        orderReturnStatus === 'completed'">
         <div class="weui-cell__bd"
-             *ngIf="orderReturnStatus === 'pendingShipment' || orderReturnStatus === 'shipped' || orderReturnStatus === 'received' || orderReturnStatus === 'completed'"
              style="padding-left: 0">
           <div class="weui-uploader">
             <div class="weui-uploader__bd">
@@ -179,7 +182,7 @@
                 </li>
               </ul>
               <div class="weui-uploader__input-box">
-                <i class="icon iconfont icon-shangchuanpingzheng1"></i>
+                <i class="icon iconfont icon-shangchuanpingzheng1" style="color: #A6A6A6;"></i>
                 <input class="weui-uploader__input" type="file" accept="image/*" multiple
                        [weui-uploader-file]="uploader">
               </div>
@@ -188,26 +191,23 @@
           <weui-gallery [imgs]="img" [(show)]="imgShow" (delete)="onDel($event)"></weui-gallery>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="order-return-image"
-       *ngIf="
+      <ng-container *ngIf="orderReturnImages.length !==0">
+        <div class="weui-cell" *ngIf="
             orderReturnStatus === 'goodsReturnReview' ||
             orderReturnStatus === 'uploadVoucher' ||
-             orderReturnStatus === 'receiveGoodsReturn' ||
-             orderReturnStatus === 'goodsReturning' ||
-              orderReturnStatus === 'goodsReturned'">
-    <div class="weui-cells" style="margin-top: 0">
-      <div class="weui-cell">
-        <div class="weui-cell__bd">
-          <img class="weui-media-box__thumb"
-               *ngFor="let item of orderReturnImages"
-               [src]="item"
-               (click)="orderReturnGalleryImg=item;orderReturnGallery=true"
-               alt="">
-          <weui-gallery [imgs]="orderReturnGalleryImg" [(show)]="orderReturnGallery" [canDelete]="false"></weui-gallery>
+            orderReturnStatus === 'receiveGoodsReturn' ||
+            orderReturnStatus === 'goodsReturning' ||
+            orderReturnStatus === 'goodsReturned'">
+          <div class="weui-cell__bd">
+            <img class="weui-media-box__thumb"
+                 *ngFor="let item of orderReturnImages"
+                 [src]="item"
+                 (click)="orderReturnGalleryImg=item;orderReturnGallery=true"
+                 alt="">
+            <weui-gallery [imgs]="orderReturnGalleryImg" [(show)]="orderReturnGallery" [canDelete]="false"></weui-gallery>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   </div>
   <div class="order-return-submit" (click)="ordRefSubClick()">
