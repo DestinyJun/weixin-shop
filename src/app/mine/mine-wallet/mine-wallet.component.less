@@ -1,10 +1,74 @@
 .mine-wallet{
   background-color: #F1F1F1;
   min-height: 100vh;
-  .balance{
-    font-size: 1.3rem;
+  .mine-wallet-balance{
+    padding: 0 15px;
+    .weui-cells{
+      border-radius: 5px;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      background: linear-gradient(to right,#F19171,#F478A0);
+      text-align: center;
+      color: #fff;
+      .weui-cell__bd{
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-right: 1px solid #F49699;
+        p{
+          &:nth-child(1){
+            margin-bottom: 15px;
+          }
+        }
+      }
+      .weui-cell__ft{
+        text-align: center;
+        flex: 1;
+        color: #fff;
+        p{
+          &:nth-child(1){
+            margin-bottom: 15px;
+          }
+        }
+      }
+    }
   }
-  .mine-btns{
+  .mine-wallet-record{
+    padding: 0 15px;
+    font-size: 0.85rem;
+    .weui-cells__title{
+      margin-top: 15px;
+      padding-left: 0;
+      padding-bottom: 5px;
+      color: #B9B9B9;
+    }
+    .weui-cells{
+      border-radius: 4px;
+      margin-top: 0;
+      margin-bottom: 10px;
+      .weui-cell{
+        .weui-cell__bd{
+          font-size: 0.75rem;
+          color: #CECECE;
+          p{
+            &:nth-child(2){
+              margin-top: 10px;
+              margin-left: 0.3rem;
+            }
+          }
+        }
+        .weui-cell__ft{
+          font-size: 0.75rem;
+          color: #CECECE;
+          p{
+            &:nth-child(2){
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .mine-wallet-btns{
     text-align: center;
     .weui-cells{
       padding-top: 15px;
@@ -18,7 +82,7 @@
       }
     }
   }
-  .reminder{
+  .mine-wallet-reminder{
     padding: 15px;
     font-size: 1.2rem;
   }

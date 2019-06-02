@@ -2,10 +2,6 @@
   <app-header [option]="headerOption" (headerRightClick)="sharegHeaderRightClick()"></app-header>
   <div class="mine-shared-qrcode">
     <div class="image" *ngIf="qrImgRrl" [ngStyle]="{'background-image': 'url(' + qrImgRrl +')'}"></div>
-    <div class="qrcode">
-      <!--<img [src]="qrImgRrl" alt="图片地址无效">-->
-      <!--<qrcode [qrdata]="'Your QR code data string'" [size]="150" [level]="'L'"></qrcode>-->
-    </div>
   </div>
   <!--<div class="weui-footer weui-footer_fixed-bottom">
     <button class="weui-btn weui-btn_primary" (click)="mineSharedClick()">分享</button>

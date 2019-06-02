@@ -10,16 +10,15 @@ import {MineWalletService} from '../../common/services/mine-wallet.service';
 })
 export class MineWalletComponent implements OnInit {
   public mineBalance: any = {};
-  // public mineBalance: any = null;
   // header
   public headerOption: HeaderContent = {
     title: '我的钱包',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '收支明细',
-      color: '#86B876'
+      color: '#75B1F3'
     }
   };
   constructor(
@@ -33,7 +32,15 @@ export class MineWalletComponent implements OnInit {
         if (val.status === 200) {
           this.mineBalance['balance'] = val.data['remainingSum'] + '.00';
           this.mineBalance['withdraw'] = val.data['remainingSum'] + '.00';
+          return;
         }
+        this.router.navigate(['/error'], {
+          queryParams: {
+            msg: `获取数据失败，错误码${val.status}`,
+            url: null,
+            btn: '请重试'
+          }
+        });
       }
     );
   }

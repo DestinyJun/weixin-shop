@@ -1,26 +1,61 @@
 <div class="mine-wallet" *ngIf="mineBalance.balance;else loading">
   <app-header [option]="headerOption" (headerRightClick)="balapayClick()"></app-header>
-  <div class="balance">
+  <div class="mine-wallet-balance">
     <div class="weui-cells">
       <div class="weui-cell">
-        <div class="weui-cell__bd">
-          账户余额
+        <div class="weui-cell__bd" [routerLink]="['/mine/wallet/recharge']">
+          <p> <span>￥{{mineBalance?.balance || '0.00'}}</span></p>
+          <p>账户余额</p>
         </div>
-        <div class="weui-cell__ft">
-          <span style="color: #FF5E5E;">￥{{mineBalance?.balance || '0.00'}}</span>
-        </div>
-      </div>
-      <div class="weui-cell">
-        <div class="weui-cell__bd">
-          可提现
-        </div>
-        <div class="weui-cell__ft">
-          <span style="color: #000000;">￥{{mineBalance?.withdraw || '0.00'}}</span>
+        <div class="weui-cell__ft" [routerLink]="['/mine/wallet/withdrawal']">
+          <p> <span>￥{{mineBalance?.withdraw || '0.00'}}</span></p>
+          <p>可提现</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="mine-btns">
+  <div class="mine-wallet-record">
+    <div class="weui-cells__title">
+      支出统计
+    </div>
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p style="font-size: 0.85rem;color: #949494;">今日</p>
+          <p>6单</p>
+        </div>
+        <div class="weui-cell__ft">
+          <p style="font-size: 0.9rem;color: #F99998;">￥767.00</p>
+          <p style="font-size: 0.75rem;color: #CECECE;">2019.05.1</p>
+        </div>
+      </div>
+    </div>
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p style="font-size: 0.85rem;color: #949494;">本月</p>
+          <p>6单</p>
+        </div>
+        <div class="weui-cell__ft">
+          <p style="font-size: 0.9rem;color: #F99998;">￥767.00</p>
+          <p style="font-size: 0.75rem;color: #CECECE;">2019.05.1</p>
+        </div>
+      </div>
+    </div>
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <p style="font-size: 0.85rem;color: #949494;">年度</p>
+          <p>6单</p>
+        </div>
+        <div class="weui-cell__ft">
+          <p style="font-size: 0.9rem;color: #F99998;">￥767.00</p>
+          <p style="font-size: 0.75rem;color: #CECECE;">2019.05.1</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="mine-wallet-btns">
     <div class="weui-cells">
       <div class="weui-flex">
         <div class="weui-flex__item" [routerLink]="['/mine/wallet/withdrawal']">
@@ -33,10 +68,10 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="reminder">
+  </div>-->
+  <!--<div class="mine-wallet-reminder">
     <p style="color: #7D7D7D;">提示：对余额的说明</p>
-  </div>
+  </div>-->
 </div>
 <ng-template #loading>
   <app-loading></app-loading>

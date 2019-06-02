@@ -15,7 +15,7 @@ export class OrderAftsaleComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '选择服务类型',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '',

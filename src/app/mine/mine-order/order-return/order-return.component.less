@@ -57,10 +57,13 @@
     }
   }
   .order-return-ems{
+    padding: 0 15px;
     .weui-cells{
+      margin-top: 10px;
       .weui-cell{
-        font-size: 1rem;
+        font-size: 0.85rem;
         .weui-cell__hd{
+          color: #909090;
           position: relative;
           .badge{
             position: absolute;
@@ -71,12 +74,19 @@
         }
         .weui-cell__bd{
           padding-left: 15px;
+          .weui-input{
+            color: #DFDFDF;
+            &::placeholder{
+              color: #DFDFDF;
+            }
+          }
           .weui-uploader{
             .weui-uploader__bd{
               padding-top: 6px;
               .weui-uploader__files{
                 .weui-uploader__file{
                   position: relative;
+                  border-radius: 5px;
                   .del-icon{
                     font-size: 10px;
                     height: 13px;
@@ -95,7 +105,19 @@
                 }
               }
               .weui-uploader__input-box{
+                border: 1px solid transparent;
                 border-radius: 5px;
+                line-height: 77px;
+                text-align: center;
+                i{
+                  font-size: 77px;
+                }
+                &:before{
+                  content: unset;
+                }
+                &:after{
+                  content: unset;
+                }
               }
             }
           }

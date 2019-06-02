@@ -19,11 +19,11 @@ export class MineSharedComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '邀请你加入团队',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '换个样式',
-      color: '#86B876'
+      color: '#75B1F3'
     }
   };
   public qrImgRrl: string = null;
