@@ -1,6 +1,6 @@
 .order-details{
   height: 100vh;
-  background-color: #F1F1F1;
+  background-color: #F5F5F5;
   position: relative;
   .order-details-header{
     position: fixed;
@@ -28,34 +28,55 @@
     }
   }
   .order-details-adress{
-    font-size: 15px;
+    margin: 10px 15px 0 15px;
+    font-size: 0.85rem;
     padding: 10px 15px;
     background-color: #fff;
+    color: #838383;
+    p{
+      span{
+        margin-right: 15px;
+        color: #B7B7B7;
+      }
+    }
   }
   .order-details-product{
-    margin-top: 15px;
+    margin-top: 10px;
+    padding: 0 15px;
     .weui-panel{
+      .weui-cell{
+        &:before{
+          left: 0;
+        }
+      }
       .weui-panel__bd{
         .weui-total{
-          font-size: 1rem;
+          border-top: 1px solid #F4F4F4;
+          font-size: 0.85rem;
           padding: 10px 15px;
           overflow: hidden;
           .pull-left{
-            text-align: center;
-            font-size: 1rem;
-            border: 1px solid #868686;
-            border-radius: 10px;
-            background-color: #fff;
-            padding: 0 10px;
+            border: 1px solid #C1C1C1;
+            border-radius: 0.7rem;
+            font-size: 0.7rem;
+            padding: 2px 15px;
+            color: #A4A4A4;
           }
         }
       }
     }
   }
   .order-details-att{
+    padding: 0 15px;
     margin-bottom: 65px;
     .weui-cells{
-      font-size: 1rem;
+      font-size: 0.85rem;
+      color: #CACACA;
+      .weui-cell{
+        &:before{
+          content: unset;
+        }
+      }
     }
   }
   .order-details-footer{
@@ -70,20 +91,20 @@
       align-items: center;
       span{
         display: inline-block;
-        width: 80px;
         height: 30px;
+        width: 4rem;
         line-height: 30px;
         text-align: center;
-        font-size: 1rem;
-        border: 1px solid #868686;
-        border-radius: 10px;
+        font-size: 0.75rem;
+        border: 1px solid #E5E5E5;
+        border-radius: 0.85rem;
         background-color: #fff;
-        padding: 0 15px;
+        padding: 0 10px;
         &:nth-child(2){
           margin-left: 15px;
-          background-color: #7FB56E;
+          background-color: #559FF0;
           color:white;
-          border-color: #7FB56E;
+          border-color: #559FF0;
         }
       }
     }

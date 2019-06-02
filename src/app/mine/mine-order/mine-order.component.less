@@ -3,6 +3,7 @@
   background-color: #F1F1F1;
   overflow: hidden;
   position: relative;
+  color: #9A9A9A;
   .mine-order-header{
     position: fixed;
     width: 100vw;
@@ -13,6 +14,7 @@
   .mine-order-select{
     text-align: center;
     padding-top: 60px;
+    color: #9E9E9E;
     .weui-cells{
       margin-top: 0;
       .weui-flex{
@@ -21,7 +23,7 @@
             padding-top: 10px;
             padding-bottom: 10px;
             :nth-child(2){
-              color: #BEBEBE;
+              color: #E2E2E2;
             }
           }
         }
@@ -43,6 +45,7 @@
         }
         .weui-panel__bd{
           .weui-cell{
+            align-items: unset;
             .weui-cell__ft{
               span.minus > em{
                 font-size: 3rem;
@@ -63,9 +66,15 @@
             }
           }
           .weui-total{
-            font-size: 1rem;
+            font-size: 0.85rem;
             padding: 10px 15px;
             overflow: hidden;
+            .pull-left{
+              border: 1px solid #C1C1C1;
+              border-radius: 15px;
+              font-size: 0.7rem;
+              padding: 2px 15px;
+            }
           }
         }
         .weui-panel__ft{
@@ -73,10 +82,10 @@
           .weui-flex{
             :nth-child(2){
               border-left: 1px solid #F1F1F1;
-              color: #85B875;
+              color: #86BBF5;
             }
             .weui-flex__item{
-              font-size: 1rem;
+              font-size: 0.85rem;
               text-align: center;
               padding-top: 15px;
               padding-bottom: 15px;

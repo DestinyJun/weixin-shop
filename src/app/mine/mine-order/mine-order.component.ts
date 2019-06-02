@@ -18,7 +18,7 @@ export class MineOrderComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '我的订单',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '',
@@ -38,33 +38,35 @@ export class MineOrderComponent implements OnInit {
   public mOrderList: any = null;
   // order status
   public orderStates: any = {
-    pendingPayment: {name: '待付款', color: 'red', operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
-    pendingShipment: {name: '待发货', color: '#7FB56E', operating: []},
-    shipped: {name: '待收货', color: '#7FB56E', operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: null}]},
-    received: {name: '已收货', color: 'red', operating: []},
-    completed: {name: '已完成', color: '#7FB56E', operating: [{title: '再下一单', routes: '/order'}]},
-    canceled: {name: '已取消', color: '#A0A0A0', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
-    failed: {name: '已取消', color: '#A0A0A0', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
+    pendingPayment: {name: '待付款', color: '#F28382', services: '',
+      operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
+    pendingShipment: {name: '待发货', color: '#73B0F3', services: '退款/售后', operating: []},
+    shipped: {name: '待收货', color: '#69AAF2', services: '退款/售后',
+      operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: null}]},
+    received: {name: '已收货', color: 'red', services: '退款/售后', operating: []},
+    completed: {name: '已完成', color: '#7AB4F3', services: '退款/售后', operating: [{title: '再下一单', routes: '/order'}]},
+    canceled: {name: '已取消', color: '#A0A0A0', services: '', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
+    failed: {name: '已取消', color: '#A0A0A0', services: '', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
 
-    refundReview: {name: '退款审核', color: 'red',
+    refundReview: {name: '退款审核', color: '#F28382', services: '',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
-    refundding: {name: '退款中', color: 'red',
+    refundding: {name: '退款中', color: '#F28382', services: '',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
-    refundded: {name: '已退款', color: 'red',
+    refundded: {name: '已退款', color: '#F28382', services: '',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
 
-    goodsReturnReview: {name: '退货退款审核', color: 'red',
+    goodsReturnReview: {name: '退货退款审核', color: '#F28382', services: '',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
-    uploadVoucher: {name: '上传凭证', color: 'red',
+    uploadVoucher: {name: '上传凭证', color: '#F28382', services: '',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
-    receiveGoodsReturn: {name: '卖家收到退货', color: 'red',
+    receiveGoodsReturn: {name: '卖家收到退货', color: '#F28382', services: '',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
-    goodsReturning: {name: '退货中', color: 'red',
+    goodsReturning: {name: '退货中', color: '#F28382', services: '',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
-    goodsReturned: {name: '已退货', color: 'red',
+    goodsReturned: {name: '已退货', color: '#F28382', services: '',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
 
-    pendingReview: {name: '待审核', color: 'red', operating: []},
+    pendingReview: {name: '待审核', color: '#F28382', services: '', operating: []},
   };
   // scroll
   @ViewChild(InfiniteLoaderComponent) il;

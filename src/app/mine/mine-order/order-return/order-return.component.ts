@@ -17,7 +17,7 @@ export class OrderReturnComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '申请退货',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '',
@@ -41,10 +41,10 @@ export class OrderReturnComponent implements OnInit {
   public orderReturnGallery = false;
   public orderReturnGalleryImg: any = null;
   public orderReturnProgress: any = [
-    {title: '填写申请', subtitle: false, color: '#7FB56E', shadow: '0 0 0 3px #BFDAB6', },
-    {title: '货物寄回', subtitle: false, color: '#969696', shadow: '0 0 0 3px #969696', },
-    {title: '商家收货', subtitle: false, color: '#969696', shadow: '0 0 0 3px #969696', },
-    {title: '退款成功', subtitle: false, color: '#969696', shadow: '0 0 0 3px #969696', },
+    {title: '填写申请', subtitle: false, color: '#559FF0', shadow: '0 0 0 3px #B9DAFF', },
+    {title: '货物寄回', subtitle: false, color: '#A6A6A6', shadow: '0 0 0 3px #D0D0D0', },
+    {title: '商家收货', subtitle: false, color: '#A6A6A6', shadow: '0 0 0 3px #D0D0D0', },
+    {title: '退款成功', subtitle: false, color: '#A6A6A6', shadow: '0 0 0 3px #D0D0D0', },
   ];
   // upload
   @Input() url = 'example';

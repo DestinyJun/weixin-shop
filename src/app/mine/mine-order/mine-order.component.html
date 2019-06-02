@@ -9,15 +9,14 @@
            *ngFor="let item of mOrderStatusList"
            (click)="mOrderStatusSelect(item?.status)"
            [ngStyle]="{
-           'background-color':orderSelectStatus === item?.status?'#85B875':'',
-           'color':orderSelectStatus === item?.status?'white':''
+           'color':orderSelectStatus === item?.status?'#83B9F4':''
            }"
         >
           <div class="placeholder">
             <p style="font-size: 1rem">{{item?.name}}</p>
             <p
               [ngStyle]="{
-           'color':orderSelectStatus === item?.status?'white':''
+           'color':orderSelectStatus === item?.status?'#D4E9FF':''
            }"
               style="font-size: 0.8rem;">{{item?.amount}}</p>
           </div>
@@ -36,8 +35,8 @@
             <div class="weui-panel__hd" [routerLink]="['/mine/order/detail', childItem.id]">
               <div class="weui-cell">
                 <div class="weui-cell__bd" style="vertical-align: middle">
+                  <p style="font-size: 1rem;color: #5E5E5E;">客户：{{childItem?.addressModel?.name}}</p>
                   <p>订单号：{{childItem?.sn}}</p>
-                  <p style="font-size: 1rem;color: #5E5E5E;">{{childItem?.user?.username}}</p>
                 </div>
                 <div class="weui-cell__ft">
                   <p [ngStyle]="{'color': orderStates[childItem?.status]?.color,'vertical-align': 'middle'}">{{orderStates[childItem?.status]?.name}}</p>
@@ -54,18 +53,22 @@
                        alt="图片无效">
                 </div>
                 <div class="weui-cell__bd">
-                  <p style="font-size: 1.1rem;">{{props?.goods?.title}}</p>
-                  <p style="font-size: 0.8rem;color: #888888;">{{props?.goods?.info}}</p>
+                  <p style="font-size: 1rem;color: #868686;">{{props?.goods?.title}}</p>
+                  <p style="font-size: 0.8rem;color: #CECECE;">{{props?.goods?.info}}</p>
+                  <p style="font-size: 1rem;color: #C4C4C4;">￥{{props?.price}}</p>
                 </div>
                 <div class="weui-cell__ft">
-                  <p>￥{{props?.price}}</p>
                   <p>x{{props?.quantity}}</p>
                 </div>
               </div>
               <div class="weui-total">
+                <span
+                  *ngIf="orderStates[childItem.status]?.services"
+                  class="pull-left"
+                  [routerLink]="['/mine/order/aftsale', childItem?.id]">{{orderStates[childItem?.status]?.services}}</span>
                 <p class="pull-right">
-                  <span>共{{childItem.moyaoOrderItemModels.length}}件商品 合计：</span>
-                  <span style="color: #FF4343;">￥{{childItem?.price}}</span>
+                  <span style="color: #919191;">共{{childItem.moyaoOrderItemModels.length}}件商品 合计：</span>
+                  <span style="color: #F28382;">￥{{childItem?.price}}</span>
                 </p>
               </div>
             </div>
@@ -76,7 +79,7 @@
                      (click)="mineOrderOperate(param, childItem, childItem?.status)">
                   <span
                     [ngStyle]="{
-           'color':param?.title === '再下一单'?'#85B875':''}"
+           'color':param?.title === '再下一单'?'#7AB4F3':''}"
                   >{{param?.title}}</span>
                 </div>
               </div>

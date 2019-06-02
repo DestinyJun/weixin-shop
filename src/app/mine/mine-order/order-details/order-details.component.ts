@@ -17,7 +17,7 @@ export class OrderDetailsComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '订单详情',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '',
@@ -35,34 +35,34 @@ export class OrderDetailsComponent implements OnInit {
   public detailsData: Observable<any>;
   // order status
   public orderDetailStates: any = {
-    pendingPayment: {name: '待付款', bgColor: ['#B66F6E', '#F49C9A'], services: '',
+    pendingPayment: {name: '待付款', bgColor: ['#7CC2FC', '#BEA9FA'], services: '',
       operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
-    pendingShipment: {name: '待发货', bgColor: ['#B66F6E', '#F49C9A'], services: '申请退款', operating: []},
-    shipped: {name: '待收货', bgColor: ['#80B66F', '#B0F49A'], services: '申请退款',
+    pendingShipment: {name: '待发货', bgColor: ['#7C9CFC', '#ACDAF9'], services: '退款/售后', operating: []},
+    shipped: {name: '待收货', bgColor: ['#F19270', '#F478A0'], services: '退款/售后',
       operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: ''}]},
     received: {name: '已收货', bgColor: [], operating: ['#80B66F', '#B0F49A']},
-    completed: {name: '已完成', bgColor: ['#80B66F', '#B0F49A'], services: '申请退款',
+    completed: {name: '已完成', bgColor: ['#F1926F', '#F477A1'], services: '退款/售后',
       operating: [{title: '再下一单', routes: '/order'}]},
     canceled: {name: '已取消', bgColor: ['#8E8E8E', '#C2C2C2'], services: '',
       operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: ''}]},
-    failed: {name: '已取消', bgColor: ['#8E8E8E', '#C2C2C2'], services: '',
+    failed: {name: '已取消', bgColor: ['#9E9E9E', '#DFDFDF'], services: '',
       operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: ''}]},
 
-    goodsReturnReview: {name: '退货退款审核中...', bgColor: ['#B66F6E', '#F49C9A'],
+    goodsReturnReview: {name: '退货退款审核中...', bgColor: ['#FF7070', '#FB9B9B'],
       operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
-    goodsReturning: {name: '退货中', bgColor: ['#B66F6E', '#F49C9A'], services: '',
+    goodsReturning: {name: '退货中', bgColor: ['#FF7070', '#FB9B9B'], services: '',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
-    goodsReturned: {name: '已退货', bgColor: ['#B66F6E', '#F49C9A'],
+    goodsReturned: {name: '已退货', bgColor: ['#FF7070', '#FB9B9B'],
       operating: [{title: '再次购买', routes: '/order'}, {title: '退货进度', routes: '/mine/order/return'}]},
 
-    refundReview: {name: '退款审核中', bgColor: ['#B66F6E', '#F49C9A'],
+    refundReview: {name: '退款审核中', bgColor: ['#FF7070', '#FB9B9B'],
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
-    refundding: {name: '退款中', bgColor: ['#B66F6E', '#F49C9A'], services: '',
+    refundding: {name: '退款中', bgColor: ['#FF7070', '#FB9B9B'], services: '',
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
-    refundded: {name: '已退款', bgColor: ['#B66F6E', '#F49C9A'],
+    refundded: {name: '已退款', bgColor: ['#FF7070', '#FB9B9B'],
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
 
-    pendingReview: {name: '待审核', bgColor: ['#B66F6E', '#F49C9A'], operating: []}};
+    pendingReview: {name: '待审核', bgColor: ['#FF7070', '#FB9B9B'], operating: []}};
 
 
   constructor(

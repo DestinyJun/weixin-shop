@@ -79,24 +79,24 @@
         <div class="weui-panel__hd">
           <div class="weui-cell">
             <div class="weui-cell__bd">
-              <p>订单号：{{detailsData?.data?.sn}}</p>
+              <p style="font-size:  0.8rem">订单号：{{detailsData?.data?.sn}}</p>
             </div>
             <div class="weui-cell__ft">
-              <span style="color: #ACACAC;">{{detailsData?.data?.createdDate}}</span></div>
+              <span style="font-size:  0.8rem;color: #C4C4C4;">{{detailsData?.data?.createdDate}}</span></div>
           </div>
         </div>
         <div class="weui-panel__bd">
-          <div class="weui-cell" *ngFor="let item of detailsData?.data?.moyaoOrderItemModels; let i = index">
+          <div class="weui-cell" style="align-items: unset;" *ngFor="let item of detailsData?.data?.moyaoOrderItemModels; let i = index">
             <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
               <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item?.goods?.mainImage"
                    alt="">
             </div>
             <div class="weui-cell__bd">
-              <p style="font-size: 1.1rem;">{{item?.goods?.title}}</p>
-              <p style="font-size: 0.8rem;color: #888888;">{{item?.goods?.info}}</p>
+              <p style="font-size: 1rem;color: #848484;">{{item?.goods?.title}}</p>
+              <p style="font-size: 0.8rem;">{{item?.goods?.info}}</p>
+              <p style="font-size: 1rem;">￥{{item?.goods?.originalPrice}}</p>
             </div>
             <div class="weui-cell__ft">
-              <p>￥{{item?.goods?.originalPrice}}</p>
               <p>x{{item?.quantity}}</p>
             </div>
           </div>
@@ -104,7 +104,8 @@
         <div class="weui-panel__ft">
           <div class="weui-cell">
             <div class="weui-cell__bd">
-              <p>退款金额：<span style="color: #FF6464;">{{detailsData?.data?.amount}}元</span></p>
+              <span style="color: #848484;">共计数量： {{detailsData?.data?.moyaoOrderItemModels.length}}</span>
+              <p class="pull-right" style="color: #848484;">退款金额：<span style="color: #FF6464;">{{detailsData?.data?.amount}}元</span></p>
             </div>
           </div>
         </div>
@@ -178,6 +179,7 @@
                 </li>
               </ul>
               <div class="weui-uploader__input-box">
+                <i class="icon iconfont icon-shangchuanpingzheng1"></i>
                 <input class="weui-uploader__input" type="file" accept="image/*" multiple
                        [weui-uploader-file]="uploader">
               </div>
