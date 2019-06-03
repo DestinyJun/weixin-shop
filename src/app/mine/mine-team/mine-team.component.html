@@ -3,8 +3,10 @@
     <app-header [option]="headerOption" (headerRightClick)="mineTeamInClient()"></app-header>
   </div>
   <div class="mine-team-earnings">
-    <p style="color: #EA5559;font-size: 1.5rem">{{mineTeamDate?.mainSum}}</p>
-    <p style="color: #6E6E6E;font-size: 1.1rem">团队总收益</p>
+    <p style="color: #ffffff;font-size: 1.1rem">
+      <span>￥ </span>{{mineTeamDate?.mainSum}}
+    </p>
+    <p style="color: #ffffff;font-size: 0.75rem;margin-top: 10px">团队总收益</p>
   </div>
   <div class="mine-team-tab">
     <weui-navbar>
@@ -13,9 +15,9 @@
           <div class="list">
             <div class="weui-cells">
               <div class="weui-cell">
-                <div class="weui-cell__bd" (click)="selectMonthClick()">
+               <!-- <div class="weui-cell__bd" (click)="selectMonthClick()">
                   <span>按月选择</span>
-                </div>
+                </div>-->
                 <div class="weui-cell__ft">
                   <span>本月收益：￥{{mineTeamDate?.detailsSum}}</span>
                 </div>
