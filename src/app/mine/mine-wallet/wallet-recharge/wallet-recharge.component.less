@@ -2,12 +2,55 @@
   min-height: 100vh;
   background-color: #F1F1F1;
   position: relative;
-  .recharge-button{
-    padding-top: 15px;
+  .wallet-recharge-input{
+    .weui-cells_form{
+      .weui-cell{
+        .weui-cell__hd{
+          label{
+            width: 40px;
+            font-size: 1.4rem;
+            color: #646464;
+          }
+        }
+        .weui-cell__bd{
+          .weui-input{
+            font-size: 0.95rem;
+            color: #6F6F6F;
+            &::placeholder{
+              font-size: 0.85rem;
+              color: #D1D1D1;
+            }
+          }
+        }
+      }
+    }
+    .weui-cells__title{
+      font-size: 0.75rem;
+      color: #8D8D8D;
+    }
+  }
+  .wallet-recharge-button{
+    padding-top: 10px;
     padding-left: 15px;
     padding-right: 15px;
+    .weui-btn{
+      font-size: 0.85rem;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      &:after{
+        border: unset;
+      }
+    }
+    .weui-btn_disabled.weui-btn_primary {
+      background: #D0D0D0;
+      color: #757575;
+    }
+    .weui-btn_primary{
+      color: #ffffff;
+      background: linear-gradient(to right,#F19270,#F477A1);
+    }
   }
-  .recharge-mask{
+  .wallet-recharge-mask{
     .weui-mask{
       .weui-mask__content{
         .weui-cells{
@@ -15,6 +58,22 @@
           bottom: 0;
           left: 0;
           width: 100vw;
+          color: #666666;
+          font-size: 0.85rem;
+          .weui-cell{
+            .weui-btn{
+              &:after{
+                border: unset;
+              }
+            }
+            .weui-btn_primary{
+              padding-top: 5px;
+              padding-bottom: 5px;
+              font-size: 0.85rem;
+              color: #ffffff;
+              background: linear-gradient(to right,#F19270,#F477A1);
+            }
+          }
         }
       }
     }

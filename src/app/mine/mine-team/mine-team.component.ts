@@ -16,11 +16,11 @@ export class MineTeamComponent implements OnInit, OnDestroy {
   public headerOption: HeaderContent = {
     title: '我的团队',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '收益明细',
-      color: '#86B876'
+      color: '#88BCF4'
     }
   };
   // scroll

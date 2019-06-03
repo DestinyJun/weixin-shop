@@ -9,7 +9,7 @@ const tabRoutes: Routes = [
   {path: '', component: MineWalletComponent},
   {path: 'balapay', component: WalletBalapayComponent},
   {path: 'recharge', component: WalletRechargeComponent},
-  {path: 'success/:status', component: WalletSuccessComponent},
+  {path: 'success', component: WalletSuccessComponent},
   {path: 'withdrawal', component: WalletWithdrawalComponent},
 ];
 @NgModule({

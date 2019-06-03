@@ -18,7 +18,7 @@ export class WalletRechargeComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '余额充值',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       color: ''
@@ -55,6 +55,11 @@ export class WalletRechargeComponent implements OnInit {
     );
   }
   public rechargePayClick() {
+    this.router.navigate(['/mine/wallet/success'], {
+      queryParams: {
+        amount: this.rechargeAmount,
+        status: 1
+    }});
     this.rechargeMask.hide();
     this.mineWalletPayShow = true;
     // this.router.navigate(['/mine/wallet/success/1']);
@@ -83,7 +88,6 @@ export class WalletRechargeComponent implements OnInit {
         console.log(val);
         if (val.status === 200) {
           this.onBridgeReady(val.dataObject);
-          // this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
         }
       });
   }
@@ -108,7 +112,7 @@ export class WalletRechargeComponent implements OnInit {
   }
   // weixin pay
   public onBridgeReady(obj) {
-    console.log(obj);
+    const that = this;
     WeixinJSBridge.invoke(
       'getBrandWCPayRequest', obj,
       function (res) {
@@ -117,6 +121,7 @@ export class WalletRechargeComponent implements OnInit {
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
           // 使用以上方式判断前端返回,微信团队郑重提示：
           // res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+          that.router.navigate(['/pay/success'], {queryParams: {amount: that.rechargeAmount}});
           console.log(res);
         }
       });

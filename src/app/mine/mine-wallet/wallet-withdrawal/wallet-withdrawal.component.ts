@@ -15,7 +15,7 @@ export class WalletWithdrawalComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '提现',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       color: ''
@@ -42,14 +42,20 @@ export class WalletWithdrawalComponent implements OnInit {
   }
 
   public balanceChange() {
+    console.log(this.balanceAmount === null);
     this.withdrawalBtn = false;
     if (this.balanceAmount > this.balance) {
       this.withdrawalStatus = true;
       this.withdrawalBtn = true;
-    } else {
-      this.withdrawalStatus = false;
-      this.withdrawalBtn = false;
+      return;
     }
+    if (this.balanceAmount === null) {
+      this.withdrawalStatus = false;
+      this.withdrawalBtn = true;
+      return;
+    }
+    this.withdrawalStatus = false;
+    this.withdrawalBtn = false;
   }
   public onDialogPayClick(event): void {
     this.dialogPayShow = event.show;

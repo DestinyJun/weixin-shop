@@ -7,15 +7,17 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./wallet-success.component.less']
 })
 export class WalletSuccessComponent implements OnInit {
-  public successStatus: number;
+  public successStatus: number = null;
+  public successAmount: number = null;
   constructor(
     private routeInfo: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.routeInfo.params.subscribe(
+    this.routeInfo.queryParams.subscribe(
       (val) => {
         this.successStatus = val.status;
+        this.successAmount = val.amount;
       }
     );
   }

@@ -1,5 +1,7 @@
 <div class="mine-wallet" *ngIf="mineBalance.balance;else loading">
-  <app-header [option]="headerOption" (headerRightClick)="balapayClick()"></app-header>
+  <div class="mine-wallet-header">
+    <app-header [option]="headerOption" (headerRightClick)="balapayClick()"></app-header>
+  </div>
   <div class="mine-wallet-balance">
     <div class="weui-cells">
       <div class="weui-cell">

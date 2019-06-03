@@ -6,23 +6,30 @@
         <div class="weui-cell">
           <div class="weui-cell__bd">可提现金额</div>
           <div class="weui-cell__ft">
-            <span style="color: #FF5E5E;font-size: 1.3rem">￥{{balance}}</span>
+            <span style="color: #66A9F1;font-size: 1.1rem">￥{{balance}}</span>
           </div>
         </div>
-        <div class="weui-cell">
-          <div class="weui-cell__hd"><label class="weui-label">￥</label></div>
+        <div class="weui-cell" style="border-top: 1px solid #EAEAEA">
+          <div class="weui-cell__hd">
+            <label class="weui-label">￥</label>
+          </div>
           <div class="weui-cell__bd">
-            <input class="weui-input" type="number" pattern="[0-9]*" [placeholder]="'本次最多转出'+balance+'元'" [(ngModel)]="balanceAmount" (input)="balanceChange()">
+            <input class="weui-input" type="number" pattern="[0-9]*" [placeholder]="'本次最多转出'+balance+'元'" [(ngModel)]="balanceAmount" (ngModelChange)="balanceChange()">
           </div>
         </div>
       </div>
     </div>
-    <div class="weui-cells__title">
-      <span *ngIf="!withdrawalStatus">说明：提现到微信钱包</span>
-      <span *ngIf="withdrawalStatus" style="color: red;">输入金额大于可提现余额</span>
+    <div class="wallet-recharge-remind">
+      <div class="weui-cells__title">
+        <span *ngIf="!withdrawalStatus">说明：提现到微信钱包</span>
+        <span *ngIf="withdrawalStatus" style="color: #F28783;">输入金额大于可提现余额</span>
+      </div>
     </div>
-    <div class="recharge-button">
-      <button class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled': withdrawalBtn}" [disabled]="withdrawalBtn" (click)="dialogPayShow = true">立即提现</button>
+    <div class="wallet-withdrawal-button">
+      <button
+        class="weui-btn weui-btn_primary"
+        [ngClass]="{'weui-btn_disabled': withdrawalBtn}"
+        [disabled]="withdrawalBtn" (click)="dialogPayShow = true">立即提现</button>
     </div>
     <div class="wallet-withdrawal-pay">
       <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayOnchange)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>
@@ -32,7 +39,7 @@
     </div>
   </ng-container>
   <div style="text-align: center;color: #7E7E7E;font-weight: bold;margin-top: 30%">
-    <span>功能正在开发中，等待微信审核！</span>
+    <span style="font-size: 0.85rem">功能正在开发中，等待微信审核！</span>
   </div>
 </div>
 

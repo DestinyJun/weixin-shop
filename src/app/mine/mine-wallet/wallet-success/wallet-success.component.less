@@ -1,11 +1,46 @@
 .wallet-success{
   height: 100vh;
-  background-color: #F1F1F1;
+  background-color: #F5F5F5;
   position: relative;
   overflow: hidden;
   .weui-msg{
     background: white;
     padding-bottom: 1px;
     margin: 15px 15px 0 15px;
+    padding-top: 0;
+    .weui-msg__icon-area{
+      margin-bottom: 0;
+      .iconfont{
+        font-size: 5rem;
+        color: #559FF0;
+      }
+    }
+    .weui-msg__text-area{
+      margin-bottom: 0;
+      .weui-msg__title{
+        font-size: 1rem;
+        color: #686868;
+      }
+      .weui-msg__desc{
+        font-size: 0.85rem;
+        color: #848484;
+      }
+    }
+  }
+  .weui-msg__opr-area{
+    .weui-btn-area{
+      .weui-btn{
+        &:after{
+          border: unset;
+        }
+      }
+      .weui-btn_primary{
+        font-size: 0.85rem;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        color: #ffffff;
+        background: linear-gradient(to right,#F1926F,#F477A1);
+      }
+    }
   }
 }

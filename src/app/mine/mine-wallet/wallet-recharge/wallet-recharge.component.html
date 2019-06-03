@@ -1,20 +1,23 @@
 <div class="wallet-recharge">
+  <div class="wallet-recharge-hader"></div>
   <app-header [option]="headerOption"></app-header>
   <div class="wallet-recharge-input">
-    <div class="weui-cells__title">充值后，您可方便快捷的使用余额支付。</div>
     <div class="weui-cells weui-cells_form">
       <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">￥</label></div>
+        <div class="weui-cell__hd">
+          <label class="weui-label">￥</label>
+        </div>
         <div class="weui-cell__bd">
           <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入金额" [(ngModel)]="rechargeAmount">
         </div>
       </div>
     </div>
+    <div class="weui-cells__title">充值后，您可方便快捷的使用余额支付</div>
   </div>
-  <div class="recharge-button">
+  <div class="wallet-recharge-button">
     <button class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled': !rechargeAmount}" [disabled]="!rechargeAmount" (click)="this.rechargeClick()">立即充值</button>
   </div>
-  <div class="recharge-mask">
+  <div class="wallet-recharge-mask">
     <weui-mask #rechargeMask>
       <div class="weui-cells">
         <div class="weui-cell" style="padding: 10px 0 10px 15px">
@@ -22,7 +25,7 @@
             <span style="vertical-align: middle">付款详情</span>
           </div>
           <div class="weui-cell__ft" style="text-align: center;width: 2rem" (click)="this.rechargeMask.hide()">
-            <i class="fa fa-times" aria-hidden="true"></i>
+            <i class="icon iconfont icon-guanbi" aria-hidden="true" style="font-size: 0.75rem"></i>
           </div>
         </div>
         <div class="weui-cell">

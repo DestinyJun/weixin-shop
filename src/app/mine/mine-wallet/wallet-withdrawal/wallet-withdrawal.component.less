@@ -1,11 +1,59 @@
 .wallet-withdrawal{
   min-height: 100vh;
-  background-color: #F1F1F1;
+  background-color: #F5F5F5;
   position: relative;
-  .recharge-button{
+  .wallet-recharge-input{
+    padding: 10px 15px 0 15px;
+    .weui-cells{
+      border-radius: 3px;
+      .weui-cell{
+        .weui-cell__bd{
+          font-size: 0.9rem;
+          color: #747474;
+          .weui-input{
+            font-size: 0.85rem;
+            &::placeholder{
+              font-size: 0.85rem;
+              color: #D3D3D3;
+            }
+          }
+        }
+        .weui-cell__hd{
+          label{
+            font-size: 1.3rem;
+            width: 30px;
+            color: #5E5E5E;
+          }
+        }
+      }
+    }
+  }
+  .wallet-withdrawal-button{
     padding-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
+    .weui-btn{
+      font-size: 0.85rem;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      &:after{
+        border: unset;
+      }
+    }
+    .weui-btn_disabled.weui-btn_primary {
+      background: #D0D0D0;
+      color: #757575;
+    }
+    .weui-btn_primary{
+      color: #ffffff;
+      background: linear-gradient(to right,#F19270,#F477A1);
+    }
+  }
+  .wallet-recharge-remind{
+    .weui-cells__title{
+      font-size: 0.75rem;
+      color: #959595;
+    }
   }
   .wallet-withdrawal-pay{
     .weui-dialog{

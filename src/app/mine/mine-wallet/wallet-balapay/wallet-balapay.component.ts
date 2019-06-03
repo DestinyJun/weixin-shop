@@ -19,11 +19,11 @@ export class WalletBalapayComponent implements OnInit, OnDestroy {
   public headerOption: HeaderContent = {
     title: '收支明细',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
-      icon: 'icon iconfont icon-shaixuan',
-      color: '#39A12D'
+      title: '筛选',
+      color: '#66A9F1'
     }
   };
   // data
