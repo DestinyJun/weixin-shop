@@ -3,44 +3,62 @@
     <app-header [option]="headerOption"></app-header>
   </div>
   <div class="weui-msg" style="padding-top: 0">
-    <div class="weui-msg__icon-area" [ngStyle]="{'color': earningStatusList[teamBillDetail?.earningStatus][1]}" style="margin-bottom: 0">
-      <i style="font-size: 3rem" class="icon iconfont icon-shouyidaozhang"></i>
+    <div
+      class="weui-msg__icon-area"
+      [ngStyle]="{'color': earningStatusList[teamBillDetail?.earningStatus][1]}"
+      style="margin-bottom: 0">
+      <i style="font-size: 3rem" class="icon iconfont icon-zhangdanxiangqing-tuanduishouyi"></i>
     </div>
     <div class="weui-msg__text-area">
-      <h2 class="weui-msg__title" [ngStyle]="{'color': earningStatusList[teamBillDetail?.earningStatus][1]}">团队收益</h2>
-      <h2 class="weui-msg__title" [ngStyle]="{'color': earningStatusList[teamBillDetail?.earningStatus][1]}">+{{teamBillDetail?.earning}}</h2>
+      <h2
+        class="weui-msg__title"
+        style="font-size: 1rem"
+        [ngStyle]="{'color': earningStatusList[teamBillDetail?.earningStatus][1]}">
+        团队收益
+      </h2>
+      <h2
+        class="weui-msg__title"
+        style="font-size: 1rem"
+        [ngStyle]="{'color': earningStatusList[teamBillDetail?.earningStatus][1]}">
+        +{{teamBillDetail?.earning}}
+      </h2>
+      <h2
+        class="weui-msg__title"
+        style="font-size: 0.75rem;color: #BABABA;">
+        {{teamBillDetail?.createdDate}}
+      </h2>
     </div>
     <div class="weui-cells">
       <div class="weui-cell">
-        <div class="weui-cell__hd" style="color:#C8C8C8">当前状态</div>
+        <div class="weui-cell__hd" style="color:#D7D7D7">当前状态</div>
         <div class="weui-cell__bd" [ngStyle]="{'color': earningStatusList[teamBillDetail?.earningStatus][1]}">{{earningStatusList[teamBillDetail?.earningStatus][0]}}</div>
       </div>
       <div class="weui-cell">
-        <div class="weui-cell__hd" style="color:#C8C8C8">成员姓名</div>
-        <div class="weui-cell__bd" style="color: #707071;">{{teamBillDetail?.user.nikeName}}</div>
+        <div class="weui-cell__hd" style="color:#D7D7D7">成员姓名</div>
+        <div class="weui-cell__bd" style="color: #979797;">{{teamBillDetail?.user.nikeName}}</div>
       </div>
       <div class="weui-cell" *ngIf="teamBillDetail?.earningStatus === 'earned'">
-        <div class="weui-cell__hd" style="color:#C8C8C8">收益时间</div>
+        <div class="weui-cell__hd" style="color:#D7D7D7">收益时间</div>
         <div class="weui-cell__bd" [ngStyle]="{'color': earningStatusList[teamBillDetail?.earningStatus][1]}">2018-11-08<span style="margin-left: 15px">10:12:14</span></div>
       </div>
       <div class="weui-cell" *ngIf="teamBillDetail?.earningStatus === 'earning'">
-        <div class="weui-cell__hd" style="color:#C8C8C8">预计入账时间</div>
+        <div class="weui-cell__hd" style="color:#D7D7D7">预计入账时间</div>
         <div class="weui-cell__bd" [ngStyle]="{'color': earningStatusList[teamBillDetail?.earningStatus][1]}">2018-11-08<span style="margin-left: 15px">10:12:14</span></div>
       </div>
       <div class="weui-cell">
-        <div class="weui-cell__hd" style="color:#C8C8C8">订单号</div>
-        <div class="weui-cell__bd" style="color: #707071;">{{teamBillDetail?.sn}}</div>
+        <div class="weui-cell__hd" style="color:#D7D7D7">订单号</div>
+        <div class="weui-cell__bd" style="color: #979797;">{{teamBillDetail?.sn}}</div>
       </div>
       <div class="weui-cell">
-        <div class="weui-cell__hd" style="color:#C8C8C8">支付时间</div>
-        <div class="weui-cell__bd" style="color: #707071;">{{teamBillDetail?.amountLog?.createdDate}}</div>
+        <div class="weui-cell__hd" style="color:#D7D7D7">支付时间</div>
+        <div class="weui-cell__bd" style="color: #979797;">{{teamBillDetail?.amountLog?.createdDate}}</div>
       </div>
       <div class="weui-cell">
-        <div class="weui-cell__hd" style="color:#C8C8C8">支付方式</div>
-        <div class="weui-cell__bd" style="color: #707071;">{{teamBillDetail?.amountLog?.payType === 'Wallet'?'钱包支付':'微信支付'}}</div>
+        <div class="weui-cell__hd" style="color:#D7D7D7">支付方式</div>
+        <div class="weui-cell__bd" style="color: #979797;">{{teamBillDetail?.amountLog?.payType === 'Wallet'?'钱包支付':'微信支付'}}</div>
       </div>
       <div class="weui-cell" *ngIf="teamBillDetail?.earningStatus === 'earnFailed'">
-        <div class="weui-cell__hd" style="color:#C8C8C8">失败原因</div>
+        <div class="weui-cell__hd" style="color:#D7D7D7">失败原因</div>
         <div class="weui-cell__bd" [ngStyle]="{'color': earningStatusList[teamBillDetail?.earningStatus][1]}">买家退货</div>
       </div>
     </div>

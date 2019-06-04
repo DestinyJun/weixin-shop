@@ -5,11 +5,23 @@
   .setting-mobile-old,.setting-mobile-new{
     padding-left: 15px;
     padding-right: 15px;
-  }
-  .setting-mobile-button {
-    padding-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
+   .weui-cells{
+     .weui-cell{
+       color: #8F8F8F;
+       font-size: 0.85rem;
+       .weui-input{
+         &::placeholder{
+           color: #8F8F8F;
+           font-size: 0.85rem;
+         }
+       }
+       .weui-vcode-btn{
+         color: #959595;
+         font-size: 0.85rem;
+         border: none;
+       }
+     }
+   }
   }
   .setting-mobile-toast{
     .weui-toast {
@@ -24,6 +36,27 @@
       .weui-icon_toast{
         margin: 0;
       }
+    }
+  }
+  .setting-mobile-button {
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    .weui-btn{
+      padding-top: 5px;
+      padding-bottom: 5px;
+      font-size: 0.85rem;
+      &:after{
+        border: unset;
+      }
+    }
+    .weui-btn_primary {
+      background: linear-gradient(to right,#F1926F,#F477A1);
+      color: #ffffff;
+    }
+    .weui-btn_primary.weui-btn_disabled{
+      background: #D0D0D0;
+      color: #767676;
     }
   }
 }

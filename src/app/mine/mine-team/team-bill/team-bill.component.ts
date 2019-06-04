@@ -14,7 +14,7 @@ export class TeamBillComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '账单详情',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       icon: ''
@@ -24,9 +24,9 @@ export class TeamBillComponent implements OnInit {
   public teamBillDetail: any = null;
   public earningStatusList: any = {
     noEarning: ['没有收益', '#7F7F7F'],
-    earning: ['入账中', '#F9C22B'],
-    earned: ['入账完成', '#7FB66E'],
-    earnFailed: ['入账失败', '#E82E38'],
+    earning: ['入账中', '#F19F65'],
+    earned: ['已入账', '#559FF0'],
+    earnFailed: ['入账失败', '#EE5B5A'],
   };
   constructor(
     private mineTeamSrv: MineTeamService,

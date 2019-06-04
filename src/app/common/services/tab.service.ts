@@ -17,12 +17,6 @@ export class TabService {
   public tabSearchClientList(params): Observable<any> {
     return this.http.post(`/contacts/nameLike`, params);
   }
-  public tabGetPersonIncome(params): Observable<any> {
-    return this.http.post(`/moayoOrder/myOrderInfo`, params);
-  }
-  public tabGetTeamTop(params): Observable<any> {
-    return this.http.post(`/team/top`, params);
-  }
   public tabGetClientAdrs(params): Observable<any> {
     return this.http.post(`/address/ListFindById`, params);
   }

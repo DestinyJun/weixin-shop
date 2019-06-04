@@ -15,7 +15,7 @@ export class TeamPersonalComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '成员明细',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '',

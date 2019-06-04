@@ -1,7 +1,7 @@
 .mine-detail {
   height: 100vh;
   overflow: hidden;
-  background-color: #F1F1F1;
+  background-color: #F5F5F5;
   position: relative;
   .mine-detail-header {
     height: 50px;
@@ -33,14 +33,16 @@
       padding-bottom: 15px;
       span {
         display: inline-block;
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         padding: 2px 10px 2px 15px;
         margin-right: 10px;
         color: #868787;
         background-color: #F8F8F8;
         border: 1px solid #E0E0E0;
-        border-radius: 5px;
+        border-radius: 10px;
+        box-shadow: 0 0 25px rgba(178,178,178,0.5);
         i{
+          font-size: 0.6rem;
           margin-left: 15px;
         }
       }
@@ -58,11 +60,12 @@
             left: 0;
             width: 100vw;
             height: 80%;
+            font-size: 0.75rem;
           }
           .weui-cells_title{
             padding: 10px 15px;
             color: #C5C5C5;
-            font-size: 1rem;
+            font-size: 0.75rem;
           }
           .status{
             .weui-flex{
@@ -70,26 +73,31 @@
               .weui-flex__item{
                 margin-right: 10px;
                 .weui-btn{
-                  padding: 0;
-                  font-size: 1rem;
+                  padding: 2px 0;
+                  font-size: 0.7rem;
                   line-height: 1.6;
                   color: #868787;
+                  border-radius: 3px;
+                }
+                .weui-btn.weui-btn_primary{
+                  background: #559FF0;
+                  color: #ffffff;
                 }
               }
             }
           }
           .timer{
             margin-top: 10px;
-            font-size: 1rem;
+            font-size: 0.75rem;
             .weui-flex{
               padding-left: 10px;
               margin-right: 10px;
               .weui-flex__item{
                 .weui-btn{
-                  padding: 0;
-                  font-size: 1rem;
+                  padding: 2px 0;
+                  font-size: 0.7rem;
                   line-height: 1.6;
-                  color: #868787;
+                  color: #838383;
                 }
               }
             }
@@ -104,7 +112,7 @@
                 display: inline-block;
                 color: #5B5B5C;
                 line-height: 0;
-                padding: 0;
+                padding: 2px 0;
                 border-radius: 20px;
                 border: none;
                 box-shadow: 0 0 25px rgba(178,178,178,0.5);
@@ -114,12 +122,16 @@
                   border: none;
                 }
                 span{
-                  font-size: 1rem;
+                  font-size: 0.7rem;
                   line-height: 1.6;
                   display: inline-block;
                   width: 55px;
                   overflow: hidden;
                 }
+              }
+              .weui-btn.weui-btn_primary{
+                background: #559FF0;
+                color: #ffffff;
               }
             }
 
@@ -133,16 +145,28 @@
             .weui-flex{
               .weui-flex__item{
                 .weui-btn{
+                  font-size: 0.75rem;
                   border-radius: 0;
                   &:after{
                     border: none;
                   }
+                }
+                .weui-btn.weui-btn_primary{
+                  background: #FFFFFF;
                 }
               }
             }
           }
         }
       }
+    }
+  }
+}
+body .weui-picker {
+  .weui-picker__hd{
+    font-size: 0.85rem;
+    .weui-picker__action:last-child{
+      color: #66A9F1;
     }
   }
 }

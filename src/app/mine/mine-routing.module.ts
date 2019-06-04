@@ -5,6 +5,7 @@ import {MineSharedComponent} from './mine-shared/mine-shared.component';
 import {MineUserNameComponent} from './mine-user/mine-user-name/mine-user-name.component';
 const tabRoutes: Routes = [
   {path: 'order', loadChildren: './mine-order/mine-order.module#MineOrderModule'},
+  {path: 'ranking', loadChildren: './mine-ranking/mine-ranking.module#MineRankingModule'},
   {path: 'setting', loadChildren: './mine-setting/mine-setting.module#MineSettingModule'},
   {path: 'shared', component: MineSharedComponent},
   {path: 'team', loadChildren: './mine-team/mine-team.module#MineTeamModule'},

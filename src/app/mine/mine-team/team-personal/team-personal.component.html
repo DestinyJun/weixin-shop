@@ -4,14 +4,14 @@
   </div>
   <div class="personal-detail-list" *ngIf="memberDetailList; else loading">
     <ng-container *ngIf="memberDetailList.length !== 0; else remind">
-      <div class="weui-cells">
-        <div class="weui-cell">
-          <div class="weui-cell__bd" style="font-size: 1.5rem;color: #4F4F50;">
+      <div class="weui-cells card">
+        <div class="weui-cell" style="align-items: start">
+          <div class="weui-cell__bd" style="font-size: 1rem;color: #ffffff;">
             {{memberUserDetail[0].user.nikeName}}
           </div>
-          <div class="weui-cell__ft" style="color: #4F4F50;">
-            <p style="font-size: 1.5rem;">￥{{memberUserEarning}}</p>
-            <p style="font-size: 0.8rem;">{{memberUserDetail.length}}单</p>
+          <div class="weui-cell__ft" style="color: #ffffff;">
+            <p style="font-size: 0.9rem;">￥{{memberUserEarning}}</p>
+            <p style="font-size: 0.75rem;margin-top: 10px">{{memberUserDetail.length}}单</p>
           </div>
         </div>
       </div>
@@ -19,23 +19,23 @@
         <div class="weui-cells__title">
           {{item?.times === (tPerNewDate | date: 'yyyy-MM-dd')? '今天': item?.times}}
         </div>
-        <div class="weui-cells">
+        <div class="weui-cells list">
           <div class="weui-cell" *ngFor="let prop of item?.value" [routerLink]="['/mine/team/bill', {id: prop.id}]">
             <div class="weui-cell__bd">
-              <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1]}">+{{prop?.earning}}</p>
-              <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.9rem'}">{{earningStatusList[prop?.earningStatus][0]}}</p>
-            </div>
-            <div class="weui-cell__ft">
-              <p style="font-size: 0.9rem;color: #888888;">
+              <p style="font-size: 0.8rem;color: #CBCBCB;">
                 <span>{{prop?.createdDate}}</span>
               </p>
+            </div>
+            <div class="weui-cell__ft">
+              <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.85rem'}">+{{prop?.earning}}</p>
+              <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.75rem'}">{{earningStatusList[prop?.earningStatus][0]}}</p>
             </div>
           </div>
         </div>
       </ng-container>
     </ng-container>
     <ng-template #remind>
-      <h3 style="color: red;text-align: center">暂无明细</h3>
+      <h3 style="color: red;text-align: center;font-size: 0.85rem">暂无明细</h3>
     </ng-template>
   </div>
   <ng-template #loading>

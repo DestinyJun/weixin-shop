@@ -8,7 +8,6 @@ import {mergeMap} from 'rxjs/internal/operators/mergeMap';
 import {GlobalService} from '../../common/services/global.service';
 import {EMPTY} from 'rxjs';
 import {is_ios} from '../../common/tools/is_ios';
-import {subscribeOn} from 'rxjs/operators';
 declare let WeixinJSBridge;
 
 @Component({
@@ -25,7 +24,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
   public headerOption: HeaderContent = {
     title: '选择支付方式',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       icon: ''

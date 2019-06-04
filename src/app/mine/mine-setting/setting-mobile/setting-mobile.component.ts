@@ -19,7 +19,7 @@ export class SettingMobileComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '更换绑定手机号',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {}
   };

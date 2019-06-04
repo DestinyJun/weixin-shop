@@ -3,11 +3,33 @@
   background-color: #F1F1F1;
   .mine-user-info {
     .weui-cells{
-      font-size: 1rem;
+      font-size: 0.85rem;
       .weui-cell{
+        color: #7D7D7D;
         .weui-cell__ft{
-          color: #000;
+          color: #7D7D7D;
         }
+      }
+    }
+  }
+  .mine-user-photo{
+    .weui-mask{
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .weui-actionsheet{
+      background-color: transparent;
+      .weui-actionsheet__cell{
+        font-size: 1rem;
+        &:before{
+          border-top:1px solid #F3F3F3;
+        }
+      }
+      .weui-actionsheet__menu{
+        border-radius: 3% 3% 0 0;
+      }
+      .weui-actionsheet__action{
+        border-top: 1px solid #F3F3F3;
+        margin-top: 0;
       }
     }
   }
@@ -30,7 +52,7 @@
    .weui-toast {
      height: 4vh;
      line-height: 4vh;
-     font-size: 1rem;
+     font-size: 0.85rem;
      width: unset;
      min-height: 0;
      min-width: 12.6em;

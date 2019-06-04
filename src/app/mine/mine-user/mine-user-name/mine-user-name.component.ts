@@ -17,12 +17,12 @@ export class MineUserNameComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '更改名字',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '保存',
       icon: '',
-      color: '#39A12D'
+      color: '#7DB6F4'
     }
   };
   // data

@@ -22,7 +22,7 @@ export class MineSettingComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '设置',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       color: '#86B876'

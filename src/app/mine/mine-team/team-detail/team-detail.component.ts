@@ -17,11 +17,11 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   public headerOption: HeaderContent = {
     title: '团队收益明细',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       title: '筛选',
-      color: '#86B876'
+      color: '#76B2F3'
     }
   };
   // filter
@@ -44,9 +44,9 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   public earningList: any = [];
   public earningStatusList: any = {
     noEarning: ['没有收益', '#7F7F7F'],
-    earning: ['入账中', '#F9C22B'],
-    earned: ['入账完成', '#7FB66E'],
-    earnFailed: ['入账失败', '#E82E38'],
+    earning: ['入账中', '#F19F65'],
+    earned: ['已入账', '#559FF0'],
+    earnFailed: ['入账失败', '#EE5B5A'],
   };
   // mask
   @ViewChild('teamDetailMask') teamDetailMask: MaskComponent;

@@ -1,0 +1,141 @@
+<div class="mine-rank" *ngIf="mineRanking;else loading">
+  <div class="mine-rank-header">
+    <app-header [option]="headerOption"></app-header>
+  </div>
+  <div class="mine-rank-card">
+    <div class="weui-flex">
+      <div class="weui-flex__item">
+        <div class="weui-cell">
+          <div class="rank" style="height: 11vh;padding: 0.5vh 0" *ngIf="mineRankingThree[1]">
+            <p>{{'No.' + mineRankingThree[1].Ranks}}</p>
+            <p>{{mineRankingThree[1].nikeName}}</p>
+            <p>{{'￥ ' + mineRankingThree[1].sumPaid}}</p>
+          </div>
+          <p style="line-height: 12vh;" *ngIf="!(mineRankingThree[2])">没有第二名</p>
+        </div>
+      </div>
+      <div class="weui-flex__item">
+        <div class="weui-cell">
+          <div class="rank" style="height: 14vh;" *ngIf="mineRankingThree[0]">
+            <p><i class="icon iconfont icon-paihangbang" style="font-size: 1rem"></i></p>
+            <p>{{'No.' + mineRankingThree[0].Ranks}}</p>
+            <p>{{mineRankingThree[0].nikeName}}</p>
+            <p>{{'￥ ' + mineRankingThree[0].sumPaid}}</p>
+          </div>
+          <p style="line-height: 14vh;" *ngIf="!(mineRankingThree[2])">没有第一名</p>
+        </div>
+      </div>
+      <div class="weui-flex__item">
+        <div class="weui-cell">
+          <div class="rank" style="height: 11vh;" *ngIf="mineRankingThree[2]">
+            <p>{{'No.' + mineRankingThree[2].Ranks}}</p>
+            <p>{{mineRankingThree[2].nikeName}}</p>
+            <p>{{'￥ ' + mineRankingThree[2].sumPaid}}</p>
+          </div>
+          <p style="line-height: 11vh;" *ngIf="!(mineRankingThree[2])">没有第二名</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mine-rank-scroll">
+  <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
+    <div class="weui-cells" style="margin-top: 0 ">
+      <div class="weui-cell" *ngFor="let item of mineRanking[1].data?.slice(1); let i = index">
+        <div class="weui-cell__hd">NO.{{item?.Ranks}}</div>
+        <div class="weui-cell__bd">{{item?.nikeName}}</div>
+        <div class="weui-cell__ft">￥{{item?.sumPaid}}</div>
+      </div>
+    </div>
+  </weui-infiniteloader>
+</div>
+  <div class="mine-rank-bottom">
+    <!--<div class="weui-cells__title">销售排行榜</div>-->
+    <div class="weui-mine">
+      <div class="weui-cell">
+        <div class="weui-cell__hd">{{mineRanking[1]?.data?mineRanking[1]?.data[0]?.Ranks: ''}}</div>
+        <div class="weui-cell__bd">{{mineRanking[1]?.data?mineRanking[1]?.data[0]?.nikeName:'没有关键字'}}</div>
+        <div class="weui-cell__ft">￥{{mineRanking[1]?.data?mineRanking[1]?.data[0]?.sumPaid: ''}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>
+<!--<div class="mine-rank-income">
+<div class="weui-panel weui-panel_access">
+  <div class="weui-panel__bd">
+    <div class="weui-media-box weui-media-box_text">
+      <h5 class="weui-media-box__title">总收益</h5>
+      <h3 class="weui-media-box__desc">￥{{mineRanking[0]['dataObject']?.all}}</h3>
+    </div>
+  </div>
+</div>
+</div>
+<div class="mine-rank-personal">
+<div class="weui-grids">
+  <div class="weui-grid">
+    <div class="weui-flex top">
+      <div class="weui-flex__item">
+        <div class="time" style="background-color: #FF6565;">今天</div>
+      </div>
+      <div class="weui-flex__item">
+        <div class="amount">{{mineRanking[0]['dataObject']?.today?.total || 0}}笔</div>
+      </div>
+    </div>
+    <div class="weui-flex center">
+      <div class="weui-flex__item">
+        <div class="placeholder">￥{{mineRanking[0]['dataObject']?.today?.sum_amount || 0}}</div>
+      </div>
+    </div>
+    <div class="weui-flex bottom">
+      <div class="weui-flex__item" style="padding-top: 1vh">
+        <div class="placeholder time">{{mineRanking[0]['dataObject']?.today?.startDay}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="weui-grid">
+    <div class="weui-flex top">
+      <div class="weui-flex__item">
+        <div class="time" style="background-color: #65D2FF;">本月</div>
+      </div>
+      <div class="weui-flex__item">
+        <div class="amount">{{mineRanking[0]['dataObject']?.month?.total || 0}}笔</div>
+      </div>
+    </div>
+    <div class="weui-flex center">
+      <div class="weui-flex__item">
+        <div class="placeholder">￥{{mineRanking[0]['dataObject']?.month['sum_amount'] || '0'}}</div>
+      </div>
+    </div>
+    <div class="weui-flex bottom">
+      <div class="weui-flex__item">
+        <div class="placeholder time">{{mineRanking[0]['dataObject']?.month['startDay']}}</div>
+        <div class="placeholder time">{{mineRanking[0]['dataObject']?.month['endDay']}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="weui-grid">
+    <div class="weui-flex top">
+      <div class="weui-flex__item">
+        <div class="time" style="background-color: #7E65FF;">本年</div>
+      </div>
+      <div class="weui-flex__item">
+        <div class="amount">{{mineRanking[0]['dataObject']?.year?.total || 0}}笔</div>
+      </div>
+    </div>
+    <div class="weui-flex center">
+      <div class="weui-flex__item">
+        <div class="placeholder">￥{{mineRanking[0]['dataObject']?.year['sum_amount'] || '0'}}</div>
+      </div>
+    </div>
+    <div class="weui-flex bottom">
+      <div class="weui-flex__item">
+        <div class="placeholder time">{{mineRanking[0]['dataObject']?.year['startDay'] || '0'}}</div>
+        <div class="placeholder time">{{mineRanking[0]['dataObject']?.year['endDay'] || '0'}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>-->
+

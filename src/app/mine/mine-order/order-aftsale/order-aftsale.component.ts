@@ -11,7 +11,7 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./order-aftsale.component.less']
 })
 export class OrderAftsaleComponent implements OnInit {
-// header
+  // header
   public headerOption: HeaderContent = {
     title: '选择服务类型',
     leftContent: {

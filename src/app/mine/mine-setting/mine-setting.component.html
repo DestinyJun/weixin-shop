@@ -1,14 +1,18 @@
 <div class="mine-setting">
   <app-header [option]="headerOption"></app-header>
-  <div class="number">
+  <div class="mine-setting-number">
     <div class="weui-cells">
-      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/setting/paypwd']">
+      <div class="weui-cell" [routerLink]="['/mine/setting/paypwd']">
         <div class="weui-cell__bd">修改支付密码</div>
-        <div class="weui-cell__ft"></div>
+        <div class="weui-cell__ft">
+          <i class="icon iconfont icon-system-moreb"></i>
+        </div>
       </div>
-      <div class="weui-cell weui-cell_access" [routerLink]="['/mine/setting/mobile']">
+      <div class="weui-cell" [routerLink]="['/mine/setting/mobile']">
         <div class="weui-cell__bd">更换绑定手机号</div>
-        <div class="weui-cell__ft"></div>
+        <div class="weui-cell__ft">
+          <i class="icon iconfont icon-system-moreb"></i>
+        </div>
       </div>
     </div>
   </div>

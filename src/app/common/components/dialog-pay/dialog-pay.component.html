@@ -4,7 +4,7 @@
       <div class="weui-dialog-title">
         {{config.title}}
         <div style="width: 2.3rem;margin-right: -0.5rem;" class="t-float pull-right" (click)="onSelfDestroy()">
-          <i class="fa fa-times"></i>
+          <i class="icon iconfont icon-guanbi" style="font-size: 0.7rem"></i>
         </div>
       </div>
       <div class="weui-dialog-content" (input)="onInput($event)">
@@ -17,7 +17,7 @@
       </div>
       <div class="weui-dialog-pwd" *ngIf="config.pwdShow" [routerLink]="['/mine/setting/paypwd']">
         <div class="weui-cell__bd"></div>
-        <div class="weui-cell__ft">忘记支付密码</div>
+        <div class="weui-cell__ft" style="font-size: 0.7rem;color: #BFBFBF;">忘记支付密码</div>
       </div>
     </div>
   </div>

@@ -1,8 +1,7 @@
 .mine-team{
   height: 100vh;
   overflow: hidden;
-  //background-color: #F5F5F5;
-  background-color: #000;
+  background-color: #F5F5F5;
   position: relative;
   .mine-team-earnings{
     margin-top: 10px;
@@ -16,8 +15,8 @@
   }
   .mine-team-tab{
     margin-top: 10px;
-    margin-left: 15px;
-    margin-right: 15px;
+   /* margin-left: 15px;
+    margin-right: 15px;*/
     background-color: #ffffff;
     height: 100%;
     .weui-navbar{
@@ -48,6 +47,9 @@
         color: #559FF0;
       }
     }
+    .weui-navbar + .weui-tab__panel {
+      padding-top: 36px;
+    }
     .weui-article{
       padding: 0;
       .list{
@@ -56,6 +58,8 @@
         .weui-cells{
           margin-top: 0;
           .weui-cell{
+            height: 30px;
+            padding: 0 15px 0 15px;
             .weui-cell__bd{
               span{
                 color: white;
@@ -67,34 +71,46 @@
               }
             }
             .weui-cell__ft{
-              font-size: 1rem;
-              color: #757576;
+              font-size: 0.75rem;
+              position: relative;
+              color: #8ABDF5;
+              i{
+                position: absolute;
+                top:0;
+                right: 0;
+              }
+              .weui-input{
+                text-align: right;
+                padding-right: 15px;
+                &::placeholder{
+                  color: #8ABDF5;
+                }
+              }
             }
           }
         }
         .list-scroll{
           position: absolute;
-          top: 50px;
+          top: 30px;
+          bottom: 0;
           left: 0;
           right: 0;
-          bottom: 0;
           padding: 0 15px;
           .list-scroll-cell{
             width: 100%;
             height: 30px;
-            background-color: #E7F2FF;
             position: relative;
             border-radius: 15px;
             margin-bottom: 10px;
             font-size: 0.85rem;
             color: #747F8B;
             .box{
+              width: 0;
               position: absolute;
               top: 0;
               left: 0;
               bottom: 0;
               border-radius: 15px;
-              background: #AFD5FF;
             }
             .text{
               position: absolute;

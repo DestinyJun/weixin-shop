@@ -1,7 +1,7 @@
 .mine-detail-personal{
   height: 100vh;
   overflow: hidden;
-  background-color: #F1F1F1;
+  background-color: #F5F5F5;
   position: relative;
   .personal-header {
     height: 50px;
@@ -12,7 +12,23 @@
     z-index: 5001;
   }
   .personal-detail-list {
+    font-size: 0.85rem;
+    padding: 0 15px;
     margin-top: 65px;
-    .weui-cells {}
+    .weui-cells.card {
+      padding: 15px 0;
+      background: linear-gradient(to right,#F19171,#F478A0);
+      border-radius: 5px;
+    }
+    .weui-cells__title{
+      padding-left: 0;
+      color: #76B2F3;
+      font-size: 0.85rem;
+    }
+    .weui-cells.list{
+      .weui-cell{
+        padding: 5px 0;
+      }
+    }
   }
 }

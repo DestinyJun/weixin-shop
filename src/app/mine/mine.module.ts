@@ -10,7 +10,11 @@ import {QRCodeModule} from 'angularx-qrcode';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({
-  declarations: [MineUserComponent, MineSharedComponent, MineUserNameComponent],
+  declarations: [
+    MineUserComponent,
+    MineSharedComponent,
+    MineUserNameComponent
+  ],
   imports: [
     CommonModule,
     MineRoutingModule,

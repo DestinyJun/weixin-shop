@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabHomeComponent } from './tab-home.component';
+import { MineRankingComponent } from './mine-ranking.component';
 
-describe('TabHomeComponent', () => {
-  let component: TabHomeComponent;
-  let fixture: ComponentFixture<TabHomeComponent>;
+describe('MineRankingComponent', () => {
+  let component: MineRankingComponent;
+  let fixture: ComponentFixture<MineRankingComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TabHomeComponent ]
+      declarations: [ MineRankingComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TabHomeComponent);
+    fixture = TestBed.createComponent(MineRankingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

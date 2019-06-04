@@ -1,9 +1,9 @@
-.home{
-  height: 100%;
+.mine-rank{
+  height: 100vh;
   overflow: hidden;
   position: relative;
-  background-color: #F1F1F1;
-  .home-income{
+  background-color: #F5F5F5;
+  .mine-rank-income{
     .weui-panel_access{
       height: 12vh;
       background-image: url(/assets/images/home_bg.png);
@@ -27,7 +27,7 @@
       }
     }
   }
-  .home-personal{
+  .mine-rank-personal{
     height: 14vh;
     overflow: hidden;
     .weui-grids{
@@ -84,78 +84,98 @@
       }
     }
   }
-  .home-card{
-    height: 11vh;
-    overflow: hidden;
+  .mine-rank-card{
     .weui-flex{
-      margin: 1vh 4vw 0 4vw;
+      height: 14vh;
+      align-items: flex-end;
+      margin: 1.5vh 4vw 0 4vw;
       .weui-flex__item:nth-child(1){
-        background-color: #7FB56E;
+        background-color: #FFAC72;
+        height: 12vh;
       }
       .weui-flex__item:nth-child(2){
-        background-color: #4670DB;
-        margin-left: 2vw;
+        background-color: #F28B7D;
+        height: 14vh;
+      }
+      .weui-flex__item:nth-child(3){
+        background-color: #559FF0;
+        height: 11vh;
       }
       .weui-flex__item{
-        height: 11vh;
         text-align: left;
         color: white;
+        border-radius: 5px 5px 0 0;
         .weui-cell{
-          padding: 8px 15px;
+          padding: 0;
+          .rank{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            p{
+              text-align: center;
+              font-size: 0.85rem;
+            }
+          }
         }
       }
     }
   }
-
-  .home-rank{
-    height: 10vh;
-    overflow: hidden;
-    margin-top: 1vh;
-    background-color: #fff;
-    position: relative;
-    .weui-cells__title{
-      height: 4vh;
-      line-height: 4vh;
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-    .title{
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: black;
-    }
-    .weui-mine{
-      font-size: 1rem;
-      color: #7FB56E;
-      .weui-cell{
-        .weui-cell__hd{
-          width: 60px;
-        }
-        .weui-cell__bd{
-          margin-left: 50px;
-        }
-      }
-    }
-  }
-  .home-scroll{
+  .mine-rank-scroll{
     background-color: #fff;
     position: absolute;
-    top: 48vh;
+    top: calc(15.5vh + 50px);
     left: 0;
     right: 0;
     bottom: 5px;
     .weui-infiniteloader__content{
       .weui-cells{
-        font-size: 1rem;
+        font-size: 0.85rem;
         .weui-cell{
-          .weui-cell__hd{
-            width: 60px;
-          }
+          color: #808080;
           .weui-cell__bd{
             margin-left: 50px;
+          }
+          .weui-cell__ft{
+            color: #808080;
           }
         }
       }
     }
   }
+  .mine-rank-bottom{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to right,#F1926F,#F477A1);
+    height: 6vh;
+    overflow: hidden;
+    .weui-cells__title{
+      height: 4vh;
+      line-height: 4vh;
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: black;
+    }
+    .weui-mine{
+      font-size: 0.85rem;
+      color: #7FB56E;
+      .weui-cell{
+        padding: 0 30px;
+        color: #ffffff;
+        line-height: 6vh;
+        .weui-cell__hd{}
+        .weui-cell__bd{
+          margin-left: 50px;
+        }
+        .weui-cell__ft{
+          color: #ffffff;
+        }
+      }
+    }
+  }
+
 }

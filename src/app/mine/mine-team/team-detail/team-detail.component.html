@@ -6,60 +6,62 @@
     <ng-container *ngIf="earningList.length !== 0">
       <div class="weui-cells" *ngFor="let item of earningList">
         <div class="weui-cells__title">
-          <p style="font-size: 1.1rem">{{item?.times === (tDetailNewDate | date: 'yyyy-MM-dd')? '今日业绩': item?.times}}</p>
+          <p style="font-size: 0.9rem;color: #76B2F3;">{{item?.times === (tDetailNewDate | date: 'yyyy-MM-dd')? '今日业绩': item?.times}}</p>
         </div>
         <div class="weui-cell" *ngFor="let prop of item.value" [routerLink]="['/mine/team/personal', {id: prop?.user.id}]">
           <div class="weui-cell__bd">
-            <p>{{prop?.user?.nikeName}}</p>
-            <p style="font-size: 0.9rem;color: #888888;">
-              <span>{{prop?.createdDate}}</span>
+            <p style="font-size: 0.75rem;color: #818181;">{{prop?.user?.nikeName}}</p>
+            <p style="font-size: 0.75rem;color: #C4C4C4;">
+              <span style="">{{prop?.createdDate}}</span>
             </p>
           </div>
           <div class="weui-cell__ft">
-            <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1]}">+{{prop?.earning}}</p>
-            <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.9rem'}">{{earningStatusList[prop?.earningStatus][0]}}</p>
+            <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.85rem'}">+{{prop?.earning}}</p>
+            <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.75rem'}">{{earningStatusList[prop?.earningStatus][0]}}</p>
           </div>
         </div>
       </div>
     </ng-container>
-    <div style="text-align: center;color: #7E7E7E;font-weight: bold;margin-top: 30%" *ngIf="filtersSearchList.length === 0">
+    <div
+      style="text-align: center;color: #7E7E7E;font-weight: bold;margin-top: 30%;font-size: 0.85rem"
+      *ngIf="earningList.length === 0">
       <span>暂无收益明细</span>
     </div>
   </div>
   <div class="mine-filter-list" *ngIf="filters?.userId || filters?.earningStatus|| filters?.startDate|| filters?.endDate">
     <div class="weui-cells__title" >
-      <span *ngIf="filters?.userId">{{filtersName}}<i class="fa fa-times" (click)="detailDelFilterClick('userId')"></i></span>
-      <span *ngIf="filters?.earningStatus">{{earningStatusList[filters?.earningStatus][0]}}<i class="fa fa-times" (click)="detailDelFilterClick('earningStatus')"></i></span>
+      <span *ngIf="filters?.userId">{{filtersName}}<i class="icon iconfont icon-guanbi" (click)="detailDelFilterClick('userId')"></i></span>
+      <span *ngIf="filters?.earningStatus">{{earningStatusList[filters?.earningStatus][0]}}<i class="icon iconfont icon-guanbi" (click)="detailDelFilterClick('earningStatus')"></i></span>
       <span *ngIf="filters?.startDate">
         {{filters?.startDate}}-{{filters?.endDate?filters?.endDate: '至今'}}
-        <i class="fa fa-times" (click)="detailDelFilterClick('startDate,endDate')"></i>
+        <i class="icon iconfont icon-guanbi" (click)="detailDelFilterClick('startDate,endDate')"></i>
       </span>
     </div>
     <ng-container *ngIf="filtersSearchList.length !== 0">
       <div class="weui-cells">
         <div class="weui-cell" style="background-color: #F2F1F0;">
-          <div class="weui-cell__bd" style="color: #999999;">
+          <div class="weui-cell__bd" style="color: #B1B1B1;font-size: 0.85rem">
             总计收益：￥{{filterEarning}}
           </div>
-          <div class="weui-cell__ft">
+          <div class="weui-cell__ft" style="color: #B1B1B1;font-size: 0.85rem">
             {{filtersSearchList.length}}单
           </div>
         </div>
         <div class="weui-cell" *ngFor="let item of filtersSearchList" [routerLink]="['/mine/team/personal', {id: item.user.id}]">
           <div class="weui-cell__bd">
-            <p>{{item?.user?.nikeName}}</p>
-            <p style="font-size: 0.9rem;color: #888888;">
+            <p style="font-size: 0.75rem;color: #818181;">{{item?.user?.nikeName}}</p>
+            <p style="font-size: 0.75rem;color: #C4C4C4;">
               <span>{{item?.createdDate}}</span>
             </p>
           </div>
           <div class="weui-cell__ft">
-            <p [ngStyle]="{'color': earningStatusList[item?.earningStatus][1]}">+{{item?.earning}}</p>
-            <p [ngStyle]="{'color': earningStatusList[item?.earningStatus][1],'font-size': '0.9rem'}">{{earningStatusList[item?.earningStatus][0]}}</p>
+            <p [ngStyle]="{'color': earningStatusList[item?.earningStatus][1],'font-size': '0.85rem'}">+{{item?.earning}}</p>
+            <p [ngStyle]="{'color': earningStatusList[item?.earningStatus][1],'font-size': '0.75rem'}">{{earningStatusList[item?.earningStatus][0]}}</p>
           </div>
         </div>
       </div>
     </ng-container>
-    <div style="text-align: center;color: #7E7E7E;font-weight: bold;margin-top: 30%" *ngIf="filtersSearchList.length === 0">
+    <div style="text-align: center;color: #7E7E7E;font-weight: bold;margin-top: 30%;font-size: 0.85rem" *ngIf="filtersSearchList.length === 0">
       <span>暂无收益明细</span>
     </div>
   </div>
@@ -112,10 +114,14 @@
           <div class="btn-group">
             <div class="weui-flex">
               <div class="weui-flex__item" (click)="detailResetFilterClick('reset')">
-                <button class="weui-btn weui-btn_primary">重置</button>
+                <button class="weui-btn weui-btn_primary">
+                  <span style="color: #9F9F9F;">重置</span>
+                </button>
               </div>
               <div class="weui-flex__item" (click)="detailResetFilterClick('sure');teamDetailMask.hide()">
-                <button class="weui-btn weui-btn_primary" style="border-left: 1px solid white">确定</button>
+                <button class="weui-btn weui-btn_primary" style="border-left: 1px solid #E7E7E7">
+                  <span style="color: #559FF0;">确定</span>
+                </button>
               </div>
             </div>
           </div>

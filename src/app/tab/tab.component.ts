@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {NavigationEnd, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
@@ -23,12 +23,10 @@ export class TabComponent implements OnInit {
     }
   };
   public rouStatus: string = null;
-  public tabHome: any = null;
   constructor(
     private router: Router,
     private location: Location,
     private titleServices: Title,
-    private tabSrc: TabService,
   ) {
      router.events.subscribe(
        (event) => {
@@ -43,20 +41,6 @@ export class TabComponent implements OnInit {
   }
 
   ngOnInit() {
-    forkJoin([this.tabSrc.tabGetPersonIncome({}), this.tabSrc.tabGetTeamTop({})]).subscribe(
-      (res) => {
-        if (res) {
-          this.tabHome = res;
-        } else {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: `获取数据失败，请检查网络后重试！`,
-              url: null,
-              btn: '请重试',
-            }});
-        }
-      }
-    );
     this.titleServices.setTitle('首页');
     if (this.rouStatus === 'order') {
       this.clientHeader = {

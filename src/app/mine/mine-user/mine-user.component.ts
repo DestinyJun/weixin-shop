@@ -26,7 +26,7 @@ export class MineUserComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '个人资料',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       icon: ''
