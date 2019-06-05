@@ -105,6 +105,6 @@ export class MineSharedComponent implements OnInit {
       });
       return;
     }
-    window.alert('微信SDK认证失败');
+    // window.alert('微信SDK认证失败');
   }
 }

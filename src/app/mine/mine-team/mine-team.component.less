@@ -9,8 +9,8 @@
     margin-right: 15px;
     border-radius: 5px;
     text-align: center;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 25px;
+    padding-bottom: 25px;
     background: linear-gradient(to right,#F19171,#F478A0);
   }
   .mine-team-tab{
@@ -20,7 +20,10 @@
     background-color: #ffffff;
     height: 100%;
     .weui-navbar{
+      background-color: #fff;
       justify-content: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
       &:after{
         content: unset;
       }
@@ -48,7 +51,7 @@
       }
     }
     .weui-navbar + .weui-tab__panel {
-      padding-top: 36px;
+      padding-top: 57px;
     }
     .weui-article{
       padding: 0;
@@ -56,10 +59,16 @@
         height: 100%;
         position: relative;
         .weui-cells{
+          &:after{
+            content: unset;
+          }
+          &:before{
+            content: unset;
+          }
           margin-top: 0;
           .weui-cell{
-            height: 30px;
-            padding: 0 15px 0 15px;
+            height: 50px;
+            padding: 10px 15px 10px 15px;
             .weui-cell__bd{
               span{
                 color: white;
@@ -71,7 +80,7 @@
               }
             }
             .weui-cell__ft{
-              font-size: 0.75rem;
+              font-size: 0.85rem;
               position: relative;
               color: #8ABDF5;
               i{
@@ -91,7 +100,7 @@
         }
         .list-scroll{
           position: absolute;
-          top: 30px;
+          top: 50px;
           bottom: 0;
           left: 0;
           right: 0;

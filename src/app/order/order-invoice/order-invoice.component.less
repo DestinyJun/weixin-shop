@@ -3,6 +3,14 @@
   min-height: 100vh;
   .order-invoice-select{
     .weui-cells_checkbox{
+      margin: 15px 15px 0 15px;
+      padding: 15px 0;
+      border-radius: 5px;
+      .weui-cell{
+        &:before{
+          content: unset;
+        }
+      }
       .weui-check:checked + .weui-icon-checked:before {
         color: #559FF0;
       }
@@ -30,8 +38,20 @@
   }
   .order-invoice-history{
     .weui-cells{
+      background-color: unset;
+      padding-left: 15px;
+      padding-right: 15px;
+      &:before{
+        border: unset;
+      }
       .weui-cell{
         font-size: 0.85rem;
+        background-color: #FFFFFF;
+        margin-top: 10px;
+        border-radius: 5px;
+        &:before{
+          content: unset;
+        }
         .weui-cell__bd{
           .left{
             color: #B2B2B2;

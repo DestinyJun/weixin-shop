@@ -16,19 +16,19 @@
         </div>
       </div>
       <ng-container *ngFor="let item of memberDetailList">
-        <div class="weui-cells__title">
-          {{item?.times === (tPerNewDate | date: 'yyyy-MM-dd')? '今天': item?.times}}
-        </div>
         <div class="weui-cells list">
+          <div class="weui-cells__title">
+            {{item?.times === (tPerNewDate | date: 'yyyy-MM-dd')? '今天': item?.times}}
+          </div>
           <div class="weui-cell" *ngFor="let prop of item?.value" [routerLink]="['/mine/team/bill', {id: prop.id}]">
             <div class="weui-cell__bd">
-              <p style="font-size: 0.8rem;color: #CBCBCB;">
+              <p style="font-size: 0.9rem;color: #CBCBCB;">
                 <span>{{prop?.createdDate}}</span>
               </p>
             </div>
             <div class="weui-cell__ft">
-              <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.85rem'}">+{{prop?.earning}}</p>
-              <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.75rem'}">{{earningStatusList[prop?.earningStatus][0]}}</p>
+              <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.9rem'}">+{{prop?.earning}}</p>
+              <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.8rem'}">{{earningStatusList[prop?.earningStatus][0]}}</p>
             </div>
           </div>
         </div>

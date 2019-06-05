@@ -13,7 +13,7 @@
            }"
         >
           <div class="placeholder">
-            <p style="font-size: 1rem">{{item?.name}}</p>
+            <p style="font-size: 0.85rem">{{item?.name}}</p>
             <p
               [ngStyle]="{
            'color':orderSelectStatus === item?.status?'#D4E9FF':''
@@ -31,11 +31,11 @@
           <div class="weui-cells__title">
             <span>{{item?.times === (mOrderNewDate | date: 'yyyy-MM-dd')? '今日': item?.times}}</span>
           </div>
-          <div class="weui-panel weui-panel_access" *ngFor="let childItem of item?.value">
+          <div class="weui-panel weui-panel_access" style="border-radius: 5px" *ngFor="let childItem of item?.value">
             <div class="weui-panel__hd" [routerLink]="['/mine/order/detail', childItem.id]">
               <div class="weui-cell">
                 <div class="weui-cell__bd" style="vertical-align: middle">
-                  <p style="font-size: 1rem;color: #5E5E5E;">客户：{{childItem?.addressModel?.name}}</p>
+                  <p style="font-size: 0.85rem;color: #5E5E5E;">客户：{{childItem?.addressModel?.name}}</p>
                   <p>订单号：{{childItem?.sn}}</p>
                 </div>
                 <div class="weui-cell__ft">

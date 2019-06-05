@@ -2,15 +2,13 @@
   <app-header [option]="headerOption"></app-header>
   <div *ngIf="inputToggle" class="setting-mobile-old">
     <div class="weui-cells">
-      <div class="weui-cell">
+      <div class="weui-cell" style="padding: 20px 15px;">
         <div class="weui-cell__hd">
           <label class="weui-label">当前手机号</label></div>
         <div class="weui-cell__bd">
           <span>{{oldPhoneCodeString}}</span>
         </div>
       </div>
-    </div>
-    <div class="weui-cells">
       <div class="weui-cell">
         <div class="weui-cell__bd">
           <input class="weui-input" type="tel" placeholder="请输入验证码" [(ngModel)]="mineSetSMS">
@@ -28,16 +26,11 @@
   </div>
   <form *ngIf="!inputToggle" #newPhoneForm="ngForm" class="setting-mobile-new" >
     <div class="weui-cells">
-      <div class="weui-cell" style="padding: 18px 15px;">
+      <div class="weui-cell" style="padding: 20px 15px;">
         <div class="weui-cell__bd">
           <input class="weui-input" type="tel" name="mobile" #mobile="ngModel" placeholder="请输入新手机号码" weui-input="mobile" weui-required [(ngModel)]="newPhone">
         </div>
       </div>
-    </div>
-    <div>
-      <p *ngIf="mobile.touched && mobile.invalid" style="color: red;font-size: 0.8rem;padding: 5px 15px 0 15px;">请输入正确格式的手机号</p>
-    </div>
-    <div class="weui-cells" style="margin-top: 10px;">
       <div class="weui-cell">
         <div class="weui-cell__bd">
           <input class="weui-input" type="tel" name="phoneSMS" placeholder="请输入验证码" [(ngModel)]="mineSetSMS">
@@ -51,6 +44,9 @@
           </button>
         </div>
       </div>
+    </div>
+    <div>
+      <p *ngIf="mobile.touched && mobile.invalid" style="color: red;font-size: 0.8rem;padding: 5px 15px 0 15px;">请输入正确格式的手机号</p>
     </div>
   </form>
   <div class="setting-mobile-toast">

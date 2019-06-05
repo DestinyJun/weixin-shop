@@ -122,6 +122,8 @@
     }
   }
   .mine-rank-scroll{
+    margin-left: 15px;
+    margin-right: 15px;
     background-color: #fff;
     position: absolute;
     top: calc(15.5vh + 50px);
@@ -130,8 +132,14 @@
     bottom: 5px;
     .weui-infiniteloader__content{
       .weui-cells{
+        &:after{
+          content: unset;
+        }
         font-size: 0.85rem;
         .weui-cell{
+          &:before{
+            content: unset;
+          }
           color: #808080;
           .weui-cell__bd{
             margin-left: 50px;
@@ -149,7 +157,7 @@
     left: 0;
     right: 0;
     background: linear-gradient(to right,#F1926F,#F477A1);
-    height: 6vh;
+    height: 7vh;
     overflow: hidden;
     .weui-cells__title{
       height: 4vh;
@@ -161,12 +169,12 @@
       color: black;
     }
     .weui-mine{
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: #7FB56E;
       .weui-cell{
         padding: 0 30px;
         color: #ffffff;
-        line-height: 6vh;
+        line-height: 7vh;
         .weui-cell__hd{}
         .weui-cell__bd{
           margin-left: 50px;
@@ -177,5 +185,4 @@
       }
     }
   }
-
 }

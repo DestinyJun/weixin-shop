@@ -5,8 +5,23 @@
   .wallet-recharge-input{
     padding: 10px 15px 0 15px;
     .weui-cells{
-      border-radius: 3px;
+      margin-top: 10px;
+      border-radius: 5px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      &:after{
+        content: unset;
+        border: unset;
+      }
+      &:before{
+        content: unset;
+        border: unset;
+      }
       .weui-cell{
+        &:before{
+          content: unset;
+          border: unset;
+        }
         .weui-cell__bd{
           font-size: 0.9rem;
           color: #747474;

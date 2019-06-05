@@ -11,26 +11,6 @@
         </div>
       </div>
     </div>
-    <!--<div class="weui-panel" style="margin-top: 0px;" *ngIf="searchItems | async">
-      <div class="weui-panel__bd" *ngIf="searchItems | async; let searchItems; else loading">
-        <div class="weui-cell weui-cell_access" *ngFor="let item of searchItems">
-          <div class="weui-cell__bd weui-cell_primary">
-            <p>{{item}}</p>
-          </div>
-        </div>
-      </div>
-      <ng-template #loading>
-        <div class="weui-panel__bd">
-          <div class="weui-media-box weui-media-box_text">Loading...</div>
-        </div>
-      </ng-template>
-      &lt;!&ndash;  <a class="weui-panel__ft" href="javascript:void(0);">
-          <div class="weui-cell weui-cell_access weui-cell_link">
-            <div class="weui-cell__bd">More</div>
-            <div class="weui-cell__ft"></div>
-          </div>
-        </a>&ndash;&gt;
-    </div>-->
   </div>
   <div class="client-add-tab">
     <weui-navbar>
@@ -125,7 +105,7 @@
           <div class="weui-cell__bd">
             <button
               class="weui-btn"
-              [disabled]="(addAddressRes.name || !addAddressRes.phone || !addAddressRes.address)"
+              [disabled]="(!addAddressRes.name || !addAddressRes.phone || !addAddressRes.address)"
               (click)="saveBtnClick(clientSaveBtnStatus)"
               [ngClass]="{
               'weui-btn_primary': (addAddressRes.name && addAddressRes.phone && addAddressRes.address)

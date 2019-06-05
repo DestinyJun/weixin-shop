@@ -29,7 +29,7 @@
     <p><span>收获地址</span>{{detailsData?.data?.addressModel?.address}}</p>
   </div>
   <div class="order-details-product">
-    <div class="weui-panel weui-panel_access">
+    <div class="weui-panel weui-panel_access" style="border-radius: 5px;">
       <weui-infiniteloader [config]="ordDeilScrollConfig">
         <div class="weui-panel__bd">
           <div class="weui-cell" *ngFor="let item of detailsData?.data?.moyaoOrderItemModels; let i = index">

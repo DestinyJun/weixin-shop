@@ -14,7 +14,7 @@ export class OrderSureComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '确认订单',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {
       icon: ''

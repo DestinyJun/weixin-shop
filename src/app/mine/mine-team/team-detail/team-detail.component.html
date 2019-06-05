@@ -10,14 +10,14 @@
         </div>
         <div class="weui-cell" *ngFor="let prop of item.value" [routerLink]="['/mine/team/personal', {id: prop?.user.id}]">
           <div class="weui-cell__bd">
-            <p style="font-size: 0.75rem;color: #818181;">{{prop?.user?.nikeName}}</p>
-            <p style="font-size: 0.75rem;color: #C4C4C4;">
+            <p style="font-size: 0.85rem;color: #818181;">{{prop?.user?.nikeName}}</p>
+            <p style="font-size: 0.8rem;color: #C4C4C4;">
               <span style="">{{prop?.createdDate}}</span>
             </p>
           </div>
           <div class="weui-cell__ft">
-            <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.85rem'}">+{{prop?.earning}}</p>
-            <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.75rem'}">{{earningStatusList[prop?.earningStatus][0]}}</p>
+            <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.9rem'}">+{{prop?.earning}}</p>
+            <p [ngStyle]="{'color': earningStatusList[prop?.earningStatus][1],'font-size': '0.8rem'}">{{earningStatusList[prop?.earningStatus][0]}}</p>
           </div>
         </div>
       </div>
@@ -49,14 +49,14 @@
         </div>
         <div class="weui-cell" *ngFor="let item of filtersSearchList" [routerLink]="['/mine/team/personal', {id: item.user.id}]">
           <div class="weui-cell__bd">
-            <p style="font-size: 0.75rem;color: #818181;">{{item?.user?.nikeName}}</p>
-            <p style="font-size: 0.75rem;color: #C4C4C4;">
+            <p style="font-size: 0.85rem;color: #818181;">{{item?.user?.nikeName}}</p>
+            <p style="font-size: 0.8rem;color: #C4C4C4;">
               <span>{{item?.createdDate}}</span>
             </p>
           </div>
           <div class="weui-cell__ft">
-            <p [ngStyle]="{'color': earningStatusList[item?.earningStatus][1],'font-size': '0.85rem'}">+{{item?.earning}}</p>
-            <p [ngStyle]="{'color': earningStatusList[item?.earningStatus][1],'font-size': '0.75rem'}">{{earningStatusList[item?.earningStatus][0]}}</p>
+            <p [ngStyle]="{'color': earningStatusList[item?.earningStatus][1],'font-size': '0.9rem'}">+{{item?.earning}}</p>
+            <p [ngStyle]="{'color': earningStatusList[item?.earningStatus][1],'font-size': '0.9rem'}">{{earningStatusList[item?.earningStatus][0]}}</p>
           </div>
         </div>
       </div>

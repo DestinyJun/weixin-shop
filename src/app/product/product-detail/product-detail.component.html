@@ -3,41 +3,41 @@
     <app-header [option]="headerOption"></app-header>
   </div>
   <div class="pro-detail-swiper">
-    <div class="tab-swiper">
-      <div class="swiper-container"
-           [swiper]="config"
-           (indexChange)="onIndexChange($event)"
-           (swiperTransitionStart)="onSwiperEvent('transitionStart')"
-           (swiperTransitionEnd)="onSwiperEvent('transitionEnd')"
-           (autoplayStart)="onSwiperEvent($event)"
-      >
-        <div class="swiper-wrapper">
-          <div *ngFor="let slide of slides" class="swiper-slide" style="margin-right: 0">
-            <!--<img [src]="slide" alt="" style="height: 100%;width: auto">-->
-            <div class="swiper-wrapper-img" [ngStyle]="{'background-image': 'url('+slide+')'}"></div>
-          </div>
+    <div class="swiper-container"
+         [swiper]="config"
+         (indexChange)="onIndexChange($event)"
+         (swiperTransitionStart)="onSwiperEvent('transitionStart')"
+         (swiperTransitionEnd)="onSwiperEvent('transitionEnd')"
+         (autoplayStart)="onSwiperEvent($event)"
+    >
+      <div class="swiper-wrapper">
+        <div *ngFor="let slide of slides" class="swiper-slide" style="margin-right: 0">
+          <!--<img [src]="slide" alt="" style="height: 100%;width: auto">-->
+          <div class="swiper-wrapper-img" [ngStyle]="{'background-image': 'url('+slide+')'}"></div>
         </div>
-        <div class="swiper-scrollbar" [hidden]="config.scrollbar === false"></div>
-        <div class="swiper-pagination" [hidden]="config.pagination === false"></div>
-        <div class="swiper-button-prev" [hidden]="config.navigation === false"></div>
-        <div class="swiper-button-next" [hidden]="config.navigation === false"></div>
       </div>
+      <div class="swiper-scrollbar" [hidden]="config.scrollbar === false"></div>
+      <div class="swiper-pagination" [hidden]="config.pagination === false"></div>
+      <div class="swiper-button-prev" [hidden]="config.navigation === false"></div>
+      <div class="swiper-button-next" [hidden]="config.navigation === false"></div>
     </div>
   </div>
   <div class="pro-detail-article">
-    <weui-infiniteloader (loadmore)="clientLoadMore($event)" [config]="clientloaderConfig">
-      <article class="weui-article" [routerLink]="['/product']">
-        <section>
-          <h3 style="color: #7E7E7E;font-size: 0.9rem">八宝五胆墨药</h3>
-          <p style="color: #C6C6C6;font-size: 0.75rem">
-            我爱华为！我爱华为！我爱华为！我爱华为！
-          </p>
-        </section>
-      </article>
-      <div class="article-detail">
-        <p class="article-detail-title">
-          –<span>产品详情</span>–
+    <article class="weui-article" [routerLink]="['/product']">
+      <section>
+        <h3 style="color: #696969;font-size: 1rem">八宝五胆墨药</h3>
+        <p style="color: #C6C6C6;font-size: 0.8rem">
+          我爱华为！我爱华为！我爱华为！我爱华为！
         </p>
+      </section>
+    </article>
+  </div>
+  <div class="pro-detail-title">
+    –<span>产品详情</span>–
+  </div>
+  <div class="pro-detail-detail">
+    <weui-infiniteloader (loadmore)="clientLoadMore($event)" [config]="clientloaderConfig">
+      <div class="article-detail">
         <p class="article-detail-img">
           <img src="/assets/images/timg1.jpg" alt="" style="width: 100%;height: auto">
           <img src="/assets/images/timg2.jpg" alt="" style="width: 100%;height: auto">
