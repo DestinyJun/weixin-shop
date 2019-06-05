@@ -31,11 +31,12 @@ export class SettingPaypwdComponent implements OnInit {
   public headerOption: HeaderContent = {
     title: '修改支付密码',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {}
   };
   // payDialog
+  public maskContentShow = true;
   public inputShow = false;
   public passwordShow = false;
   public errorShow = false;
@@ -109,6 +110,7 @@ export class SettingPaypwdComponent implements OnInit {
           console.log(val);
           this.smsBackString = val.backString;
           this.maskContent.hide();
+          this.maskContentShow = false;
         } else {
           this.topSrv['warn'](`验证失败，错误代码：${val.status}`);
         }

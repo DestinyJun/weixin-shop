@@ -1,52 +1,55 @@
 .setting-paypwd{
   background-color: #F1F1F1;
   min-height: 100vh;
-  .weui-dialog-title{
-    text-align: center;
-    font-size: 1rem;
-  }
-  .weui-dialog-content{
-    text-align: center;
-    padding-top: 2.5vh;
-    padding-bottom: 2.5vh;
-    position: relative;
-    .c-n{
-      display: inline-block;
-      height: 14vw;
-      width: 14vw;
-      line-height: 14vw;
-      vertical-align: top;
-      border-left: 1px solid #CECECE;
-      border-top: 1px solid #CECECE;
-      border-bottom: 1px solid #CECECE;
-    }
-    :last-child{
-      border-right: 1px solid #CECECE;
-    }
-    .password{
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      border: 0;
-    }
-  }
-  .password{
+  .setting-paypwd-word{
     margin-top: 1vh;
+  }
+  .setting-paypwd-word,.setting-paypwd-firpassword{
+    .weui-dialog-title{
+      text-align: center;
+      font-size: 0.85rem;
+      color: #929292;
+    }
+    .weui-dialog-content{
+      text-align: center;
+      padding-top: 2.5vh;
+      padding-bottom: 2.5vh;
+      position: relative;
+      .c-n{
+        display: inline-block;
+        height: 14vw;
+        width: 14vw;
+        line-height: 14vw;
+        vertical-align: top;
+        border-left: 1px solid #CECECE;
+        border-top: 1px solid #CECECE;
+        border-bottom: 1px solid #CECECE;
+      }
+      :last-child{
+        border-right: 1px solid #CECECE;
+      }
+      .password{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        border: 0;
+      }
+    }
   }
   .setting-mobile__error{
     color: #F43530;
     text-align: center;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 0.85rem;
   }
   .setting-password-toast{
     .weui-toast {
       height: 4vh;
       line-height: 4vh;
-      font-size: 1rem;
+      font-size: 0.85rem;
       min-height: 0;
       width: 50vw;
       margin-left: 0;
@@ -55,6 +58,49 @@
       transform: translateX(-50%);
       .weui-icon_toast{
         margin: 0;
+      }
+    }
+  }
+  .setting-paypwd-mask{
+    .weui-mask{
+      .weui-mask__content{
+        .weui-cells{
+          margin-top: 0;
+          border-radius: 5px;
+          font-size: 0.85rem;
+          .weui-cell{
+            .weui-label{
+              color: #767676;
+            }
+            .weui-btn{
+              padding-top: 5px;
+              padding-bottom: 5px;
+              font-size: 0.85rem;
+              &:after{
+                border: unset;
+              }
+            }
+            .weui-btn_primary {
+              background: linear-gradient(to right,#F1926F,#F477A1);
+              color: #ffffff;
+            }
+            .weui-btn_primary.weui-btn_disabled{
+              background: #D0D0D0;
+              color: #767676;
+            }
+            .weui-input{
+              &::placeholder{
+                color: #8F8F8F;
+                font-size: 0.85rem;
+              }
+            }
+            .weui-vcode-btn{
+              color: #959595;
+              font-size: 0.85rem;
+              border: none;
+            }
+          }
+        }
       }
     }
   }
