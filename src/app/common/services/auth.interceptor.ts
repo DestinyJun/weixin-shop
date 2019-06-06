@@ -14,8 +14,8 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // return this.prod_http(req, next);
-    return this.debug_http(req, next);
+    return this.prod_http(req, next);
+    // return this.debug_http(req, next);
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('imageFileUpload') >= 0) {

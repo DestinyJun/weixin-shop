@@ -22,8 +22,8 @@ export class AppComponent implements OnInit {
       this.globalSrv.wxSessionSetObject('ios_url', window.location.href);
     }
     if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
-      // this.router.navigate(['/error']);
-      // return;
+      this.router.navigate(['/error']);
+      return;
     }
     // 路由事件
     this.router.events.subscribe(

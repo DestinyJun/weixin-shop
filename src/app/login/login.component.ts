@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.appInit();
+    this.appInit();
   }
   public appInit(): void {
     // weixin auth
