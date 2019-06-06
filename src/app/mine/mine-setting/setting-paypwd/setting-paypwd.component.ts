@@ -169,7 +169,7 @@ export class SettingPaypwdComponent implements OnInit {
                 this.firpasswordConfig.value = ['', '', '', '', '', ''];
                 this.passwordConfig.value = ['', '', '', '', '', ''];
                 window.history.back();
-              }, 2000);
+              }, 1000);
             } else {
               this.router.navigate(['/error'], {
                 queryParams: {

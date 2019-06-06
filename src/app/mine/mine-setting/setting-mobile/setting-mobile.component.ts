@@ -29,6 +29,7 @@ export class SettingMobileComponent implements OnInit {
   public mineSetSMS: any = null;
   public newPhone: any = null;
   public inputToggle = true;
+  public setMobileToastTxt: any = null;
   constructor(
     private mineSetSrv: MineSettingService,
     private router: Router,
@@ -109,7 +110,6 @@ export class SettingMobileComponent implements OnInit {
       case 2:
         this.mineSetVerifySMS(this.newPhone, this.mineSetSMS).pipe(
           mergeMap((val) => {
-            console.log(val);
               if (val.status === 200) {
                 return this.mineSetSrv.mineSetUpdatePhone({username: this.newPhone, smsKey: val.backString});
               } else {
@@ -119,8 +119,12 @@ export class SettingMobileComponent implements OnInit {
             })
         )
           .subscribe((val) => {
-            if (val.status !== 200) {
-              window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+            if (val.status === 200) {
+              this.setMobileToastTxt = val.message;
+              this.onToastShow('success');
+              setTimeout(() => {
+                window.history.back();
+              }, 1000);
             } else {
               this.router.navigate(['/error'], {
                 queryParams: {

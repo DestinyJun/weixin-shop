@@ -50,10 +50,10 @@
     </div>
   </form>
   <div class="setting-mobile-toast">
-    <weui-toast #success [text]="'修改成功'" [icon]="''" [time]="1000"></weui-toast>
+    <weui-toast #success [text]="setMobileToastTxt" [icon]="''" [time]="1000"></weui-toast>
   </div>
   <div class="setting-mobile-button">
     <button *ngIf="inputToggle" class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled':!mineSetSMS}" [disabled]="!mineSetSMS" (click)="inputToggleClick(1)">下一步</button>
-    <button *ngIf="!inputToggle" class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled':!newPhone}" [disabled]="!newPhone && !mineSetSMS" (click)="inputToggleClick(2)">立即绑定</button>
+    <button *ngIf="!inputToggle" class="weui-btn weui-btn_primary" [ngClass]="{'weui-btn_disabled':(!newPhone || !mineSetSMS)}" [disabled]="(!newPhone || !mineSetSMS)" (click)="inputToggleClick(2)">立即绑定</button>
   </div>
 </div>
