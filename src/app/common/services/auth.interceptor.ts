@@ -153,7 +153,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.router.navigate(['/error'], {
             queryParams: {
               msg: 'token认证失败，请重新登陆！',
-              url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
+              url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=${environment.dev_test_url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
               btn: '点击登陆'
             }});
         }
