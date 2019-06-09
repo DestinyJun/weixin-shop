@@ -36,11 +36,12 @@ export class TabHomeComponent implements OnInit {
       disableOnInteraction: false  // 用户操作之后是否停止自动轮播默认true
     }
   };
-  public slides = [
-    '/assets/images/timg1.jpg',
-    '/assets/images/timg2.jpg',
-    '/assets/images/timg3.jpg',
-  ];
+ /* public slides = [
+    './assets/images/timg1.jpg',
+    './assets/images/timg2.jpg',
+    './assets/images/timg3.jpg',
+  ];*/
+  public slides: any = null;
   constructor(
     private tabSrv: TabService,
     private router: Router,
@@ -84,6 +85,23 @@ export class TabHomeComponent implements OnInit {
         if (val.status === 200) {
           console.log(val);
           this.tabUserInfo = val.data;
+          return;
+        }
+        this.router.navigate(['/error'], {
+          queryParams: {
+            msg: `获取用户信息失败，错误码${val.status}`,
+            url: null,
+            btn: '请重试',
+          }
+        });
+      }
+    );
+    this.tabSrv.tabGetBanner().subscribe(
+      (val) => {
+        console.log(val);
+        if (val.status === 200) {
+          this.slides = val.datas;
+          console.log(this.slides);
           return;
         }
         this.router.navigate(['/error'], {

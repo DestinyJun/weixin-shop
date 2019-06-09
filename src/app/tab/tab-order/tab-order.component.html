@@ -1,8 +1,8 @@
-<div class="order-place" *ngIf="goodsInfo;else loading">
-  <div class="order-place-header">
+<div class="tab-order" *ngIf="goodsInfo;else loading">
+  <div class="tab-order-header">
     <app-header [option]="headerOption"></app-header>
   </div>
-  <div class="order-place-address">
+  <div class="tab-order-address">
     <div class="weui-cells" [routerLink]="['/client/list', {status: 'order'}]">
       <div class="weui-cell" [ngStyle]="{'color':orderPlaceAddressInfo?'#636363':'#C1C1C1'}">
         <div class="weui-cell__bd">
@@ -18,7 +18,7 @@
       </div>
     </div>
   </div>
-  <div class="order-place-goods">
+  <div class="tab-order-goods">
     <div class="weui-panel weui-panel_access commodity">
       <div class="weui-panel__hd" style="font-size: 0.85rem;color: #969696;">商品信息</div>
       <weui-infiniteloader [config]="infiniteloaderConfig">
@@ -48,7 +48,7 @@
       </weui-infiniteloader>
     </div>
   </div>
-  <div class="order-place-bill">
+  <div class="tab-order-bill">
     <div class="weui-cells">
       <div class="weui-cell" style="align-items: unset;" (click)="getInvoiceClick()">
         <div class="weui-cell__hd">
@@ -73,7 +73,7 @@
       </div>
     </div>
   </div>
-  <div class="order-place-toast">
+  <div class="tab-order-toast">
     <weui-toast #success [text]="'请先填写收货地址'" [icon]="''" [time]="1000"></weui-toast>
   </div>
   <div class="weui-footer weui-footer_fixed-bottom" *ngIf="totalPrice">

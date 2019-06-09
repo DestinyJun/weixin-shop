@@ -19,6 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('imageFileUpload') >= 0) {
+      console.log(environment.dev_test_url + req.url);
       this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         // url: 'http://192.168.1.88' + req.url,
@@ -48,8 +49,8 @@ export class AuthInterceptor implements HttpInterceptor {
       url: environment.dev_test_url + req.url,
       // url: 'http://192.168.1.88' + req.url,
       headers: req.headers
-        .set('Content-type', 'application/json; charset=UTF-8')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU1OTgyMzgxN30.qimX4xpmHrs08xlQ6SwuHnYSC9428XVOi3EE3G_3y8trfCQeX6A6ZAZDiGzrSilwgdx9YImMOlt-xjhPy9OzGA')
+        .set('Content-type', 'application/json')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU2MDE4MTc0Nn0.PHPhzqClfpWnFOlqxVhEWLQjoVvQ-LxcmOo9_hHj52cO4ElVxY_3OAmSGzYJkifjN1J3sjCZ-6Swy39x3TmLZg')
     });
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {

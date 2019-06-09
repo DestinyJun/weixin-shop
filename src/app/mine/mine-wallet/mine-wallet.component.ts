@@ -10,6 +10,7 @@ import {MineWalletService} from '../../common/services/mine-wallet.service';
 })
 export class MineWalletComponent implements OnInit {
   public mineBalance: any = {};
+  public mineWalletOrderInfo: any = null;
   // header
   public headerOption: HeaderContent = {
     title: '我的钱包',
@@ -32,6 +33,22 @@ export class MineWalletComponent implements OnInit {
         if (val.status === 200) {
           this.mineBalance['balance'] = val.data['remainingSum'] + '.00';
           this.mineBalance['withdraw'] = val.data['remainingSum'] + '.00';
+          return;
+        }
+        this.router.navigate(['/error'], {
+          queryParams: {
+            msg: `获取数据失败，错误码${val.status}`,
+            url: null,
+            btn: '请重试'
+          }
+        });
+      }
+    );
+    this.mineWalletSrv.mineWalletIncome({}).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.mineWalletOrderInfo = val.dataObject;
+          console.log(val);
           return;
         }
         this.router.navigate(['/error'], {

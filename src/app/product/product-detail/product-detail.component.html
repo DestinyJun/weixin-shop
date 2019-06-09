@@ -23,11 +23,11 @@
     </div>
   </div>
   <div class="pro-detail-article">
-    <article class="weui-article" [routerLink]="['/product']">
+    <article class="weui-article">
       <section>
-        <h3 style="color: #696969;font-size: 1rem">八宝五胆墨药</h3>
+        <h3 style="color: #696969;font-size: 1rem">{{prodInfo?.title}}</h3>
         <p style="color: #C6C6C6;font-size: 0.8rem">
-          我爱华为！我爱华为！我爱华为！我爱华为！
+          {{prodInfo?.info}}
         </p>
       </section>
     </article>
@@ -39,9 +39,9 @@
     <weui-infiniteloader (loadmore)="clientLoadMore($event)" [config]="clientloaderConfig">
       <div class="article-detail">
         <p class="article-detail-img">
-          <img src="/assets/images/timg1.jpg" alt="" style="width: 100%;height: auto">
-          <img src="/assets/images/timg2.jpg" alt="" style="width: 100%;height: auto">
+          <img *ngIf="prodInfo?.mainImage" [src]="prodInfo?.mainImage" alt="图片地址无效" style="width: 100%;height: auto">
         </p>
+        <p>{{prodInfo?.content}}</p>
       </div>
     </weui-infiniteloader>
   </div>

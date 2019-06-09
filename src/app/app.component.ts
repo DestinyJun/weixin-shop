@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
     private globalSrv: GlobalService,
   ) {}
   ngOnInit(): void {
-    console.log(window.screen.orientation.angle);
     console.log(environment.env);
     this.globalSrv.wxSessionSetObject('orderSelectStatus', 'all');
     if (!(this.globalSrv.wxSessionGetObject('ios_url'))) {

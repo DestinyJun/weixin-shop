@@ -24,4 +24,8 @@ export class TabService {
   public tabGetUserInfo(): Observable<any> {
     return this.http.post(`/member/userInfo`, {});
   }
+  // get banner
+  public tabGetBanner(): Observable<any> {
+    return this.http.post(`/banner/getBanner`, {});
+  }
 }
