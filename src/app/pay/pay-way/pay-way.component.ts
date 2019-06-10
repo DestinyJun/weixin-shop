@@ -140,7 +140,11 @@ export class PayWayComponent implements OnInit, OnDestroy {
         .subscribe((val) => {
           console.log(val);
           if (val.status === 200) {
-            this.router.navigate(['/pay/success'], {queryParams: {orderId: this.payDetailsData.id}});
+            this.router.navigate(['/pay/success'], {
+              queryParams: {
+                sn: this.payDetailsData.sn,
+                orderId: this.payDetailsData.id
+              }});
             return;
           }
           this.router.navigate(['/error'], {
@@ -210,7 +214,11 @@ export class PayWayComponent implements OnInit, OnDestroy {
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
           that.paySrv.payWeixinConfirm(that.orderId).subscribe(
             (val) => {
-              that.router.navigate(['/pay/success'], {queryParams: {orderId: that.payDetailsData.id}});
+              that.router.navigate(['/pay/success'], {
+                queryParams: {
+                  sn: that.payDetailsData.sn,
+                  orderId: that.payDetailsData.id
+                }});
             }
           );
         }

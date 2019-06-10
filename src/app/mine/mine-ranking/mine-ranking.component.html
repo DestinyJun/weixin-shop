@@ -40,7 +40,7 @@
   <div class="mine-rank-scroll">
   <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
     <div class="weui-cells" style="margin-top: 0 ">
-      <div class="weui-cell" *ngFor="let item of mineRanking[1].data?.slice(1); let i = index">
+      <div class="weui-cell" *ngFor="let item of mineRanking[0].data?.slice(1); let i = index">
         <div class="weui-cell__hd">NO.{{item?.Ranks}}</div>
         <div class="weui-cell__bd">{{item?.nikeName}}</div>
         <div class="weui-cell__ft">￥{{item?.sumPaid}}</div>
@@ -52,9 +52,9 @@
     <!--<div class="weui-cells__title">销售排行榜</div>-->
     <div class="weui-mine">
       <div class="weui-cell">
-        <div class="weui-cell__hd">{{mineRanking[1]?.data?mineRanking[1]?.data[0]?.Ranks: ''}}</div>
-        <div class="weui-cell__bd">{{mineRanking[1]?.data?mineRanking[1]?.data[0]?.nikeName:'没有关键字'}}</div>
-        <div class="weui-cell__ft">￥{{mineRanking[1]?.data?mineRanking[1]?.data[0]?.sumPaid: ''}}</div>
+        <div class="weui-cell__hd">{{mineRanking[0]?.data?mineRanking[0]?.data[0]?.Ranks: ''}}</div>
+        <div class="weui-cell__bd">{{mineRanking[0]?.data?mineRanking[0]?.data[0]?.nikeName:'没有关键字'}}</div>
+        <div class="weui-cell__ft">￥{{mineRanking[0]?.data?mineRanking[0]?.data[0]?.sumPaid: ''}}</div>
       </div>
     </div>
   </div>

@@ -25,8 +25,8 @@
                <div class="weui-cell" style=" position: static;visibility: hidden;margin-top: -23px;" [id]="item?.name">{{item?.name}}</div>
                <div class="weui-cell" *ngFor="let prop of item.value" (touchmove)="onTouchMove($event, prop)" (touchstart)="onTouchstart($event)">
                  <div class="weui-cell__bd" (click)="clientNameClick(prop, 'address')">
-                   <p><span style="font-size: 0.8rem">{{prop.name}}</span></p>
-                   <p><span style="color: #B0B0B0;font-size: 0.5rem">{{123}}</span></p>
+                   <p><span style="font-size: 0.9rem">{{prop.name}}</span></p>
+                   <!--<p><span style="color: #B0B0B0;font-size: 0.5rem">{{123}}</span></p>-->
                  </div>
                  <div class="weui-cell__ft">
                    <button *ngIf="prop.editState" class="weui-btn weui-btn_warn" (click)="clientDeleteClick(prop.id)" style="font-size: 0.8rem;">删除</button>

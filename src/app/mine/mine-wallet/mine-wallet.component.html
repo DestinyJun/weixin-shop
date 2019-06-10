@@ -24,11 +24,11 @@
       <div class="weui-cell">
         <div class="weui-cell__bd">
           <p style="font-size: 0.85rem;color: #949494;">今日</p>
-          <p>6单</p>
+          <p>{{mineWalletOrderInfo?.today?.sum_amount}}单</p>
         </div>
         <div class="weui-cell__ft">
-          <p style="font-size: 0.9rem;color: #F99998;">￥767.00</p>
-          <p style="font-size: 0.75rem;color: #CECECE;">2019.05.1</p>
+          <p style="font-size: 0.9rem;color: #F99998;">￥{{mineWalletOrderInfo?.today?.total?mineWalletOrderInfo?.today?.total: 0}}</p>
+          <p style="font-size: 0.75rem;color: #CECECE;">{{mineWalletOrderInfo?.today?.startDay}}</p>
         </div>
       </div>
     </div>
@@ -36,11 +36,11 @@
       <div class="weui-cell">
         <div class="weui-cell__bd">
           <p style="font-size: 0.85rem;color: #949494;">本月</p>
-          <p>6单</p>
+          <p>{{mineWalletOrderInfo?.month?.sum_amount}}单</p>
         </div>
         <div class="weui-cell__ft">
-          <p style="font-size: 0.9rem;color: #F99998;">￥767.00</p>
-          <p style="font-size: 0.75rem;color: #CECECE;">2019.05.1</p>
+          <p style="font-size: 0.9rem;color: #F99998;">￥{{mineWalletOrderInfo?.month?.total?mineWalletOrderInfo?.today?.total: 0}}</p>
+          <p style="font-size: 0.75rem;color: #CECECE;">{{mineWalletOrderInfo?.month?.startDay}} ～ {{mineWalletOrderInfo?.month?.endDay}}</p>
         </div>
       </div>
     </div>
@@ -48,11 +48,11 @@
       <div class="weui-cell">
         <div class="weui-cell__bd">
           <p style="font-size: 0.85rem;color: #949494;">年度</p>
-          <p>6单</p>
+          <p>{{mineWalletOrderInfo?.year?.sum_amount}}单</p>
         </div>
         <div class="weui-cell__ft">
-          <p style="font-size: 0.9rem;color: #F99998;">￥767.00</p>
-          <p style="font-size: 0.75rem;color: #CECECE;">2019.05.1</p>
+          <p style="font-size: 0.9rem;color: #F99998;">￥{{mineWalletOrderInfo?.year?.total?mineWalletOrderInfo?.year?.total: 0}}</p>
+          <p style="font-size: 0.75rem;color: #CECECE;">{{mineWalletOrderInfo?.year?.startDay}} ～ {{mineWalletOrderInfo?.year?.endDay}}</p>
         </div>
       </div>
     </div>

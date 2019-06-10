@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-pay-success',
@@ -9,12 +9,13 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 })
 export class PaySuccessComponent implements OnInit {
   // order id
-  public paySucOrdId: any;
+  public paySucOrdSn: any;
+  public paySucUrl: any = null;
   // header
   public headerOption: HeaderContent = {
     title: '支付完成',
     leftContent: {
-      icon: 'fa fa-chevron-left'
+      icon: 'icon iconfont icon-fanhui'
     },
     rightContent: {}
   };
@@ -24,9 +25,16 @@ export class PaySuccessComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // 防止页面后退
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function () {
+      history.pushState(null, null, document.URL);
+    });
     this.routerInfo.queryParams.subscribe((params: Params) => {
-      this.paySucOrdId = params;
+      this.paySucOrdSn = params;
     });
   }
-
+  public payWayClick(): void {
+    window.location.href = 'http://www.sjcqdjk.com/moyaoView/tab/home';
+  }
 }

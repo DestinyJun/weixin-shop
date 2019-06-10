@@ -1,12 +1,12 @@
 <div class="tab-product">
-  <article class="weui-article" [routerLink]="['/product']">
-    <section>
+  <article class="weui-article">
+    <section *ngFor="let item of tabProdList" [routerLink]="['/product']" [queryParams]="{id: item.id}">
       <p class="weui-article-img">
-        <img src="./assets/images/timg1.jpg" alt="">
+        <img *ngIf="item?.mainImage" [src]="item?.mainImage" alt="无效图片地址">
       </p>
-      <h3 style="color: #7E7E7E;font-size: 0.9rem">八宝五胆墨药</h3>
+      <h3 style="color: #7E7E7E;font-size: 0.9rem">{{item?.title}}</h3>
       <p style="color: #C6C6C6;font-size: 0.75rem">
-        我爱华为！我爱华为！我爱华为！我爱华为！
+        {{item?.info}}
       </p>
     </section>
   </article>

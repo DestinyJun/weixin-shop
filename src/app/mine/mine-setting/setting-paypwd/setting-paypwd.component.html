@@ -33,7 +33,14 @@
     <weui-mask #maskContent>
       <div class="weui-cells" style="width: 95vw">
         <div class="weui-cell__title">
-          <p style="text-align: center;padding: 10px">为了安全，请验证身份</p>
+          <p style="text-align: center;">
+            <span style="display: inline-block;padding: 10px 0">为了安全，请验证身份</span>
+            <i
+              (click)="setMobileCloseMask()"
+              class="icon iconfont icon-guanbi pull-right"
+              style="font-size: 0.7rem;color: #959595;display: inline-block;width: 50px;height: 100%;padding: 10px 0">
+            </i>
+          </p>
         </div>
         <div class="weui-cell">
           <div class="weui-cell__hd">

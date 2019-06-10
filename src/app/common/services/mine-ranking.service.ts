@@ -12,6 +12,7 @@ export class MineRankingService {
   public mineRankingTeamTop(params): Observable<any> {
     return this.http.post(`/team/top`, params);
   }
+  // order Income
   public mineRankingIncome(params): Observable<any> {
     return this.http.post(`/moayoOrder/myOrderInfo`, params);
   }

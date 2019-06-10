@@ -15,15 +15,14 @@ export class AppComponent implements OnInit {
     private globalSrv: GlobalService,
   ) {}
   ngOnInit(): void {
-    console.log(window.screen.orientation.angle);
     console.log(environment.env);
     this.globalSrv.wxSessionSetObject('orderSelectStatus', 'all');
     if (!(this.globalSrv.wxSessionGetObject('ios_url'))) {
       this.globalSrv.wxSessionSetObject('ios_url', window.location.href);
     }
     if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
-      this.router.navigate(['/error']);
-      return;
+    /*  this.router.navigate(['/error']);
+      return;*/
     }
     // 路由事件
     this.router.events.subscribe(

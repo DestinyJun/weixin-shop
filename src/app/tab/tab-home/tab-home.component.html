@@ -20,7 +20,7 @@
       <div class="swiper-wrapper">
         <div *ngFor="let slide of slides" class="swiper-slide" style="margin-right: 0">
           <!--<img [src]="slide" alt="" style="height: 100%;width: auto">-->
-          <div class="swiper-wrapper-img" [ngStyle]="{'background-image': 'url('+slide+')'}"></div>
+          <div class="swiper-wrapper-img" [ngStyle]="{'background-image': 'url('+slide?.img+')'}"></div>
         </div>
       </div>
       <div class="swiper-scrollbar" [hidden]="config.scrollbar === false"></div>

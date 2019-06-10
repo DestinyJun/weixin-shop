@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {SwiperConfigInterface, SwiperPaginationInterface} from 'ngx-swiper-wrapper';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
+import {ProductService} from '../../common/services/product.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-detail',
@@ -46,18 +48,48 @@ export class ProductDetailComponent implements OnInit {
       disableOnInteraction: false  // 用户操作之后是否停止自动轮播默认true
     }
   };
-  public slides = [
-    '/assets/images/timg1.jpg',
-    '/assets/images/timg2.jpg',
-    '/assets/images/timg3.jpg',
-  ];
+ /* public slides = [
+    './assets/images/timg1.jpg',
+    './assets/images/timg2.jpg',
+    './assets/images/timg3.jpg',
+  ];*/
+  public prodInfo: any = null;
+  public slides: any = null;
   // scroll
   public clientloaderConfig: InfiniteLoaderConfig = {
     height: '100%'
   };
-  constructor() { }
+  constructor(
+    private productSrv: ProductService,
+    private router: Router,
+    private routerInfo: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.productInit();
+  }
+  public productInit(): void {
+    this.routerInfo.queryParams.subscribe(
+      (prop) => {
+        this.productSrv.prodGetInfo(prop).subscribe(
+          (val) => {
+            console.log(val);
+            if (val.status === 200) {
+              this.prodInfo = val.data;
+              this.slides = val.data.imgs.split(',');
+              return;
+            }
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: `获取用户信息失败，错误码${val.status}`,
+                url: null,
+                btn: '请重试',
+              }
+            });
+          }
+        );
+      }
+    );
   }
   // scroll
   public clientLoadMore(comp: InfiniteLoaderComponent): void {

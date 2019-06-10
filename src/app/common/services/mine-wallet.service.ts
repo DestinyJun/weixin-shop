@@ -31,4 +31,8 @@ export class MineWalletService {
   public mineWalletBalaPay(params): Observable<any> {
     return this.http.post('/earnings/earningsList', params);
   }
+  // get OrderInfo
+  public mineWalletIncome(params): Observable<any> {
+    return this.http.post(`/moayoOrder/myOrderInfo`, params);
+  }
 }

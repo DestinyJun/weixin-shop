@@ -41,12 +41,12 @@ export class MineRankingComponent implements OnInit {
     this.mineRankInit();
   }
   public mineRankInit(): void {
-    forkJoin([this.mineRankingSrv.mineRankingIncome({}), this.mineRankingSrv.mineRankingTeamTop({})]).subscribe(
+    forkJoin([this.mineRankingSrv.mineRankingTeamTop({})]).subscribe(
       (res) => {
         console.log(res);
         if (res) {
           this.mineRanking = res;
-          this.mineRankingThree = (res[1].data.slice(1)).slice(0, 3);
+          this.mineRankingThree = (res[0].data.slice(1)).slice(0, 3);
           console.log( this.mineRankingThree);
         } else {
           this.router.navigate(['/error'], {

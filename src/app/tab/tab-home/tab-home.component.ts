@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TabService} from '../../common/services/tab.service';
 import {NavigationEnd, Router} from '@angular/router';
 import {SwiperConfigInterface, SwiperPaginationInterface} from 'ngx-swiper-wrapper';
@@ -15,7 +15,7 @@ export class TabHomeComponent implements OnInit {
     clickable: true,
     hideOnClick: false
   };
-  @Input() public config: SwiperConfigInterface = {
+  public config: SwiperConfigInterface = {
     a11y: true,
     loop: true,
     threshold: 1,
@@ -36,11 +36,12 @@ export class TabHomeComponent implements OnInit {
       disableOnInteraction: false  // 用户操作之后是否停止自动轮播默认true
     }
   };
-  public slides = [
-    '/assets/images/timg1.jpg',
-    '/assets/images/timg2.jpg',
-    '/assets/images/timg3.jpg',
-  ];
+ /* public slides = [
+    './assets/images/timg1.jpg',
+    './assets/images/timg2.jpg',
+    './assets/images/timg3.jpg',
+  ];*/
+  public slides: any = null;
   constructor(
     private tabSrv: TabService,
     private router: Router,
@@ -50,6 +51,7 @@ export class TabHomeComponent implements OnInit {
     this.tabHomeInit();
     this.router.events.subscribe(
       (event) => {
+        console.log('进来了');
         if (event instanceof NavigationEnd) {
           if (event.url === '/tab/home') {
             this.config = {
@@ -84,6 +86,23 @@ export class TabHomeComponent implements OnInit {
         if (val.status === 200) {
           console.log(val);
           this.tabUserInfo = val.data;
+          return;
+        }
+        this.router.navigate(['/error'], {
+          queryParams: {
+            msg: `获取用户信息失败，错误码${val.status}`,
+            url: null,
+            btn: '请重试',
+          }
+        });
+      }
+    );
+    this.tabSrv.tabGetBanner().subscribe(
+      (val) => {
+        console.log(val);
+        if (val.status === 200) {
+          this.slides = val.datas;
+          console.log(this.slides);
           return;
         }
         this.router.navigate(['/error'], {

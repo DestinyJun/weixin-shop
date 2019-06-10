@@ -31,10 +31,10 @@ export class TabComponent implements OnInit {
      router.events.subscribe(
        (event) => {
          if (event instanceof NavigationEnd) {
-           console.log(event);
+           // console.log(event);
            this.tabActive = event.urlAfterRedirects.split('/')[2];
            this.rouStatus = event.urlAfterRedirects.split('/')[2];
-           console.log(this.tabActive, this.rouStatus);
+           // console.log(this.tabActive, this.rouStatus);
          }
        }
      );

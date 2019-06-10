@@ -200,4 +200,7 @@ export class SettingPaypwdComponent implements OnInit {
   public onToastShow(type: 'success' | 'loading') {
     (<ToastComponent>this[`${type}Toast`]).onShow();
   }
+  public setMobileCloseMask(): void {
+    window.history.back();
+  }
 }
