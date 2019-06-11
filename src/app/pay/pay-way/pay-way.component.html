@@ -20,7 +20,7 @@
              class="icon iconfont icon-qianbaozhifu1"></i>
         </p>
         <p>钱包支付</p>
-        <input type="radio" class="weui-check" name="radio" id="s12" value="wallet" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+        <input type="radio" class="weui-check" name="radio" id="s12" value="wallet" [(ngModel)]="radioRes.radio">
       </div>
       <div class="weui-flex__item" [ngClass]="{'active': radioRes.radio === 'weixin'}">
         <p>
@@ -28,43 +28,9 @@
             class="icon iconfont icon-weixinzhifu1"></i>
         </p>
         <p>微信支付</p>
-        <input type="radio" class="weui-check" name="radio" id="s13" value="weixin" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
+        <input type="radio" class="weui-check" name="radio" id="s13" value="weixin" [(ngModel)]="radioRes.radio">
       </div>
     </div>
-   <!-- <div class="weui-cells">
-      <div class="weui-panel">
-        <div class="weui-panel__bd">
-          <div class="weui-media-box weui-media-box_small-appmsg">
-            &lt;!&ndash;<div class="weui-cells">
-              <label class="weui-cell weui-cells_checkbox" for="s12">
-                <div class="weui-cell__hd">
-                  <i class="icon iconfont icon-qianbaozhifu" style="width:20px;margin-right:5px;display:block;color: #4DCB6B;"></i>
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <p>钱包支付</p>
-                </div>
-                <div class="weui-cell__ft">
-                  <input type="radio" class="weui-check" name="radio" id="s12" value="wallet" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
-                  <i class="weui-icon-checked"></i>
-                </div>
-              </label>
-              <label class="weui-cell weui-cells_checkbox"  for="s13">
-                <div class="weui-cell__hd">
-                  <i class="fa fa-weixin" style="width:20px;margin-right:5px;display:block;color: #4DCB6B;"></i>
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <p>微信支付</p>
-                </div>
-                <div class="weui-cell__ft">
-                  <input type="radio" class="weui-check" name="radio" id="s13" value="weixin" [(ngModel)]="radioRes.radio" (change)="radioResChanges()">
-                  <i class="weui-icon-checked"></i>
-                </div>
-              </label>
-            </div>&ndash;&gt;
-          </div>
-        </div>
-      </div>
-    </div>-->
   </div>
   <div class="weui-dialog-pay">
     <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayOnchange)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>

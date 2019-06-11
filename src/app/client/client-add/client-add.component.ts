@@ -89,7 +89,6 @@ export class ClientAddComponent implements OnInit {
             (val) => {
               if (val.status === 200) {
                 this.addClient.name = val.data.name;
-                console.log(this.addClient.name);
               }
             }
           );

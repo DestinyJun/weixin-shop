@@ -3,19 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { ProductRoutingModule } from './product-routing.module';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
-import {SWIPER_CONFIG, SwiperConfigInterface, SwiperModule} from 'ngx-swiper-wrapper';
+import {SwiperModule} from 'ngx-swiper-wrapper';
 import {HeaderModule} from '../common/components/header/header.module';
 import {WeUiModule} from 'ngx-weui';
-const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
-  direction: 'horizontal',
-  slidesPerView: 'auto',
-  observer: true,
-  threshold: 50,
-  spaceBetween: 5,
-  centeredSlides: true
-};
+import {ProductAdComponent} from './product-ad/product-ad.component';
 @NgModule({
-  declarations: [ProductDetailComponent],
+  declarations: [ProductDetailComponent, ProductAdComponent],
   imports: [
     CommonModule,
     ProductRoutingModule,
@@ -23,11 +16,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     HeaderModule,
     WeUiModule.forRoot(),
   ],
-  providers: [
-    {
-      provide: SWIPER_CONFIG,
-      useValue: DEFAULT_SWIPER_CONFIG
-    }
-  ]
+  providers: []
 })
 export class ProductModule { }

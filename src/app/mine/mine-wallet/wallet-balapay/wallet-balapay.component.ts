@@ -13,8 +13,6 @@ import {Router} from '@angular/router';
 export class WalletBalapayComponent implements OnInit, OnDestroy {
   // mask
   @ViewChild('maskContent') maskContent: MaskComponent;
-  // date picker
-  srvRes: any = '';
   // header
   public headerOption: HeaderContent = {
     title: '收支明细',
@@ -43,7 +41,6 @@ export class WalletBalapayComponent implements OnInit, OnDestroy {
   public walletBalaPayInit(params): void {
     this.mineWalletSrv.mineWalletBalaPay(params).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           this.balapayList = val.datas;
           return;
@@ -63,8 +60,6 @@ export class WalletBalapayComponent implements OnInit, OnDestroy {
   public onShowBySrv() {
     this.srv.destroyAll();
     this.srv.showDateTime('date-ym', '', null, null, new Date()).subscribe((res: any) => {
-      console.log(res);
-      // this.srvRes = res.value;
       this.walletBalaPayInit({currentPage: '1', createddate: res.formaValue});
     });
   }

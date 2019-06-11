@@ -14,7 +14,7 @@ import {GlobalService} from '../../common/services/global.service';
 @Component({
   selector: 'app-client-lit',
   templateUrl: './client-list.component.html',
-  styleUrls: ['./client-listcomponent.less'],
+  styleUrls: ['./client-list.component.less'],
   encapsulation: ViewEncapsulation.None
 })
 export class ClientListComponent implements OnInit {
@@ -40,7 +40,6 @@ export class ClientListComponent implements OnInit {
     }
   };
   // router
-  // @Input() public routerStatus: string = null;
   public routerStatus: string = null;
   // client
   public clientList: any = null;
@@ -144,7 +143,6 @@ export class ClientListComponent implements OnInit {
           item.editState = false;
         }
       }
-      // console.log('右滑呀');
       return;
     } else {
       if (Math.abs(this.touchStartPageY - this.touchMovePageY) < 5 ) {
@@ -152,7 +150,6 @@ export class ClientListComponent implements OnInit {
           item.editState = true;
         }
       }
-      // console.log('左滑呀');
     }
   }
   // client
@@ -188,7 +185,7 @@ export class ClientListComponent implements OnInit {
         if (res.value) {
           this.tabService.tabDeleteClient(item.id).subscribe(
             (value) => {},
-            error => console.log(error),
+            error => {},
             () => {
               this.tabClientInitialize();
             }
@@ -222,7 +219,6 @@ export class ClientListComponent implements OnInit {
       });
       this.clientList.push({name: val, value: c });
     });
-    console.log(this.clientList);
   }
   // go to
   public goTo(location: string): void {

@@ -9,6 +9,8 @@ import {SwiperConfigInterface, SwiperPaginationInterface} from 'ngx-swiper-wrapp
 })
 export class TabHomeComponent implements OnInit {
   public tabUserInfo: any = null;
+  public tabHomeGreetings: any = null;
+  public tabHomeDate = new Date().getHours();
   // swoper
   private pagination: SwiperPaginationInterface = {
     el: '.swiper-pagination',
@@ -32,15 +34,10 @@ export class TabHomeComponent implements OnInit {
     speed: 3000,
     observer: true,
     autoplay: {
-      delay: 2000, // 时间 毫秒
-      disableOnInteraction: false  // 用户操作之后是否停止自动轮播默认true
+      delay: 2000,
+      disableOnInteraction: false
     }
   };
- /* public slides = [
-    './assets/images/timg1.jpg',
-    './assets/images/timg2.jpg',
-    './assets/images/timg3.jpg',
-  ];*/
   public slides: any = null;
   constructor(
     private tabSrv: TabService,
@@ -49,9 +46,9 @@ export class TabHomeComponent implements OnInit {
 
   ngOnInit() {
     this.tabHomeInit();
+    this.tabHomeTimer();
     this.router.events.subscribe(
       (event) => {
-        console.log('进来了');
         if (event instanceof NavigationEnd) {
           if (event.url === '/tab/home') {
             this.config = {
@@ -84,7 +81,6 @@ export class TabHomeComponent implements OnInit {
     this.tabSrv.tabGetUserInfo().subscribe(
       (val) => {
         if (val.status === 200) {
-          console.log(val);
           this.tabUserInfo = val.data;
           return;
         }
@@ -99,10 +95,8 @@ export class TabHomeComponent implements OnInit {
     );
     this.tabSrv.tabGetBanner().subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           this.slides = val.datas;
-          console.log(this.slides);
           return;
         }
         this.router.navigate(['/error'], {
@@ -115,11 +109,35 @@ export class TabHomeComponent implements OnInit {
       }
     );
   }
-  public onIndexChange(index: number): void {
-    // console.log('Swiper index: ', index);
-  }
-  public onSwiperEvent(event: string): void {
-    // console.log(event);
-    // console.log('Swiper event: ', event);
+  public tabHomeTimer(): void {
+    if (this.tabHomeDate < 6) {
+      this.tabHomeGreetings = '凌晨好！';
+      return;
+    }
+    if (this.tabHomeDate < 9) {
+      this.tabHomeGreetings = '早上好！';
+      return;
+    }
+    if (this.tabHomeDate < 12) {
+      this.tabHomeGreetings = '上午好！';
+      return;
+    }
+    if (this.tabHomeDate < 14) {
+      this.tabHomeGreetings = '中午好！';
+      return;
+    }
+    if (this.tabHomeDate < 17) {
+      this.tabHomeGreetings = '下午好！';
+      return;
+    }
+    if (this.tabHomeDate < 19) {
+      this.tabHomeGreetings = '傍晚好！';
+      return;
+    }
+    if (this.tabHomeDate < 22) {
+      this.tabHomeGreetings = '晚上好！';
+      return;
+    }
+    this.tabHomeGreetings = '夜深了！';
   }
 }

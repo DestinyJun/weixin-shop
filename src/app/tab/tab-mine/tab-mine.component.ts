@@ -2,7 +2,6 @@ import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angu
 import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
 import {MineService} from '../../common/services/mine.service';
 import {forkJoin} from 'rxjs';
-import {GlobalService} from '../../common/services/global.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -20,7 +19,7 @@ export class TabMineComponent implements OnInit {
     {name: '已完成', amount: 0, status: 'completed'},
     {name: '退货', amount: 0, status: 'return'},
   ];
-  // Dialog组件
+  // Dialog
   @ViewChild('iosDialog') iosDialog: DialogComponent;
   public configDialog: DialogConfig = {};
   public mineUserInfo: any = null;
@@ -74,5 +73,4 @@ export class TabMineComponent implements OnInit {
     }, 10);
     return false;
   }
-
 }

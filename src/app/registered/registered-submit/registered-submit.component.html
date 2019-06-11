@@ -13,7 +13,6 @@
         <div class="weui-cell__bd">
           <input class="weui-input" type="tel" placeholder="请输入验证码" name="smsCode" [(ngModel)]="smsCode">
         </div>
-        <!---->
         <div class="weui-cell__ft">
           <button class="weui-vcode-btn"
                   [ngStyle]="{'color':regSubmit.username?'#3CC51F':''}"
@@ -22,7 +21,6 @@
                   weui-seconds="60"
                   weui-tpl="${num}s后重新获取"
                   weui-error="重新发送">获取验证码</button>
-          <!--<button type="button" class="weui-vcode-btn" [ngStyle]="{'color':regSubmit.username?'#3CC51F':''}" [disabled]="mobile.invalid" (click)="codeBtnClick()">获取验证码</button>-->
         </div>
       </div>
       <div *ngIf="mobile.touched && mobile.invalid" class="weui-cell" style="padding: 0.5em 0 0 0;">
@@ -35,7 +33,6 @@
   </div>
   <div class="reg-submit-agree">
     <label class="weui-agree">
-      <!--<input id="weuiAgree" type="checkbox" class="weui-agree__checkbox" [(ngModel)]="submitAgree" name="agree">-->
       <span class="weui-agree__text">
         注册既代表同意
         <span style="color: #9DC5F2;" (click)="dialogAgreeShow('ios')">服务条款</span> 和

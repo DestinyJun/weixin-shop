@@ -48,7 +48,6 @@ export class MineWalletComponent implements OnInit {
       (val) => {
         if (val.status === 200) {
           this.mineWalletOrderInfo = val.dataObject;
-          console.log(val);
           return;
         }
         this.router.navigate(['/error'], {

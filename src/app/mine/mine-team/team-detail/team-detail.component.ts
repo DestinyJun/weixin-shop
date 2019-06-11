@@ -60,7 +60,6 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     this.detailDataInit({}, 'init');
     this.mineTeamSrv.mineTeamGetMember({}).subscribe(
       (value) => {
-        console.log(value);
         if (value.status === 200) {
           value.datas.unshift({nikeName: '全部', id: 0, actives: true});
           value.datas.map((param) => {
@@ -85,14 +84,11 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
     this.srv.destroyAll();
   }
   public detailDataInit(param, type: 'init' | 'search') {
-    console.log(param);
     this.mineTeamSrv.mineTeamGetEarn(param).subscribe(
       (value) => {
-        console.log(value);
         if (value.status === 200) {
           if (type === 'init') {
             this.earningList = this.detailSerialization(value.datas);
-            console.log(this.earningList);
           } else {
             this.filterEarning = 0;
             this.filtersSearchList = value.datas;

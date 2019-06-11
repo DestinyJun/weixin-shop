@@ -18,7 +18,6 @@ export class OrderPlaceComponent implements OnInit {
   public orderPlaceInvoiceInfo: any = null;
   public orderPlaceInfo: any = {
     addressId: '',
-    // invoiceId: '',
     goodsItem: [],
     remark: ''
   };
@@ -51,16 +50,6 @@ export class OrderPlaceComponent implements OnInit {
   }
 
   ngOnInit() {
-   /* this.routeInfo.queryParams.subscribe(
-      (params: Params) => {
-        this.orderId = params.orderId;
-        this.orderSrv.orderGetDetail(params).subscribe(
-          (val) => {
-            console.log(val);
-          }
-        );
-      }
-    );*/
     this.orderPlaceAddressInfo = this.globalService.addressEvent;
     this.orderPlaceInvoiceInfo = this.globalService.invoiceEvent;
     if (this.orderPlaceAddressInfo) {
@@ -75,7 +64,6 @@ export class OrderPlaceComponent implements OnInit {
   public orderPlaceInitialize (): void {
     this.orderSrv.orderGetGoods({}).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           val.datas.map((item, index) => {
             item['amount'] = parseInt(this.globalService.wxSessionGetObject('goods' + index), 10);
@@ -87,9 +75,7 @@ export class OrderPlaceComponent implements OnInit {
             }
             this.totalPrice += item.originalPrice * item.amount;
           });
-          // this.goodsInfo = val.datas.filter((prop) => prop.id = this.orderId);
           this.goodsInfo = val.datas;
-          console.log(this.goodsInfo);
         }
       }
     );
@@ -124,10 +110,8 @@ export class OrderPlaceComponent implements OnInit {
       this.onToastShow('success');
       return;
     }
-    console.log(this.orderPlaceInfo);
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
         this.orderPlaceAddressInfo = null;
         this.orderPlaceInvoiceInfo = null;

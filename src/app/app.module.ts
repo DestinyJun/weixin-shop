@@ -13,7 +13,7 @@ import {LoadingModule} from './common/components/loading/loading.module';
   declarations: [
     AppComponent,
     ErrorRemindComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -23,7 +23,6 @@ import {LoadingModule} from './common/components/loading/loading.module';
     LoadingModule
   ],
   providers: [
-    // 使用http拦截器
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
     ],
   bootstrap: [AppComponent]

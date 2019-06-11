@@ -42,7 +42,6 @@ export class WalletWithdrawalComponent implements OnInit {
   }
 
   public balanceChange() {
-    console.log(this.balanceAmount === null);
     this.withdrawalBtn = false;
     if (this.balanceAmount > this.balance) {
       this.withdrawalStatus = true;

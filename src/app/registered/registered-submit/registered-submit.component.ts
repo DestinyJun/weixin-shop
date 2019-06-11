@@ -6,6 +6,7 @@ import {RegisteredService} from '../../common/services/registered.service';
 import {GlobalService} from '../../common/services/global.service';
 import {map, mergeMap} from 'rxjs/operators';
 import {EMPTY, Observable, timer} from 'rxjs';
+import {environment} from '../../../environments/environment';
 let that: any;
 
 @Component({
@@ -28,6 +29,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     username: null,
     payPwd: null,
     refereesId: null,
+    wxid: null,
     headImage: null,
     nikeName: null,
     sex: null,
@@ -61,7 +63,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   public codeBtnClick() {
     this.regSrv.regSendSMS({phone: this.regSubmit.username}).subscribe(
       (val) => {
-        console.log(val);
          if (val.status === 200) {
            this.topSrv['primary'](val.message);
            return;
@@ -114,7 +115,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     });
     setTimeout(() => {
       (<DialogComponent>this[`${type}AgreeDialog`]).show().subscribe((res: any) => {
-        console.log('type', res);
       });
     }, 10);
     return false;
@@ -126,7 +126,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
       return;
     }
     this.regSubmit.payPwd = event.password;
-    console.log(this.regSubmit);
     this.regSrv.regRegister(this.regSubmit).pipe(
       mergeMap((res) => {
         if (res.status === 200) {
@@ -135,7 +134,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
         } else {
           this.router.navigate(['/error'], {
             queryParams: {
-              msg: '注册失败！',
+              msg: `注册失败！错误码${res.status}`,
               url: null,
               btn: '请重试',
             }});
@@ -154,7 +153,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
           this.router.navigate(['/error'], {
             queryParams: {
               msg: 'token认证失败，请重新登陆！',
-              url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=http://1785s28l17.iask.in/moyaoView&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
+              url: `${environment.wx_api}?appid=${environment.wx_appid}&redirect_uri=${environment.wx_redirect_uri}&response_type=${environment.wx_response_type}&scope${environment.wx_scope}=&state=${environment.wx_state}`,
               btn: '点击登陆'
             }});
         }
@@ -165,7 +164,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   public onSendCode(): Observable<boolean> {
     that.codeBtnClick();
     return timer(1000).pipe(map((v, i) => {
-      console.log(v);
       return true;
     }));
   }

@@ -43,7 +43,6 @@ export class OrderSureComponent implements OnInit {
     this.orderSrv.orderGetDetail({orderId: id}).subscribe(
       (val) => {
         if (val.status === 200) {
-          console.log(val);
           this.orderDetail  = val;
           return;
         }

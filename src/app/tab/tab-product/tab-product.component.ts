@@ -21,7 +21,6 @@ export class TabProductComponent implements OnInit {
   public tabProdInit (): void {
     this.orderSrv.orderGetGoods({}).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           this.tabProdList = val.datas;
         } else {

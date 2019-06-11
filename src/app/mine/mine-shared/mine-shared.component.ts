@@ -44,9 +44,7 @@ export class MineSharedComponent implements OnInit {
       (val) => {
         if (val.status === 200) {
           this.qrImgRrl = val.data.QRimage;
-          console.log(this.qrImgRrl);
         }
-        console.log(val);
       }
     );
   }
@@ -105,6 +103,5 @@ export class MineSharedComponent implements OnInit {
       });
       return;
     }
-    // window.alert('微信SDK认证失败');
   }
 }

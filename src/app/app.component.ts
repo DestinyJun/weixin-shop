@@ -16,15 +16,18 @@ export class AppComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     console.log(environment.env);
+    // order status
     this.globalSrv.wxSessionSetObject('orderSelectStatus', 'all');
+    // record url of ios
     if (!(this.globalSrv.wxSessionGetObject('ios_url'))) {
       this.globalSrv.wxSessionSetObject('ios_url', window.location.href);
     }
+    // Judge client
     if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
-    /*  this.router.navigate(['/error']);
+     /* this.router.navigate(['/error']);
       return;*/
     }
-    // 路由事件
+    // router events
     this.router.events.subscribe(
       (event) => {
         if (event instanceof NavigationEnd) {

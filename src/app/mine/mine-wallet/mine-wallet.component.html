@@ -39,7 +39,7 @@
           <p>{{mineWalletOrderInfo?.month?.sum_amount}}单</p>
         </div>
         <div class="weui-cell__ft">
-          <p style="font-size: 0.9rem;color: #F99998;">￥{{mineWalletOrderInfo?.month?.total?mineWalletOrderInfo?.today?.total: 0}}</p>
+          <p style="font-size: 0.9rem;color: #F99998;">￥{{mineWalletOrderInfo?.month?.total?mineWalletOrderInfo?.month?.total: 0}}</p>
           <p style="font-size: 0.75rem;color: #CECECE;">{{mineWalletOrderInfo?.month?.startDay}} ～ {{mineWalletOrderInfo?.month?.endDay}}</p>
         </div>
       </div>
@@ -57,23 +57,6 @@
       </div>
     </div>
   </div>
-  <!--<div class="mine-wallet-btns">
-    <div class="weui-cells">
-      <div class="weui-flex">
-        <div class="weui-flex__item" [routerLink]="['/mine/wallet/withdrawal']">
-          <i class="fa fa-eercast"></i>
-          <span>提现</span>
-        </div>
-        <div class="weui-flex__item" style="color: #99C38C;" [routerLink]="['/mine/wallet/recharge']">
-          <i class="fa fa-address-card-o"></i>
-          <span>充值</span>
-        </div>
-      </div>
-    </div>
-  </div>-->
-  <!--<div class="mine-wallet-reminder">
-    <p style="color: #7D7D7D;">提示：对余额的说明</p>
-  </div>-->
 </div>
 <ng-template #loading>
   <app-loading></app-loading>

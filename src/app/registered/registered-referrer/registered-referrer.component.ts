@@ -94,7 +94,6 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     const that = this;
     qrcode.decode(img_dada);
     qrcode.callback = function (imgMsg) {
-      window.alert(imgMsg);
       that.workId.nativeElement.value = imgMsg;
       that.referrerBtn.nativeElement.disabled = false;
       that.referrerBtn.nativeElement.style.backgroundColor = '#1AAD19';
@@ -143,9 +142,6 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     });
     wx.error(function(err) {
       alert(err.errMsg);
-      // config信息验证失败会执行error函数，如签名过期导致验证失败，
-      // 具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，
-      // 对于SPA可以在这里更新签名。
     });
   }
   // wx image
@@ -153,13 +149,13 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
     const that = this;
     wx.ready(function(res) {
       wx.chooseImage({
-        count: 1, // 默认9
+        count: 1,
         sizeType: ['original', 'compressed'],
         sourceType: ['album'],
         success: function (img_res) {
           const localIds = img_res.localIds;
           wx.getLocalImgData({
-            localId: localIds[0], // 图片的localID
+            localId: localIds[0],
             success: function (img_down_res) {
               const a_blob = noHeaderBase64DataToBlob(img_down_res.localData);
               blobToDataURL(a_blob, (dataUrl_res) => {

@@ -61,7 +61,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
   // data init
   public payOrdDetailInit (params): void {
      this.paySrv.payOrdGetDetail(params).subscribe((val) => {
-       console.log(val);
        if (val.status === 200) {
          if (val.data) {
            this.payDetailsData = val.data;
@@ -90,7 +89,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
     const endDates = new Date().getTime(); // 结束时间
     const totalDate = 900000; // 结束时间
     const t = totalDate - (endDates - startDates); // 时间差
-    // window.alert(`${startDates},${endDates},${totalDate},${t}`);
     let d = 0,
       h = 0,
       m = 0,
@@ -117,10 +115,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
       return '付款超时，请重新购买';
     }
   }
-  // pay way
-  public radioResChanges (): void {
-      console.log(this.radioRes);
-  }
   // verify pay
   public onDialogPayClick(event): void {
     this.dialogPayShow = event.show;
@@ -138,7 +132,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
           }
         }))
         .subscribe((val) => {
-          console.log(val);
           if (val.status === 200) {
             this.router.navigate(['/pay/success'], {
               queryParams: {
@@ -159,7 +152,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
     if (this.radioRes.radio === 'weixin') {
       this.paySrv.payPwdVerify({payPwd: event.password})
         .pipe(mergeMap((key) => {
-          console.log(key);
           if (key.status === 200) {
             return this.paySrv.payWeixinVerify({
               payPwd: key.backString,
@@ -171,7 +163,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
           }
         }))
         .subscribe((val) => {
-          console.log(val);
           if (val.status === 200) {
             this.onBridgeReady(val.dataObject);
             return;

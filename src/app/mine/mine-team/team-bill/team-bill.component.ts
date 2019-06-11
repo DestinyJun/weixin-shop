@@ -44,7 +44,6 @@ export class TeamBillComponent implements OnInit {
   public teamBillInit(param): void {
     this.mineTeamSrv.mineTeamGetDetail(param).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           this.teamBillDetail = val.data;
           return;

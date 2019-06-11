@@ -111,7 +111,6 @@ export class MineOrderComponent implements OnInit {
     );
     this.mOrderSrv.getMineOrderList(param).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200 ) {
           this.mOrderSerialization(val.datas);
         } else {
@@ -148,11 +147,9 @@ export class MineOrderComponent implements OnInit {
       });
       this.mOrderList.push({times: val, value: c });
     });
-    console.log(this.mOrderList);
   }
   // select status
   public mOrderStatusSelect (status): void {
-    console.log(status);
     this.globalSrv.wxSessionSetObject('orderSelectStatus', status);
     this.orderSelectStatus = status;
     if (!status) {
@@ -167,8 +164,6 @@ export class MineOrderComponent implements OnInit {
   }
   // order operate
   public mineOrderOperate(param, childItem, status): void {
-    // console.log(status);
-    // console.log(param);
     console.log(childItem);
     if (param.title === '退货进度') {
       if (status === 'refundReview' || status === 'refundding' || status === 'refundded') {
@@ -193,7 +188,6 @@ export class MineOrderComponent implements OnInit {
     if (param.title === '确认收货') {
       this.mOrderSrv.mineOrdFinish({orderId: childItem.id}).subscribe(
         (val) => {
-          console.log(val);
           if (val.status === 200) {
           }
         }
@@ -222,12 +216,10 @@ export class MineOrderComponent implements OnInit {
       return;
     }
     if (param.title === '取消订单') {
-      console.log(this.orderSelectStatus);
       this.srv.loading();
       this.mOrderSrv.mineOrdCancel({orderId: childItem.id}).subscribe(
         (val) => {
           this.srv.hide();
-          console.log(val);
           if (val.status === 200) {
             this.mineOrderMsg = val.message;
             this.onShow('mineOrder');
@@ -245,7 +237,6 @@ export class MineOrderComponent implements OnInit {
       this.mOrderSrv.mineOrdDelete({orderId: childItem.id}).subscribe(
         (val) => {
           this.srv.hide();
-          console.log(val);
           if (val.status === 200) {
             this.mineOrderMsg = val.message;
             this.onShow('mineOrder');

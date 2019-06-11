@@ -14,8 +14,8 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.prod_http(req, next);
-    // return this.debug_http(req, next);
+    // return this.prod_http(req, next);
+    return this.debug_http(req, next);
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('imageFileUpload') >= 0) {
@@ -50,7 +50,7 @@ export class AuthInterceptor implements HttpInterceptor {
       // url: 'http://192.168.1.88' + req.url,
       headers: req.headers
         .set('Content-type', 'application/json')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU2MDE4MTc0Nn0.PHPhzqClfpWnFOlqxVhEWLQjoVvQ-LxcmOo9_hHj52cO4ElVxY_3OAmSGzYJkifjN1J3sjCZ-6Swy39x3TmLZg')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU2MDMxMDczM30.LKAKAH6XKQlQHUoLeSGVzVayQ50HHq5AAas1poHrfUi6gmiP-jYuKJPAZmNBYE36Ug0Dv7-ErXUL6JzrXT-pJA')
     });
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {
@@ -145,7 +145,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if (err.status === 0) {
           this.router.navigate(['/error'], {
             queryParams: {
-              msg: '连接服务器失败，请检查网络！',
+              msg: '连接服务器失败，请检查网络或联系管理员！',
               url: null,
               btn: '请重试',
             }});
@@ -164,7 +164,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if (err.status === 500) {
           this.router.navigate(['/error'], {
             queryParams: {
-              msg: '服务器处理失败！请联系管理员',
+              msg: '服务器挂了！请联系管理员',
               url: null,
               btn: '请重试',
             }});

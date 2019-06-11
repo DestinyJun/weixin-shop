@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
     // weixin auth
     this.routerInfo.queryParams.subscribe((params: Params) => {
       if ('code' in params) {
-        console.log('进来了');
         this.wx_code = params.code;
         this.wxAuth();
       }
@@ -97,7 +96,6 @@ export class LoginComponent implements OnInit {
     this.http.get(`/wx/gettoken`).pipe(
       mergeMap((val) => {
         if (!val['errcode']) {
-          console.log(val);
           this.globalSrv.wxSessionSetObject('js_access_token', val['access_token']);
           return this.http.get(`/wx/getticket?access_token=${val['access_token']}`);
         }

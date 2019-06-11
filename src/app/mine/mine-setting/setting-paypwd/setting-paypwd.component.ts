@@ -91,7 +91,6 @@ export class SettingPaypwdComponent implements OnInit {
   public onSendCode(): Observable<boolean> {
     return that.mineSetSrv.mineSetSendSMS({phone: that.mobilePhone}).pipe(
       mergeMap((val) => {
-          console.log(val['status']);
           if (val['status'] === 200) {
             that.topSrv['primary'](val['message']);
             return timer(50).pipe(map((v, i) => true));
@@ -107,7 +106,6 @@ export class SettingPaypwdComponent implements OnInit {
     this.mineSetSrv.mineSetVerifySMS({phone: this.mobilePhone, smsCode: this.mineSetMobileSMS}).subscribe(
       (val) => {
         if (val.status === 200) {
-          console.log(val);
           this.smsBackString = val.backString;
           this.maskContent.hide();
           this.maskContentShow = false;
@@ -157,7 +155,6 @@ export class SettingPaypwdComponent implements OnInit {
       if (this.inputPws === this.inputFirePws) {
         this.mineSrv.mineSetPayPwd({payPwd: this.inputFirePws, smsKey: this.smsBackString}).subscribe(
           (val) => {
-            console.log(val);
             if (val.status === 200) {
               this.setPwdToastTxt = val.message;
               this.onToastShow('success');

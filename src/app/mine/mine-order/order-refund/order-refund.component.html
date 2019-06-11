@@ -34,13 +34,19 @@
         </div>
         <div class="weui-panel__bd">
           <div class="weui-cell" style="align-items: unset;" *ngFor="let item of detailsData?.data?.moyaoOrderItemModels; let i = index">
-            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;" [routerLink]="['/product']" [queryParams]="{id:item.id}">
               <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item?.goods?.mainImage"
                    alt="">
             </div>
             <div class="weui-cell__bd">
               <p style="font-size: 1rem;color: #848484;">{{item?.goods?.title}}</p>
-              <p style="font-size: 0.8rem;">{{item?.goods?.info}}</p>
+              <p style="
+                  width: 60vw;
+                  font-size: 0.8rem;
+                  color: #888888;
+                  overflow: hidden;
+                  text-overflow:ellipsis;
+                  white-space: nowrap;">{{item?.goods?.info}}</p>
               <p style="font-size: 1rem;">￥{{item?.goods?.originalPrice}}</p>
             </div>
             <div class="weui-cell__ft">

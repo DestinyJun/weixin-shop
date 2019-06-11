@@ -90,7 +90,6 @@ export class OrderRefundComponent implements OnInit {
   public mineOrdRefundInit(id): void {
      this.mOrderSrv.mineOrdGetDetail({orderId: id}).subscribe(
        (val) => {
-         console.log(val);
          if (val.status === 200) {
            this.detailsData = val;
            this.orderRefund.refundamount = val.data.amount;
@@ -129,10 +128,8 @@ export class OrderRefundComponent implements OnInit {
   // submit click
   public ordRefSubClick(type?: string) {
     if (type === 'cancel') {
-      console.log({orderId: this.orderRefund.orderId});
       this.mOrderSrv.mineOrdCancelReFund({orderId: this.orderRefund.orderId}).subscribe((val) => {
         this.srv.hide();
-        console.log(val);
         if (val.status === 200) {
           this.mineOrderRefundMsg = val.message;
           this.onShow('mineOrderRefund');
@@ -153,7 +150,6 @@ export class OrderRefundComponent implements OnInit {
        this.mOrderSrv.mineOrdReFund(this.orderRefund).subscribe(
       (val) => {
         this.srv.hide();
-        console.log(val);
         if (val.status === 200) {
           this.mineOrderRefundMsg = val.message;
           this.onShow('mineOrderRefund');
@@ -167,7 +163,6 @@ export class OrderRefundComponent implements OnInit {
     }
     this.mOrderSrv.mineOrdImgUpload(img_upload).pipe(
       mergeMap((val) => {
-        console.log(val);
         if (val.status === 200) {
           let img_string = '';
           val.dataObject.map((prop) => {

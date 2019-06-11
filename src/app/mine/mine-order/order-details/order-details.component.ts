@@ -63,8 +63,6 @@ export class OrderDetailsComponent implements OnInit {
       operating: [{title: '再次购买', routes: '/order'}, {title: '退款进度', routes: '/mine/order/refund'}]},
 
     pendingReview: {name: '待审核', bgColor: ['#FF7070', '#FB9B9B'], operating: []}};
-
-
   constructor(
     private mOrderSrv: MineOrderService,
     private routerInfo: ActivatedRoute,
@@ -81,7 +79,6 @@ export class OrderDetailsComponent implements OnInit {
   }
   // order operate
   public orderDetailOpeClick(param, childItem, status): void {
-    console.log(childItem);
     if (param.title === '退货进度') {
       if (status === 'refundReview' || status === 'refundding' || status === 'refundded') {
         this.router.navigate([param.routes, childItem.id, 0, status]);
@@ -105,7 +102,6 @@ export class OrderDetailsComponent implements OnInit {
     if (param.title === '确认收货') {
       this.mOrderSrv.mineOrdFinish({orderId: childItem.id}).subscribe(
         (val) => {
-          console.log(val);
           if (val.status === 200) {
           }
         }
@@ -134,12 +130,10 @@ export class OrderDetailsComponent implements OnInit {
       return;
     }
     if (param.title === '取消订单') {
-      console.log('取消订单');
       this.srv.loading();
       this.mOrderSrv.mineOrdCancel({orderId: childItem.id}).subscribe(
         (val) => {
           this.srv.hide();
-          console.log(val);
           if (val.status === 200) {
             this.mineOrderMsg = val.message;
             this.onShow('mineOrder');
@@ -157,7 +151,6 @@ export class OrderDetailsComponent implements OnInit {
       this.mOrderSrv.mineOrdDelete({orderId: childItem.id}).subscribe(
         (val) => {
           this.srv.hide();
-          console.log(val);
           if (val.status === 200) {
             this.mineOrderMsg = val.message;
             this.onShow('mineOrder');

@@ -46,7 +46,7 @@
             </div>
             <div class="weui-panel__bd" [routerLink]="['/mine/order/detail', childItem.id]">
               <div class="weui-cell" *ngFor="let props of childItem?.moyaoOrderItemModels; let i = index">
-                <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                <div class="weui-cell__hd" style="position: relative;margin-right: 10px;" [routerLink]="['/product']" [queryParams]="{id:item.id}">
                   <img *ngIf="props?.goods?.imgs.indexOf('http')>=0" class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="props?.goods?.imgs"
                        alt="图片无效">
                   <img *ngIf="!(props?.goods?.imgs.indexOf('http')>=0)" class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" src="/assets/images/recharge.png"
@@ -54,7 +54,13 @@
                 </div>
                 <div class="weui-cell__bd">
                   <p style="font-size: 1rem;color: #868686;">{{props?.goods?.title}}</p>
-                  <p style="font-size: 0.8rem;color: #CECECE;">{{props?.goods?.info}}</p>
+                  <p style="
+                  width: 60vw;
+                  font-size: 0.8rem;
+                  color: #888888;
+                  overflow: hidden;
+                  text-overflow:ellipsis;
+                  white-space: nowrap;">{{props?.goods?.info}}</p>
                   <p style="font-size: 1rem;color: #C4C4C4;">￥{{props?.price}}</p>
                 </div>
                 <div class="weui-cell__ft">

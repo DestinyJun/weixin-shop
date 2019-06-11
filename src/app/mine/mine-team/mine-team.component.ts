@@ -35,10 +35,6 @@ export class MineTeamComponent implements OnInit, OnDestroy {
     date: new Date()
   };
   public year: string[];
-  public pickerOptions: PickerOptions = {
-    cancel: '取消',
-    confirm: '确认'
-  };
   public listLoading = false;
   public yearMonthPicker: any = {
     min: new Date(2015, 0, 1),
@@ -64,14 +60,11 @@ export class MineTeamComponent implements OnInit, OnDestroy {
     this.year = [];
     const date = new Date;
     for (let i = 0; i < 5; i++) {
-      // this.year.push(date.getFullYear() - i + '年');
       this.year.push((date.getFullYear() - i).toString());
     }
-    // this.year = this.year.reverse();
   }
   // team data
   public mineTeamGetData(time: string) {
-    // this.mineTeamDate = null;
     this.mineTeamSrv.mineTeamGetDate({date: time}).subscribe(
       (val) => {
         if (val.status === 200) {
@@ -87,7 +80,6 @@ export class MineTeamComponent implements OnInit, OnDestroy {
               }
             });
           }
-          console.log(this.mineTeamDate);
         } else {
           this.listLoading = false;
           this.router.navigate(['/error'], {
@@ -115,12 +107,10 @@ export class MineTeamComponent implements OnInit, OnDestroy {
   }
   // select
   public selectMonthClick() {
-    /*this.srv.showDateTime('date-ym', '', null, null, new Date()).subscribe((res: any) => {});*/
     this.listLoading = true;
     this.mineTeamGetData(this.yearMonthPickerTime);
   }
   public selectYearClick() {
-   /* this.srv.show(this.year, null, [this.year.length - 1], this.pickerOptions).subscribe((res: any) => {});*/
     this.listLoading = true;
     this.mineTeamGetData(this.yearPickerTime.slice(0, 4));
   }

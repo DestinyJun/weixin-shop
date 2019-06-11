@@ -89,7 +89,6 @@ export class OrderReturnComponent implements OnInit {
   public mineOrdReturnInit(id): void {
     this.mOrderSrv.mineOrdGetDetail({orderId: id}).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           this.detailsData = val;
           this.orderReturn.refundamount  = val.data.amount;
@@ -133,7 +132,6 @@ export class OrderReturnComponent implements OnInit {
     if (type === 'cancel') {
       this.mOrderSrv.mineOrdCancelReFund({orderId: this.orderReturn.orderId }).subscribe((val) => {
         this.srv.hide();
-        console.log(val);
         if (val.status === 200) {
           this.mineOrderReturnMsg = val.message;
           this.onShow('mineOrderRefund');
@@ -154,7 +152,6 @@ export class OrderReturnComponent implements OnInit {
       this.mOrderSrv.mineOrdReFund(this.orderReturn).subscribe(
         (val) => {
           this.srv.hide();
-          console.log(val);
           if (val.status === 200) {
             this.mineOrderReturnMsg = val.message;
             this.onShow('mineOrderReturn');
@@ -168,14 +165,12 @@ export class OrderReturnComponent implements OnInit {
     }
     this.mOrderSrv.mineOrdImgUpload(img_upload).pipe(
       mergeMap((val) => {
-        console.log(val);
         if (val.status === 200) {
           let img_string = '';
           val.dataObject.map((prop) => {
             img_string = img_string + prop + ',';
           });
           this.orderReturn.refundImage = img_string.substring(0, img_string.length - 1);
-          console.log(this.orderReturn);
           return this.mOrderSrv.mineOrdReFund(this.orderReturn);
         }
         this.mineOrderReturnMsg = val.message;
@@ -183,7 +178,6 @@ export class OrderReturnComponent implements OnInit {
         return EMPTY;
       })
     ).subscribe((val) => {
-      console.log(val);
       this.srv.hide();
       if (val.status === 200) {
         this.mineOrderReturnMsg = val.message;

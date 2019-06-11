@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {InfiniteLoaderConfig} from 'ngx-weui';
-import {Observable} from 'rxjs';
 import {MineOrderService} from '../../../common/services/mine-order.service';
 import {ActivatedRoute, Router} from '@angular/router';
 

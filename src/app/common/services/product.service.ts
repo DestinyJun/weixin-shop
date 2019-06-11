@@ -10,8 +10,12 @@ export class ProductService {
   constructor(
     private http: HttpClient
   ) { }
-  // get banner
+  // get goods info
   public prodGetInfo(params): Observable<any> {
     return this.http.post(`/goods/item`, params);
+  }
+  // get banner
+  public prodGetBanner(): Observable<any> {
+    return this.http.post(`/banner/getBanner`, {});
   }
 }

@@ -35,12 +35,4 @@ export class RegisteredService {
     console.log(params);
     return this.http.get(`/wx/userinfo?access_token=${params.access_token}&openid=${params.openid}`);
   }
-  // get token
-  public regGetWxToken(): Observable<any> {
-    return this.http.get(`/wx/gettoken`);
-  }
-  // get ticket
-  public regGetWxticket(params): Observable<any> {
-    return this.http.get(`/wx/getticket?access_token=${params.access_token}`);
-  }
 }

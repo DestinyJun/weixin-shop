@@ -105,7 +105,6 @@ export class MineUserComponent implements OnInit {
                 success: function (upload_res) {
                   window.alert(upload_res);
                   window.alert(JSON.stringify(upload_res));
-                  console.log(upload_res);
                 }
               });
             }
@@ -127,7 +126,6 @@ export class MineUserComponent implements OnInit {
                 success: function (upload_res) {
                   window.alert(JSON.stringify(upload_res));
                   window.alert(JSON.stringify(headerBase64DataToBlob(upload_res.localData)));
-                  console.log(upload_res);
                 }
               });
             }
@@ -153,10 +151,8 @@ export class MineUserComponent implements OnInit {
     });
     setTimeout(() => {
       (<DialogComponent>this[`${type}AS`]).show().subscribe((res: any) => {
-        console.log('type', res);
         this.mineSrv.mineUpdateUserName({sex: res.result.value}).subscribe(
           (val) => {
-            console.log(val);
             if (val.status === 200) {
               this.updateSexMsg = '修改成功';
               this.tabMineDateInit();
@@ -176,7 +172,6 @@ export class MineUserComponent implements OnInit {
     this.pickerSrv.showCity(this.cityData).subscribe((res: any) => {
       this.mineSrv.mineUpdateUserName({address: res.items[0].name + res.items[1].name + res.items[2].name}).subscribe(
         (val) => {
-          console.log(val);
           if (val.status === 200) {
             this.updateSexMsg = '修改成功';
             this.tabMineDateInit();

@@ -45,7 +45,6 @@ export class WalletRechargeComponent implements OnInit {
   public rechargeClick() {
     this.mineWalletSrv.mineWalletRecharge({money: this.rechargeAmount}).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           this.rechargeOrderId = val.data.id;
           this.rechargeOrderSn = val.data.sn;
@@ -62,7 +61,6 @@ export class WalletRechargeComponent implements OnInit {
     }});
     this.rechargeMask.hide();
     this.mineWalletPayShow = true;
-    // this.router.navigate(['/mine/wallet/success/1']);
   }
   // verify pay
   public onDialogPayClick(event): void {
@@ -72,7 +70,6 @@ export class WalletRechargeComponent implements OnInit {
     }
     this.mineWalletSrv.mineWalletVerifyPwd({payPwd: event.password})
       .pipe(mergeMap((key) => {
-        console.log(key);
         if (key.status === 200) {
           return this.mineWalletSrv.mineWalletWxVerify({
             payPwd: key.backString,
@@ -84,8 +81,6 @@ export class WalletRechargeComponent implements OnInit {
         }
       }))
       .subscribe((val) => {
-        window.alert(JSON.stringify(val));
-        console.log(val);
         if (val.status === 200) {
           this.onBridgeReady(val.dataObject);
         }
@@ -116,13 +111,8 @@ export class WalletRechargeComponent implements OnInit {
     WeixinJSBridge.invoke(
       'getBrandWCPayRequest', obj,
       function (res) {
-        window.alert(JSON.stringify(res));
-        console.log(res);
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
-          // 使用以上方式判断前端返回,微信团队郑重提示：
-          // res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
           that.router.navigate(['/pay/success'], {queryParams: {amount: that.rechargeAmount}});
-          console.log(res);
         }
       });
   }
