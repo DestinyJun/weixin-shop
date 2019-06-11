@@ -5,7 +5,6 @@ import {is_ios} from '../../common/tools/is_ios';
 import {random_word} from '../../common/tools/random_word';
 import {hex_sha1} from '../../common/tools/hex_sha1';
 import {GlobalService} from '../../common/services/global.service';
-
 declare const wx: any;
 
 @Component({
@@ -69,7 +68,7 @@ export class MineSharedComponent implements OnInit {
       const sdkstring = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
       const signature = hex_sha1(sdkstring);
       wx.config({
-        debug: true,
+        debug: false,
         appId: 'wxbacad0ba65a80a3d',
         timestamp: timestamp,
         nonceStr: noncestr,

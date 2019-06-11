@@ -1,1 +1,4 @@
-<router-outlet></router-outlet>
+<div [hidden]="!appShow">
+  <router-outlet></router-outlet>
+</div>
+<app-error [hidden]="appShow"></app-error>

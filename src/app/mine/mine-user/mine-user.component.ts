@@ -13,7 +13,7 @@ import {random_word} from '../../common/tools/random_word';
 import {hex_sha1} from '../../common/tools/hex_sha1';
 import {GlobalService} from '../../common/services/global.service';
 import {blobToDataURL, dataURLtoFile, headerBase64DataToBlob, noHeaderBase64DataToBlob} from '../../common/tools/readBlobAsDataURL';
-import {DATA} from '../../common/data/city_data';
+import {CityData} from '../../common/data/city_data';
 declare const wx: any;
 @Component({
   selector: 'app-mine-user',
@@ -32,12 +32,7 @@ export class MineUserComponent implements OnInit {
       icon: ''
     }
   };
-  // picker
-  res: any = {
-    city: '520102',
-    date: new Date()
-  };
-  public cityData = DATA;
+  public cityData = CityData;
   // ActionSheet
   @ViewChild('iosActionSheet') iosActionSheet: ActionSheetComponent;
   public actionSheetMenus: any[] = [
@@ -84,27 +79,15 @@ export class MineUserComponent implements OnInit {
             sizeType: ['original', 'compressed'],
             sourceType: ['album'],
             success: function (img_res) {
-              window.alert(JSON.stringify(img_res));
               const localIds = img_res.localIds;
               wx.getLocalImgData({
                 localId: localIds[0], // 图片的localID
                 success: function (img_base64_res) {
                   const fileData = new FormData();
-                  window.alert(img_base64_res.localData);
                   const a_blob = noHeaderBase64DataToBlob(img_base64_res.localData);
-                  window.alert(JSON.stringify(a_blob));
                   blobToDataURL(a_blob, (blob_res) => {
-                    window.alert(JSON.stringify(dataURLtoFile(blob_res, 'test')));
                     fileData.append('file', dataURLtoFile(blob_res, 'test'));
                   });
-                }
-              });
-              wx.uploadImage({
-                localId: localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
-                isShowProgressTips: 1, // 默认为1，显示进度提示
-                success: function (upload_res) {
-                  window.alert(upload_res);
-                  window.alert(JSON.stringify(upload_res));
                 }
               });
             }
@@ -118,14 +101,15 @@ export class MineUserComponent implements OnInit {
             sizeType: ['original', 'compressed'],
             sourceType: ['camera'],
             success: function (img_res) {
-              window.alert(JSON.stringify(img_res));
               const localIds = img_res.localIds;
-              wx.uploadImage({
-                localId: localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
-                isShowProgressTips: 1, // 默认为1，显示进度提示
-                success: function (upload_res) {
-                  window.alert(JSON.stringify(upload_res));
-                  window.alert(JSON.stringify(headerBase64DataToBlob(upload_res.localData)));
+              wx.getLocalImgData({
+                localId: localIds[0], // 图片的localID
+                success: function (img_base64_res) {
+                  const fileData = new FormData();
+                  const a_blob = noHeaderBase64DataToBlob(img_base64_res.localData);
+                  blobToDataURL(a_blob, (blob_res) => {
+                    fileData.append('file', dataURLtoFile(blob_res, 'test'));
+                  });
                 }
               });
             }
@@ -202,7 +186,7 @@ export class MineUserComponent implements OnInit {
       const sdkstring = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
       const signature = hex_sha1(sdkstring);
       wx.config({
-        debug: true,
+        debug: false,
         appId: 'wxbacad0ba65a80a3d',
         timestamp: timestamp,
         nonceStr: noncestr,
@@ -216,6 +200,6 @@ export class MineUserComponent implements OnInit {
       });
       return;
     }
-    // window.alert('微信SDK认证失败');
+    window.alert('微信JS-SDK认证失败,请重试');
   }
 }

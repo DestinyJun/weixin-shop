@@ -114,7 +114,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
       const sdkstring = `jsapi_ticket=${jsapi_ticket}&noncestr=${noncestr}&timestamp=${timestamp}&url=${url}`;
       const signature = hex_sha1(sdkstring);
       wx.config({
-        debug: true,
+        debug: false,
         appId: 'wxbacad0ba65a80a3d',
         timestamp: timestamp,
         nonceStr: noncestr,

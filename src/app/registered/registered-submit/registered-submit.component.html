@@ -44,7 +44,7 @@
     <weui-dialog #agreeDialog [config]="configAgreeDialog"></weui-dialog>
   </div>
   <div class="reg-submit-dialog-pay">
-    <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayClick)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>
+    <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayOnchange)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>
   </div>
   <div class="reg-submit-btn">
     <button

@@ -32,7 +32,6 @@ export class RegisteredService {
   }
   // get wx user info
   public regGetWxUserInfo(params): Observable<any> {
-    console.log(params);
     return this.http.get(`/wx/userinfo?access_token=${params.access_token}&openid=${params.openid}`);
   }
 }

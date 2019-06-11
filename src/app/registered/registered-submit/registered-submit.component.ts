@@ -91,7 +91,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     .subscribe(
       (val) => {
         this.toastService.hide();
-        if (val.status === 200) {
+        if (val.errcode !== 40001) {
           this.regSubmit.nikeName = val.nickname;
           this.regSubmit.headImage = val.headimgurl;
           this.regSubmit.sex = val.sex;
@@ -128,6 +128,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     this.regSubmit.payPwd = event.password;
     this.regSrv.regRegister(this.regSubmit).pipe(
       mergeMap((res) => {
+        console.log(res);
         if (res.status === 200) {
           this.workId = res.data.workId;
           return this.regSrv.regLanding({wxid: res.data.wxid});
@@ -153,7 +154,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
           this.router.navigate(['/error'], {
             queryParams: {
               msg: 'token认证失败，请重新登陆！',
-              url: `${environment.wx_api}?appid=${environment.wx_appid}&redirect_uri=${environment.wx_redirect_uri}&response_type=${environment.wx_response_type}&scope${environment.wx_scope}=&state=${environment.wx_state}`,
+              url: `${environment.wx_api}?appid=${environment.wx_appid}&redirect_uri=${environment.wx_redirect_uri}/moyaoView/login&response_type=${environment.wx_response_type}&scope${environment.wx_scope}=&state=${environment.wx_state}`,
               btn: '点击登陆'
             }});
         }

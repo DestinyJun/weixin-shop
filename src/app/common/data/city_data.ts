@@ -2,7 +2,7 @@
  * 数据来源于 weui-react
  * @see https://raw.githubusercontent.com/weui/react-weui/master/example/pages/picker/cnCity.js
  */
-export const DATA = [
+export const CityData = [
   {
     'name': '北京',
     'code': '110000',

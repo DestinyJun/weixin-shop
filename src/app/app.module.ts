@@ -8,6 +8,7 @@ import {AuthInterceptor} from './common/services/auth.interceptor';
 import { ErrorRemindComponent } from './error-remind/error-remind.component';
 import { LoginComponent } from './login/login.component';
 import {LoadingModule} from './common/components/loading/loading.module';
+import {ErrorModule} from './common/components/error/error.module';
 
 @NgModule({
   declarations: [
@@ -20,10 +21,11 @@ import {LoadingModule} from './common/components/loading/loading.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    LoadingModule
+    LoadingModule,
+    ErrorModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
     ],
   bootstrap: [AppComponent]
 })

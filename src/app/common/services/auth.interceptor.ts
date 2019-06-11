@@ -14,12 +14,14 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // return this.prod_http(req, next);
-    return this.debug_http(req, next);
+    if (environment.production) {
+      return this.prod_http(req, next);
+    } else {
+      return this.debug_http(req, next);
+    }
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.indexOf('imageFileUpload') >= 0) {
-      console.log(environment.dev_test_url + req.url);
       this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         // url: 'http://192.168.1.88' + req.url,
@@ -50,7 +52,7 @@ export class AuthInterceptor implements HttpInterceptor {
       // url: 'http://192.168.1.88' + req.url,
       headers: req.headers
         .set('Content-type', 'application/json')
-        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU2MDMxMDczM30.LKAKAH6XKQlQHUoLeSGVzVayQ50HHq5AAas1poHrfUi6gmiP-jYuKJPAZmNBYE36Ug0Dv7-ErXUL6JzrXT-pJA')
+        .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU2MDM0ODU3OH0.qsQS_HnalvQDaKfbQ59NnAESvOjMuEG0benSEa3uViziJImhu7Uws6SNckx50QlxMO_FCDy08FiirGpYekTJFg')
     });
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {
@@ -154,7 +156,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.router.navigate(['/error'], {
             queryParams: {
               msg: 'token认证失败，请重新登陆！',
-              url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=${environment.dev_test_url}&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
+              url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=${environment.dev_test_url}/moyaoView/login&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
               btn: '点击登陆'
             }});
         }

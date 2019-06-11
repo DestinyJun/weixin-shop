@@ -10,7 +10,6 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 export class PaySuccessComponent implements OnInit {
   // order id
   public paySucOrdSn: any;
-  public paySucUrl: any = null;
   // header
   public headerOption: HeaderContent = {
     title: '支付完成',
