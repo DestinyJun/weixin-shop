@@ -10,16 +10,16 @@
     </div>
   </div>
   <div class="tab-swiper">
-    <div class="swiper-container" [swiper]="config">
+    <div *ngIf="tabHomeSlides" class="swiper-container" [swiper]="tabHomeConfig">
       <div class="swiper-wrapper">
-        <div *ngFor="let slide of slides" class="swiper-slide" style="margin-right: 0">
+        <div *ngFor="let slide of tabHomeSlides" class="swiper-slide" style="margin-right: 0">
           <div class="swiper-wrapper-img" [ngStyle]="{'background-image': 'url('+slide?.img+')'}" [routerLink]="['/product/ad']" [queryParams]="{id:slide.id}"></div>
         </div>
       </div>
-      <div class="swiper-scrollbar" [hidden]="config.scrollbar === false"></div>
-      <div class="swiper-pagination" [hidden]="config.pagination === false"></div>
-      <div class="swiper-button-prev" [hidden]="config.navigation === false"></div>
-      <div class="swiper-button-next" [hidden]="config.navigation === false"></div>
+      <div class="swiper-scrollbar" [hidden]="tabHomeConfig.scrollbar === false"></div>
+      <div class="swiper-pagination" [hidden]="tabHomeConfig.pagination === false"></div>
+      <div class="swiper-button-prev" [hidden]="tabHomeConfig.navigation === false"></div>
+      <div class="swiper-button-next" [hidden]="tabHomeConfig.navigation === false"></div>
     </div>
   </div>
 </div>

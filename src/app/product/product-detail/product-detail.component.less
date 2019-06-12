@@ -1,5 +1,5 @@
 .pro-detail{
-  height: 100vh;
+  min-height: 100vh;
   overflow: scroll;
   background-color: #F5F5F5;
   .pro-detail-header{
@@ -13,7 +13,8 @@
   }
   .pro-detail-swiper{
     padding-top: 50px;
-    height: 40vh;
+    width: 100vw;
+    height: 73.33vw;
     .swiper-container{
       height: 100%;
       .swiper-wrapper{
@@ -37,7 +38,7 @@
     }
   }
   .pro-detail-article{
-    height: 90px;
+    min-height: 90px;
     background-color: #fff;
     .weui-article{
       section{
@@ -56,8 +57,14 @@
     }
   }
   .pro-detail-detail{
-    margin-bottom: 52px;
+    background-color: #fff;
+    margin-bottom: 55px;
     overflow: scroll;
+    .article-detail{
+      .article-detail-content{
+        padding: 0 15px;
+      }
+    }
   }
   .pro-detail-button{
     .weui-footer_fixed-bottom{

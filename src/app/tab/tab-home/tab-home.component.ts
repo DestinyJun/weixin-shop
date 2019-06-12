@@ -17,28 +17,8 @@ export class TabHomeComponent implements OnInit {
     clickable: true,
     hideOnClick: false
   };
-  public config: SwiperConfigInterface = {
-    a11y: true,
-    loop: true,
-    threshold: 1,
-    effect: 'coverflow',
-    watchSlidesProgress: true,
-    spaceBetween : 0,
-    direction: 'horizontal',
-    slidesPerView: 1,
-    keyboard: true,
-    mousewheel: true,
-    scrollbar: false,
-    navigation: false,
-    pagination: this.pagination,
-    speed: 3000,
-    observer: true,
-    autoplay: {
-      delay: 2000,
-      disableOnInteraction: false
-    }
-  };
-  public slides: any = null;
+  public tabHomeConfig: any = null;
+  public tabHomeSlides: any = null;
   constructor(
     private tabSrv: TabService,
     private router: Router,
@@ -51,7 +31,7 @@ export class TabHomeComponent implements OnInit {
       (event) => {
         if (event instanceof NavigationEnd) {
           if (event.url === '/tab/home') {
-            this.config = {
+            this.tabHomeConfig = {
               a11y: true,
               loop: true,
               threshold: 1,
@@ -96,12 +76,33 @@ export class TabHomeComponent implements OnInit {
     this.tabSrv.tabGetBanner().subscribe(
       (val) => {
         if (val.status === 200) {
-          this.slides = val.datas;
+          this.tabHomeSlides = val.datas;
+          this.tabHomeConfig = {
+            a11y: true,
+            loop: true,
+            threshold: 1,
+            effect: 'coverflow',
+            watchSlidesProgress: true,
+            spaceBetween : 0,
+            direction: 'horizontal',
+            slidesPerView: 1,
+            keyboard: true,
+            mousewheel: true,
+            scrollbar: false,
+            navigation: false,
+            pagination: this.pagination,
+            speed: 3000,
+            observer: true,
+            autoplay: {
+              delay: 2000, // 时间 毫秒
+              disableOnInteraction: false  // 用户操作之后是否停止自动轮播默认true
+            }
+          };
           return;
         }
         this.router.navigate(['/error'], {
           queryParams: {
-            msg: `获取用户信息失败，错误码${val.status}`,
+            msg: `获取信息失败，错误码${val.status}`,
             url: null,
             btn: '请重试',
           }
@@ -109,6 +110,7 @@ export class TabHomeComponent implements OnInit {
       }
     );
   }
+  // time
   public tabHomeTimer(): void {
     if (this.tabHomeDate < 6) {
       this.tabHomeGreetings = '凌晨好！';

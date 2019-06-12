@@ -3,16 +3,16 @@
     <app-header [option]="headerOption"></app-header>
   </div>
   <div class="pro-detail-swiper">
-    <div class="swiper-container" [swiper]="config">
+    <div *ngIf="prodSlides" class="swiper-container" [swiper]="prodConfig">
       <div class="swiper-wrapper">
-        <div *ngFor="let slide of slides" class="swiper-slide" style="margin-right: 0">
+        <div *ngFor="let slide of prodSlides" class="swiper-slide" style="margin-right: 0">
           <div class="swiper-wrapper-img" [ngStyle]="{'background-image': 'url('+slide+')'}"></div>
         </div>
       </div>
-      <div class="swiper-scrollbar" [hidden]="config.scrollbar === false"></div>
-      <div class="swiper-pagination" [hidden]="config.pagination === false"></div>
-      <div class="swiper-button-prev" [hidden]="config.navigation === false"></div>
-      <div class="swiper-button-next" [hidden]="config.navigation === false"></div>
+      <div class="swiper-scrollbar" [hidden]="prodConfig?.scrollbar === false"></div>
+      <div class="swiper-pagination" [hidden]="prodConfig?.pagination === false"></div>
+      <div class="swiper-button-prev" [hidden]="prodConfig?.navigation === false"></div>
+      <div class="swiper-button-next" [hidden]="prodConfig?.navigation === false"></div>
     </div>
   </div>
   <div class="pro-detail-article">
@@ -29,14 +29,11 @@
     –<span>产品详情</span>–
   </div>
   <div class="pro-detail-detail">
-    <!--<weui-infiniteloader (loadmore)="clientLoadMore($event)" [config]="clientloaderConfig">
-
-    </weui-infiniteloader>-->
     <div class="article-detail">
       <p class="article-detail-img">
         <img *ngIf="prodInfo?.mainImage" [src]="prodInfo?.mainImage" alt="图片地址无效" style="width: 100%;height: auto">
       </p>
-      <p>{{prodInfo?.content}}</p>
+      <div class="article-detail-content" [innerHTML]="prodInfo?.content"></div>
     </div>
   </div>
   <div class="pro-detail-button" [routerLink]="['/order']">

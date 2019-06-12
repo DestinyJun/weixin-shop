@@ -18,4 +18,7 @@ export class ProductService {
   public prodGetBanner(): Observable<any> {
     return this.http.post(`/banner/getBanner`, {});
   }
+  public tabGetUserInfo(params): Observable<any> {
+    return this.http.post(`/member/userInfo`, {});
+  }
 }

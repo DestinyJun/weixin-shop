@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SwiperConfigInterface, SwiperPaginationInterface} from 'ngx-swiper-wrapper';
+import {SwiperPaginationInterface} from 'ngx-swiper-wrapper';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {ProductService} from '../../common/services/product.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -26,29 +26,9 @@ export class ProductDetailComponent implements OnInit {
     clickable: true,
     hideOnClick: false
   };
-  public config: SwiperConfigInterface = {
-    a11y: true,
-    loop: true,
-    threshold: 1,
-    effect: 'coverflow',
-    watchSlidesProgress: true,
-    spaceBetween : 0,
-    direction: 'horizontal',
-    slidesPerView: 1,
-    keyboard: true,
-    mousewheel: true,
-    scrollbar: false,
-    navigation: false,
-    pagination: this.pagination,
-    speed: 3000,
-    observer: true,
-    autoplay: {
-      delay: 2000,
-      disableOnInteraction: false
-    }
-  };
+  public prodConfig: any = {};
   public prodInfo: any = null;
-  public slides: any = null;
+  public prodSlides: any = null;
   constructor(
     private productSrv: ProductService,
     private router: Router,
@@ -65,7 +45,28 @@ export class ProductDetailComponent implements OnInit {
           (val) => {
             if (val.status === 200) {
               this.prodInfo = val.data;
-              this.slides = val.data.imgs.split(',');
+              this.prodSlides = val.data.imgs.split(',');
+              this.prodConfig = {
+                a11y: true,
+                loop: true,
+                threshold: 1,
+                effect: 'coverflow',
+                watchSlidesProgress: true,
+                spaceBetween : 0,
+                direction: 'horizontal',
+                slidesPerView: 1,
+                keyboard: true,
+                mousewheel: true,
+                scrollbar: false,
+                navigation: false,
+                pagination: this.pagination,
+                speed: 3000,
+                observer: true,
+                autoplay: {
+                  delay: 2000, // 时间 毫秒
+                  disableOnInteraction: false  // 用户操作之后是否停止自动轮播默认true
+                }
+              };
               return;
             }
             this.router.navigate(['/error'], {
