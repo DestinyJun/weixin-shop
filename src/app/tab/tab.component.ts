@@ -23,10 +23,10 @@ export class TabComponent implements OnInit {
 
   ngOnInit() {
     // 防止页面后退
-    window.history.pushState(null, null, document.URL);
+    /*window.history.pushState(null, null, document.URL);
     window.addEventListener('popstate', function () {
       window.history.pushState(null, null, document.URL);
-    });
+    });*/
   }
   public onSelect(name, event): void {
     this.router.navigate([`/tab/${name}`]);
