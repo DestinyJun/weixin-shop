@@ -21,48 +21,46 @@
   </div>
   <div class="order-refund-product">
     <div class="weui-panel weui-panel_access">
-      <weui-infiniteloader [config]="ordAftScrollConfig">
-        <div class="weui-panel__hd">
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <p style="font-size:  0.8rem">订单号：{{detailsData?.data?.sn}}</p>
-            </div>
-            <div class="weui-cell__ft">
-              <span style="font-size:  0.8rem;color: #C4C4C4;">{{detailsData?.data?.createdDate}}</span>
-            </div>
+      <div class="weui-panel__hd">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <p style="font-size:  0.8rem">订单号：{{detailsData?.data?.sn}}</p>
+          </div>
+          <div class="weui-cell__ft">
+            <span style="font-size:  0.8rem;color: #C4C4C4;">{{detailsData?.data?.createdDate}}</span>
           </div>
         </div>
-        <div class="weui-panel__bd">
-          <div class="weui-cell" style="align-items: unset;" *ngFor="let item of detailsData?.data?.moyaoOrderItemModels; let i = index">
-            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;" [routerLink]="['/product']" [queryParams]="{id:item.id}">
-              <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item?.goods?.mainImage"
-                   alt="">
-            </div>
-            <div class="weui-cell__bd">
-              <p style="font-size: 1rem;color: #848484;">{{item?.goods?.title}}</p>
-              <p style="
+      </div>
+      <div class="weui-panel__bd">
+        <div class="weui-cell" style="align-items: unset;" *ngFor="let item of detailsData?.data?.moyaoOrderItemModels; let i = index">
+          <div class="weui-cell__hd" style="position: relative;margin-right: 10px;" [routerLink]="['/product']" [queryParams]="{id:item.id}">
+            <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item?.goods?.mainImage"
+                 alt="">
+          </div>
+          <div class="weui-cell__bd">
+            <p style="font-size: 1rem;color: #848484;">{{item?.goods?.title}}</p>
+            <p style="
                   width: 60vw;
                   font-size: 0.8rem;
                   color: #888888;
                   overflow: hidden;
                   text-overflow:ellipsis;
                   white-space: nowrap;">{{item?.goods?.info}}</p>
-              <p style="font-size: 1rem;">￥{{item?.goods?.originalPrice}}</p>
-            </div>
-            <div class="weui-cell__ft">
-              <p>x{{item?.quantity}}</p>
-            </div>
+            <p style="font-size: 1rem;">￥{{item?.goods?.originalPrice}}</p>
+          </div>
+          <div class="weui-cell__ft">
+            <p>x{{item?.quantity}}</p>
           </div>
         </div>
-        <div class="weui-panel__ft" style="border-top: 1px solid #F7F7F7">
-          <div class="weui-cell">
-            <div class="weui-cell__bd">
-              <span style="color: #848484;">共计数量： {{detailsData?.data?.moyaoOrderItemModels.length}}</span>
-              <p class="pull-right" style="color: #848484;">退款金额：<span style="color: #FF6464;">{{detailsData?.data?.amount}}元</span></p>
-            </div>
+      </div>
+      <div class="weui-panel__ft" style="border-top: 1px solid #F7F7F7">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <span style="color: #848484;">共计数量： {{detailsData?.data?.moyaoOrderItemModels.length}}</span>
+            <p class="pull-right" style="color: #848484;">退款金额：<span style="color: #FF6464;">{{detailsData?.data?.amount}}元</span></p>
           </div>
         </div>
-      </weui-infiniteloader>
+      </div>
     </div>
   </div>
   <div class="order-refund-remark">

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {InfiniteLoaderConfig} from 'ngx-weui';
 import {MineOrderService} from '../../../common/services/mine-order.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -20,10 +19,6 @@ export class OrderAftsaleComponent implements OnInit {
       title: '',
       color: '#86B876'
     }
-  };
-  // scroll
-  ordAftScrollConfig: InfiniteLoaderConfig = {
-    height: 'auto'
   };
   // details
   public detailsData: any = null;

@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {InfiniteLoaderConfig, ToastComponent, ToastService, Uploader, UploaderOptions} from 'ngx-weui';
+import {ToastComponent, ToastService, Uploader, UploaderOptions} from 'ngx-weui';
 import {MineOrderService} from '../../../common/services/mine-order.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {EMPTY, timer} from 'rxjs';
@@ -23,10 +23,6 @@ export class OrderRefundComponent implements OnInit {
       title: '',
       color: '#86B876'
     }
-  };
-  // scroll
-  public ordAftScrollConfig: InfiniteLoaderConfig = {
-    height: 'auto'
   };
   // details
   public detailsData: any = null;

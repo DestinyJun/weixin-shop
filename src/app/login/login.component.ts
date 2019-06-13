@@ -26,7 +26,12 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.appInit();
+    // wx get token
+    if (this.globalSrv.wxSessionGetObject('token')) {
+      this.router.navigate(['/tab/home']);
+    } else {
+      this.appInit();
+    }
   }
   public appInit(): void {
     // weixin auth

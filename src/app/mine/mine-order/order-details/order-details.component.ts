@@ -3,7 +3,7 @@ import {HeaderContent} from '../../../common/components/header/header.model';
 import {Observable, timer} from 'rxjs';
 import {MineOrderService} from '../../../common/services/mine-order.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {InfiniteLoaderConfig, ToastComponent, ToastService} from 'ngx-weui';
+import {ToastComponent, ToastService} from 'ngx-weui';
 import {GlobalService} from '../../../common/services/global.service';
 
 @Component({
@@ -23,10 +23,6 @@ export class OrderDetailsComponent implements OnInit {
       title: '',
       color: '#86B876'
     }
-  };
-  // scroll
-  public ordDeilScrollConfig: InfiniteLoaderConfig = {
-    height: 'auto'
   };
   // toast
   @ViewChild('mineOrderToast') mineOrderToast: ToastComponent;
