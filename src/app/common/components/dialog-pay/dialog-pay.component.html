@@ -9,7 +9,7 @@
       </div>
       <div class="weui-dialog-content" (input)="onInput($event)">
         <label for="password"></label>
-        <input id="password" #password type="number" name="password" maxlength="6" pattern="[0-9]*" [hidden]="inputShow" autofocus>
+        <input id="password" #password type="number" name="password" maxlength="6" pattern="[0-9]*" [hidden]="inputShow">
         <span class="c-n" *ngFor="let item of config.value" [ngStyle]="{'background': item}"></span>
       </div>
       <div class="weui-dialog-footer" *ngIf="config.btnShow">

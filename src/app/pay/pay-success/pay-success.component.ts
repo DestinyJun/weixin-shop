@@ -26,9 +26,9 @@ export class PaySuccessComponent implements OnInit {
   ngOnInit() {
     // 防止页面后退
     window.history.pushState(null, null, document.URL);
-    window.addEventListener('popstate', function () {
+   /* window.addEventListener('popstate', function () {
       window.history.pushState(null, null, document.URL);
-    });
+    });*/
     this.routerInfo.queryParams.subscribe((params: Params) => {
       this.paySucOrdSn = params;
     });

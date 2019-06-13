@@ -33,7 +33,12 @@
     </div>
   </div>
   <div class="weui-dialog-pay">
-    <app-dialog-pay *ngIf="dialogPayShow" [config]="dialogPayConfig" (dialogPayOnchange)="onDialogPayClick($event)" (dialogPayDestroy)="onDialogPayClick($event)"></app-dialog-pay>
+    <app-dialog-pay
+      *ngIf="dialogPayShow"
+      [config]="dialogPayConfig"
+      (dialogPayOnchange)="onDialogPayClick($event)"
+      (dialogPayDestroy)="onDialogPayClick($event)">
+    </app-dialog-pay>
   </div>
   <div class="pay-way-sure">
     <button class="weui-btn weui-btn_primary" *ngIf="!payDetailsData?.amountLog?.payType" (click)="paySureClick()">立即支付</button>

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ComponentRef} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, ComponentRef, AfterViewInit} from '@angular/core';
 export class DialogPay {
   title?: string;
   show?: boolean;
@@ -21,7 +21,7 @@ export class DialogPay {
   styleUrls: ['./dialog-pay.component.less']
 })
 
-export class DialogPayComponent implements OnInit {
+export class DialogPayComponent implements OnInit, AfterViewInit {
   @Input() config = new DialogPay('', true, ['', '', '', '', '', ''], true, false, false);
   @Output() dialogPayClick: EventEmitter<{}> = new EventEmitter();
   @Output() dialogPayOnchange: EventEmitter<{}> = new EventEmitter();
@@ -75,6 +75,12 @@ export class DialogPayComponent implements OnInit {
       show: false,
       status: true
     });
+  }
+  ngAfterViewInit(): void {
+    this.passwordInput.nativeElement.onclick = function () {
+      this.focus();
+    };
+    this.passwordInput.nativeElement.click();
   }
 }
 
