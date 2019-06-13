@@ -91,7 +91,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     .subscribe(
       (val) => {
         this.toastService.hide();
-        if (val.errcode !== 40001) {
+        if (!val.errcode) {
           this.regSubmit.nikeName = val.nickname;
           this.regSubmit.headImage = val.headimgurl;
           this.regSubmit.sex = val.sex;

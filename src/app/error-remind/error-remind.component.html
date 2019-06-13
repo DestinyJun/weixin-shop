@@ -10,7 +10,7 @@
       <div class="weui-msg__opr-area" *ngIf="!(errorMsg.btn === undefined)">
         <p class="weui-btn-area">
           <button (click)="errorResetClick()" class="weui-btn weui-btn_primary">{{errorMsg.btn}}</button>
-          <button [routerLink]="['/tab']" class="weui-btn weui-btn_default">返回主页</button>
+          <button *ngIf="errorToken" [routerLink]="['/tab']" class="weui-btn weui-btn_default">返回主页</button>
         </p>
       </div>
       <div class="weui-msg__extra-area">

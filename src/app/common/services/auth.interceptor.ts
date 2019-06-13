@@ -144,6 +144,15 @@ export class AuthInterceptor implements HttpInterceptor {
         return EMPTY;
       }),
       catchError((err: HttpErrorResponse) => {
+        if (!this.globalService.wxSessionGetObject('token')) {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: '登陆失效，请重新登陆！',
+              url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=${environment.dev_test_url}/moyaoView/login&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
+              btn: '点击登陆'
+            }});
+          return;
+        }
         if (err.status === 0) {
           this.router.navigate(['/error'], {
             queryParams: {
