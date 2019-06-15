@@ -25,7 +25,7 @@ export class MineTeamComponent implements OnInit, OnDestroy {
   };
   // scroll
   public infiniteloaderConfig: InfiniteLoaderConfig = {
-    height: '80%'
+    height: '100%'
   };
   public maxData: number;
   public mineTeamDate: any = null;

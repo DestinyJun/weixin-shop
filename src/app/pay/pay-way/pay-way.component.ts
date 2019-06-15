@@ -142,7 +142,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
           }
           this.router.navigate(['/error'], {
             queryParams: {
-              msg: `${val.message},错误码：${val.status}`,
+              msg: `${val.message}错误码：${val.status}`,
               url: '/mine/wallet/recharge',
               btn: '点击充值'
             }});

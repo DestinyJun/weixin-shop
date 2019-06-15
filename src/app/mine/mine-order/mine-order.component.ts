@@ -86,16 +86,11 @@ export class MineOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.orderSelectStatus = this.globalSrv.wxSessionGetObject('orderSelectStatus');
-    if (this.orderSelectStatus === 'all') {
-      this.mOrderInit({currentPage: '1'});
-    } else {
-      this.mOrderInit({currentPage: '1', status: this.orderSelectStatus});
+    if (!this.globalSrv.wxSessionGetObject('orderSelectStatus')) {
+      this.globalSrv.wxSessionSetObject('orderSelectStatus', 'all');
     }
-  }
-  // init
-  public mOrderInit(param): void {
-    this.mOrderList = null;
+    this.orderSelectStatus = this.globalSrv.wxSessionGetObject('orderSelectStatus');
+    // order select list
     this.mOrderSrv.mineOrdGetNum().subscribe(
       (val) => {
         if (val.status === 200) {
@@ -106,15 +101,38 @@ export class MineOrderComponent implements OnInit {
               }
             });
           });
+        } else {
+          this.router.navigate(['error'], {
+            queryParams: {
+              msg: `获取订单列表失败，错误码${val.status}`,
+              url: null,
+              btn: '请重试',
+            }
+          });
         }
       }
     );
+    if (this.orderSelectStatus === 'all') {
+      this.mOrderInit({currentPage: '1'});
+    } else {
+      this.mOrderInit({currentPage: '1', status: this.orderSelectStatus});
+    }
+  }
+  // order init
+  public mOrderInit(param): void {
+    this.mOrderList = null;
     this.mOrderSrv.getMineOrderList(param).subscribe(
       (val) => {
         if (val.status === 200 ) {
           this.mOrderSerialization(val.datas);
         } else {
-          this.mOrderList = [];
+          this.router.navigate(['error'], {
+            queryParams: {
+              msg: `获取订单分类失败，错误码${val.status}`,
+              url: null,
+              btn: '请重试',
+            }
+          });
         }
       }
     );

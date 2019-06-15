@@ -4,12 +4,13 @@
   </div>
   <div class="mine-team-earnings">
     <p style="color: #ffffff;font-size: 1.1rem">
-      <span>￥ </span>{{mineTeamDate?.mainSum}}
+      <span>￥ </span>
+      <span>{{mineTeamDate?.mainSum}}</span>
     </p>
     <p style="color: #ffffff;font-size: 0.75rem;margin-top: 10px">团队总收益</p>
   </div>
   <div class="mine-team-tab">
-    <weui-navbar>
+    <weui-navbar style="height: 100%">
       <weui-tab heading="月度" (select)="onSelect($event)" style="height: 100%">
         <article class="weui-article" style="height: 100%">
           <div class="list">
@@ -31,18 +32,18 @@
               </div>
             </div>
             <div class="list-scroll">
-              <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
-                <ng-container *ngIf="!listLoading">
-                  <div class="list-scroll-cell" style="background: #E7F2FF;" *ngFor="let item of mineTeamDate?.team?.reverse();">
-                  <div class="box" *ngIf="item.width !== '0'" style="background: #AFD5FF" [ngStyle]="{'width':item.width + '%'}"></div>
-                  <div class="text">
-                    <p class="pull-left">{{item?.nikeName}}</p>
-                    <p class="pull-right">{{item?.sum_amount_paid}}</p>
-                  </div>
-                </div>
-                </ng-container>
-                <app-loading *ngIf="listLoading"></app-loading>
-              </weui-infiniteloader>
+             <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
+               <ng-container *ngIf="!listLoading">
+                 <div class="list-scroll-cell" style="background: #E7F2FF;" *ngFor="let item of mineTeamDate?.team?.reverse();">
+                   <div class="box" *ngIf="item.width !== '0'" style="background: #AFD5FF" [ngStyle]="{'width':item.width + '%'}"></div>
+                   <div class="text">
+                     <p class="pull-left">{{item?.nikeName}}</p>
+                     <p class="pull-right">{{item?.sum_amount_paid}}</p>
+                   </div>
+                 </div>
+               </ng-container>
+               <app-loading *ngIf="listLoading"></app-loading>
+            </weui-infiniteloader>
             </div>
           </div>
         </article>
@@ -79,14 +80,14 @@
                   </div>
                 </ng-container>
                 <app-loading *ngIf="listLoading"></app-loading>
-              </weui-infiniteloader>
+             </weui-infiniteloader>
             </div>
           </div>
         </article>
       </weui-tab>
     </weui-navbar>
   </div>
-  <div class="mine-team-shared" *ngIf="false">
+  <div class="mine-team-shared" *ngIf="mineTeamDate?.team.length === 0">
     <p>暂无团队</p>
     <p style="margin-top: 10px">快起组建自己的团队吧</p>
     <p style="color: #77B1F1;margin-top: 10px">分享/邀请</p>
