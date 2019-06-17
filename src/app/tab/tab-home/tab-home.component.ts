@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TabService} from '../../common/services/tab.service';
 import {NavigationEnd, Router} from '@angular/router';
-import {SwiperConfigInterface, SwiperPaginationInterface} from 'ngx-swiper-wrapper';
+import {SwiperPaginationInterface} from 'ngx-swiper-wrapper';
 @Component({
   selector: 'app-tab-home',
   templateUrl: './tab-home.component.html',
