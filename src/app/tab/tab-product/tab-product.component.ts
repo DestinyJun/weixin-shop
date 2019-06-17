@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {OrderService} from '../../common/services/order.service';
 import {Router} from '@angular/router';
+import {ProductService} from '../../common/services/product.service';
 
 @Component({
   selector: 'app-tab-product',
@@ -10,7 +11,7 @@ import {Router} from '@angular/router';
 export class TabProductComponent implements OnInit {
   public tabProdList: any = null;
   constructor(
-    private orderSrv: OrderService,
+    private productSrv: ProductService,
     private router: Router,
   ) { }
 
@@ -19,10 +20,11 @@ export class TabProductComponent implements OnInit {
   }
   // get goods
   public tabProdInit (): void {
-    this.orderSrv.orderGetGoods({}).subscribe(
+    this.productSrv.prodGetLearnList().subscribe(
       (val) => {
+        console.log(val);
         if (val.status === 200) {
-          this.tabProdList = val.datas;
+          // this.tabProdList = val.datas;
         } else {
           this.router.navigate(['/error'], {queryParams: {
               msg: `获取信息失败，错误码${val.status}`,

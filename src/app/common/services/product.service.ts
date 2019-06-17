@@ -21,4 +21,8 @@ export class ProductService {
   public tabGetUserInfo(params): Observable<any> {
     return this.http.post(`/member/userInfo`, {});
   }
+  // get goods info
+  public prodGetLearnList(): Observable<any> {
+    return this.http.post(`/learn/list`, {});
+  }
 }
