@@ -112,6 +112,7 @@ export class TabOrderComponent implements OnInit {
     }
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
+        console.log(val);
         if (val.status === 200) {
         this.orderPlaceAddressInfo = null;
         this.orderPlaceInvoiceInfo = null;

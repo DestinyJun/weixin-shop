@@ -5,11 +5,10 @@ import {
   DialogComponent,
   DialogConfig,
   InfiniteLoaderComponent,
-  InfiniteLoaderConfig, MaskComponent,
+  InfiniteLoaderConfig,
   SkinType, ToastComponent, ToastService
 } from 'ngx-weui';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TabService} from '../../common/services/tab.service';
 import {GlobalService} from '../../common/services/global.service';
 import {ClientService} from '../../common/services/client.service';
 
@@ -31,8 +30,6 @@ export class AddressListComponent implements OnInit {
   // Dialog
   @ViewChild('iosDelDialog') iosDelDialog: DialogComponent;
   public configDelDialog: DialogConfig = {};
-  // mask
-  @ViewChild('tabClientMask') tabClientMask: MaskComponent;
   // header
   @Input() public headerOption: HeaderContent = {
     title: '收货地址',
@@ -48,10 +45,6 @@ export class AddressListComponent implements OnInit {
   public routerStatus: string = null;
   // client
   public clientList: any = null;
-  public clientUpdateName: any = {
-    name: null,
-    id: null
-  };
   public clientloaderConfig: InfiniteLoaderConfig = {
     height: '100%'
   };
@@ -77,7 +70,6 @@ export class AddressListComponent implements OnInit {
   public tabClientInitialize (): void {
     this.clientSrv.clientGetAddress({}).subscribe(
       (value) => {
-        console.log(value);
         if (value['status'] === 200) {
           this.clientList = value.datas;
         } else {
@@ -100,9 +92,7 @@ export class AddressListComponent implements OnInit {
     comp.setFinished();
   }
   public scrollAddressClick (item): void {
-    console.log(item);
     if (this.routerStatus === 'order') {
-      item.parentId = this.clientUpdateName.id;
       this.globalService.addressEvent = item;
       this.location.back();
     }
@@ -131,7 +121,8 @@ export class AddressListComponent implements OnInit {
     }
   }
   // client
-  public clientDeleteClick (id): void {
+  public clientDeleteClick (id, event): void {
+    event.stopPropagation();
     this.dialogDelShow('ios', {id: id, msg: '你确定删除当前客户吗？'});
   }
   public clientNameClick(id) {
@@ -149,7 +140,7 @@ export class AddressListComponent implements OnInit {
       (<DialogComponent>this[`${type}DelDialog`]).show().subscribe((res: any) => {
         if (res.value) {
           this.srv.loading();
-          this.clientSrv.clientDelAddress(item.id).subscribe(
+          this.clientSrv.clientDelAddress({id: item.id}).subscribe(
             (value) => {
               this.srv.hide();
               console.log(value);
@@ -169,30 +160,5 @@ export class AddressListComponent implements OnInit {
       });
     }, 10);
     return false;
-  }
-  // client Serialization
-  public clientSerialization(params): void {
-    this.clientList = [];
-    const a = [];
-    const b = [];
-    params.map((item) => {
-        b.push(item.firstPY);
-    });
-    for (const s in b) {
-      if (b) {
-        if (a.indexOf(b[s]) < 0) {
-          a.push(b[s]);
-        }
-      }
-    }
-    a.map((val) => {
-      const c = [];
-      params.map((pItem) => {
-        if (pItem.firstPY === val) {
-          c.push(pItem);
-        }
-      });
-      this.clientList.push({name: val, value: c });
-    });
   }
 }

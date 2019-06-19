@@ -15,7 +15,7 @@
                    <p style="font-size: 0.75rem;color: #B6B6B6;margin-top: 5px">{{item?.address}}</p>
                  </div>
                  <div class="weui-cell__ft">
-                   <button *ngIf="item.editState" class="weui-btn weui-btn_warn" (click)="clientDeleteClick(item.id)" style="font-size: 0.8rem;">删除</button>
+                   <button *ngIf="item.editState" class="weui-btn weui-btn_warn" (click)="clientDeleteClick(item.id, $event)" style="font-size: 0.8rem;">删除</button>
                    <button *ngIf="!item.editState" class="weui-btn weui-btn_default" style="color: #F4B78B;font-size: 0.85rem" (click)="clientNameClick(item.id)">编辑</button>
                  </div>
                </div>
@@ -23,9 +23,9 @@
            </div>
          </ng-container>
          <ng-template #remind>
-           <div style="text-align: center;color: #7E7E7E;font-weight: bold;margin-top: 30%">
-             <span>暂无客户，</span>
-             <span style="color: #87BA77;" [routerLink]="['/client/add', {id: null, status: 'add'}]">点击添加</span>
+           <div style="text-align: center;color: #959595;font-weight: bold;margin-top: 30%;font-size: 0.85rem">
+             <span>暂无收货地址，</span>
+             <span style="color: #87BA77;" [routerLink]="['/client/addition']" [queryParams]="{id: null, status: 'add'}">点击添加</span>
            </div>
          </ng-template>
        </ng-container>

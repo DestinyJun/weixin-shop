@@ -16,7 +16,7 @@ export class OrderPlaceComponent implements OnInit {
   public goodId: any = null;
   public orderId: any = null;
   public orderPlaceAddressInfo: any = null;
-  public orderPlaceInvoiceInfo: any = null;
+  public orderPlaceInvoiceInfo: any = {};
   public orderPlaceInfo: any = {
     addressId: '',
     goodsItem: [],
@@ -115,11 +115,17 @@ export class OrderPlaceComponent implements OnInit {
   }
   // get Invoice
   public getInvoiceClick(): void {
-    if (this.orderPlaceAddressInfo) {
-      this.router.navigate(['/order/orinvoice']);
+    console.log(this.orderPlaceInvoiceInfo);
+    if (!this.orderPlaceInvoiceInfo) {
+      this.orderPlaceInvoiceInfo['invoiceType'] = 'noinvoice';
+      console.log(this.orderPlaceInvoiceInfo);
+    }
+   /* if (this.orderPlaceAddressInfo) {
+      console.log(this.orderPlaceInvoiceInfo);
+      this.router.navigate(['/order/orinvoice'], {queryParams: {type: this.orderPlaceInvoiceInfo.invoiceType}});
       return;
     }
-    this.onToastShow('success');
+    this.onToastShow('success');*/
   }
   // order place
   public submitOrder() {

@@ -36,6 +36,9 @@ export class ClientService {
   public clientGetAddress(params): Observable<any> {
     return this.http.post(`/address/ListFindById`, params);
   }
+  public clientGetAddressItem(params): Observable<any> {
+    return this.http.post(`/address/item`, params);
+  }
   // invoice
   public clientAddInvoice(params): Observable<any> {
     return this.http.post(`/invoice/add`, params);

@@ -3,7 +3,7 @@
     <app-header [option]="headerOption"></app-header>
   </div>
   <div class="tab-order-address">
-    <div class="weui-cells" [routerLink]="['/client/list', {status: 'order'}]">
+    <div class="weui-cells" [routerLink]="['/client/address', {status: 'order'}]">
       <div class="weui-cell" [ngStyle]="{'color':orderPlaceAddressInfo?'#636363':'#C1C1C1'}">
         <div class="weui-cell__bd">
           <p *ngIf="orderPlaceAddressInfo">

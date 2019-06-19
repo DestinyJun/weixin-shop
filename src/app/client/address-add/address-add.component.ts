@@ -3,10 +3,6 @@ import {HeaderContent} from '../../common/components/header/header.model';
 import {Location} from '@angular/common';
 import {
   DialogComponent,
-  DialogConfig,
-  InfiniteLoaderConfig,
-  MaskComponent,
-  SkinType,
   ToastComponent,
   ToastService
 } from 'ngx-weui';
@@ -33,31 +29,14 @@ export class AddressAddComponent implements OnInit {
     postcode: null,
   };
   public description: any;
-  public clientAddressList: any = null;
-  public clientInvoiceList: any = null;
-  public bottomBtnStatus = 'address';
   public clientId: any = null;
   public clientStatus: string = null;
-  // radio
-  public clientAddRadioRes: any = {
-    invoiceType: 'individual',
-    title: null,
-    number: null,
-  };
-  public clientIndividualShow = false;
   // toast
   @ViewChild('addRemindToast') addRemindToast: ToastComponent;
   @ViewChild('addClientToast') addClientToast: ToastComponent;
   public clientMsg: string;
-  // mask
-  @ViewChild('clientAddMask') clientAddMask: MaskComponent;
   // Dialog
   @ViewChild('iosDialog') iosDialog: DialogComponent;
-  public configDialog: DialogConfig = {};
-  // scroll
-  public clientAddloaderConfig: InfiniteLoaderConfig = {
-    height: '100%'
-  };
   // header
   public headerOption: HeaderContent = {
     title: '',
@@ -86,10 +65,15 @@ export class AddressAddComponent implements OnInit {
           this.headerOption.title = '新增收货地址';
         } else {
           this.headerOption.title = '修改收货地址';
-          this.clientSrv.clientSearchInfo({id: params.id}).subscribe(
+          this.clientSrv.clientGetAddressItem({id: params.id}).subscribe(
             (val) => {
               if (val.status === 200) {
-                this.addClient.name = val.data.name;
+                this.addAddressRes = {
+                  name: val.data.name,
+                  phone: val.data.phone,
+                  address: val.data.address,
+                  postcode: val.data.postcode,
+                };
               }
             }
           );
@@ -129,13 +113,12 @@ export class AddressAddComponent implements OnInit {
         return;
       }
       if (this.clientStatus === 'update') {
-        this.addAddressRes.contactsId = this.clientId;
+        this.addAddressRes.id = this.clientId;
         this.srv.loading('修改中...');
         this.clientSrv.clientUpdateAddress(this.addAddressRes).subscribe(
           (val) => {
             if (val.status === 200) {
               this.srv.hide();
-              this.clientAddMask.hide();
               this.clientMsg = val.message;
               this.addAddressRes = {
                 name: null,
@@ -143,11 +126,14 @@ export class AddressAddComponent implements OnInit {
                 address: null,
               };
               this.onShow('addClient');
+              timer(1000).subscribe(() => {
+                this.location.back();
+              });
               return;
             }
             this.router.navigate(['/error'], {
               queryParams: {
-                msg: `操作失败，${val.message}`,
+                msg: `修改失败，${val.message}`,
                 url: null,
                 btn: '请重试'
               }
@@ -158,51 +144,12 @@ export class AddressAddComponent implements OnInit {
       }
   }
   // remind + del
-  public dialogDelShow(type: SkinType, msg: string, item: any, event) {
-    event.stopPropagation();
-    this.configDialog = Object.assign({}, <DialogConfig>{
-      skin: type,
-      confirm: '是',
-      cancel: '否',
-      content: msg
-    });
-    setTimeout(() => {
-      (<DialogComponent>this[`${type}Dialog`]).show().subscribe((res: any) => {
-        if (res.value) {
-          this.srv.loading('删除中...');
-          if (this.bottomBtnStatus === 'address') {
-            this.clientSrv.clientDelAddress({id: item.id}).subscribe(
-              (val) => {
-                if (val.status === 200) {
-                  this.srv.hide();
-                  this.clientMsg = val.message;
-                  this.onShow('addClient');
-                }
-              }
-            );
-            return;
-          }
-          this.clientSrv.clientDelInvoice({id: item.id}).subscribe(
-            (val) => {
-              if (val.status === 200) {
-                this.srv.hide();
-                this.clientMsg = val.message;
-                this.onShow('addClient');
-              }
-            }
-          );
-        }
-      });
-    }, 10);
-    return false;
-  }
   public onShow(type: string) {
     (<ToastComponent>this[`${type}Toast`]).onShow();
   }
   // Address recognition
   public clientAddChange(event): void {
     const addressInfo = parse(event);
-    console.log(addressInfo);
     if (addressInfo['city'] === addressInfo['province']) {
       this.addAddressRes.address = addressInfo['province'] + addressInfo['area'] + addressInfo['addr'];
       this.addAddressRes.phone = addressInfo['phone'] || addressInfo['mobile'];

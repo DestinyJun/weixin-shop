@@ -52,6 +52,7 @@ export class OrderInvoiceComponent implements OnInit {
   // radio change
   public radioResChanges() {
     if (this.orderAddRadioRes.invoiceType === 'noinvoice') {
+      this.globalSrv.invoiceEvent = null;
       window.history.back();
     }
   }
