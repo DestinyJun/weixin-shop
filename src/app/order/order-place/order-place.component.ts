@@ -13,6 +13,7 @@ import {GlobalService} from '../../common/services/global.service';
 })
 export class OrderPlaceComponent implements OnInit {
   // data
+  public goodId: any = null;
   public orderId: any = null;
   public orderPlaceAddressInfo: any = null;
   public orderPlaceInvoiceInfo: any = null;
@@ -58,25 +59,43 @@ export class OrderPlaceComponent implements OnInit {
     if (this.orderPlaceInvoiceInfo) {
       this.orderPlaceInfo.invoiceId = this.orderPlaceInvoiceInfo.id;
     }
-    this.orderPlaceInitialize();
+    this.routeInfo.queryParams.subscribe(
+      (val) => {
+        this.orderPlaceInitialize(val);
+      }
+    );
   }
   // get goods
-  public orderPlaceInitialize (): void {
-    this.orderSrv.orderGetGoods({}).subscribe(
+  public orderPlaceInitialize (param): void {
+    this.orderSrv.orderGetGoodItem(param).subscribe(
       (val) => {
         if (val.status === 200) {
-          val.datas.map((item, index) => {
-            item['amount'] = parseInt(this.globalService.wxSessionGetObject('goods' + index), 10);
-            if (item.amount) {
-              this.orderPlaceInfo.goodsItem.push({
-                goodsId: item.id,
-                quantity: item.amount,
-              });
-            }
-            this.totalPrice += item.originalPrice * item.amount;
-          });
-          this.goodsInfo = val.datas;
+          /* val.datas.map((item, index) => {
+           item['amount'] = parseInt(this.globalService.wxSessionGetObject('goods' + index), 10);
+           if (item.amount) {
+             this.orderPlaceInfo.goodsItem.push({
+               goodsId: item.id,
+               quantity: item.amount,
+             });
+           }
+           this.totalPrice += item.originalPrice * item.amount;
+         });*/
+          val.data['amount'] = parseInt(this.globalService.wxSessionGetObject('good'), 10);
+          if (val.data.amount) {
+            this.orderPlaceInfo.goodsItem.push({
+              goodsId: val.data.id,
+              quantity: val.data.amount,
+            });
+            this.totalPrice += val.data.originalPrice * val.data.amount;
+          }
+          this.goodsInfo = val.data;
+          return;
         }
+        this.router.navigate(['/error'], {queryParams: {
+            msg: `获取产品失败，错误代码${val.status}`,
+            url: null,
+            btn: '请重试'
+          }});
       }
     );
   }
@@ -84,17 +103,15 @@ export class OrderPlaceComponent implements OnInit {
   public goodsTotalCount(event, i): void {
     this.orderPlaceInfo.goodsItem = [];
     this.totalPrice = 0;
-    this.globalService.wxSessionSetObject(`goods${i}`, event);
-    this.goodsInfo[i].amount = event;
-    this.goodsInfo.map((item) => {
-      if (item.amount) {
-        this.orderPlaceInfo.goodsItem.push({
-          goodsId: item.id,
-          quantity: item.amount,
-        });
-      }
-      this.totalPrice += item.originalPrice * item.amount;
-    });
+    this.globalService.wxSessionSetObject(`good`, event);
+    this.goodsInfo.amount = event;
+    if (this.goodsInfo.amount) {
+      this.orderPlaceInfo.goodsItem.push({
+        goodsId: this.goodsInfo.id,
+        quantity: this.goodsInfo.amount,
+      });
+      this.totalPrice += this.goodsInfo.originalPrice * this.goodsInfo.amount;
+    }
   }
   // get Invoice
   public getInvoiceClick(): void {

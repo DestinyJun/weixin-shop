@@ -36,7 +36,7 @@
       <div class="article-detail-content" [innerHTML]="prodInfo?.content"></div>
     </div>
   </div>
-  <div class="pro-detail-button" [routerLink]="['/order']">
+  <div class="pro-detail-button" [routerLink]="['/order']" [queryParams]="{id: prodInfo?.id}">
     <div class="weui-footer weui-footer_fixed-bottom">
       <button class="weui-btn weui-btn_primary" weui-button>立即预约</button>
     </div>

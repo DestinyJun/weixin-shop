@@ -22,9 +22,8 @@ export class TabProductComponent implements OnInit {
   public tabProdInit (): void {
     this.productSrv.prodGetLearnList().subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
-          // this.tabProdList = val.datas;
+          this.tabProdList = val.datas;
         } else {
           this.router.navigate(['/error'], {queryParams: {
               msg: `获取信息失败，错误码${val.status}`,

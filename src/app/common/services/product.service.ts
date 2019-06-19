@@ -12,7 +12,7 @@ export class ProductService {
   ) { }
   // get goods info
   public prodGetInfo(params): Observable<any> {
-    return this.http.post(`/goods/item`, params);
+    return this.http.post(`/learn/item `, params);
   }
   // get banner
   public prodGetBanner(): Observable<any> {

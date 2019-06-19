@@ -15,6 +15,10 @@ export class OrderService {
   public orderGetGoods(params): Observable<any> {
     return this.http.post('/goods/list', params);
   }
+  // goods Item
+  public orderGetGoodItem(params): Observable<any> {
+    return this.http.post('/goods/item', params);
+  }
   // get invoice
   public orderGetInvoice(params): Observable<any> {
     return this.http.post(`/invoice/ListFindById`, params);
