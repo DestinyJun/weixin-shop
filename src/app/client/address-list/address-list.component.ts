@@ -1,28 +1,33 @@
 import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
+import {Location} from '@angular/common';
 import {
   DialogComponent,
   DialogConfig,
   InfiniteLoaderComponent,
   InfiniteLoaderConfig, MaskComponent,
-  SkinType
+  SkinType, ToastComponent, ToastService
 } from 'ngx-weui';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TabService} from '../../common/services/tab.service';
 import {GlobalService} from '../../common/services/global.service';
+import {ClientService} from '../../common/services/client.service';
 
 @Component({
   selector: 'app-client-address',
-  templateUrl: './client-address.component.html',
-  styleUrls: ['./client-address.component.less'],
+  templateUrl: './address-list.component.html',
+  styleUrls: ['./address-list.component.less'],
   encapsulation: ViewEncapsulation.None
 })
-export class ClientAddressComponent implements OnInit {
+export class AddressListComponent implements OnInit {
   // swipt
   public touchStartX: number;
   public touchMoveX: number;
   public touchStartPageY: number;
   public touchMovePageY: number;
+  // toast
+  @ViewChild('addRemindToast') addRemindToast: ToastComponent;
+  @ViewChild('addClientToast') addClientToast: ToastComponent;
   // Dialog
   @ViewChild('iosDelDialog') iosDelDialog: DialogComponent;
   public configDelDialog: DialogConfig = {};
@@ -43,8 +48,6 @@ export class ClientAddressComponent implements OnInit {
   public routerStatus: string = null;
   // client
   public clientList: any = null;
-  public clientAddressList: any[];
-  public clientName: string;
   public clientUpdateName: any = {
     name: null,
     id: null
@@ -54,9 +57,11 @@ export class ClientAddressComponent implements OnInit {
   };
   constructor(
     private router: Router,
-    private tabService: TabService,
+    private clientSrv: ClientService,
     private globalService: GlobalService,
-    private routerInfo: ActivatedRoute
+    private routerInfo: ActivatedRoute,
+    private srv: ToastService,
+    private location: Location,
   ) {
   }
 
@@ -70,16 +75,11 @@ export class ClientAddressComponent implements OnInit {
   }
   // initialize
   public tabClientInitialize (): void {
-    this.tabService.tabGetAddressList().subscribe(
+    this.clientSrv.clientGetAddress({}).subscribe(
       (value) => {
         console.log(value);
         if (value['status'] === 200) {
           this.clientList = value.datas;
-        /*  value['datas'].map((val) => {
-            val.editState = false;
-          });
-          this.clientList = value['datas'];
-          this.clientSerialization(value['datas']);*/
         } else {
           this.router.navigate(['/error'], {
             queryParams: {
@@ -93,17 +93,18 @@ export class ClientAddressComponent implements OnInit {
   }
   // header
   public onHeaderRightClick(): void {
-    this.router.navigate(['/client/add', {id: null, status: 'add'}]);
+    this.router.navigate(['/client/addition'], {queryParams: {id: null, status: 'add'}});
   }
   // scroll
   public clientLoadMore(comp: InfiniteLoaderComponent): void {
     comp.setFinished();
   }
   public scrollAddressClick (item): void {
+    console.log(item);
     if (this.routerStatus === 'order') {
       item.parentId = this.clientUpdateName.id;
       this.globalService.addressEvent = item;
-      window.history.back();
+      this.location.back();
     }
   }
   // slide
@@ -133,21 +134,8 @@ export class ClientAddressComponent implements OnInit {
   public clientDeleteClick (id): void {
     this.dialogDelShow('ios', {id: id, msg: '你确定删除当前客户吗？'});
   }
-  public clientNameClick(item, type: 'address' | 'update') {
-    this.clientUpdateName.id = item.id;
-    this.tabClientMask.show();
-    if (type === 'address') {
-      this.clientName = item.name;
-      this.tabService.tabGetClientAdrs({contactsId: item.id}).subscribe(
-        (val) => {
-          if (val.status === 200) {
-            this.clientAddressList = val.datas;
-          }
-        }
-      );
-      return;
-    }
-    this.router.navigate(['/client/add',  {id: item.id, status: 'update'}]);
+  public clientNameClick(id) {
+    this.router.navigate(['/client/addition'], {queryParams: {id: id, status: 'update'}});
   }
   // remind
   public dialogDelShow(type: SkinType, item: any) {
@@ -160,11 +148,21 @@ export class ClientAddressComponent implements OnInit {
     setTimeout(() => {
       (<DialogComponent>this[`${type}DelDialog`]).show().subscribe((res: any) => {
         if (res.value) {
-          this.tabService.tabDeleteClient(item.id).subscribe(
-            (value) => {},
-            error => {},
-            () => {
-              this.tabClientInitialize();
+          this.srv.loading();
+          this.clientSrv.clientDelAddress(item.id).subscribe(
+            (value) => {
+              this.srv.hide();
+              console.log(value);
+              if (value.status === 200) {
+                this.tabClientInitialize();
+              } else {
+                this.router.navigate(['/error'], {
+                  queryParams: {
+                    msg: `删除失败，错误码${value.status}`,
+                    url: null,
+                    btn: '请重试',
+                  }});
+              }
             }
           );
         }

@@ -1,0 +1,47 @@
+<div class="address-list">
+  <app-header [option]="headerOption" (headerRightClick)="onHeaderRightClick()"></app-header>
+  <div class="address-list-scroll">
+     <weui-infiniteloader (loadmore)="clientLoadMore($event)" [config]="clientloaderConfig">
+       <ng-container *ngIf="clientList;else loading">
+         <ng-container *ngIf="clientList.length !== 0;else remind">
+           <div class="client-list" *ngFor="let item of clientList">
+             <div class="weui-cells" (click)="scrollAddressClick(item)">
+               <div class="weui-cell" (touchmove)="onTouchMove($event, item)" (touchstart)="onTouchstart($event)">
+                 <div class="weui-cell__bd">
+                   <p>
+                     <span style="font-size: 1rem;vertical-align: bottom">{{item?.name}}</span>
+                     <span style="font-size: 0.8rem;color: #767676;vertical-align: bottom;padding-left: 10px">{{item?.phone}}</span>
+                   </p>
+                   <p style="font-size: 0.75rem;color: #B6B6B6;margin-top: 5px">{{item?.address}}</p>
+                 </div>
+                 <div class="weui-cell__ft">
+                   <button *ngIf="item.editState" class="weui-btn weui-btn_warn" (click)="clientDeleteClick(item.id)" style="font-size: 0.8rem;">删除</button>
+                   <button *ngIf="!item.editState" class="weui-btn weui-btn_default" style="color: #F4B78B;font-size: 0.85rem" (click)="clientNameClick(item.id)">编辑</button>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </ng-container>
+         <ng-template #remind>
+           <div style="text-align: center;color: #7E7E7E;font-weight: bold;margin-top: 30%">
+             <span>暂无客户，</span>
+             <span style="color: #87BA77;" [routerLink]="['/client/add', {id: null, status: 'add'}]">点击添加</span>
+           </div>
+         </ng-template>
+       </ng-container>
+       <ng-template #loading>
+         <app-loading></app-loading>
+       </ng-template>
+     </weui-infiniteloader>
+  </div>
+  <div class="address-list-remind">
+    <div class="client-dialog">
+      <weui-dialog #iosDelDialog [config]="configDelDialog"></weui-dialog>
+    </div>
+  </div>
+  <div class="address-list-toast">
+    <weui-toast #addRemindToast [type]="'success'" [text]="'请先填写客户姓名'" [icon]="''" [time]="2000"></weui-toast>
+    <weui-toast #addClientToast [type]="'success'" [text]="clientMsg" [icon]="''" [time]="2000"></weui-toast>
+  </div>
+</div>
+

@@ -1,0 +1,73 @@
+<div class="address-add">
+  <div class="address-add-header">
+    <app-header [option]="headerOption"></app-header>
+  </div>
+  <div class="address-add-input">
+    <div class="weui-cells">
+      <div class="weui-cell">
+        <div class="weui-cell__hd">
+          <span style="margin-right: 0.85rem">姓</span>
+          <span style="margin-left: 0.85rem">名</span>
+        </div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请填写收货人姓名" [(ngModel)]="addAddressRes.name" name="name">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd">
+          <span style="color: #6B6B6B;">联系电话</span>
+        </div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="tel" placeholder="请填写收货人手机号码"  weui-input="mobile" weui-required [(ngModel)]="addAddressRes.phone" name="phone">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd">
+          <span style="margin-right: 0.85rem">邮</span>
+          <span style="margin-left: 0.85rem">编</span>
+        </div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="number" placeholder="请填写收货人邮编" [(ngModel)]="addAddressRes.postcode" name="postcode">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__hd">
+          <span>收货地址</span>
+        </div>
+        <div class="weui-cell__bd">
+          <input class="weui-input" type="text" placeholder="请填写收货人详细地址" [(ngModel)]="addAddressRes.address" name="address">
+        </div>
+      </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <div class="textarea-box">
+            <textarea
+                class="weui-textarea"
+                placeholder="粘贴整段地址,自动识别姓名、电话和地址，如：北京市朝阳区富康路姚家园3楼1351111111马云邮编038300"
+                rows="5"
+                [(ngModel)]="description"
+                (ngModelChange)='clientAddChange($event)'
+                name="description"
+                weui-textarea
+                weui-cn="2">
+          </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="address-add-toast">
+    <weui-toast #addRemindToast [type]="'success'" [text]="'请先填写客户姓名'" [icon]="''" [time]="2000"></weui-toast>
+    <weui-toast #addClientToast [type]="'success'" [text]="clientMsg" [icon]="''" [time]="1000"></weui-toast>
+  </div>
+  <div class="address-add-button" (click)="saveBtnClick()">
+    <div class="weui-footer weui-footer_fixed-bottom">
+      <button
+        class="weui-btn"
+        [disabled]="(!addAddressRes.name || !addAddressRes.phone || !addAddressRes.address || !addAddressRes.postcode)"
+        [class.weui-btn_primary]="addAddressRes.name && addAddressRes.phone && addAddressRes.address && addAddressRes.postcode">
+        保存
+      </button>
+    </div>
+  </div>
+</div>

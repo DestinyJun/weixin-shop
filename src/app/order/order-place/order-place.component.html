@@ -3,14 +3,14 @@
     <app-header [option]="headerOption"></app-header>
   </div>
   <div class="order-place-address">
-    <div class="weui-cells" [routerLink]="['/client/list', {status: 'order'}]">
+    <div class="weui-cells" [routerLink]="['/client/address', {status: 'order'}]">
       <div class="weui-cell" [ngStyle]="{'color':orderPlaceAddressInfo?'#636363':'#C1C1C1'}">
         <div class="weui-cell__bd">
           <p *ngIf="orderPlaceAddressInfo">
-            <span>{{orderPlaceAddressInfo.name}}</span>
-            <span style="margin-left: 4rem">{{orderPlaceAddressInfo.phone}}</span>
+            <span style="font-size: 0.9rem;color: #848484;">{{orderPlaceAddressInfo.name}}</span>
+            <span style="margin-left: 1rem;font-size: 0.85rem;color: #BFBFBF;">{{orderPlaceAddressInfo.phone}}</span>
            </p>
-          <p style="font-size:0.85rem" [ngStyle]="{'line-height':orderPlaceAddressInfo?'unset':'44px'}">{{orderPlaceAddressInfo?orderPlaceAddressInfo.address:'请选择一个收货地址'}}</p>
+          <p style="font-size:0.85rem;color: #A4A4A4;" [ngStyle]="{'line-height':orderPlaceAddressInfo?'unset':'44px'}">{{orderPlaceAddressInfo?orderPlaceAddressInfo.address:'请选择一个收货地址'}}</p>
         </div>
         <div class="weui-cell__ft">
           <i class="icon iconfont icon-system-moreb" style="color: #B2B2B2;"></i>

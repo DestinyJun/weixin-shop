@@ -1,0 +1,84 @@
+.address-list{
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #F5F5F5;
+  .address-list-scroll{
+    width: 100%;
+    position: absolute;
+    top:60px;
+    left: 0;
+    bottom: 0;
+    .client-list{
+      position: relative;
+      .weui-cells{
+        margin-top: 0;
+        .weui-cell{
+          padding: 0;
+          .weui-cell__bd{
+            padding-left: 15px;
+            font-size: 1rem;
+          }
+          .weui-cell__ft{
+            .weui-btn{
+              border-radius: 0;
+              height: 70px;
+              display: inline-block;
+              padding-left: 35px;
+              padding-right: 20px;
+              &:after{
+                border: none;
+              }
+            }
+            .weui-btn_default{
+              background-color: #fff;
+            }
+            .weui-btn_warn{
+              background-color: #FF6464;
+              padding-right: 35px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .address-list-remind{
+    .weui-dialog{
+      .weui-dialog__bd{
+        font-size: 0.85rem;
+        :nth-child(2){
+          margin-top: 5px;
+        }
+      }
+      .weui-dialog__ft{
+        .weui-dialog__btn{
+          font-size: 0.85rem;
+        }
+        .weui-dialog__btn.weui-dialog__btn_primary{
+          color: #FF7676;
+        }
+      }
+    }
+  }
+  .address-list-toast{
+    .weui-toast{
+      min-width: 15em;
+      min-height: 4em;
+      width: unset;
+      padding: 15px 10px;
+      top: 30%;
+      font-size: 0.85rem;
+      background: rgba(127,127,127,1);
+      border-radius: 7px;
+      left: 35%;
+      .weui-icon_toast {
+        display: none;
+      }
+      .weui-toast__content {
+        margin: 0;
+        line-height: 4em;
+      }
+    }
+  }
+}
+

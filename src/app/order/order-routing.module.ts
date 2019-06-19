@@ -5,7 +5,7 @@ import {OrderSureComponent} from './order-sure/order-sure.component';
 import {OrderPlaceComponent} from './order-place/order-place.component';
 const tabRoutes: Routes = [
   {path: '', component: OrderPlaceComponent},
-  {path: 'orinvoice/:id', component: OrderInvoiceComponent},
+  {path: 'orinvoice', component: OrderInvoiceComponent},
   {path: 'sure/:id', component: OrderSureComponent},
 ];
 @NgModule({

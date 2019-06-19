@@ -11,9 +11,6 @@ export class TabService {
   public tabGetClientList(): Observable<any> {
     return this.http.post(`/contacts/list`, {});
   }
-  public tabGetAddressList(): Observable<any> {
-    return this.http.post(`/address/ListFindById`, {});
-  }
   public tabDeleteClient(id): Observable<any> {
     return this.http.post(`/contacts/delete`, {id: id});
   }

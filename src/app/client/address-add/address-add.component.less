@@ -1,0 +1,86 @@
+.address-add{
+  height: 100vh;
+  background: #FFFFFF;
+  position: relative;
+  overflow: hidden;
+  .address-add-input{
+    .weui-cells{
+      margin-top: 10px;
+      color: #6B6B6B;
+      font-size: 0.85rem;
+      &:after{
+        content: unset;
+      }
+      .weui-cell{
+        &:before{
+          content: unset;
+        }
+        .weui-cell__bd{
+          .weui-input{
+            font-size: 0.85rem;
+            color: #6F6F6F;
+            margin-left: 15px;
+            &::placeholder{
+              font-size: 0.85rem;
+              color: #D2D2D2;
+            }
+          }
+          .textarea-box{
+            padding: 10px;
+            width: calc(100% - 20px);
+            background: #F9F9F9;
+            border: 1px solid #EEEEEE;
+            .weui-textarea{
+              font-size: 0.85rem;
+              color: #6F6F6F;
+              background: transparent;
+              &::placeholder{
+                font-size: 0.80rem;
+                color: #AAAAAA;
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+  .address-add-toast{
+    .weui-toast{
+      min-width: 15em;
+      min-height: 4em;
+      width: unset;
+      padding: 15px 10px;
+      top: 30%;
+      font-size: 0.85rem;
+      background: rgba(127,127,127,1);
+      border-radius: 7px;
+      left: 35%;
+      .weui-icon_toast {
+        display: none;
+      }
+      .weui-toast__content {
+        margin: 0;
+        line-height: 4em;
+      }
+    }
+  }
+  .address-add-button{
+    .weui-footer_fixed-bottom{
+      bottom: 0;
+      .weui-btn{
+        border-radius: 0;
+        font-size: 0.85rem;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        &:after{
+          content: unset;
+        }
+      }
+      .weui-btn_primary{
+        background: linear-gradient(to right,#F19270,#F478A1);
+      }
+    }
+  }
+}
+

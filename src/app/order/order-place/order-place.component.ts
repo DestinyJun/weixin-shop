@@ -116,7 +116,7 @@ export class OrderPlaceComponent implements OnInit {
   // get Invoice
   public getInvoiceClick(): void {
     if (this.orderPlaceAddressInfo) {
-      this.router.navigate(['/order/orinvoice', this.orderPlaceAddressInfo.parentId]);
+      this.router.navigate(['/order/orinvoice']);
       return;
     }
     this.onToastShow('success');

@@ -7,13 +7,15 @@ import {WeUiModule} from 'ngx-weui';
 import {FormsModule} from '@angular/forms';
 import {LoadingModule} from '../common/components/loading/loading.module';
 import {ClientListComponent} from './client-list/client-list.component';
-import { ClientAddressComponent } from './client-address/client-address.component';
+import { AddressListComponent } from './address-list/address-list.component';
+import {AddressAddComponent} from './address-add/address-add.component';
 
 @NgModule({
   declarations: [
     ClientAddComponent,
     ClientListComponent,
-    ClientAddressComponent
+    AddressListComponent,
+    AddressAddComponent
   ],
   imports: [
     CommonModule,
