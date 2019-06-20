@@ -41,23 +41,33 @@
   <div class="order-invoice-history">
     <div class="weui-cells__title" style="font-size: 0.85rem">已有发票信息</div>
     <div class="weui-cells" *ngIf="orderBill | async as orderBill; else loading">
-      <div class="weui-cell" *ngFor="let item of orderBill?.datas" (click)="orderBillClick(item)">
+      <div class="weui-cell"
+           *ngFor="let item of orderBill?.datas"
+           (click)="orderBillClick(item)"
+           (touchstart)="orderBillTouchStart($event)">
         <div class="weui-cell__bd">
           <p>
             <span class="left">发票抬头</span>
-            <span style="color: #8F8F8F;">{{item?.title}}</span>
+            <span style="color: #727272;">{{item?.title}}</span>
           </p>
-          <p *ngIf="item?.number">
-            <span class="left">税<span style="margin-left: 2rem;">号</span></span>
-            <span style="color: #8F8F8F;">{{item?.number}}</span>
+          <p *ngIf="item?.number" style="margin-top: 10px">
+            <span class="left">税<span style="margin-left: 1.7rem;">号</span></span>
+            <span style="color: #727272;">{{item?.number}}</span>
           </p>
+          <p *ngIf="!(item?.number)" style="margin-top: 10px;visibility:hidden">
+            <span class="left">占<span style="margin-left: 1.7rem;">位</span></span>
+            <span style="color: #727272;">符</span>
+          </p>
+        </div>
+        <div class="weui-cell__ft" (click)="dialogDelShow('ios', '确认删除当前发票？', item, $event)">
+          <span class="weui-badge icon iconfont icon-guanbi" style="position: absolute;top: 0.3em;right: 0.5em;font-size: 0.6rem"></span>
         </div>
       </div>
       <ng-container *ngIf="orderBill.datas.length === 0">
         <p style="
         padding-top: 20px;
         background: #F1F1F1;
-        color: darkseagreen;
+        color: #E6E6E6;
         font-size: 0.8rem;
         font-weight: bold;
         text-align: center">暂无发票，添加一个吧！</p>
@@ -66,5 +76,44 @@
     <ng-template #loading>
       <app-loading></app-loading>
     </ng-template>
+  </div>
+  <div class="order-invoice-toast">
+    <weui-toast #addRemindToast [type]="'success'" [text]="'请先填写客户姓名'" [icon]="''" [time]="2000"></weui-toast>
+    <weui-toast #addClientToast [type]="'success'" [text]="clientMsg" [icon]="''" [time]="2000"></weui-toast>
+  </div>
+  <div class="order-invoice-dialog">
+    <weui-dialog #iosDialog [config]="configDialog"></weui-dialog>
+  </div>
+  <div class="order-invoice-mask">
+    <weui-mask #invoiceMask [backdrop]="false">
+      <div class="weui-cells">
+        <div class="weui-cell" style="padding:  10px 0 10px 15px;">
+          <div class="weui-cell__bd" style="text-align: center">
+            <span style="vertical-align: middle;color: #737373;font-size: 0.85rem">发票信息修改}</span>
+          </div>
+          <div class="weui-cell__ft" style="height: 100%;width: 2rem;text-align: center" (click)="closeInvoiceMask();">
+            <i class="icon iconfont icon-guanbi" aria-hidden="true" style="font-size: 0.5rem;color: #ADADAD;"></i>
+          </div>
+        </div>
+        <div class="weui-cell" style="padding: 0 15px 10px 15px;">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="请输入新的发票抬头" [(ngModel)]="invoiceDateUpdate.title" name="name">
+            <input class="weui-input" style="margin-top: 15px" type="tel" placeholder="请输入新的发票代码"  weui-input="mobile" weui-required [(ngModel)]="invoiceDateUpdate.number" name="mobile">
+          </div>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <button
+              class="weui-btn"
+              [disabled]="(!invoiceDateUpdate.title || !invoiceDateUpdate.number)"
+              (click)="saveBtnClick(clientSaveBtnStatus)"
+              [ngClass]="{
+              'weui-btn_primary': (invoiceDateUpdate.title && invoiceDateUpdate.number)
+              }"
+            >保存</button>
+          </div>
+        </div>
+      </div>
+    </weui-mask>
   </div>
 </div>

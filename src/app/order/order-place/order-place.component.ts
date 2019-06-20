@@ -13,7 +13,7 @@ import {GlobalService} from '../../common/services/global.service';
 })
 export class OrderPlaceComponent implements OnInit {
   // data
-  public goodId: any = null;
+  public orderAmount: any = 0;
   public orderId: any = null;
   public orderPlaceAddressInfo: any = null;
   public orderPlaceInvoiceInfo: any = {};
@@ -86,7 +86,8 @@ export class OrderPlaceComponent implements OnInit {
               goodsId: val.data.id,
               quantity: val.data.amount,
             });
-            this.totalPrice += val.data.originalPrice * val.data.amount;
+            this.orderAmount =  val.data.amount;
+            this.totalPrice += val.data.discountPrice * val.data.amount;
           }
           this.goodsInfo = val.data;
           return;
@@ -103,6 +104,7 @@ export class OrderPlaceComponent implements OnInit {
   public goodsTotalCount(event, i): void {
     this.orderPlaceInfo.goodsItem = [];
     this.totalPrice = 0;
+    this.orderAmount = 0;
     this.globalService.wxSessionSetObject(`good`, event);
     this.goodsInfo.amount = event;
     if (this.goodsInfo.amount) {
@@ -110,22 +112,21 @@ export class OrderPlaceComponent implements OnInit {
         goodsId: this.goodsInfo.id,
         quantity: this.goodsInfo.amount,
       });
-      this.totalPrice += this.goodsInfo.originalPrice * this.goodsInfo.amount;
+      this.orderAmount =  this.goodsInfo.amount;
+      this.totalPrice += this.goodsInfo.discountPrice * this.goodsInfo.amount;
     }
   }
   // get Invoice
   public getInvoiceClick(): void {
-    console.log(this.orderPlaceInvoiceInfo);
-    if (!this.orderPlaceInvoiceInfo) {
-      this.orderPlaceInvoiceInfo['invoiceType'] = 'noinvoice';
-      console.log(this.orderPlaceInvoiceInfo);
-    }
-   /* if (this.orderPlaceAddressInfo) {
-      console.log(this.orderPlaceInvoiceInfo);
-      this.router.navigate(['/order/orinvoice'], {queryParams: {type: this.orderPlaceInvoiceInfo.invoiceType}});
+    if (this.orderPlaceAddressInfo) {
+      if (this.orderPlaceInvoiceInfo) {
+        this.router.navigate(['/order/orinvoice'], {queryParams: {type: this.orderPlaceInvoiceInfo.invoiceType}});
+      } else {
+        this.router.navigate(['/order/orinvoice'], {queryParams: {type: 'noinvoice'}});
+      }
       return;
     }
-    this.onToastShow('success');*/
+    this.onToastShow('success');
   }
   // order place
   public submitOrder() {
@@ -136,11 +137,9 @@ export class OrderPlaceComponent implements OnInit {
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
         if (val.status === 200) {
-        this.orderPlaceAddressInfo = null;
-        this.orderPlaceInvoiceInfo = null;
-          this.goodsInfo.map((item, index) => {
-            this.globalService.wxSessionSetObject(`goods${index}`, 0);
-          });
+          this.orderPlaceAddressInfo = null;
+          this.orderPlaceInvoiceInfo = null;
+          this.globalService.wxSessionSetObject(`good`, event);
           this.router.navigate(['/order/sure', val.data.id]);
           return;
         }

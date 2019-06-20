@@ -65,7 +65,7 @@
           <span>备注</span>
         </div>
         <div class="weui-cell__bd" style="text-indent: 20px;">
-          <input class="weui-input" type="text" placeholder="无" name="txt" [value]="orderDetail?.data?.remark" disabled>
+          <input class="weui-input" type="text" placeholder="无" name="txt" [value]="orderDetail?.data?.remark?orderDetail?.data?.remark: '无'" disabled>
         </div>
       </div>
     </div>

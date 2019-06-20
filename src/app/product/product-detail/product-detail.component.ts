@@ -43,10 +43,9 @@ export class ProductDetailComponent implements OnInit {
       (prop) => {
         this.productSrv.prodGetInfo(prop).subscribe(
           (val) => {
-            console.log(val);
             if (val.status === 200) {
-              this.prodInfo = val.data.goodsModel;
-              this.prodSlides = val.data.goodsModel.imgs.split(',');
+              this.prodInfo = val.data;
+              this.prodSlides = val.data.imgs.split(',');
               this.prodConfig = {
                 a11y: true,
                 loop: true,

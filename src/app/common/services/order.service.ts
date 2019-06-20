@@ -27,6 +27,10 @@ export class OrderService {
   public orderAddInvoice(params): Observable<any> {
     return this.http.post(`/invoice/add`, params);
   }
+  // delete invoice
+  public orderDelInvoice(params): Observable<any> {
+    return this.http.post(`/invoice/delete`, params);
+  }
   // add order
   public orderPlace(params): Observable<any> {
     return this.http.post(`/moayoOrder/confirmOrder`, params);

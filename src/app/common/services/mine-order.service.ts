@@ -45,4 +45,8 @@ export class MineOrderService {
   public mineOrdDelete(params): Observable<any> {
     return this.http.post('/moayoOrder/deleteOrder', params);
   }
+  // get sms
+  public mineOrdGetSms(params): Observable<any> {
+    return this.http.post('/moayoOrder/express', params);
+  }
 }

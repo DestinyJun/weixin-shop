@@ -41,7 +41,7 @@
   <weui-infiniteloader (loadmore)="onLoadMore($event)" [config]="infiniteloaderConfig">
     <div class="weui-cells" style="margin-top: 0 ">
       <div class="weui-cell" *ngFor="let item of mineRanking[0].data?.slice(1); let i = index">
-        <div class="weui-cell__hd">NO.{{item?.Ranks}}</div>
+        <div class="weui-cell__hd">{{item?.Ranks}}</div>
         <div class="weui-cell__bd">{{item?.nikeName}}</div>
         <div class="weui-cell__ft">￥{{item?.sumPaid}}</div>
       </div>

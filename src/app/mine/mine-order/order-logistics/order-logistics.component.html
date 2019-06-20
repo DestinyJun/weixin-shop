@@ -1,3 +1,76 @@
-<p>
-  物流
-</p>
+<div class="order-logistics">
+  <div class="order-logistics-header">
+    <app-header [option]="headerOption"></app-header>
+  </div>
+  <div class="order-logistics-company">
+    <div class="weui-cells">
+      <div class="weui-cell" style="padding: 10px 15px 0 15px;">
+        <div class="weui-cell__bd">
+          <p>快递公司 <span style="margin-left: 20px;color: #8B8B8B;">申通快递</span></p>
+        </div>
+      </div>
+      <div class="weui-cell" style="border-bottom: 1px solid #F5F5F5;">
+        <div class="weui-cell__bd">
+          <p>运单单号 <span style="margin-left: 20px;color: #8B8B8B;">95471487475</span></p>
+        </div>
+        <div class="weui-cell__ft">
+          <button class="weui-btn weui-btn_default">复制单号</button>
+        </div>
+      </div>
+      <div class="log-msg">
+        <div class="weui-cell" *ngFor="let item of orderLogMsg.reverse()">
+          <div class="weui-cell__bd">
+            <p>
+              <i class="fa fa-circle" style="font-size: 0.5rem;vertical-align: middle"></i>
+              <span style="vertical-align: middle;margin-left: 5px">{{item.msg}}</span>
+            </p>
+            <p>
+              <span>{{item.createDate}}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="order-logistics-product">
+    <div class="weui-panel weui-panel_access" style="border-radius: 5px;">
+      <div class="weui-panel__bd">
+        <div class="weui-cell" *ngFor="let item of orderLogProduct?.moyaoOrderItemModels;">
+          <div class="weui-cell__hd" style="position: relative;margin-right: 10px;" [routerLink]="['/product']" [queryParams]="{id:item.id}">
+            <img
+              *ngIf="item?.goods?.imgs.indexOf('http')>=0"
+              class="weui-media-box__thumb"
+              style="width: auto;height:10vh;display: block"
+              [src]="item?.goods?.imgs"
+              alt="图片无效">
+            <img
+              *ngIf="!(item?.goods?.imgs.indexOf('http')>=0)"
+              class="weui-media-box__thumb"
+              style="width: auto;height:10vh;display: block" src="/assets/images/recharge.png"
+              alt="图片无效">
+          </div>
+          <div class="weui-cell__bd">
+            <p style="font-size: 1rem;color: #868686;">{{item?.goods?.title}}</p>
+            <p style="
+                  width: 60vw;
+                  font-size: 0.8rem;
+                  color: #888888;
+                  overflow: hidden;
+                  text-overflow:ellipsis;
+                  white-space: nowrap;">{{item?.goods?.info}}</p>
+            <p style="font-size: 1rem;color: #C4C4C4;">￥{{item?.goods?.originalPrice}}</p>
+          </div>
+          <div class="weui-cell__ft">
+            <p>x{{item?.quantity}}</p>
+          </div>
+        </div>
+        <div class="weui-total">
+          <p class="pull-right">
+            <span style="color: #919191;">共{{orderLogProduct?.moyaoOrderItemModels.length}}件商品 合计：</span>
+            <span style="color: #FF4343;">￥{{orderLogProduct?.amount}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

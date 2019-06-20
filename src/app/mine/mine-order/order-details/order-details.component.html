@@ -1,36 +1,40 @@
-<div class="order-details" *ngIf="detailsData | async as detailsData; else loading">
+<div class="order-details" *ngIf="detailsData; else loading">
   <div class="order-details-header">
     <app-header [option]="headerOption"></app-header>
   </div>
   <div class="order-details-ems">
-    <div class="weui-cells weui-cell_access"
+    <div class="weui-cells"
          [ngStyle]="{
          'margin-top': '0',
-         'background': 'linear-gradient(to right,'+orderDetailStates[detailsData?.data?.status]?.bgColor[0] + ','+orderDetailStates[detailsData?.data?.status]?.bgColor[1]+')',
-         'line-height':detailsData?.data?.status !== 'shipped'?'72px':'unset'
+         'background': 'linear-gradient(to right,'+orderDetailStates[detailsData?.status]?.bgColor[0] + ','+orderDetailStates[detailsData?.status]?.bgColor[1]+')',
+         'line-height':'72px'
          }">
-      <div class="weui-cell" *ngIf="detailsData?.data?.status === 'shipped'">
+      <!--'line-height':detailsData?.status !== 'shipped'?'72px':'unset'-->
+     <!-- <div class="weui-cell" *ngIf="detailsData?.status === 'shipped'">
         <div class="weui-cell__bd">
-          <p>{{detailsData?.data?.addressModel?.address}}</p>
+          <p>{{detailsData?.addressModel?.address}}</p>
           </div>
         <div class="weui-cell__ft"></div>
-      </div>
-      <div class="weui-cell" style="padding: 0 15px" *ngIf="detailsData?.data?.status !== 'shipped'">
+      </div>-->
+      <div class="weui-cell" style="padding: 0 15px">
         <div class="weui-cell__bd">
-          <p style="font-size: 1.1rem">{{orderDetailStates[detailsData?.data?.status]?.name}}</p>
+          <p style="font-size: 1.1rem">{{orderDetailStates[detailsData?.status]?.name}}</p>
+        </div>
+        <div class="weui-cell__ft" *ngIf="detailsData?.status === 'shipped'">
+          <i class="icon iconfont icon-system-moreb" style="font-size: 0.85rem;color: #fff;"></i>
         </div>
       </div>
     </div>
   </div>
   <div class="order-details-adress">
-    <p><span>收货姓名</span>{{detailsData?.data?.addressModel?.name}}</p>
-    <p><span>手机号码</span>{{detailsData?.data?.addressModel?.phone}}</p>
-    <p><span>收获地址</span>{{detailsData?.data?.addressModel?.address}}</p>
+    <p><span>收货姓名</span>{{detailsData?.addressModel?.name}}</p>
+    <p><span>手机号码</span>{{detailsData?.addressModel?.phone}}</p>
+    <p><span>收获地址</span>{{detailsData?.addressModel?.address}}</p>
   </div>
   <div class="order-details-product">
     <div class="weui-panel weui-panel_access" style="border-radius: 5px;">
       <div class="weui-panel__bd">
-        <div class="weui-cell" *ngFor="let item of detailsData?.data?.moyaoOrderItemModels; let i = index">
+        <div class="weui-cell" *ngFor="let item of detailsData?.moyaoOrderItemModels; let i = index">
           <div class="weui-cell__hd" style="position: relative;margin-right: 10px;" [routerLink]="['/product']" [queryParams]="{id:item.id}">
             <img
               *ngIf="item?.goods?.imgs.indexOf('http')>=0"
@@ -61,12 +65,12 @@
         </div>
         <div class="weui-total">
             <span
-              *ngIf="orderDetailStates[detailsData?.data?.status]?.services"
+              *ngIf="orderDetailStates[detailsData?.status]?.services"
               class="pull-left"
-              [routerLink]="['/mine/order/aftsale', detailsData?.data?.id]">{{orderDetailStates[detailsData?.data?.status]?.services}}</span>
+              [routerLink]="['/mine/order/aftsale', detailsData?.id]">{{orderDetailStates[detailsData?.status]?.services}}</span>
           <p class="pull-right">
-            <span style="color: #919191;">共两件商品 合计：</span>
-            <span style="color: #FF4343;">￥{{detailsData?.data?.amount}}</span>
+            <span style="color: #919191;">共{{detailsData?.moyaoOrderItemModels.length}}件商品 合计：</span>
+            <span style="color: #FF4343;">￥{{detailsData?.amount}}</span>
           </p>
         </div>
       </div>
@@ -76,23 +80,23 @@
     <div class="weui-cells" style="margin-top: 10px;">
       <div class="weui-cell">
         <div class="weui-cell__bd">
-          <p>订单编号：{{detailsData?.data?.sn}}</p>
-          <p>订单时间：{{detailsData?.data?.createdDate}}</p>
+          <p>订单编号：{{detailsData?.sn}}</p>
+          <p>订单时间：{{detailsData?.createdDate}}</p>
           <!--<p>发货时间：2018-11-23 08:31:14</p>-->
         </div>
       </div>
-      <div class="weui-cell">
+      <div class="weui-cell" *ngIf="detailsData?.amountLog">
         <div class="weui-cell__bd">
-          <p>支付方式：{{detailsData?.data?.amountLog?.payType === 'Wallet'?'钱包支付':'微信支付'}}</p>
-          <p *ngIf="detailsData?.data?.amountLog">付款时间：{{detailsData?.data?.amountLog?.createdDate}}</p>
+          <p>支付方式：{{detailsData?.amountLog?.payType === 'Wallet'?'钱包支付':'微信支付'}}</p>
+          <p>付款时间：{{detailsData?.amountLog?.createdDate}}</p>
         </div>
       </div>
       <div class="weui-cell">
         <div class="weui-cell__bd">
           <span>发票信息：</span>
-          <span>{{(!detailsData?.data?.invoiceModel || detailsData?.data?.invoiceModel?.invoiceType === 'noinvoice')?'不需要发票':''}}</span>
-          <span>{{detailsData?.data?.invoiceModel?.title}}</span>
-          <span *ngIf="detailsData?.data?.invoiceModel?.number">{{detailsData?.data?.invoiceModel?.number}}</span>
+          <span>{{(!detailsData?.invoiceModel || detailsData?.invoiceModel?.invoiceType === 'noinvoice')?'不需要发票':''}}</span>
+          <span>{{detailsData?.invoiceModel?.title}}</span>
+          <span *ngIf="detailsData?.invoiceModel?.number">{{detailsData?.invoiceModel?.number}}</span>
         </div>
       </div>
     </div>
@@ -100,8 +104,8 @@
   <div class="order-details-footer">
     <div class="weui-footer weui-footer_fixed-bottom">
       <span
-        *ngFor="let item of orderDetailStates[detailsData?.data?.status]?.operating"
-        (click)="orderDetailOpeClick(item, detailsData?.data, detailsData?.data?.status)"
+        *ngFor="let item of orderDetailStates[detailsData?.status]?.operating"
+        (click)="orderDetailOpeClick(item, detailsData, detailsData?.status)"
         [ngStyle]="{
           'color':item?.title === '再下一单'?'white':'',
           'background-color':item?.title === '再下一单'?'#559FF0':'',

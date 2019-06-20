@@ -14,6 +14,7 @@ import {GlobalService} from '../../common/services/global.service';
 export class TabOrderComponent implements OnInit {
   // data
   public orderId: any = null;
+  public orderAmount: any = 0;
   public orderPlaceAddressInfo: any = null;
   public orderPlaceInvoiceInfo: any = null;
   public orderPlaceInfo: any = {
@@ -73,7 +74,8 @@ export class TabOrderComponent implements OnInit {
                 quantity: item.amount,
               });
             }
-            this.totalPrice += item.originalPrice * item.amount;
+            this.totalPrice += item.discountPrice * item.amount;
+            this.orderAmount +=  item.amount;
           });
           this.goodsInfo = val.datas;
         }
@@ -84,6 +86,7 @@ export class TabOrderComponent implements OnInit {
   public goodsTotalCount(event, i): void {
     this.orderPlaceInfo.goodsItem = [];
     this.totalPrice = 0;
+    this.orderAmount = 0;
     this.globalService.wxSessionSetObject(`goods${i}`, event);
     this.goodsInfo[i].amount = event;
     this.goodsInfo.map((item) => {
@@ -93,13 +96,18 @@ export class TabOrderComponent implements OnInit {
           quantity: item.amount,
         });
       }
-      this.totalPrice += item.originalPrice * item.amount;
+      this.orderAmount +=  item.amount;
+      this.totalPrice += item.discountPrice * item.amount;
     });
   }
   // get Invoice
   public getInvoiceClick(): void {
     if (this.orderPlaceAddressInfo) {
-      this.router.navigate(['/order/orinvoice', this.orderPlaceAddressInfo.parentId]);
+      if (this.orderPlaceInvoiceInfo) {
+        this.router.navigate(['/order/orinvoice'], {queryParams: {type: this.orderPlaceInvoiceInfo.invoiceType}});
+      } else {
+        this.router.navigate(['/order/orinvoice'], {queryParams: {type: 'noinvoice'}});
+      }
       return;
     }
     this.onToastShow('success');

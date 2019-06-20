@@ -1,10 +1,11 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {Observable, timer} from 'rxjs';
+import {EMPTY, Observable, timer} from 'rxjs';
 import {MineOrderService} from '../../../common/services/mine-order.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastComponent, ToastService} from 'ngx-weui';
 import {GlobalService} from '../../../common/services/global.service';
+import {mergeMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-order-details',
@@ -28,14 +29,14 @@ export class OrderDetailsComponent implements OnInit {
   @ViewChild('mineOrderToast') mineOrderToast: ToastComponent;
   public mineOrderMsg: string;
   // details list
-  public detailsData: Observable<any>;
+  public detailsData: any = null;
   // order status
   public orderDetailStates: any = {
     pendingPayment: {name: '待付款', bgColor: ['#7CC2FC', '#BEA9FA'], services: '',
       operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
     pendingShipment: {name: '待发货', bgColor: ['#7C9CFC', '#ACDAF9'], services: '退款/售后', operating: []},
     shipped: {name: '待收货', bgColor: ['#F19270', '#F478A0'], services: '退款/售后',
-      operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: ''}]},
+      operating: [{title: '查看物流', routes: '/mine/order/logistics'}, {title: '确认收货', routes: ''}]},
     received: {name: '已收货', bgColor: [], operating: ['#80B66F', '#B0F49A']},
     completed: {name: '已完成', bgColor: ['#F1926F', '#F477A1'], services: '退款/售后',
       operating: [{title: '再下一单', routes: '/order'}]},
@@ -71,7 +72,36 @@ export class OrderDetailsComponent implements OnInit {
     this.routerInfo.params.subscribe(params => this.mineOrdDetailInit(params.id));
   }
   public mineOrdDetailInit (id): void {
-    this.detailsData = this.mOrderSrv.mineOrdGetDetail({orderId: id});
+    this.mOrderSrv.mineOrdGetDetail({orderId: id}).pipe(
+      mergeMap((val) => {
+        if (val.status === 200) {
+          this.detailsData = val.data;
+          return this.mOrderSrv.mineOrdGetSms({code: val.data.pushExpressNum, type: val.data.pushExpressCompany});
+        }
+        this.router.navigate(['/error'], {
+          queryParams: {
+            msg: `获取订单详情失败，错误码${val.status}`,
+            url: null,
+            btn: '请重试'
+          }
+        });
+      })
+    )
+      .subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.globalSrv.wxSessionSetObject('sms', val.dataObject);
+          return;
+        }
+        this.router.navigate(['/error'], {
+          queryParams: {
+            msg: `获取物流数据失败，错误码${val.status}`,
+            url: null,
+            btn: '请重试'
+          }
+        });
+      }
+    );
   }
   // order operate
   public orderDetailOpeClick(param, childItem, status): void {
@@ -92,6 +122,10 @@ export class OrderDetailsComponent implements OnInit {
       return;
     }
     if (param.title === '去付款') {
+      this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
+      return;
+    }
+    if (param.title === '待收货') {
       this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
       return;
     }

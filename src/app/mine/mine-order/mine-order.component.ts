@@ -42,7 +42,7 @@ export class MineOrderComponent implements OnInit {
       operating: [{title: '取消订单', routes: ''}, {title: '去付款', routes: '/pay/sure'}]},
     pendingShipment: {name: '待发货', color: '#73B0F3', services: '退款/售后', operating: []},
     shipped: {name: '待收货', color: '#69AAF2', services: '退款/售后',
-      operating: [{title: '查看物流', routes: ''}, {title: '确认收货', routes: null}]},
+      operating: [{title: '查看物流', routes: '/mine/order/logistics'}, {title: '确认收货', routes: null}]},
     received: {name: '已收货', color: 'red', services: '退款/售后', operating: []},
     completed: {name: '已完成', color: '#7AB4F3', services: '退款/售后', operating: [{title: '再下一单', routes: '/order'}]},
     canceled: {name: '已取消', color: '#A0A0A0', services: '', operating: [{title: '删除订单', routes: ''}, {title: '重新购买', routes: '/order'}]},
@@ -197,6 +197,10 @@ export class MineOrderComponent implements OnInit {
         return;
       }
       this.router.navigate([param.routes, childItem.id, 1, status]);
+      return;
+    }
+    if (param.title === '待收货') {
+      this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
       return;
     }
     if (param.title === '去付款') {

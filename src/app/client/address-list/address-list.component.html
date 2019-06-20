@@ -1,4 +1,4 @@
-<div class="address-list">
+<div class="address-list" *ngIf="clientList;else loading">
   <app-header [option]="headerOption" (headerRightClick)="onHeaderRightClick()"></app-header>
   <div class="address-list-scroll">
      <weui-infiniteloader (loadmore)="clientLoadMore($event)" [config]="clientloaderConfig">
@@ -44,4 +44,7 @@
     <weui-toast #addClientToast [type]="'success'" [text]="clientMsg" [icon]="''" [time]="2000"></weui-toast>
   </div>
 </div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>
 

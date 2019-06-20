@@ -19,6 +19,8 @@ import {ClientService} from '../../common/services/client.service';
   encapsulation: ViewEncapsulation.None
 })
 export class AddressListComponent implements OnInit {
+  // data
+  public clientList: any = null;
   // swipt
   public touchStartX: number;
   public touchMoveX: number;
@@ -27,6 +29,7 @@ export class AddressListComponent implements OnInit {
   // toast
   @ViewChild('addRemindToast') addRemindToast: ToastComponent;
   @ViewChild('addClientToast') addClientToast: ToastComponent;
+  public clientMsg: string;
   // Dialog
   @ViewChild('iosDelDialog') iosDelDialog: DialogComponent;
   public configDelDialog: DialogConfig = {};
@@ -43,8 +46,7 @@ export class AddressListComponent implements OnInit {
   };
   // router
   public routerStatus: string = null;
-  // client
-  public clientList: any = null;
+  // scroll
   public clientloaderConfig: InfiniteLoaderConfig = {
     height: '100%'
   };
@@ -143,8 +145,9 @@ export class AddressListComponent implements OnInit {
           this.clientSrv.clientDelAddress({id: item.id}).subscribe(
             (value) => {
               this.srv.hide();
-              console.log(value);
               if (value.status === 200) {
+                this.clientMsg = value.message;
+                this.onShow('addClient');
                 this.tabClientInitialize();
               } else {
                 this.router.navigate(['/error'], {
@@ -160,5 +163,8 @@ export class AddressListComponent implements OnInit {
       });
     }, 10);
     return false;
+  }
+  public onShow(type: string) {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
   }
 }

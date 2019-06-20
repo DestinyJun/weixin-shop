@@ -60,7 +60,7 @@
   </div>
   <div class="order-place-bill">
     <div class="weui-cells">
-      <div class="weui-cell" (click)="getInvoiceClick()">
+      <div class="weui-cell" style="align-items: unset;" (click)="getInvoiceClick()">
         <div class="weui-cell__hd">
           <span>发票</span>
         </div>
@@ -86,14 +86,14 @@
   <div class="order-place-toast">
     <weui-toast #success [text]="'请先填写收货地址'" [icon]="''" [time]="1000"></weui-toast>
   </div>
-  <div class="weui-footer weui-footer_fixed-bottom" *ngIf="totalPrice">
+  <div class="weui-footer weui-footer_fixed-bottom" *ngIf="orderAmount !== 0">
     <div class="weui-flex">
       <div class="weui-flex__item">
-        <span style="color: #858585;font-size: 0.85rem">共计</span>
+        <span style="color: #858585;font-size: 0.85rem">共计保证金</span>
         <span style="color: #F38C8C;font-size: 0.9rem">￥{{totalPrice}}</span>
       </div>
       <div class="weui-flex__item" (click)="submitOrder();">
-        <span style="color: white;font-size: 0.85rem">提交订单</span>
+        <span style="color: white;font-size: 0.85rem">提交预约</span>
       </div>
     </div>
   </div>

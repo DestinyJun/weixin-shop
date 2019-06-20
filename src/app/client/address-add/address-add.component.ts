@@ -74,7 +74,14 @@ export class AddressAddComponent implements OnInit {
                   address: val.data.address,
                   postcode: val.data.postcode,
                 };
+                return;
               }
+              this.router.navigate(['/error'], {
+                queryParams: {
+                  msg: `初始化失败，错误码${val.status}`,
+                  url: null,
+                  btn: '请重试',
+                }});
             }
           );
         }

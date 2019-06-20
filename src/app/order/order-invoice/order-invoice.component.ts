@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {ActivatedRoute, Params} from '@angular/router';
-import {Observable} from 'rxjs';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Observable, timer} from 'rxjs';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
+import {DialogComponent, DialogConfig, MaskComponent, SkinType, ToastComponent, ToastService} from 'ngx-weui';
 
 @Component({
   selector: 'app-order-invoice',
@@ -29,25 +30,40 @@ export class OrderInvoiceComponent implements OnInit {
     title: null,
     number: null,
   };
+  // toast
+  @ViewChild('addRemindToast') addRemindToast: ToastComponent;
+  @ViewChild('addClientToast') addClientToast: ToastComponent;
+  // mask
+  @ViewChild('invoiceMask') invoiceMask: MaskComponent;
+  public clientMsg: string;
+  // Dialog
+  @ViewChild('iosDialog') iosDialog: DialogComponent;
+  public configDialog: DialogConfig = {};
   // bill list
   public orderBill: Observable<any>;
   // data
   public orderClientId: any = null;
+  public invoiceDateUpdate: any = {
+    title: null,
+    number: null,
+  };
   constructor(
     private orderSrv: OrderService,
     private globalSrv: GlobalService,
-    private routeInfo: ActivatedRoute
+    private routeInfo: ActivatedRoute,
+    private srv: ToastService,
+    private router: Router,
   ) {}
 
   ngOnInit() {
-    this.routeInfo.params.subscribe((params: Params) => {
-      this.orderClientId = params['id'];
-      this.orderInvocInitialize(params['id']);
+    this.routeInfo.queryParams.subscribe((params: Params) => {
+      this.orderAddRadioRes.invoiceType = params.type;
+      this.orderInvocInitialize();
     });
   }
   // Initialize
-  public orderInvocInitialize (id): void {
-    this.orderBill = this.orderSrv.orderGetInvoice({contactsId: id});
+  public orderInvocInitialize (): void {
+    this.orderBill = this.orderSrv.orderGetInvoice({});
   }
   // radio change
   public radioResChanges() {
@@ -68,7 +84,7 @@ export class OrderInvoiceComponent implements OnInit {
               title: null,
               number: null,
             };
-            this.orderInvocInitialize(this.orderClientId);
+            this.orderInvocInitialize();
           }
         }
       );
@@ -78,5 +94,63 @@ export class OrderInvoiceComponent implements OnInit {
   public orderBillClick (item): void {
     this.globalSrv.invoiceEvent = item;
     window.history.back();
+  }
+  // remind + del
+  public dialogDelShow(type: SkinType, msg: string, item: any, event) {
+    event.stopPropagation();
+    this.configDialog = Object.assign({}, <DialogConfig>{
+      skin: type,
+      confirm: '是',
+      cancel: '否',
+      content: msg
+    });
+    setTimeout(() => {
+      (<DialogComponent>this[`${type}Dialog`]).show().subscribe((res: any) => {
+        if (res.value) {
+          this.srv.loading('删除中...');
+          this.orderSrv.orderDelInvoice({id: item.id}).subscribe(
+            (val) => {
+              if (val.status === 200) {
+                this.srv.hide();
+                this.clientMsg = val.message;
+                this.onShow('addClient');
+                this.orderInvocInitialize();
+              } else {
+                this.router.navigate(['/error'], {
+                  queryParams: {
+                    msg: `删除失败，错误码${val.status}`,
+                    url: null,
+                    btn: '请重试'
+                  }
+                });
+              }
+            }
+          );
+        }
+      });
+    }, 10);
+    return false;
+  }
+  // dialog
+  public onShow(type: string) {
+    (<ToastComponent>this[`${type}Toast`]).onShow();
+  }
+  // TouchStart
+  public orderBillTouchStart(event): void {
+    event.stopPropagation();
+    timer(500).subscribe(
+      (val) => {
+        console.log(val);
+      }
+    );
+  }
+  // close mask
+  public closeInvoiceMask (): void {
+    this.invoiceMask.hide();
+    this.addAddressRes = {
+      name: null,
+      phone: null,
+      address: null,
+    };
   }
 }

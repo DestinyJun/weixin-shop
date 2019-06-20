@@ -1,13 +1,16 @@
 <div class="tab-product">
   <article class="weui-article">
     <section *ngFor="let item of tabProdList" [routerLink]="['/product']" [queryParams]="{id: item.id}">
-      <p class="weui-article-img">
-        <img *ngIf="item?.mainImage" [src]="item?.mainImage" alt="无效图片地址">
-      </p>
-      <h3 style="color: #7E7E7E;font-size: 0.9rem">{{item?.title}}</h3>
-      <p style="color: #C6C6C6;font-size: 0.75rem">
-        {{item?.info}}
-      </p>
+      <div class="weui-article-title">
+        <span>{{item?.createdDate}}</span>
+      </div>
+      <div class="weui-article-img" [ngStyle]="{'background-image': 'url('+item?.mainImage+')'}"></div>
+      <div class="weui-article-content">
+        <p style="color: #7E7E7E;font-size: 0.9rem">{{item?.title}}</p>
+        <p style="color: #C6C6C6;font-size: 0.75rem">
+          {{item?.info}}
+        </p>
+      </div>
     </section>
   </article>
 </div>
