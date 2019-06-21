@@ -33,7 +33,7 @@
       <p class="article-detail-img">
         <img *ngIf="prodInfo?.mainImage" [src]="prodInfo?.mainImage" alt="图片地址无效" style="width: 100%;height: auto">
       </p>
-      <div class="article-detail-content" [innerHTML]="prodInfo?.content"></div>
+      <div class="article-detail-content" [innerHTML]="prodHtml"></div>
     </div>
   </div>
   <div class="pro-detail-button" [routerLink]="['/order']" [queryParams]="{id: prodInfo?.id}">

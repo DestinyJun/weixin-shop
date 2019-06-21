@@ -6,26 +6,26 @@
     <div class="weui-cells">
       <div class="weui-cell" style="padding: 10px 15px 0 15px;">
         <div class="weui-cell__bd">
-          <p>快递公司 <span style="margin-left: 20px;color: #8B8B8B;">申通快递</span></p>
+          <p>快递公司 <span style="margin-left: 20px;color: #8B8B8B;">{{orderLogMsg?.result?.type}}</span></p>
         </div>
       </div>
       <div class="weui-cell" style="border-bottom: 1px solid #F5F5F5;">
         <div class="weui-cell__bd">
-          <p>运单单号 <span style="margin-left: 20px;color: #8B8B8B;">95471487475</span></p>
+          <p>运单单号 <span style="margin-left: 20px;color: #8B8B8B;">{{orderLogMsg?.result?.number}}</span></p>
         </div>
         <div class="weui-cell__ft">
           <button class="weui-btn weui-btn_default">复制单号</button>
         </div>
       </div>
       <div class="log-msg">
-        <div class="weui-cell" *ngFor="let item of orderLogMsg.reverse()">
+        <div class="weui-cell" *ngFor="let item of orderLogMsg?.result?.list">
           <div class="weui-cell__bd">
             <p>
               <i class="fa fa-circle" style="font-size: 0.5rem;vertical-align: middle"></i>
-              <span style="vertical-align: middle;margin-left: 5px">{{item.msg}}</span>
+              <span style="vertical-align: middle;margin-left: 5px">{{item.status}}</span>
             </p>
             <p>
-              <span>{{item.createDate}}</span>
+              <span>{{item.time}}</span>
             </p>
           </div>
         </div>
@@ -35,7 +35,7 @@
   <div class="order-logistics-product">
     <div class="weui-panel weui-panel_access" style="border-radius: 5px;">
       <div class="weui-panel__bd">
-        <div class="weui-cell" *ngFor="let item of orderLogProduct?.moyaoOrderItemModels;">
+        <div class="weui-cell" style="align-items: unset;" *ngFor="let item of orderLogProduct?.moyaoOrderItemModels;">
           <div class="weui-cell__hd" style="position: relative;margin-right: 10px;" [routerLink]="['/product']" [queryParams]="{id:item.id}">
             <img
               *ngIf="item?.goods?.imgs.indexOf('http')>=0"
@@ -67,7 +67,7 @@
         <div class="weui-total">
           <p class="pull-right">
             <span style="color: #919191;">共{{orderLogProduct?.moyaoOrderItemModels.length}}件商品 合计：</span>
-            <span style="color: #FF4343;">￥{{orderLogProduct?.amount}}</span>
+            <span style="color: #FF4343;">￥{{orderLogPrice}}</span>
           </p>
         </div>
       </div>

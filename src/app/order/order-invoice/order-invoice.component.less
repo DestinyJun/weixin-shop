@@ -2,40 +2,38 @@
   background: #F5F5F5;
   height: 100vh;
   overflow: scroll;
-  .order-invoice-select{
-    .weui-cells_checkbox{
-      margin: 15px 15px 0 15px;
-      padding: 15px 0;
-      border-radius: 5px;
-      .weui-cell{
-        &:before{
-          content: unset;
-        }
+  .weui-cells_checkbox{
+    margin: 15px 15px 0 15px;
+    padding: 15px 0;
+    border-radius: 5px;
+    .weui-cell{
+      &:before{
+        content: unset;
       }
-      .weui-check:checked + .weui-icon-checked:before {
-        color: #559FF0;
+    }
+    .weui-check:checked + .weui-icon-checked:before {
+      color: #559FF0;
+    }
+    .weui-check__label{
+      flex: unset;
+      span{
+        font-size: 0.8rem;
       }
-      .weui-check__label{
-        flex: unset;
-        span{
+    }
+    .personal-input,.company-input{
+      .weui-input{
+        color: #D2D2D2;
+        font-size: 0.8rem;
+        &::placeholder{
           font-size: 0.8rem;
-        }
-      }
-      .personal-input,.company-input{
-        .weui-input{
           color: #D2D2D2;
-          font-size: 0.8rem;
-          &::placeholder{
-            font-size: 0.8rem;
-            color: #D2D2D2;
-          }
         }
       }
     }
-    .weui-cells_checkbox .weui-icon-checked:before {
-      font-size: 1rem;
-      margin-right: 10px;
-    }
+  }
+  .weui-cells_checkbox .weui-icon-checked:before {
+    font-size: 1rem;
+    margin-right: 10px;
   }
   .order-invoice-history{
     .weui-cells{
@@ -123,42 +121,45 @@
     }
   }
   .order-invoice-mask{
-    .weui-mask{
-      .weui-mask__content{
-        .weui-cells{
-          margin-top: 0;
-          margin-left: 15px;
-          margin-right: 15px;
-          border-radius: 5px;
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          left: 0;
-          right: 0;
-          color: #A1A1A1;
-          padding-bottom: 0;
-          .weui-cell{
-            .weui-input{
-              margin-top: 5px;
-              font-size: 0.8rem;
-              color: #6F6F6F;
-              &::placeholder{
-                font-size: 0.8rem;
-                color: #D2D2D2;
-              }
-            }
-            .weui-btn{
-              background-color: #fff;
-              color: #D2D2D2;
-              font-size: 0.88rem;
-              &:after{
-                content: unset;
-              }
-            }
-            .weui-btn.weui-btn_primary{
-              color: #61A5F1;
-            }
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    .weui-cells{
+      margin-top: 0;
+      margin-left: 15px;
+      margin-right: 15px;
+      border-radius: 5px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      right: 0;
+      color: #A1A1A1;
+      padding-bottom: 0;
+      .weui-cell{
+        .weui-input{
+          margin-top: 5px;
+          font-size: 0.8rem;
+          color: #6F6F6F;
+          &::placeholder{
+            font-size: 0.8rem;
+            color: #D2D2D2;
           }
+        }
+        .weui-btn{
+          background-color: #fff;
+          color: #D2D2D2;
+          font-size: 0.88rem;
+          &:after{
+            content: unset;
+          }
+        }
+        .weui-btn.weui-btn_primary{
+          color: #61A5F1;
         }
       }
     }

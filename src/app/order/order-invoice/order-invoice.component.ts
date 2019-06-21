@@ -4,7 +4,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Observable, timer} from 'rxjs';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
-import {DialogComponent, DialogConfig, MaskComponent, SkinType, ToastComponent, ToastService} from 'ngx-weui';
+import {DialogComponent, DialogConfig, SkinType, ToastComponent, ToastService} from 'ngx-weui';
 
 @Component({
   selector: 'app-order-invoice',
@@ -33,8 +33,6 @@ export class OrderInvoiceComponent implements OnInit {
   // toast
   @ViewChild('addRemindToast') addRemindToast: ToastComponent;
   @ViewChild('addClientToast') addClientToast: ToastComponent;
-  // mask
-  @ViewChild('invoiceMask') invoiceMask: MaskComponent;
   public clientMsg: string;
   // Dialog
   @ViewChild('iosDialog') iosDialog: DialogComponent;
@@ -43,10 +41,13 @@ export class OrderInvoiceComponent implements OnInit {
   public orderBill: Observable<any>;
   // data
   public orderClientId: any = null;
-  public invoiceDateUpdate: any = {
+  public invoiceDataUpdate: any = {
+    id: null,
+    invoiceType: null,
     title: null,
     number: null,
   };
+  public invoiceMaskShow = false;
   constructor(
     private orderSrv: OrderService,
     private globalSrv: GlobalService,
@@ -91,12 +92,13 @@ export class OrderInvoiceComponent implements OnInit {
     }
   }
   // bill click
-  public orderBillClick (item): void {
+  public orderBillClick (event, item): void {
+    event.preventDefault();
     this.globalSrv.invoiceEvent = item;
     window.history.back();
   }
   // remind + del
-  public dialogDelShow(type: SkinType, msg: string, item: any, event) {
+  public dialogDelShow(event, type: SkinType, msg: string, item: any) {
     event.stopPropagation();
     this.configDialog = Object.assign({}, <DialogConfig>{
       skin: type,
@@ -136,21 +138,57 @@ export class OrderInvoiceComponent implements OnInit {
     (<ToastComponent>this[`${type}Toast`]).onShow();
   }
   // TouchStart
-  public orderBillTouchStart(event): void {
-    event.stopPropagation();
-    timer(500).subscribe(
-      (val) => {
-        console.log(val);
+  public orderBillTouchStart(event, item): void {
+    if (event) {
+      console.log(event);
+      this.invoiceDataUpdate.id = item.id;
+      this.invoiceDataUpdate.title = item.title;
+      this.invoiceDataUpdate.invoiceType = item.invoiceType;
+      if (item.number) {
+        this.invoiceDataUpdate.number = item.number;
       }
-    );
+      timer(500).subscribe(
+        (val) => {
+          this.invoiceMaskShow = true;
+        }
+      );
+    }
   }
   // close mask
   public closeInvoiceMask (): void {
-    this.invoiceMask.hide();
-    this.addAddressRes = {
-      name: null,
-      phone: null,
-      address: null,
+    this.invoiceMaskShow = false;
+    this.invoiceDataUpdate = {
+      invoiceType: null,
+      title: null,
+      number: null,
     };
+  }
+  // save update invoice
+  public saveBtnClick(): void {
+    this.srv.loading('修改中...');
+    this.orderSrv.orderUpdInvoice(this.invoiceDataUpdate).subscribe(
+      (val) => {
+        if (val.status === 200) {
+          this.srv.hide();
+          this.clientMsg = val.message;
+          this.onShow('addClient');
+          this.orderInvocInitialize();
+          this.invoiceMaskShow = false;
+          this.invoiceDataUpdate = {
+            invoiceType: null,
+            title: null,
+            number: null,
+          };
+        } else {
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: `发票修改失败，错误码${val.status}`,
+              url: null,
+              btn: '请重试'
+            }
+          });
+        }
+      }
+    );
   }
 }

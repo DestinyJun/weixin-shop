@@ -39,4 +39,8 @@ export class OrderService {
   public orderGetDetail(params): Observable<any> {
     return this.http.post(`/moayoOrder/orderItem`, params);
   }
+  // update invoice
+  public orderUpdInvoice(params): Observable<any> {
+    return this.http.post(`/invoice/update`, params);
+  }
 }

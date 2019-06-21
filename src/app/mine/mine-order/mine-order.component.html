@@ -74,7 +74,7 @@
                   [routerLink]="['/mine/order/aftsale', childItem?.id]">{{orderStates[childItem?.status]?.services}}</span>
                 <p class="pull-right">
                   <span style="color: #919191;">共{{childItem.moyaoOrderItemModels.length}}件商品 合计：</span>
-                  <span style="color: #F28382;">￥{{childItem?.price}}</span>
+                  <span style="color: #F28382;">￥{{childItem?.totalPrice}}</span>
                 </p>
               </div>
             </div>

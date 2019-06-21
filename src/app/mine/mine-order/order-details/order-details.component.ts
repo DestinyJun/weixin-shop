@@ -30,6 +30,7 @@ export class OrderDetailsComponent implements OnInit {
   public mineOrderMsg: string;
   // details list
   public detailsData: any = null;
+  public detailsPrice: any = null;
   // order status
   public orderDetailStates: any = {
     pendingPayment: {name: '待付款', bgColor: ['#7CC2FC', '#BEA9FA'], services: '',
@@ -72,36 +73,24 @@ export class OrderDetailsComponent implements OnInit {
     this.routerInfo.params.subscribe(params => this.mineOrdDetailInit(params.id));
   }
   public mineOrdDetailInit (id): void {
-    this.mOrderSrv.mineOrdGetDetail({orderId: id}).pipe(
-      mergeMap((val) => {
-        if (val.status === 200) {
-          this.detailsData = val.data;
-          return this.mOrderSrv.mineOrdGetSms({code: val.data.pushExpressNum, type: val.data.pushExpressCompany});
-        }
-        this.router.navigate(['/error'], {
-          queryParams: {
-            msg: `获取订单详情失败，错误码${val.status}`,
-            url: null,
-            btn: '请重试'
+    this.mOrderSrv.mineOrdGetDetail({orderId: id}).subscribe(
+        (val) => {
+          if (val.status === 200) {
+            this.detailsData = val.data;
+            val.data.moyaoOrderItemModels.map((item) => {
+              this.detailsPrice += item.goods.discountPrice * item.quantity;
+            });
+            return;
           }
-        });
-      })
-    )
-      .subscribe(
-      (val) => {
-        if (val.status === 200) {
-          this.globalSrv.wxSessionSetObject('sms', val.dataObject);
-          return;
+          this.router.navigate(['/error'], {
+            queryParams: {
+              msg: `获取订单详情失败，错误码${val.status}`,
+              url: null,
+              btn: '请重试'
+            }
+          });
         }
-        this.router.navigate(['/error'], {
-          queryParams: {
-            msg: `获取物流数据失败，错误码${val.status}`,
-            url: null,
-            btn: '请重试'
-          }
-        });
-      }
-    );
+      );
   }
   // order operate
   public orderDetailOpeClick(param, childItem, status): void {
@@ -125,7 +114,7 @@ export class OrderDetailsComponent implements OnInit {
       this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
       return;
     }
-    if (param.title === '待收货') {
+    if (param.title === '查看物流') {
       this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
       return;
     }
@@ -197,5 +186,11 @@ export class OrderDetailsComponent implements OnInit {
   // toast
   public onShow(type: string) {
     (<ToastComponent>this[`${type}Toast`]).onShow();
+  }
+  // details Ems Click
+  public detailsEmsClick(): void {
+    if (this.detailsData.status === 'shipped') {
+      this.router.navigate(['/mine/order/logistics'], {queryParams: {orderId: this.detailsData.id}});
+    }
   }
 }

@@ -3,6 +3,7 @@ import {SwiperPaginationInterface} from 'ngx-swiper-wrapper';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {ProductService} from '../../common/services/product.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-detail',
@@ -29,10 +30,12 @@ export class ProductDetailComponent implements OnInit {
   public prodConfig: any = {};
   public prodInfo: any = null;
   public prodSlides: any = null;
+  public prodHtml: any = null;
   constructor(
     private productSrv: ProductService,
     private router: Router,
-    private routerInfo: ActivatedRoute
+    private routerInfo: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -45,6 +48,7 @@ export class ProductDetailComponent implements OnInit {
           (val) => {
             if (val.status === 200) {
               this.prodInfo = val.data;
+              this.prodHtml = this.sanitizer.bypassSecurityTrustHtml(val.data.content);
               this.prodSlides = val.data.imgs.split(',');
               this.prodConfig = {
                 a11y: true,

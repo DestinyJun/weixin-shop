@@ -2,7 +2,7 @@
   <div class="order-details-header">
     <app-header [option]="headerOption"></app-header>
   </div>
-  <div class="order-details-ems">
+  <div class="order-details-ems" (click)="detailsEmsClick()">
     <div class="weui-cells"
          [ngStyle]="{
          'margin-top': '0',
@@ -34,7 +34,7 @@
   <div class="order-details-product">
     <div class="weui-panel weui-panel_access" style="border-radius: 5px;">
       <div class="weui-panel__bd">
-        <div class="weui-cell" *ngFor="let item of detailsData?.moyaoOrderItemModels; let i = index">
+        <div class="weui-cell" style="align-items: unset;" *ngFor="let item of detailsData?.moyaoOrderItemModels; let i = index">
           <div class="weui-cell__hd" style="position: relative;margin-right: 10px;" [routerLink]="['/product']" [queryParams]="{id:item.id}">
             <img
               *ngIf="item?.goods?.imgs.indexOf('http')>=0"
@@ -70,7 +70,7 @@
               [routerLink]="['/mine/order/aftsale', detailsData?.id]">{{orderDetailStates[detailsData?.status]?.services}}</span>
           <p class="pull-right">
             <span style="color: #919191;">共{{detailsData?.moyaoOrderItemModels.length}}件商品 合计：</span>
-            <span style="color: #FF4343;">￥{{detailsData?.amount}}</span>
+            <span style="color: #FF4343;">￥{{detailsPrice}}</span>
           </p>
         </div>
       </div>

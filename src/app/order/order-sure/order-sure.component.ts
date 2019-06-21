@@ -23,6 +23,7 @@ export class OrderSureComponent implements OnInit {
   // data
   public orderDetail: any = null;
   public orderParentId: any = null;
+  public totalPrice: any = null;
   // scroll
   infiniteloaderConfig: InfiniteLoaderConfig = {
     height: 'auto'
@@ -40,12 +41,14 @@ export class OrderSureComponent implements OnInit {
     });
   }
   public orderSureInit (id): void {
-    console.log(id);
     this.orderSrv.orderGetDetail({orderId: id}).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
           this.orderDetail  = val;
+          val.data.moyaoOrderItemModels.map((item) => {
+            console.log(item);
+            this.totalPrice += item.goods.discountPrice * item.quantity;
+          });
           return;
         }
         this.router.navigate(['/error'], {

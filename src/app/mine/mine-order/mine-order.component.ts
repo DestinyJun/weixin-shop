@@ -146,7 +146,13 @@ export class MineOrderComponent implements OnInit {
     this.mOrderList = [];
     const a = [];
     const b = [];
+    let total = 0;
     params.map((item) => {
+      total = 0;
+      item.moyaoOrderItemModels.map((val) => {
+        total += val.quantity * val.goods.discountPrice;
+      });
+      item.totalPrice = total;
       b.push(item.createdDate.slice(0, 10));
     });
     for (const s in b) {
@@ -182,7 +188,6 @@ export class MineOrderComponent implements OnInit {
   }
   // order operate
   public mineOrderOperate(param, childItem, status): void {
-    console.log(childItem);
     if (param.title === '退货进度') {
       if (status === 'refundReview' || status === 'refundding' || status === 'refundded') {
         this.router.navigate([param.routes, childItem.id, 0, status]);
@@ -199,7 +204,7 @@ export class MineOrderComponent implements OnInit {
       this.router.navigate([param.routes, childItem.id, 1, status]);
       return;
     }
-    if (param.title === '待收货') {
+    if (param.title === '查看物流') {
       this.router.navigate([param.routes], {queryParams: {orderId: childItem.id}});
       return;
     }
