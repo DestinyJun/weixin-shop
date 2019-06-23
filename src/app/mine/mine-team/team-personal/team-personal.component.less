@@ -1,28 +1,21 @@
 .mine-detail-personal{
   height: 100vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   background-color: #F5F5F5;
   position: relative;
-  .personal-header {
-    height: 50px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 5001;
-  }
   .personal-detail-list {
     font-size: 0.85rem;
-    margin-top: 65px;
     .weui-cells.card {
+      margin-top: 10px;
       margin-left: 15px;
       margin-right: 15px;
       padding: 15px 0;
       background: linear-gradient(to right,#F19171,#F478A0);
       border-radius: 5px;
     }
-
     .weui-cells.list{
+      margin-top: 10px;
       .weui-cells__title{
         padding: 10px 15px;
         color: #76B2F3;

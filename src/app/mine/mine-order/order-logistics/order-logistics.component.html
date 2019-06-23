@@ -1,4 +1,4 @@
-<div class="order-logistics">
+<div class="order-logistics" *ngIf="orderLogMsg;else loading">
   <div class="order-logistics-header">
     <app-header [option]="headerOption"></app-header>
   </div>
@@ -74,3 +74,6 @@
     </div>
   </div>
 </div>
+<ng-template #loading>
+  <app-loading></app-loading>
+</ng-template>

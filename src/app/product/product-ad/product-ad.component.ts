@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductService} from '../../common/services/product.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-product-ad',
@@ -9,10 +10,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class ProductAdComponent implements OnInit {
   public prodAdInfo: any = null;
+  public prodAdInfoHtml: any = null;
   constructor(
     private productSrv: ProductService,
     private router: Router,
-    private routerInfo: ActivatedRoute
+    private routerInfo: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -27,7 +30,7 @@ export class ProductAdComponent implements OnInit {
               val.datas.map((param) => {
                 if (param.id == prop.id) {
                   this.prodAdInfo = param;
-                  console.log(this.prodAdInfo);
+                  this.prodAdInfoHtml = this.sanitizer.bypassSecurityTrustHtml(param.content);
                 }
               });
               return;

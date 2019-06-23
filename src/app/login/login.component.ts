@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
     });
     // wx get ticket
     if (!this.globalSrv.wxSessionGetObject('ticket')) {
-      this.getWxTicket();
+      // this.getWxTicket();
     }
   }
   // wx auth

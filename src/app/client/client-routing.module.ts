@@ -5,8 +5,8 @@ import {ClientListComponent} from './client-list/client-list.component';
 import {AddressListComponent} from './address-list/address-list.component';
 import {AddressAddComponent} from './address-add/address-add.component';
 const tabRoutes: Routes = [
-  {path: 'add', component: ClientAddComponent},
-  {path: 'list', component: ClientListComponent},
+  // {path: 'add', component: ClientAddComponent},
+  // {path: 'list', component: ClientListComponent},
   {path: 'address', component: AddressListComponent},
   {path: 'addition', component: AddressAddComponent},
 ];

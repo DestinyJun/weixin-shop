@@ -33,7 +33,7 @@ export class WalletBalapayComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.walletBalaPayInit({currentPage: '1', createddate: '2019-05'});
+    this.walletBalaPayInit({currentPage: '1'});
   }
   ngOnDestroy() {
     this.srv.destroyAll();
@@ -41,6 +41,7 @@ export class WalletBalapayComponent implements OnInit, OnDestroy {
   public walletBalaPayInit(params): void {
     this.mineWalletSrv.mineWalletBalaPay(params).subscribe(
       (val) => {
+        console.log(val);
         if (val.status === 200) {
           this.balapayList = val.datas;
           return;

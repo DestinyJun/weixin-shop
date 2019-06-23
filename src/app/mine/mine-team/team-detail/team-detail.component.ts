@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
-import {MaskComponent, PickerService} from 'ngx-weui';
+import {MaskComponent, PickerService, ToastService} from 'ngx-weui';
 import {MineTeamService} from '../../../common/services/mine-team.service';
 import {Router} from '@angular/router';
 
@@ -41,7 +41,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   public filterMember: any[] = [];
   public filterEarning: any = null;
   // earning list
-  public earningList: any = [];
+  public earningList: any = null;
   public earningStatusList: any = {
     noEarning: ['没有收益', '#7F7F7F'],
     earning: ['入账中', '#F19F65'],
@@ -53,30 +53,20 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   constructor(
     private mineTeamSrv: MineTeamService,
     private srv: PickerService,
-    private router: Router,
+    public toastSrv: ToastService
   ) { }
 
   ngOnInit() {
     this.detailDataInit({}, 'init');
     this.mineTeamSrv.mineTeamGetMember({}).subscribe(
       (value) => {
-        if (value.status === 200) {
-          value.datas.unshift({nikeName: '全部', id: 0, actives: true});
-          value.datas.map((param) => {
-            if (param.nikeName !== '全部') {
-              param.actives = false;
-            }
-          });
-          this.filterMember = value.datas;
-        } else {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: `服务器处理失败，错误代码：${value.status}！`,
-              url: null,
-              btn: '请重试'
-            }
-          });
-        }
+        value.datas.unshift({nikeName: '全部', id: 0, actives: true});
+        value.datas.map((param) => {
+          if (param.nikeName !== '全部') {
+            param.actives = false;
+          }
+        });
+        this.filterMember = value.datas;
       }
     );
   }
@@ -86,24 +76,14 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
   public detailDataInit(param, type: 'init' | 'search') {
     this.mineTeamSrv.mineTeamGetEarn(param).subscribe(
       (value) => {
-        if (value.status === 200) {
-          if (type === 'init') {
-            this.earningList = this.detailSerialization(value.datas);
-          } else {
-            this.filterEarning = 0;
-            this.filtersSearchList = value.datas;
-            value.datas.map((prop) => {
-              this.filterEarning = this.filterEarning + prop.earning;
-            });
-          }
-        }
-        if (value.status !== 200) {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: `服务器处理失败，错误代码：${value.status}！`,
-              url: null,
-              btn: '请重试'
-            }
+        this.toastSrv.hide();
+        if (type === 'init') {
+          this.earningList = this.detailSerialization(value.datas);
+        } else {
+          this.filterEarning = 0;
+          this.filtersSearchList = value.datas;
+          value.datas.map((prop) => {
+            this.filterEarning = this.filterEarning + prop.earning;
           });
         }
       }
@@ -182,6 +162,7 @@ export class TeamDetailComponent implements OnInit, OnDestroy {
       }
     });
     if (type === 'sure') {
+      this.toastSrv.loading('搜索中...');
       this.detailDataInit(this.filters, 'search');
     }
   }

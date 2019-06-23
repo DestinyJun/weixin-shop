@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../../common/components/header/header.model';
 import {MineOrderService} from '../../../common/services/mine-order.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {GlobalService} from '../../../common/services/global.service';
 import {mergeMap} from 'rxjs/operators';
 import {EMPTY} from 'rxjs';
@@ -29,7 +29,6 @@ export class OrderLogisticsComponent implements OnInit {
   public orderLogPrice: any = null;
   constructor(
     private mOrderSrv: MineOrderService,
-    private router: Router,
     private globalSrv: GlobalService,
     public routerInfo: ActivatedRoute
   ) { }
@@ -40,8 +39,7 @@ export class OrderLogisticsComponent implements OnInit {
     }
     this.routerInfo.queryParams.subscribe(
       (param) => {
-        console.log(param);
-        this.mineOrdDetailInit(217);
+        this.mineOrdDetailInit(param.id);
       }
     );
   }
@@ -58,13 +56,6 @@ export class OrderLogisticsComponent implements OnInit {
           }
           return this.mOrderSrv.mineOrdGetSms({code: val.data.pushExpressNum, type: val.data.pushExpressCompany});
         }
-        this.router.navigate(['/error'], {
-          queryParams: {
-            msg: `获取订单详情失败，错误码${val.status}`,
-            url: null,
-            btn: '请重试'
-          }
-        });
       })
     )
       .subscribe(
@@ -73,13 +64,6 @@ export class OrderLogisticsComponent implements OnInit {
             this.globalSrv.wxSessionSetObject('sms', val.dataObject);
             return;
           }
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: `获取物流数据失败，错误码${val.status}`,
-              url: null,
-              btn: '请重试'
-            }
-          });
         }
       );
   }

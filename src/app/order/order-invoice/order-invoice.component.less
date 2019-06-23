@@ -1,7 +1,13 @@
 .order-invoice{
   background: #F5F5F5;
   height: 100vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   .weui-cells_checkbox{
     margin: 15px 15px 0 15px;
     padding: 15px 0;
@@ -68,6 +74,13 @@
           .weui-badge{
             background-color: transparent;
             color: #999999;
+            position: absolute;
+            width: 3rem;
+            height: 1.5rem;
+            top: 0.31rem;
+            right: 0.1rem;
+            padding: 0 5px 0 0;
+            text-align: right;
           }
         }
       }
@@ -121,7 +134,7 @@
     }
   }
   .order-invoice-mask{
-    position: fixed;
+    position: absolute;
     z-index: 1000;
     top: 0;
     right: 0;

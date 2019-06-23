@@ -49,11 +49,9 @@ export class TeamPersonalComponent implements OnInit {
     this.mineTeamSrv.mineTeamGetMemberEarn(param).subscribe(
       (val) => {
         if (val.status === 200) {
-          this.memberUserDetail = val.datas;
+          this.memberUserDetail = val;
+          console.log(this.memberUserDetail);
           this.memberDetailList = this.teamPerSerialization(val.datas);
-          val.datas.map((prop) => {
-            this.memberUserEarning = this.memberUserEarning + prop.earning;
-          });
           return;
         }
         this.router.navigate(['/error'], {

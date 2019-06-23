@@ -1,19 +1,12 @@
 .mine-detail {
   height: 100vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   background-color: #F5F5F5;
   position: relative;
-  .mine-detail-header {
-    height: 50px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 5001;
-  }
   .mine-detail-list {
-    margin-top: 65px;
     .weui-cells {
+      margin-top: 10px;
       .weui-cells__title {
         padding: 10px 15px;
         p {
@@ -29,7 +22,6 @@
     }
   }
   .mine-filter-list{
-    margin-top: 65px;
     font-size: 1rem;
     position: relative;
     .weui-cells__title {
@@ -52,7 +44,9 @@
         }
       }
     }
-    .weui-cells {}
+    .weui-cells {
+      margin-top: 10px;
+    }
   }
   .mine-detail-mask{
     .recharge-mask {

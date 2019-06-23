@@ -7,11 +7,11 @@
       <div class="weui-cells card">
         <div class="weui-cell" style="align-items: start">
           <div class="weui-cell__bd" style="font-size: 1rem;color: #ffffff;">
-            {{memberUserDetail[0].user.nikeName}}
+            {{memberUserDetail?.datas[0].user.nikeName}}
           </div>
           <div class="weui-cell__ft" style="color: #ffffff;">
-            <p style="font-size: 0.9rem;">￥{{memberUserEarning}}</p>
-            <p style="font-size: 0.75rem;margin-top: 10px">{{memberUserDetail.length}}单</p>
+            <p style="font-size: 0.9rem;">￥{{memberUserDetail?.totalEarnings | number:'2.2-2'}}</p>
+            <p style="font-size: 0.75rem;margin-top: 10px">{{memberUserDetail?.totalOrder}}单</p>
           </div>
         </div>
       </div>

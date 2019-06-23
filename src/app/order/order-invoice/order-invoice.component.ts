@@ -1,10 +1,11 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {ActivatedRoute, Params, Router} from '@angular/router';
-import {Observable, timer} from 'rxjs';
+import {ActivatedRoute, Params} from '@angular/router';
+import {Observable} from 'rxjs';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
 import {DialogComponent, DialogConfig, SkinType, ToastComponent, ToastService} from 'ngx-weui';
+import {is_object} from '../../common/tools/is_object';
 
 @Component({
   selector: 'app-order-invoice',
@@ -40,7 +41,6 @@ export class OrderInvoiceComponent implements OnInit {
   // bill list
   public orderBill: Observable<any>;
   // data
-  public orderClientId: any = null;
   public invoiceDataUpdate: any = {
     id: null,
     invoiceType: null,
@@ -48,12 +48,18 @@ export class OrderInvoiceComponent implements OnInit {
     number: null,
   };
   public invoiceMaskShow = false;
+  public invoiceMediator: any = {
+    id: null,
+    invoiceType: null,
+    title: null,
+    number: null,
+  };
+  public invoiceTimer: any;
   constructor(
     private orderSrv: OrderService,
     private globalSrv: GlobalService,
     private routeInfo: ActivatedRoute,
     private srv: ToastService,
-    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -66,34 +72,49 @@ export class OrderInvoiceComponent implements OnInit {
   public orderInvocInitialize (): void {
     this.orderBill = this.orderSrv.orderGetInvoice({});
   }
+  // add click
+  public orderInvocAddClick (): void {
+    if (this.orderAddRadioRes.invoiceType !== 'noinvoice') {
+      if (this.orderAddRadioRes.invoiceType === 'individual' && this.orderAddRadioRes.title) {
+        this.orderSrv.orderAddInvoice(this.orderAddRadioRes).subscribe(
+          (val) => {
+            if (val.status === 200) {
+              this.orderAddRadioRes = {
+                invoiceType: 'individual',
+                title: null,
+                number: null,
+              };
+              this.orderInvocInitialize();
+            }
+          }
+        );
+      }
+      if (this.orderAddRadioRes.invoiceType === 'company' && this.orderAddRadioRes.title  && this.orderAddRadioRes.number) {
+        this.orderSrv.orderAddInvoice(this.orderAddRadioRes).subscribe(
+          (val) => {
+            if (val.status === 200) {
+              this.orderAddRadioRes = {
+                invoiceType: 'individual',
+                title: null,
+                number: null,
+              };
+              this.orderInvocInitialize();
+            }
+          }
+        );
+      }
+    }
+  }
   // radio change
-  public radioResChanges() {
+  public orderInvocRadioChanges() {
     if (this.orderAddRadioRes.invoiceType === 'noinvoice') {
       this.globalSrv.invoiceEvent = null;
       window.history.back();
     }
   }
-  // add click
-  public orderAddBillClick (): void {
-    if (this.orderAddRadioRes.invoiceType !== 'noinvoice') {
-      this.orderAddRadioRes.contactsId = this.orderClientId;
-      this.orderSrv.orderAddInvoice(this.orderAddRadioRes).subscribe(
-        (val) => {
-          if (val.status === 200) {
-            this.orderAddRadioRes = {
-              invoiceType: 'individual',
-              title: null,
-              number: null,
-            };
-            this.orderInvocInitialize();
-          }
-        }
-      );
-    }
-  }
   // bill click
   public orderBillClick (event, item): void {
-    event.preventDefault();
+    event.stopPropagation();
     this.globalSrv.invoiceEvent = item;
     window.history.back();
   }
@@ -112,20 +133,10 @@ export class OrderInvoiceComponent implements OnInit {
           this.srv.loading('删除中...');
           this.orderSrv.orderDelInvoice({id: item.id}).subscribe(
             (val) => {
-              if (val.status === 200) {
-                this.srv.hide();
-                this.clientMsg = val.message;
-                this.onShow('addClient');
-                this.orderInvocInitialize();
-              } else {
-                this.router.navigate(['/error'], {
-                  queryParams: {
-                    msg: `删除失败，错误码${val.status}`,
-                    url: null,
-                    btn: '请重试'
-                  }
-                });
-              }
+              this.srv.hide();
+              this.clientMsg = val.message;
+              this.onShow('addClient');
+              this.orderInvocInitialize();
             }
           );
         }
@@ -137,22 +148,30 @@ export class OrderInvoiceComponent implements OnInit {
   public onShow(type: string) {
     (<ToastComponent>this[`${type}Toast`]).onShow();
   }
-  // TouchStart
+  // TouchStart touchend
   public orderBillTouchStart(event, item): void {
     if (event) {
-      console.log(event);
+      this.invoiceMediator.id = item.id;
+      this.invoiceMediator.title = item.title;
+      this.invoiceMediator.invoiceType = item.invoiceType;
       this.invoiceDataUpdate.id = item.id;
       this.invoiceDataUpdate.title = item.title;
       this.invoiceDataUpdate.invoiceType = item.invoiceType;
       if (item.number) {
         this.invoiceDataUpdate.number = item.number;
+        this.invoiceMediator.number = item.number;
+      } else {
+        this.invoiceDataUpdate.number = null;
+        this.invoiceMediator.number = null;
       }
-      timer(500).subscribe(
-        (val) => {
-          this.invoiceMaskShow = true;
-        }
-      );
+      this.invoiceTimer = setTimeout(() => {
+        this.invoiceMaskShow = true;
+      }, 500);
     }
+  }
+  public orderBillTouchEnd(e): void {
+    e.stopPropagation();
+    clearTimeout(this.invoiceTimer);
   }
   // close mask
   public closeInvoiceMask (): void {
@@ -165,30 +184,26 @@ export class OrderInvoiceComponent implements OnInit {
   }
   // save update invoice
   public saveBtnClick(): void {
-    this.srv.loading('修改中...');
-    this.orderSrv.orderUpdInvoice(this.invoiceDataUpdate).subscribe(
-      (val) => {
-        if (val.status === 200) {
-          this.srv.hide();
-          this.clientMsg = val.message;
-          this.onShow('addClient');
-          this.orderInvocInitialize();
-          this.invoiceMaskShow = false;
-          this.invoiceDataUpdate = {
-            invoiceType: null,
-            title: null,
-            number: null,
-          };
-        } else {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: `发票修改失败，错误码${val.status}`,
-              url: null,
-              btn: '请重试'
-            }
-          });
-        }
-      }
-    );
+    if (!(is_object(this.invoiceMediator, this.invoiceDataUpdate))) {
+      this.srv.loading('修改中...');
+      this.orderSrv.orderUpdInvoice(this.invoiceDataUpdate).subscribe(
+       (val) => {
+         this.srv.hide();
+         this.clientMsg = val.message;
+         this.onShow('addClient');
+         this.orderInvocInitialize();
+         this.invoiceMaskShow = false;
+         this.invoiceDataUpdate = {
+           invoiceType: null,
+           title: null,
+           number: null,
+         };
+       }
+      );
+    }
+  }
+  // blur
+  public orderInvocBlur(e): void {
+    window.scroll(0, 0);
   }
 }
