@@ -154,7 +154,7 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
           this.router.navigate(['/error'], {
             queryParams: {
               msg: 'token认证失败，请重新登陆！',
-              url: `${environment.wx_api}?appid=${environment.wx_appid}&redirect_uri=${environment.wx_redirect_uri}/moyaoView/login&response_type=${environment.wx_response_type}&scope${environment.wx_scope}=&state=${environment.wx_state}`,
+              url: `${environment.wx_auth_url}`,
               btn: '点击登陆'
             }});
         }

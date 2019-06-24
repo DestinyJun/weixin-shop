@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {GlobalService} from '../common/services/global.service';
 @Component({
@@ -14,6 +15,7 @@ export class ErrorRemindComponent implements OnInit {
     private routerInfo: ActivatedRoute,
     private router: Router,
     private globalService: GlobalService,
+    private location: Location,
   ) { }
 
   ngOnInit() {
@@ -36,6 +38,6 @@ export class ErrorRemindComponent implements OnInit {
       this.router.navigate([this.errorMsg.url]);
       return;
     }
-    window.history.back();
+    this.location.back();
   }
 }

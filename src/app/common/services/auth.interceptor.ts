@@ -31,8 +31,11 @@ export class AuthInterceptor implements HttpInterceptor {
     if (this.isSkipAuth(req.url)) {
       this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
+        headers: req.headers
+          .set('Content-type', 'application/json')
       });
-    } else {
+    }
+    else {
       this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -76,28 +79,38 @@ export class AuthInterceptor implements HttpInterceptor {
     if (this.isSkipAuth(req.url)) {
       this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
+        headers: req.headers
+          .set('Content-type', 'application/json')
       });
-    } else {
+    }
+    else {
       if (!this.globalService.wxSessionGetObject('token')) {
         this.router.navigate(['/error'], {
           queryParams: {
-            msg: '登陆失效，请重新登陆！',
-            url: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbacad0ba65a80a3d&redirect_uri=${environment.dev_test_url}/moyaoView/login&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect`,
-            btn: '点击登陆'
+            msg: `token失效，请重新登陆！`,
+            url: `${environment.wx_auth_url}}`,
+            btn: '点击登陆',
           }});
         return EMPTY;
       }
       this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
-          .set('Content-type', 'application/json; charset=UTF-8')
+          .set('Content-type', 'application/json')
           .set('token', this.globalService.wxSessionGetObject('token'))
       });
     }
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {
         if (event.status === 200) {
+          if (event.body.status === 40000) {
+            this.router.navigate(['/registered']);
+            return EMPTY;
+          }
           if (event.body.status === 200) {
+            return of(event);
+          }
+          if (event.body.access_token) {
             return of(event);
           }
           if (event.body.errcode) {
@@ -117,6 +130,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }});
           return EMPTY;
         }
+        return EMPTY;
       }),
       catchError((err: HttpErrorResponse) => {
         this.handle_error(err);
@@ -125,7 +139,7 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
   // handle error
-  public handle_error(err): void {
+  public handle_error(err: HttpErrorResponse): void {
     if (err.status === 0 || err.status === 400) {
       this.router.navigate(['/error'], {
         queryParams: {
