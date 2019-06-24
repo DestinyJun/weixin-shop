@@ -113,6 +113,9 @@ export class AuthInterceptor implements HttpInterceptor {
           if (event.body.access_token) {
             return of(event);
           }
+          if (event.body.errcode === 0) {
+            return of(event);
+          }
           if (event.body.errcode) {
             this.router.navigate(['/error'], {
               queryParams: {
