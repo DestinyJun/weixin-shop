@@ -1,12 +1,10 @@
-import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DialogComponent, DialogConfig, SkinType, DialogService, ToastService, ToptipsService} from 'ngx-weui';
-import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
 import {GlobalService} from '../../common/services/global.service';
 import {map, mergeMap} from 'rxjs/operators';
 import {EMPTY, Observable, timer} from 'rxjs';
-import {environment} from '../../../environments/environment';
 let that: any;
 
 @Component({
@@ -19,9 +17,15 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   // agreeDialog
   @ViewChild('agreeDialog') iosAgreeDialog: DialogComponent;
   public configAgreeDialog: DialogConfig = {};
-  // dialogPay
+  // pay mask
+  public inputPws: any;
+  public inputPwsTimer: any;
   public dialogPayShow = false;
-  public dialogPayConfig = new DialogPay('设置支付密码', true, ['', '', '', '', '', ''], false, false, false);
+  public config = {
+    title: '请输入支付密码',
+    value: ['', '', '', '', '', '']
+  };
+  @ViewChild('passwordInput') passwordInput: ElementRef;
   // code
   public codeError = false;
   public smsCode: any = null;
@@ -97,6 +101,11 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
           this.regSubmit.sex = val.sex;
           this.regSubmit.address = val.country;
           this.dialogPayShow = true;
+          timer(200).subscribe(
+            () => {
+              this.passwordInput.nativeElement.focus();
+            }
+          );
           return;
         }
         this.topSrv['warn']('获取微信信息失败');
@@ -120,44 +129,22 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     return false;
   }
   // set Pay Pwd
-  public onDialogPayClick(event): void {
-    this.dialogPayShow = event.show;
-    if (event.password === 'destroy') {
-      return;
-    }
-    this.regSubmit.payPwd = event.password;
+  public onDialogPayClick(password): void {
+    this.dialogPayShow = false;
+    this.regSubmit.payPwd = password;
     this.regSrv.regRegister(this.regSubmit).pipe(
       mergeMap((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          this.workId = res.data.workId;
-          return this.regSrv.regLanding({wxid: res.data.wxid});
-        } else {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: `注册失败！错误码${res.status}`,
-              url: null,
-              btn: '请重试',
-            }});
-        }
+        this.workId = res.data.workId;
+        return this.regSrv.regLanding({wxid: res.data.wxid});
       })
     ).subscribe(
       (val) => {
-        if (val.status === 200) {
-          this.globalSrv.wxSessionSetObject('token', val.token);
-          this.router.navigate(['/registered/success'], {
-            queryParams: {
-              workId: `${this.workId}`,
-            }
-          });
-        } else {
-          this.router.navigate(['/error'], {
-            queryParams: {
-              msg: 'token认证失败，请重新登陆！',
-              url: `${environment.wx_auth_url}`,
-              btn: '点击登陆'
-            }});
-        }
+        this.globalSrv.wxSessionSetObject('token', val.token);
+        this.router.navigate(['/registered/success'], {
+          queryParams: {
+            workId: `${this.workId}`,
+          }
+        });
       }
     );
   }
@@ -167,5 +154,29 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     return timer(1000).pipe(map((v, i) => {
       return true;
     }));
+  }
+  // pay mask
+  public onSelfDestroy(): void {
+    this.inputPws = null;
+    this.config.value = ['', '', '', '', '', ''];
+    this.dialogPayShow = false;
+  }
+  public onInput(event): void {
+    if (event.target.value.length > 6) {
+      event.target.value =  this.inputPws;
+      return;
+    }
+    this.config.value = ['', '', '', '', '', ''];
+    this.inputPws = event.target.value;
+    for (let i = 0; i < this.inputPws.length; i++) {
+      this.config.value[i] = '#5E5E5E';
+    }
+    if (this.inputPws.length === 6) {
+      this.config.value = ['', '', '', '', '', ''];
+      this.onDialogPayClick(this.inputPws);
+      this.inputPwsTimer = setTimeout(() => {
+        this.inputPws = null;
+      }, 50);
+    }
   }
 }

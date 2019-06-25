@@ -1,4 +1,4 @@
-<div class="pay-way" *ngIf="payDetailsData; else loading">
+<div class="pay-way" *ngIf="payDetailsData;else loading">
   <app-header [option]="headerOption"></app-header>
   <div class="pay-way-cash">
     <div class="weui-cells">
@@ -32,13 +32,26 @@
       </div>
     </div>
   </div>
-  <div class="weui-dialog-pay">
-    <app-dialog-pay
-      *ngIf="dialogPayShow"
-      [config]="dialogPayConfig"
-      (dialogPayOnchange)="onDialogPayClick($event)"
-      (dialogPayDestroy)="onDialogPayClick($event)">
-    </app-dialog-pay>
+  <div class="pay-way-mask" *ngIf="dialogPayShow">
+    <div class="weui-mask">
+      <div class="weui-dialog">
+        <div class="weui-dialog-title">
+          {{config.title}}
+          <div style="width: 2.3rem;margin-right: -0.5rem;" class="t-float pull-right" (click)="onSelfDestroy()">
+            <i class="icon iconfont icon-guanbi" style="font-size: 0.7rem"></i>
+          </div>
+        </div>
+        <div class="weui-dialog-content" (input)="onInput($event)">
+          <label for="password" ></label>
+          <input #passwordInput id="password" type="number" name="password" maxlength="6" pattern="[0-9]*">
+          <span class="c-n" *ngFor="let item of config.value" [ngStyle]="{'background': item}"></span>
+        </div>
+        <div class="weui-dialog-pwd" [routerLink]="['/mine/setting/paypwd']">
+          <div class="weui-cell__bd"></div>
+          <div class="weui-cell__ft" style="font-size: 0.7rem;color: #BFBFBF;">忘记支付密码</div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="pay-way-sure">
     <button class="weui-btn weui-btn_primary" *ngIf="!payDetailsData?.amountLog?.payType" (click)="paySureClick()">立即支付</button>

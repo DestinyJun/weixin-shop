@@ -1,12 +1,18 @@
-import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {DialogPay} from '../../common/components/dialog-pay/dialog-pay.component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {DialogComponent, DialogConfig, SkinType} from 'ngx-weui';
 import {PayService} from '../../common/services/pay.service';
 import {mergeMap} from 'rxjs/internal/operators/mergeMap';
 import {GlobalService} from '../../common/services/global.service';
-import {EMPTY} from 'rxjs';
+import {EMPTY, timer} from 'rxjs';
 import {is_ios} from '../../common/tools/is_ios';
 declare let WeixinJSBridge;
 
@@ -36,9 +42,15 @@ export class PayWayComponent implements OnInit, OnDestroy {
   };
   // order detail
   public payDetailsData: any = null;
-  // dialogPay
+  // pay mask
+  public inputPws: any;
+  public inputPwsTimer: any;
   public dialogPayShow = false;
-  public dialogPayConfig = new DialogPay('请输入支付密码', true, ['', '', '', '', '', ''], false, false, true);
+  public config = {
+    title: '请输入支付密码',
+    value: ['', '', '', '', '', '']
+  };
+  @ViewChild('passwordInput') passwordInput: ElementRef;
   // dialog
   @ViewChild('iosPayWay') iosPayWay: DialogComponent;
   public iosPayWayConfig: DialogConfig = {};
@@ -116,13 +128,10 @@ export class PayWayComponent implements OnInit, OnDestroy {
     }
   }
   // verify pay
-  public onDialogPayClick(event): void {
-    this.dialogPayShow = event.show;
-    if (event.status) {
-      return;
-    }
+  public onDialogPayClick(password): void {
+    this.dialogPayShow = false;
     if (this.radioRes.radio === 'wallet') {
-      this.paySrv.payPwdVerify({payPwd: event.password})
+      this.paySrv.payPwdVerify({payPwd: password})
         .pipe(mergeMap((key) => {
           if (key.status === 200) {
             return this.paySrv.payWalletVerify({payPwd: key.backString, orderId: this.payDetailsData.id});
@@ -150,7 +159,7 @@ export class PayWayComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.radioRes.radio === 'weixin') {
-      this.paySrv.payPwdVerify({payPwd: event.password})
+      this.paySrv.payPwdVerify({payPwd: password})
         .pipe(mergeMap((key) => {
           if (key.status === 200) {
             return this.paySrv.payWeixinVerify({
@@ -218,9 +227,39 @@ export class PayWayComponent implements OnInit, OnDestroy {
   // pay sure
   public paySureClick() {
     this.dialogPayShow = true;
+    timer(200).subscribe(
+      () => {
+        this.passwordInput.nativeElement.focus();
+      }
+    );
   }
-// clearInterval
+  // clearInterval
   ngOnDestroy(): void {
     clearInterval(this.cleanTimer);
+    clearInterval(this.inputPwsTimer);
+  }
+  // pay mask
+  public onSelfDestroy(): void {
+    this.inputPws = null;
+    this.config.value = ['', '', '', '', '', ''];
+    this.dialogPayShow = false;
+  }
+  public onInput(event): void {
+    if (event.target.value.length > 6) {
+      event.target.value =  this.inputPws;
+      return;
+    }
+    this.config.value = ['', '', '', '', '', ''];
+    this.inputPws = event.target.value;
+    for (let i = 0; i < this.inputPws.length; i++) {
+      this.config.value[i] = '#5E5E5E';
+    }
+    if (this.inputPws.length === 6) {
+      this.config.value = ['', '', '', '', '', ''];
+      this.onDialogPayClick(this.inputPws);
+      this.inputPwsTimer = setTimeout(() => {
+        this.inputPws = null;
+      }, 50);
+    }
   }
 }

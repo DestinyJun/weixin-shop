@@ -86,20 +86,10 @@ export class OrderRefundComponent implements OnInit {
   public mineOrdRefundInit(id): void {
      this.mOrderSrv.mineOrdGetDetail({orderId: id}).subscribe(
        (val) => {
-         if (val.status === 200) {
-           this.detailsData = val;
-           this.orderRefund.refundamount = val.data.amount;
-           if (val.data.refundImage) {
-             this.orderRefundImages = val.data.refundImage.split(',');
-           }
-         } else {
-            this.router.navigate(['/error'], {
-              queryParams: {
-                msg: `查询订单详情失败，错误码${val.status}`,
-                url: null,
-                btn: '点击重试'
-              }
-            });
+         this.detailsData = val;
+         this.orderRefund.refundamount = val.data.amount;
+         if (val.data.refundImage) {
+           this.orderRefundImages = val.data.refundImage.split(',');
          }
        }
      );

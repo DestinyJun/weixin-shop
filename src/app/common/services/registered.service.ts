@@ -31,7 +31,7 @@ export class RegisteredService {
     return this.http.post(`/member/verifySMS`, params);
   }
   // get wx user info
-  public regGetWxUserInfo(params): Observable<any> {
-    return this.http.get(`/wx/userinfo?access_token=${params.access_token}&openid=${params.openid}`);
+  public regGetWxUserInfo(param): Observable<any> {
+    return this.http.get(`/wx/userinfo`, {params: param});
   }
 }

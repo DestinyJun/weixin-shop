@@ -64,11 +64,59 @@
       color: #ffffff;
     }
   }
-  .weui-dialog-pay{
-    .weui-dialog{
-      max-width: 86vw;
-      width: 86vw;
-      padding: 1vh 3vw 3vh 3vw;
+  .pay-way-mask{
+    .weui-mask{
+      background: rgba(0, 0, 0, 0.5);
+      .weui-dialog{
+        max-width: 86vw;
+        width: 86vw;
+        padding: 1vh 3vw 3vh 3vw;
+        animation:mymove 0.2s ease-in-out forwards ;
+        -moz-animation:mymove 0.2s ease-in-out forwards; /* Firefox */
+        -webkit-animation:mymove 0.2s ease-in-out forwards; /* Safari and Chrome */
+        -o-animation:mymove 0.2s ease-in-out forwards; /* Opera */
+        .weui-dialog-title{
+          padding-top: 6px;
+          font-size: 0.85rem;
+          color: #777777;
+          .t-float{
+            cursor: pointer;
+          }
+        }
+        .weui-dialog-content{
+          padding-top: 20px;
+          padding-bottom: 20px;
+          position: relative;
+          display: flex;
+          justify-content: space-around;
+          label{
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+          .c-n{
+            border-radius: 50%;
+            border: 1px solid #CECECE;
+            display: inline-block;
+            height: 16px;
+            width: 16px;
+            line-height: 16px;
+            vertical-align: top;
+          }
+          #password{
+            width: 200%;
+            height: 100%;
+            color:transparent;
+            position: absolute;
+            text-indent: -100em; /*文本向左缩进*/
+            margin-left: -100%; /*输入框光标起始点向左左移*/
+            top: 0;
+            left: 0;
+            opacity: 0;
+            border: 0;
+          }
+        }
+      }
     }
   }
   .pay-way-dialog{
@@ -98,4 +146,27 @@
       }
     }
   }
+}
+@keyframes mymove
+{
+  from {top:100%;}
+  to {top:50%;}
+}
+
+@-moz-keyframes mymove /* Firefox */
+{
+  from {top:100%;}
+  to {top:50%;}
+}
+
+@-webkit-keyframes mymove /* Safari and Chrome */
+{
+  from {top:100%;}
+  to {top:50%;}
+}
+
+@-o-keyframes mymove /* Opera */
+{
+  from {top:100%;}
+  to {top:50%;}
 }

@@ -28,7 +28,12 @@ export class AuthInterceptor implements HttpInterceptor {
   }
   // debug http
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.isSkipAuth(req.url)) {
+    if (this.isSkipAuth(req.url) === '1') {
+      this.clonedRequest = req.clone({
+        url: environment.dev_test_url + req.url,
+      });
+    }
+    else if (this.isSkipAuth(req.url)) {
       this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -40,7 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
         url: environment.dev_test_url + req.url,
         headers: req.headers
           .set('Content-type', 'application/json')
-          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU2MTM5MjE2NH0.tv8c3-sQb5c2QTCAbFwAXxfi_YlEPwkNvcDNdzXz4PHVRlrw4vUvChwBcMRDl-wow8BrKs-kA1OxvaQNK7rstg')
+          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU2MTUzMjA0NX0.54BOq_yo2As8gxMHnZaPsZ1HwOuziAV_pt_fGj3kjVRkHJMF4E6h7nLhfiBzSyXmNcbMfYqNBZdh5HktlIjhyA')
       });
     }
     return next.handle(this.clonedRequest).pipe(
@@ -76,7 +81,12 @@ export class AuthInterceptor implements HttpInterceptor {
   }
   // prod http
   public prod_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.isSkipAuth(req.url)) {
+    if (this.isSkipAuth(req.url) === '1') {
+      this.clonedRequest = req.clone({
+        url: environment.dev_test_url + req.url,
+      });
+    }
+    else if (this.isSkipAuth(req.url)) {
       this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
         headers: req.headers
@@ -88,7 +98,7 @@ export class AuthInterceptor implements HttpInterceptor {
         this.router.navigate(['/error'], {
           queryParams: {
             msg: `token失效，请重新登陆！`,
-            url: `${environment.wx_auth_url}}`,
+            url: `${environment.wx_auth_url}`,
             btn: '点击登陆',
           }});
         return EMPTY;
@@ -103,20 +113,23 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(this.clonedRequest).pipe(
       mergeMap((event: any) => {
         if (event.status === 200) {
+          if (event.body.status === 200) {
+            return of(event);
+          }
           if (event.body.status === 40000) {
             this.router.navigate(['/registered']);
             return EMPTY;
           }
-          if (event.body.status === 200) {
+          if (event.body.nickname) {
             return of(event);
           }
           if (event.body.access_token) {
             return of(event);
           }
-          if (event.body.errcode === 0) {
+          if (event.body.expires_in === 7200) {
             return of(event);
           }
-          if (event.body.errcode) {
+          if (event.body.errcode && event.body.errcode !== 0) {
             this.router.navigate(['/error'], {
               queryParams: {
                 msg: `${event.body.errmsg}`,
@@ -170,25 +183,9 @@ export class AuthInterceptor implements HttpInterceptor {
   }
   // is skip url
   public isSkipAuth(url: string) {
+     if (url === '/imageFileUpload') {
+       return '1';
+     }
     return this.skipAuth.includes(url);
   }
-  /*
-   if (req.url.indexOf('imageFileUpload') >= 0) {
-      this.clonedRequest = req.clone({
-        url: environment.dev_test_url + req.url,
-      });
-      return next.handle(this.clonedRequest).pipe(
-        mergeMap((event: any) => {
-          if (event.status === 200) {
-            return of(event);
-          }
-          return EMPTY;
-        }),
-        catchError((err: HttpErrorResponse) => {
-          this.handle_error(err);
-          return EMPTY;
-        })
-      );
-    }
-  * */
 }
