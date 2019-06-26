@@ -65,16 +65,13 @@ export class SettingMobileComponent implements OnInit {
     (<ToastComponent>this[`${type}Toast`]).onShow();
   }
   public onSendCodeOld(): Observable<boolean> {
-    that.mineSetSrv.mineSetSendSMS({phone: that.oldPhoneCode}).subscribe(
-      (val) => {
-        if (val.status === 200) {
-          that.topSrv['primary'](val.message);
-          return;
-        }
-        that.topSrv['warn'](val.message);
-      }
-    );
-    return timer(1000).pipe(map((v, i) => true));
+    return timer(50).pipe(map((v, i) => {
+      that.mineSetSrv.mineSetSendSMS({phone: that.oldPhoneCode}).subscribe(
+     (val) => {
+       that.topSrv['primary'](val.message);
+     });
+      return true;
+    }));
   }
   public onSendCodeNew(): Observable<boolean> {
     that.mineSetSrv.mineSetSendSMS({phone: that.newPhone}).subscribe(

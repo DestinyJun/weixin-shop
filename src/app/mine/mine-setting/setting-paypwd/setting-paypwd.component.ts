@@ -91,12 +91,8 @@ export class SettingPaypwdComponent implements OnInit {
   public onSendCode(): Observable<boolean> {
     return that.mineSetSrv.mineSetSendSMS({phone: that.mobilePhone}).pipe(
       mergeMap((val) => {
-          if (val['status'] === 200) {
-            that.topSrv['primary'](val['message']);
-            return timer(50).pipe(map((v, i) => true));
-          }
-          that.topSrv['warn'](val['message']);
-          return timer(50).pipe(map((v, i) => false));
+        that.topSrv['primary'](val['message']);
+        return timer(50).pipe(map((v, i) => true));
         }
       )
     );

@@ -150,8 +150,8 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   }
   // btn
   public onSendCode(): Observable<boolean> {
-    that.codeBtnClick();
-    return timer(1000).pipe(map((v, i) => {
+    return timer(50).pipe(map((v, i) => {
+      that.codeBtnClick();
       return true;
     }));
   }
