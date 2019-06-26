@@ -227,9 +227,10 @@ export class PayWayComponent implements OnInit, OnDestroy {
   // pay sure
   public paySureClick() {
     this.dialogPayShow = true;
+    this.passwordInput.nativeElement.focus();
     timer(200).subscribe(
       () => {
-        this.passwordInput.nativeElement.focus();
+
       }
     );
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-pay-success',
@@ -21,11 +22,12 @@ export class PaySuccessComponent implements OnInit {
   constructor(
     private router: Router,
     private routerInfo: ActivatedRoute,
+    private location: Location
   ) { }
 
   ngOnInit() {
     // 防止页面后退
-    window.history.pushState(null, null, document.URL);
+    // window.history.pushState(null, null, document.URL);
    /* window.addEventListener('popstate', function () {
       window.history.pushState(null, null, document.URL);
     });*/
@@ -35,5 +37,13 @@ export class PaySuccessComponent implements OnInit {
   }
   public payWayClick(): void {
     window.location.href = 'http://www.sjcqdjk.com/moyaoView/tab/home';
+   /* this.location.subscribe(
+      (val) => {
+        console.log(val);
+        if (val.url.indexOf('/pay/success') > 0) {
+          this.location.forward();
+        }
+      }
+    );*/
   }
 }
