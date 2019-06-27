@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {SwiperPaginationInterface} from 'ngx-swiper-wrapper';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {ProductService} from '../../common/services/product.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DomSanitizer} from '@angular/platform-browser';
+import {InfiniteLoaderComponent, InfiniteLoaderConfig} from 'ngx-weui';
 
 @Component({
   selector: 'app-product-detail',
@@ -31,6 +32,11 @@ export class ProductDetailComponent implements OnInit {
   public prodInfo: any = null;
   public prodSlides: any = null;
   public prodHtml: any = null;
+  // scroll
+  public proScrollConfig: InfiniteLoaderConfig = {
+    height: '100%',
+    finished: ''
+  };
   constructor(
     private productSrv: ProductService,
     private router: Router,
@@ -84,5 +90,9 @@ export class ProductDetailComponent implements OnInit {
         );
       }
     );
+  }
+  // scroll
+  public onLoadMore(comp: InfiniteLoaderComponent): void {
+    comp.setFinished();
   }
 }

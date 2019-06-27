@@ -15,6 +15,7 @@ import {LoginService} from '../common/services/login.service';
 export class LoginComponent implements OnInit {
   public msg: string;
   public wx_openid: string;
+  public workId: any = null;
 
   constructor(
     private router: Router,
@@ -36,6 +37,10 @@ export class LoginComponent implements OnInit {
   public appInit(): void {
     // weixin auth
     this.routerInfo.queryParams.subscribe((params: Params) => {
+      // console.log(params);
+      if ('workId' in params) {
+        this.workId = params.workId;
+      }
       if ('code' in params) {
         // wx get ticket
         if (!this.globalSrv.wxSessionGetObject('ticket')) {
@@ -89,8 +94,16 @@ export class LoginComponent implements OnInit {
       }))
       .subscribe(
         (val) => {
-          this.globalSrv.wxSessionSetObject('token', val['token']);
-          this.router.navigate(['/tab/home']);
+          if (val.status === 40000) {
+            if (this.workId) {
+              this.router.navigate(['/registered/submit'], {queryParams: {workId: this.workId}});
+            } else {
+              this.router.navigate(['/registered']);
+            }
+          } else {
+            this.globalSrv.wxSessionSetObject('token', val['token']);
+            this.router.navigate(['/tab/home']);
+          }
         }
       );
   }

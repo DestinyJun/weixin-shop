@@ -3,40 +3,42 @@
     <app-header [option]="headerOption"></app-header>
   </div>
   <div class="pro-detail-scroll">
-    <div class="scroll-swiper">
-      <div *ngIf="prodSlides" class="swiper-container" [swiper]="prodConfig">
-        <div class="swiper-wrapper">
-          <div *ngFor="let slide of prodSlides" class="swiper-slide" style="margin-right: 0">
-            <div class="swiper-wrapper-img" [ngStyle]="{'background-image': 'url('+slide+')'}"></div>
+    <weui-infiniteloader [config]="proScrollConfig" (loadmore)="onLoadMore($event)">
+      <div class="scroll-swiper">
+        <div *ngIf="prodSlides" class="swiper-container" [swiper]="prodConfig">
+          <div class="swiper-wrapper">
+            <div *ngFor="let slide of prodSlides" class="swiper-slide" style="margin-right: 0">
+              <div class="swiper-wrapper-img" [ngStyle]="{'background-image': 'url('+slide+')'}"></div>
+            </div>
           </div>
+          <div class="swiper-scrollbar" [hidden]="prodConfig?.scrollbar === false"></div>
+          <div class="swiper-pagination" [hidden]="prodConfig?.pagination === false"></div>
+          <div class="swiper-button-prev" [hidden]="prodConfig?.navigation === false"></div>
+          <div class="swiper-button-next" [hidden]="prodConfig?.navigation === false"></div>
         </div>
-        <div class="swiper-scrollbar" [hidden]="prodConfig?.scrollbar === false"></div>
-        <div class="swiper-pagination" [hidden]="prodConfig?.pagination === false"></div>
-        <div class="swiper-button-prev" [hidden]="prodConfig?.navigation === false"></div>
-        <div class="swiper-button-next" [hidden]="prodConfig?.navigation === false"></div>
       </div>
-    </div>
-    <div class="scroll-article">
-      <article class="weui-article">
-        <section>
-          <h3 style="color: #696969;font-size: 1rem">{{prodInfo?.title}}</h3>
-          <p style="color: #C6C6C6;font-size: 0.8rem">
-            {{prodInfo?.info}}
+      <div class="scroll-article">
+        <article class="weui-article">
+          <section>
+            <h3 style="color: #696969;font-size: 1rem">{{prodInfo?.title}}</h3>
+            <p style="color: #C6C6C6;font-size: 0.8rem">
+              {{prodInfo?.info}}
+            </p>
+          </section>
+        </article>
+      </div>
+      <div class="scroll-title">
+        –<span>产品详情</span>–
+      </div>
+      <div class="scroll-detail">
+        <div class="article-detail">
+          <p class="article-detail-img">
+            <img *ngIf="prodInfo?.mainImage" [src]="prodInfo?.mainImage" alt="图片地址无效" style="width: 100%;height: auto">
           </p>
-        </section>
-      </article>
-    </div>
-    <div class="scroll-title">
-      –<span>产品详情</span>–
-    </div>
-    <div class="scroll-detail">
-      <div class="article-detail">
-        <p class="article-detail-img">
-          <img *ngIf="prodInfo?.mainImage" [src]="prodInfo?.mainImage" alt="图片地址无效" style="width: 100%;height: auto">
-        </p>
-        <div class="article-detail-content" [innerHTML]="prodHtml"></div>
+          <div class="article-detail-content" [innerHTML]="prodHtml"></div>
+        </div>
       </div>
-    </div>
+    </weui-infiniteloader>
   </div>
   <div class="pro-detail-button" [routerLink]="['/order']" [queryParams]="{id: prodInfo?.id}">
     <div class="weui-footer weui-footer_fixed-bottom">

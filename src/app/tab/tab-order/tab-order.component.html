@@ -46,7 +46,10 @@
             <div class="weui-stepper-s">
               <span style="font-size: 0.8rem;color:#8B8B8B;">购买数量</span>
               <div class="pull-right">
-                <weui-stepper [(ngModel)]="goodsInfo[i].amount" [min]="0" [max]="1000000" (change)="goodsTotalCount($event, i)"></weui-stepper>
+                <weui-stepper #ref
+                  [(ngModel)]="goodsInfo[i].amount"
+                  [min]="0" [max]="1000000"
+                  (change)="goodsTotalCount($event, i)"></weui-stepper>
               </div>
             </div>
           </ng-container>

@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
-import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
-import {ActivatedRoute, Router} from '@angular/router';
+import {InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
 
@@ -11,8 +11,9 @@ import {GlobalService} from '../../common/services/global.service';
   styleUrls: ['./tab-order.component.less'],
   encapsulation: ViewEncapsulation.None
 })
-export class TabOrderComponent implements OnInit {
+export class TabOrderComponent implements OnInit, OnDestroy {
   // data
+  public orderStatus = true;
   public orderId: any = null;
   public orderAmount: any = 0;
   public orderPlaceAddressInfo: any = null;
@@ -28,7 +29,6 @@ export class TabOrderComponent implements OnInit {
   infiniteloaderConfig: InfiniteLoaderConfig = {
     height: 'auto'
   };
-  @ViewChild(InfiniteLoaderComponent) il;
   // header
   public headerOption: HeaderContent = {
     title: '商品预约',
@@ -42,15 +42,26 @@ export class TabOrderComponent implements OnInit {
   // goodsinfo
   public totalPrice = 0;
   public goodsInfo: any = null;
+  // toast
   constructor(
     private router: Router,
     private routeInfo: ActivatedRoute,
     private orderSrv: OrderService,
-    private globalService: GlobalService
+    private globalService: GlobalService,
   ) {
   }
-
   ngOnInit() {
+    this.router.events.subscribe(
+      (event) => {
+        if (event instanceof NavigationEnd) {
+          if (event.urlAfterRedirects.indexOf('/tab/order') >= 0) {
+            this.orderStatus = true;
+          } else {
+            this.orderStatus = false;
+          }
+        }
+      }
+    );
     this.orderPlaceAddressInfo = this.globalService.addressEvent;
     this.orderPlaceInvoiceInfo = this.globalService.invoiceEvent;
     if (this.orderPlaceAddressInfo) {
@@ -59,6 +70,12 @@ export class TabOrderComponent implements OnInit {
     if (this.orderPlaceInvoiceInfo) {
       this.orderPlaceInfo.invoiceId = this.orderPlaceInvoiceInfo.id;
     }
+    window.addEventListener('resize', (e) => {
+      if (this.orderStatus) {
+        console.log('1111');
+        window.scroll(0, 0);
+      }
+    });
     this.orderPlaceInitialize();
   }
   // get goods
@@ -120,7 +137,6 @@ export class TabOrderComponent implements OnInit {
     }
     this.orderSrv.orderPlace(this.orderPlaceInfo).subscribe(
       (val) => {
-        console.log(val);
         if (val.status === 200) {
         this.orderPlaceAddressInfo = null;
         this.orderPlaceInvoiceInfo = null;
@@ -142,5 +158,7 @@ export class TabOrderComponent implements OnInit {
   public onToastShow(type: 'success' | 'loading') {
     (<ToastComponent>this[`${type}Toast`]).onShow();
   }
-
+  ngOnDestroy(): void {
+    this.orderStatus = false;
+  }
 }

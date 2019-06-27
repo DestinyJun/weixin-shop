@@ -1,7 +1,7 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
 
@@ -11,8 +11,9 @@ import {GlobalService} from '../../common/services/global.service';
   styleUrls: ['./order-place.component.less'],
   encapsulation: ViewEncapsulation.None
 })
-export class OrderPlaceComponent implements OnInit {
+export class OrderPlaceComponent implements OnInit, OnDestroy {
   // data
+  public orderStatus = true;
   public orderAmount: any = 0;
   public orderId: any = null;
   public orderPlaceAddressInfo: any = null;
@@ -64,6 +65,12 @@ export class OrderPlaceComponent implements OnInit {
         this.orderPlaceInitialize(val);
       }
     );
+    window.addEventListener('resize', (e) => {
+      if (this.orderStatus) {
+        console.log('1111');
+        window.scroll(0, 0);
+      }
+    });
   }
   // get goods
   public orderPlaceInitialize (param): void {
@@ -155,5 +162,7 @@ export class OrderPlaceComponent implements OnInit {
   public onToastShow(type: 'success' | 'loading') {
     (<ToastComponent>this[`${type}Toast`]).onShow();
   }
-
+  ngOnDestroy(): void {
+    this.orderStatus = false;
+  }
 }

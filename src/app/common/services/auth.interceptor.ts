@@ -45,7 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
         url: environment.dev_test_url + req.url,
         headers: req.headers
           .set('Content-type', 'application/json')
-          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU2MTYzNDE5NH0._uOmO2EKHPkElvQFwGD8uhG02-MQEtbfymPaGi0-q1-Z2gV6x66ZyGgexOY7W5YnaQdB2Rib5vyd-uvZe_qgNQ')
+          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU2MTcwODQzMX0.FLwI0A7u0aU_Iak8P0oCURd9ZIZNYMXvJN3lrczqG6VcdviQi1sPd-52xldVPj08QpOmIqW_rSN-3HOkF8XA8w')
       });
     }
     return next.handle(this.clonedRequest).pipe(
@@ -117,8 +117,7 @@ export class AuthInterceptor implements HttpInterceptor {
             return of(event);
           }
           if (event.body.status === 40000) {
-            this.router.navigate(['/registered']);
-            return EMPTY;
+            return of(event);
           }
           if (event.body.nickname) {
             return of(event);
