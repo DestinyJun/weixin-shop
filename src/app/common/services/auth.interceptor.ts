@@ -28,7 +28,6 @@ export class AuthInterceptor implements HttpInterceptor {
   }
   // debug http
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('1111');
     if (this.isSkipAuth(req.url) === '1') {
       this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,

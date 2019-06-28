@@ -53,9 +53,9 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     that = this;
+    this.regSubmit.wxid = this.globalSrv.wxSessionGetObject('openid');
     this.routerInfo.queryParams.subscribe(
       (params: Params) => {
-        this.regSubmit.wxid =  params.openid;
         this.regSubmit.refereesId =  params.workId;
       }
     );
@@ -77,40 +77,8 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
   }
   // reg submit
   public onsubmit(): void {
-    this.toastService['loading']('请求中...');
-    this.regSrv.regVerifySMS({phone: this.regSubmit.username, smsCode: this.smsCode}).pipe(
-      mergeMap((val) => {
-        if (val.status === 200) {
-          this.regSubmit.smsKey = val.backString;
-          return this.regSrv.regGetWxUserInfo({
-            access_token: this.globalSrv.wxSessionGetObject('access_token'),
-            openid: this.globalSrv.wxSessionGetObject('openid')
-          });
-        } else {
-          this.codeError = true;
-          return EMPTY;
-        }
-      })
-    )
-    .subscribe(
-      (val) => {
-        this.toastService.hide();
-        if (!val.errcode) {
-          this.regSubmit.nikeName = val.nickname;
-          this.regSubmit.headImage = val.headimgurl;
-          this.regSubmit.sex = val.sex;
-          this.regSubmit.address = val.country;
-          this.dialogPayShow = true;
-          timer(200).subscribe(
-            () => {
-              this.passwordInput.nativeElement.focus();
-            }
-          );
-          return;
-        }
-        this.topSrv['warn']('获取微信信息失败');
-      }
-    );
+    this.dialogPayShow = true;
+    this.passwordInput.nativeElement.focus();
   }
   // reg agree
   public dialogAgreeShow(type: SkinType) {
@@ -127,26 +95,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
       });
     }, 10);
     return false;
-  }
-  // set Pay Pwd
-  public onDialogPayClick(password): void {
-    this.dialogPayShow = false;
-    this.regSubmit.payPwd = password;
-    this.regSrv.regRegister(this.regSubmit).pipe(
-      mergeMap((res) => {
-        this.workId = res.data.workId;
-        return this.regSrv.regLanding({wxid: res.data.wxid});
-      })
-    ).subscribe(
-      (val) => {
-        this.globalSrv.wxSessionSetObject('token', val.token);
-        this.router.navigate(['/registered/success'], {
-          queryParams: {
-            workId: `${this.workId}`,
-          }
-        });
-      }
-    );
   }
   // btn
   public onSendCode(): Observable<boolean> {
@@ -173,10 +121,51 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     }
     if (this.inputPws.length === 6) {
       this.config.value = ['', '', '', '', '', ''];
-      this.onDialogPayClick(this.inputPws);
+      this.regVerify(this.inputPws);
       this.inputPwsTimer = setTimeout(() => {
         this.inputPws = null;
       }, 50);
     }
+  }
+  public regVerify(password): void {
+    this.toastService['loading']('请求中...');
+    this.regSrv.regVerifySMS({phone: this.regSubmit.username, smsCode: this.smsCode}).pipe(
+      mergeMap((val) => {
+        this.regSubmit.smsKey = val.backString;
+        return this.regSrv.regGetWxUserInfo({
+          access_token: this.globalSrv.wxSessionGetObject('access_token'),
+          openid: this.globalSrv.wxSessionGetObject('openid')
+        });
+      })
+    )
+      .subscribe(
+        (val) => {
+          this.toastService.hide();
+          this.regSubmit.nikeName = val.nickname;
+          this.regSubmit.headImage = val.headimgurl;
+          this.regSubmit.sex = val.sex;
+          this.regSubmit.address = val.country;
+          this.onDialogPayClick(password);
+        }
+      );
+  }
+  public onDialogPayClick(password): void {
+    this.dialogPayShow = false;
+    this.regSubmit.payPwd = password;
+    this.regSrv.regRegister(this.regSubmit).pipe(
+      mergeMap((res) => {
+        this.workId = res.data.workId;
+        return this.regSrv.regLanding({wxid: res.data.wxid});
+      })
+    ).subscribe(
+      (val) => {
+        this.globalSrv.wxSessionSetObject('token', val.token);
+        this.router.navigate(['/registered/success'], {
+          queryParams: {
+            workId: `${this.workId}`,
+          }
+        });
+      }
+    );
   }
 }

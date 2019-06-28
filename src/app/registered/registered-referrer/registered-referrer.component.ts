@@ -52,7 +52,6 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.globalSrv.wxSessionGetObject('openid')) {
-      this.referrerNumber.openid = this.globalSrv.wxSessionGetObject('openid');
       this.referrerVerifyWxSdk();
     }
   }
@@ -182,7 +181,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
         this.loading_show = false;
         if (val.status === 200) {
           this.referrerNumber.workId = val.data.workId;
-          this.router.navigate(['/registered/submit'], {queryParams: this.referrerNumber});
+          this.router.navigate(['/registered/submit'], {queryParams: {workId: this.referrerNumber.workId}});
           return;
         }
         this.referrerNumber.workId = '';

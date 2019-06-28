@@ -228,11 +228,6 @@ export class PayWayComponent implements OnInit, OnDestroy {
   public paySureClick() {
     this.dialogPayShow = true;
     this.passwordInput.nativeElement.focus();
-    timer(200).subscribe(
-      () => {
-
-      }
-    );
   }
   // clearInterval
   ngOnDestroy(): void {
