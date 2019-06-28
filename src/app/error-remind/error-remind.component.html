@@ -1,6 +1,6 @@
 <div class="error-remind">
-  <ng-container *ngIf="errorMsgStatus;else weixinmsg">
-    <div class="weui-msg">
+  <ng-container >
+    <div class="weui-msg" *ngIf="errorMsgStatus;else weixinmsg">
       <div class="weui-msg__icon-area">
         <i class="weui-icon-warn weui-icon_msg"></i>
       </div>
@@ -25,12 +25,20 @@
     </div>
   </ng-container>
   <ng-template #weixinmsg>
-    <div class="weui-msg">
+    <div class="weui-msg" *ngIf="!errorStatus">
       <div class="weui-msg__icon-area">
         <i class="weui-icon-info weui-icon_msg"></i>
       </div>
       <div class="weui-msg__text-area">
         <h4 class="weui-msg__title">请在微信客户端打开链接</h4>
+      </div>
+    </div>
+    <div class="weui-msg" *ngIf="errorStatus">
+      <div class="weui-msg__icon-area">
+        <i class="weui-icon-warn weui-icon_msg"></i>
+      </div>
+      <div class="weui-msg__text-area">
+        <h4 class="weui-msg__title">你访问的页面不存在！</h4>
       </div>
     </div>
   </ng-template>

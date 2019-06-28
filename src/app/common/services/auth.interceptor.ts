@@ -28,6 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
   // debug http
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log('1111');
     if (this.isSkipAuth(req.url) === '1') {
       this.clonedRequest = req.clone({
         url: environment.dev_test_url + req.url,
@@ -45,7 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
         url: environment.dev_test_url + req.url,
         headers: req.headers
           .set('Content-type', 'application/json')
-          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU2MTcwODQzMX0.FLwI0A7u0aU_Iak8P0oCURd9ZIZNYMXvJN3lrczqG6VcdviQi1sPd-52xldVPj08QpOmIqW_rSN-3HOkF8XA8w')
+          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU2MTc3ODA0MX0.z4HUxbJ2XDwh-cm7JfD55XynnieFRdfZ3oGyqWxhVefTwYYlvVyMVXYgYBzYJsnkwAFxBvIKOWj0YDT0jsi5Fw')
       });
     }
     return next.handle(this.clonedRequest).pipe(

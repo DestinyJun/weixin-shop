@@ -15,6 +15,7 @@ const routes: Routes = [
   {path: 'mine', canActivate: [LoginGuard], loadChildren: './mine/mine.module#MineModule'},
   {path: 'client', canActivate: [LoginGuard], loadChildren: './client/client.module#ClientModule'},
   {path: 'error', component: ErrorRemindComponent},
+  {path: '**', component: ErrorRemindComponent, data: {status: '404'}},
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

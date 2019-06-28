@@ -5,7 +5,6 @@ import {is_ios} from '../../common/tools/is_ios';
 import {random_word} from '../../common/tools/random_word';
 import {hex_sha1} from '../../common/tools/hex_sha1';
 import {GlobalService} from '../../common/services/global.service';
-declare const wx: any;
 
 @Component({
   selector: 'app-mine-shared',
@@ -41,9 +40,7 @@ export class MineSharedComponent implements OnInit {
   public mineSharedInitialize(): void {
     this.mineSrv.mineGetQrImg({}).subscribe(
       (val) => {
-        if (val.status === 200) {
-          this.qrImgRrl = val.data.QRimage;
-        }
+        this.qrImgRrl = val.data.QRimage + '?t=' + Math.random();
       }
     );
   }
