@@ -41,7 +41,7 @@
             <i class="icon iconfont icon-guanbi" style="font-size: 0.7rem"></i>
           </div>
         </div>
-        <div class="weui-dialog-content">
+        <div class="weui-dialog-content" (click)="paySureClick('input')">
           <span class="c-n" *ngFor="let item of config.value" [ngStyle]="{'background': item}"></span>
         </div>
         <div class="weui-dialog-pwd" [routerLink]="['/mine/setting/paypwd']">
@@ -52,7 +52,7 @@
     </div>
   </div>
   <div class="pay-way-sure">
-    <button class="weui-btn weui-btn_primary" *ngIf="!payDetailsData?.amountLog?.payType" (click)="paySureClick()">立即支付</button>
+    <button class="weui-btn weui-btn_primary" *ngIf="!payDetailsData?.amountLog?.payType" (click)="paySureClick('pay')">立即支付</button>
     <button class="weui-btn weui-btn_primary" *ngIf="payDetailsData?.amountLog?.payType" [routerLink]="['/tab/home']">返回首页</button>
   </div>
   <div class="pay-way-input" (input)="onInput($event)">

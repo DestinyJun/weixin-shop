@@ -54,7 +54,7 @@
             <i class="icon iconfont icon-guanbi" style="font-size: 0.7rem"></i>
           </div>
         </div>
-        <div class="weui-dialog-content">
+        <div class="weui-dialog-content" (click)="onsubmit('content')">
           <span class="c-n" *ngFor="let item of config.value" [ngStyle]="{'background': item}"></span>
         </div>
         <div class="weui-dialog-pwd" [routerLink]="['/mine/setting/paypwd']">
@@ -72,7 +72,7 @@
     <button
       type="button"
       class="weui-btn weui-btn_primary"
-      (click)="onsubmit()"
+      (click)="onsubmit('submit')"
       [ngClass]="!(mobile.valid&&smsCode) ?'weui-btn_disabled': ''"
       [disabled]="!(mobile.valid&&smsCode)">注册</button>
   </div>

@@ -76,8 +76,12 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     );
   }
   // reg submit
-  public onsubmit(): void {
-    this.dialogPayShow = true;
+  public onsubmit(type: string): void {
+    if (type === 'submit') {
+      this.dialogPayShow = true;
+      this.passwordInput.nativeElement.focus();
+      return;
+    }
     this.passwordInput.nativeElement.focus();
   }
   // reg agree
