@@ -64,7 +64,7 @@
       </div>
     </div>
   </div>
-  <div class="reg-submit-input" (input)="onInput($event)">
+  <div class="reg-submit-input" (input)="onInput($event)" (blur)="regBlur()">
     <label for="password" ></label>
     <input #passwordInput id="password" type="number" name="password" maxlength="6" pattern="[0-9]*">
   </div>

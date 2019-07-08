@@ -55,7 +55,7 @@
     <button class="weui-btn weui-btn_primary" *ngIf="!payDetailsData?.amountLog?.payType" (click)="paySureClick('pay')">立即支付</button>
     <button class="weui-btn weui-btn_primary" *ngIf="payDetailsData?.amountLog?.payType" [routerLink]="['/tab/home']">返回首页</button>
   </div>
-  <div class="pay-way-input" (input)="onInput($event)">
+  <div class="pay-way-input" (input)="onInput($event)" (blur)="payWayBlur()">
     <label for="password" ></label>
     <input #passwordInput id="password" type="number" name="password" maxlength="6" pattern="[0-9]*">
   </div>

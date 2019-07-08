@@ -153,6 +153,10 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
         }
       );
   }
+  public regBlur() {
+    this.inputPws = null;
+    this.config.value = ['', '', '', '', '', ''];
+  }
   public onDialogPayClick(password): void {
     this.dialogPayShow = false;
     this.regSubmit.payPwd = password;

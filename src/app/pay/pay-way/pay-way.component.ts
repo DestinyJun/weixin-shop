@@ -262,4 +262,8 @@ export class PayWayComponent implements OnInit, OnDestroy {
       }, 50);
     }
   }
+  public payWayBlur() {
+    this.inputPws = null;
+    this.config.value = ['', '', '', '', '', ''];
+  }
 }
