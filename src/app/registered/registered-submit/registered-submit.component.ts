@@ -4,7 +4,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RegisteredService} from '../../common/services/registered.service';
 import {GlobalService} from '../../common/services/global.service';
 import {map, mergeMap} from 'rxjs/operators';
-import {EMPTY, Observable, timer} from 'rxjs';
+import {Observable, timer} from 'rxjs';
 let that: any;
 
 @Component({
@@ -76,9 +76,23 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     );
   }
   // reg submit
-  public onsubmit(): void {
-    this.dialogPayShow = true;
+  public onsubmit(type: string): void {
+    if (type === 'submit') {
+      this.dialogPayShow = true;
+      this.passwordInput.nativeElement.focus();
+      timer(120).subscribe(
+        () => {
+          window.scroll(0, 0);
+        }
+      );
+      return;
+    }
     this.passwordInput.nativeElement.focus();
+    timer(100).subscribe(
+      () => {
+        window.scroll(0, 0);
+      }
+    );
   }
   // reg agree
   public dialogAgreeShow(type: SkinType) {
@@ -104,6 +118,10 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     }));
   }
   // pay mask
+  public onBlur(e){
+    console.log(e);
+    // window.scroll(0, 0);
+  }
   public onSelfDestroy(): void {
     this.inputPws = null;
     this.config.value = ['', '', '', '', '', ''];

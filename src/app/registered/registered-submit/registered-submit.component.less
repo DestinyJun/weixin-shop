@@ -56,14 +56,15 @@
   .reg-submit-mask{
     .weui-mask{
       background: rgba(0, 0, 0, 0.5);
+      position: absolute;
       .weui-dialog{
         max-width: 86vw;
         width: 86vw;
         padding: 1vh 3vw 3vh 3vw;
-        animation:mymove 0.2s ease-in-out forwards ;
-        -moz-animation:mymove 0.2s ease-in-out forwards; /* Firefox */
-        -webkit-animation:mymove 0.2s ease-in-out forwards; /* Safari and Chrome */
-        -o-animation:mymove 0.2s ease-in-out forwards; /* Opera */
+        animation:submymove 0.2s ease-in-out forwards ;
+        -moz-animation:submymove 0.2s ease-in-out forwards; /* Firefox */
+        -webkit-animation:submymove 0.2s ease-in-out forwards; /* Safari and Chrome */
+        -o-animation:submymove 0.2s ease-in-out forwards; /* Opera */
         .weui-dialog-title{
           padding-top: 6px;
           font-size: 0.85rem;
@@ -148,25 +149,25 @@
     padding: 1vh 3vw 0 3vw;
   }
 }
-@keyframes mymove
+@keyframes submymove
 {
   from {top:100%;}
   to {top:50%;}
 }
 
-@-moz-keyframes mymove /* Firefox */
+@-moz-keyframes submymove /* Firefox */
 {
   from {top:100%;}
   to {top:50%;}
 }
 
-@-webkit-keyframes mymove /* Safari and Chrome */
+@-webkit-keyframes submymove /* Safari and Chrome */
 {
   from {top:100%;}
   to {top:50%;}
 }
 
-@-o-keyframes mymove /* Opera */
+@-o-keyframes submymove /* Opera */
 {
   from {top:100%;}
   to {top:50%;}

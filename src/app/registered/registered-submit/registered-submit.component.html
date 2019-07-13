@@ -11,7 +11,7 @@
       </div>
       <div class="weui-cell weui-cell_vcode">
         <div class="weui-cell__bd">
-          <input class="weui-input" type="tel" placeholder="请输入验证码" name="smsCode" [(ngModel)]="smsCode">
+          <input class="weui-input" (blur)="onBlur($event)" type="tel" placeholder="请输入验证码" name="smsCode" [(ngModel)]="smsCode">
         </div>
         <div class="weui-cell__ft">
           <button class="weui-vcode-btn"
@@ -54,7 +54,7 @@
             <i class="icon iconfont icon-guanbi" style="font-size: 0.7rem"></i>
           </div>
         </div>
-        <div class="weui-dialog-content">
+        <div class="weui-dialog-content" (click)="onsubmit('pwd')">
           <span class="c-n" *ngFor="let item of config.value" [ngStyle]="{'background': item}"></span>
         </div>
         <div class="weui-dialog-pwd" [routerLink]="['/mine/setting/paypwd']">
@@ -66,13 +66,13 @@
   </div>
   <div class="reg-submit-input" (input)="onInput($event)">
     <label for="password" ></label>
-    <input #passwordInput id="password" type="number" name="password" maxlength="6" pattern="[0-9]*">
+    <input #passwordInput (blur)="onBlur($event)" id="password" type="number" name="password" maxlength="6" pattern="[0-9]*">
   </div>
   <div class="reg-submit-btn">
     <button
       type="button"
       class="weui-btn weui-btn_primary"
-      (click)="onsubmit()"
+      (click)="onsubmit('submit')"
       [ngClass]="!(mobile.valid&&smsCode) ?'weui-btn_disabled': ''"
       [disabled]="!(mobile.valid&&smsCode)">注册</button>
   </div>

@@ -4,6 +4,7 @@ import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-order-place',
@@ -65,10 +66,22 @@ export class OrderPlaceComponent implements OnInit, OnDestroy {
         this.orderPlaceInitialize(val);
       }
     );
-    window.addEventListener('resize', (e) => {
+    document.body.addEventListener('focusin', () => {
       if (this.orderStatus) {
-        console.log('1111');
-        window.scroll(0, 0);
+        timer(80).subscribe(
+          (val) => {
+            window.scroll(0, 0);
+          }
+        );
+      }
+    });
+    document.body.addEventListener('focusout', () => {
+      if (this.orderStatus) {
+        timer(80).subscribe(
+          (val) => {
+            window.scroll(0, 0);
+          }
+        );
       }
     });
   }
@@ -125,15 +138,11 @@ export class OrderPlaceComponent implements OnInit, OnDestroy {
   }
   // get Invoice
   public getInvoiceClick(): void {
-    if (this.orderPlaceAddressInfo) {
-      if (this.orderPlaceInvoiceInfo) {
-        this.router.navigate(['/order/orinvoice'], {queryParams: {type: this.orderPlaceInvoiceInfo.invoiceType}});
-      } else {
-        this.router.navigate(['/order/orinvoice'], {queryParams: {type: 'noinvoice'}});
-      }
-      return;
+    if (this.orderPlaceInvoiceInfo) {
+      this.router.navigate(['/order/orinvoice'], {queryParams: {type: this.orderPlaceInvoiceInfo.invoiceType}});
+    } else {
+      this.router.navigate(['/order/orinvoice'], {queryParams: {type: 'noinvoice'}});
     }
-    this.onToastShow('success');
   }
   // order place
   public submitOrder() {

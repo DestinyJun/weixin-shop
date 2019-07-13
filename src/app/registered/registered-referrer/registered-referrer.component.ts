@@ -51,6 +51,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.referrerVerifyWxSdk();
     if (this.globalSrv.wxSessionGetObject('openid')) {
       this.referrerVerifyWxSdk();
     }
@@ -102,7 +103,7 @@ export class RegisteredReferrerComponent implements OnInit, OnDestroy {
   public referrerVerifyWxSdk(): void {
     let url = '';
     if (is_ios()) {
-     url = this.globalSrv.wxSessionGetObject('ios_url');
+      url = this.globalSrv.wxSessionGetObject('ios_url');
     } else {
       url = window.location.href;
     }

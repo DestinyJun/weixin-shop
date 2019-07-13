@@ -45,7 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
         url: environment.dev_test_url + req.url,
         headers: req.headers
           .set('Content-type', 'application/json')
-          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODk4NDU5NzM5MyIsImV4cCI6MTU2MTc3ODA0MX0.z4HUxbJ2XDwh-cm7JfD55XynnieFRdfZ3oGyqWxhVefTwYYlvVyMVXYgYBzYJsnkwAFxBvIKOWj0YDT0jsi5Fw')
+          .set('token', 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODY4NTQ4ODA4NCIsImV4cCI6MTU2MzA4MTQxN30.YSzxVoP684OQEeLHHTZyomFaW7uC73guUVk7v6NJmXBHpGYvD6ef7VYgmjhTwPVYJwaEONxYUbvbqWepSlk06A')
       });
     }
     return next.handle(this.clonedRequest).pipe(
@@ -128,12 +128,21 @@ export class AuthInterceptor implements HttpInterceptor {
           if (event.body.expires_in === 7200) {
             return of(event);
           }
+          if (event.body.errcode === 42001) {
+            this.router.navigate(['/error'], {
+              queryParams: {
+                msg: `access_token已过期，请重新登录！`,
+                url: null,
+                btn: '点击重新登录',
+              }});
+            return EMPTY;
+          }
           if (event.body.errcode && event.body.errcode !== 0) {
             this.router.navigate(['/error'], {
               queryParams: {
                 msg: `${event.body.errmsg}`,
                 url: null,
-                btn: '请联系管理员',
+                btn: '点击重新登录',
               }});
             return EMPTY;
           }

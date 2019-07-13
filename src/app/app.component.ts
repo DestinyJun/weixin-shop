@@ -16,16 +16,13 @@ export class AppComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     console.log(environment.env);
+    this.globalSrv.wxSessionSetObject('ios_url', window.location.href);
     // Judge screen
     if (window.screen.orientation.angle === 90 || window.screen.orientation.angle === -90 || window.screen.orientation.angle === 270) {
       this.appShow = false;
     }
     // order status
     this.globalSrv.wxSessionSetObject('orderSelectStatus', 'all');
-    // record url of ios
-    if (!(this.globalSrv.wxSessionGetObject('ios_url'))) {
-      this.globalSrv.wxSessionSetObject('ios_url', window.location.href);
-    }
     // Judge client
     if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
       if (environment.production) {
