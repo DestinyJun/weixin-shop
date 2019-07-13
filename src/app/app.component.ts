@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {environment} from '../environments/environment';
 import {GlobalService} from './common/services/global.service';
+import {timer} from 'rxjs';
+import {is_ios} from './common/tools/is_ios';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +41,22 @@ export class AppComponent implements OnInit {
         return;
       }
     });
+    if (is_ios()) {
+      document.addEventListener('focusin', () => {
+        timer(80).subscribe(
+          (val) => {
+            window.scroll(0, 0);
+          }
+        );
+      });
+      document.addEventListener('focusout', () => {
+        timer(80).subscribe(
+          (val) => {
+            window.scroll(0, 0);
+          }
+        );
+      });
+    }
   }
 }
 

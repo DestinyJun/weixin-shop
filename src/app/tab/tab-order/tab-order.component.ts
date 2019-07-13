@@ -71,7 +71,7 @@ export class TabOrderComponent implements OnInit, OnDestroy {
     if (this.orderPlaceInvoiceInfo) {
       this.orderPlaceInfo.invoiceId = this.orderPlaceInvoiceInfo.id;
     }
-    document.body.addEventListener('focusin', () => {
+   /* document.body.addEventListener('focusin', () => {
       if (this.orderStatus) {
         timer(80).subscribe(
           (val) => {
@@ -88,7 +88,7 @@ export class TabOrderComponent implements OnInit, OnDestroy {
           }
         );
       }
-    });
+    });*/
     this.orderPlaceInitialize();
   }
   // get goods

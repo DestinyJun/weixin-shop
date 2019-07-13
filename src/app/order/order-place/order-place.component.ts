@@ -4,7 +4,6 @@ import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
-import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-order-place',
@@ -66,7 +65,7 @@ export class OrderPlaceComponent implements OnInit, OnDestroy {
         this.orderPlaceInitialize(val);
       }
     );
-    document.body.addEventListener('focusin', () => {
+    /*document.body.addEventListener('focusin', () => {
       if (this.orderStatus) {
         timer(80).subscribe(
           (val) => {
@@ -83,7 +82,7 @@ export class OrderPlaceComponent implements OnInit, OnDestroy {
           }
         );
       }
-    });
+    });*/
   }
   // get goods
   public orderPlaceInitialize (param): void {
