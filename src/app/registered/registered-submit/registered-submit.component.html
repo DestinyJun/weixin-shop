@@ -11,7 +11,7 @@
       </div>
       <div class="weui-cell weui-cell_vcode">
         <div class="weui-cell__bd">
-          <input class="weui-input" (blur)="onBlur($event)" type="tel" placeholder="请输入验证码" name="smsCode" [(ngModel)]="smsCode">
+          <input class="weui-input" type="tel" placeholder="请输入验证码" name="smsCode" [(ngModel)]="smsCode">
         </div>
         <div class="weui-cell__ft">
           <button class="weui-vcode-btn"
@@ -64,7 +64,7 @@
       </div>
     </div>
   </div>
-  <div class="reg-submit-input" (input)="onInput($event)">
+  <div class="reg-submit-input" (input)="onInput($event)" (blur)="regBlur()">
     <label for="password" ></label>
     <input #passwordInput (blur)="onBlur($event)" id="password" type="number" name="password" maxlength="6" pattern="[0-9]*">
   </div>

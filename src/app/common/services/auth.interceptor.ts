@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
   public clonedRequest: any;
   public skipAuth = [
     `/login`, '/wx/getOauth', '/wx/userinfo',
-    '/orderPay/orderWxPay', '/wx/gettoken', '/imageFileUpload',
+    '/wx/gettoken', '/imageFileUpload',
     '/wx/getticket', '/member/signin', '/member/recommenderWorkId',
     '/member/sendSMS', '/member/verifySMS'
   ];

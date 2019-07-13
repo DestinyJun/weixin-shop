@@ -225,8 +225,12 @@ export class PayWayComponent implements OnInit, OnDestroy {
       });
   }
   // pay sure
-  public paySureClick() {
-    this.dialogPayShow = true;
+  public paySureClick(type: string) {
+    if (type === 'pay') {
+      this.dialogPayShow = true;
+      this.passwordInput.nativeElement.focus();
+      return;
+    }
     this.passwordInput.nativeElement.focus();
   }
   // clearInterval
@@ -257,5 +261,9 @@ export class PayWayComponent implements OnInit, OnDestroy {
         this.inputPws = null;
       }, 50);
     }
+  }
+  public payWayBlur() {
+    this.inputPws = null;
+    this.config.value = ['', '', '', '', '', ''];
   }
 }

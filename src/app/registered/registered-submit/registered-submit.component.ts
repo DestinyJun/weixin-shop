@@ -118,10 +118,6 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
     }));
   }
   // pay mask
-  public onBlur(e){
-    console.log(e);
-    // window.scroll(0, 0);
-  }
   public onSelfDestroy(): void {
     this.inputPws = null;
     this.config.value = ['', '', '', '', '', ''];
@@ -166,6 +162,10 @@ export class RegisteredSubmitComponent implements OnInit, OnDestroy {
           this.onDialogPayClick(password);
         }
       );
+  }
+  public regBlur() {
+    this.inputPws = null;
+    this.config.value = ['', '', '', '', '', ''];
   }
   public onDialogPayClick(password): void {
     this.dialogPayShow = false;
