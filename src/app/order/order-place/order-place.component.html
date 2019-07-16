@@ -20,12 +20,14 @@
   </div>
   <div class="order-place-goods">
     <div class="weui-panel weui-panel_access commodity">
-      <div class="weui-panel__hd" style="font-size: 0.9rem;color: #969696;">商品信息</div>
+      <!--<div class="weui-panel__hd" style="font-size: 0.9rem;color: #969696;">商品信息</div>-->
       <weui-infiniteloader [config]="infiniteloaderConfig">
-        <div class="weui-panel__bd">
-         <!-- <ng-container *ngFor="let item of goodsInfo; let i = index">
-
-          </ng-container>-->
+        <app-moyao-goods
+          [goodsList]="goodsInfo"
+          (blurChange)="OrderPlaceBlur()"
+          (numChange)="goodsTotalCount($event)">
+        </app-moyao-goods>
+        <!--<div class="weui-panel__bd">
           <div class="weui-cell" >
             <div class="weui-cell__hd" style="position: relative;margin-right: 10px;" [routerLink]="['/product']" [queryParams]="{id:goodsInfo?.id}">
               <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="goodsInfo?.mainImage"
@@ -54,7 +56,7 @@
               </weui-stepper>
             </div>
           </div>
-        </div>
+        </div>-->
       </weui-infiniteloader>
     </div>
   </div>

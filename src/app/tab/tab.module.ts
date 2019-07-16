@@ -11,6 +11,7 @@ import {TabProductComponent } from './tab-product/tab-product.component';
 import {TabOrderComponent} from './tab-order/tab-order.component';
 import {TabHomeComponent } from './tab-home/tab-home.component';
 import {SwiperModule} from 'ngx-swiper-wrapper';
+import {MoyaoGoodsModule} from '../common/components/moyao-goods/moyao-goods.module';
 @NgModule({
   declarations: [
     TabComponent,
@@ -26,7 +27,8 @@ import {SwiperModule} from 'ngx-swiper-wrapper';
     HeaderModule,
     FormsModule,
     LoadingModule,
-    SwiperModule
+    SwiperModule,
+    MoyaoGoodsModule
   ],
   providers: []
 })

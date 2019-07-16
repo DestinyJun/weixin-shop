@@ -10,6 +10,7 @@ import {ClientService} from '../../common/services/client.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {parse} from '../../common/tools/is_address';
 import {timer} from 'rxjs';
+import {is_ios} from '../../common/tools/is_ios';
 
 @Component({
   selector: 'app-address-add',
@@ -168,5 +169,12 @@ export class AddressAddComponent implements OnInit {
     this.addAddressRes.phone = addressInfo['phone'] || addressInfo['mobile'];
     this.addAddressRes.name = addressInfo['name'];
     this.addAddressRes.postcode = addressInfo['zip_code'];
+  }
+  // onblur
+  public addressBlur(): void {
+    console.log('执行了');
+    if (is_ios()) {
+      window.scroll(0, 0);
+    }
   }
 }

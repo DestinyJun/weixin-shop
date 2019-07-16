@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
 import { OrderSureComponent } from './order-sure/order-sure.component';
 import {LoadingModule} from '../common/components/loading/loading.module';
 import {OrderPlaceComponent} from './order-place/order-place.component';
+import {MoyaoGoodsModule} from '../common/components/moyao-goods/moyao-goods.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {OrderPlaceComponent} from './order-place/order-place.component';
     WeUiModule.forRoot(),
     HeaderModule,
     FormsModule,
-    LoadingModule
+    LoadingModule,
+    MoyaoGoodsModule
   ],
   providers: []
 })

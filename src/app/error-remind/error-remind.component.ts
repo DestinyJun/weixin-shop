@@ -27,6 +27,7 @@ export class ErrorRemindComponent implements OnInit {
     }
     this.routerInfo.queryParams.subscribe(
       (params: Params) => {
+        console.log(params);
         this.errorMsgStatus = 'msg' in params;
         this.errorMsg = params;
       }

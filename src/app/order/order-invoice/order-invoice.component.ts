@@ -6,6 +6,7 @@ import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
 import {DialogComponent, DialogConfig, SkinType, ToastComponent, ToastService} from 'ngx-weui';
 import {is_object} from '../../common/tools/is_object';
+import {is_ios} from '../../common/tools/is_ios';
 
 @Component({
   selector: 'app-order-invoice',
@@ -204,6 +205,8 @@ export class OrderInvoiceComponent implements OnInit {
   }
   // blur
   public orderInvocBlur(e): void {
-    window.scroll(0, 0);
+    if (is_ios()) {
+      window.scroll(0, 0);
+    }
   }
 }

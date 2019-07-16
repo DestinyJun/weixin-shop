@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {HeaderContent} from '../../common/components/header/header.model';
 import {InfiniteLoaderComponent, InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
+import {is_ios} from '../../common/tools/is_ios';
 
 @Component({
   selector: 'app-order-place',
@@ -65,40 +66,12 @@ export class OrderPlaceComponent implements OnInit, OnDestroy {
         this.orderPlaceInitialize(val);
       }
     );
-    /*document.body.addEventListener('focusin', () => {
-      if (this.orderStatus) {
-        timer(80).subscribe(
-          (val) => {
-            window.scroll(0, 0);
-          }
-        );
-      }
-    });
-    document.body.addEventListener('focusout', () => {
-      if (this.orderStatus) {
-        timer(80).subscribe(
-          (val) => {
-            window.scroll(0, 0);
-          }
-        );
-      }
-    });*/
   }
   // get goods
   public orderPlaceInitialize (param): void {
     this.orderSrv.orderGetGoodItem(param).subscribe(
       (val) => {
         if (val.status === 200) {
-          /* val.datas.map((item, index) => {
-           item['amount'] = parseInt(this.globalService.wxSessionGetObject('goods' + index), 10);
-           if (item.amount) {
-             this.orderPlaceInfo.goodsItem.push({
-               goodsId: item.id,
-               quantity: item.amount,
-             });
-           }
-           this.totalPrice += item.originalPrice * item.amount;
-         });*/
           val.data['amount'] = parseInt(this.globalService.wxSessionGetObject('good'), 10);
           if (val.data.amount) {
             this.orderPlaceInfo.goodsItem.push({
@@ -120,12 +93,12 @@ export class OrderPlaceComponent implements OnInit, OnDestroy {
     );
   }
  // goods count
-  public goodsTotalCount(event, i): void {
+  public goodsTotalCount(event): void {
     this.orderPlaceInfo.goodsItem = [];
     this.totalPrice = 0;
     this.orderAmount = 0;
-    this.globalService.wxSessionSetObject(`good`, event);
-    this.goodsInfo.amount = event;
+    this.globalService.wxSessionSetObject(`good`, event.num);
+    this.goodsInfo.amount = event.num;
     if (this.goodsInfo.amount) {
       this.orderPlaceInfo.goodsItem.push({
         goodsId: this.goodsInfo.id,
@@ -172,5 +145,11 @@ export class OrderPlaceComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.orderStatus = false;
+  }
+  // onblur
+  public OrderPlaceBlur(): void {
+    if (is_ios()) {
+      window.scroll(0, 0);
+    }
   }
 }

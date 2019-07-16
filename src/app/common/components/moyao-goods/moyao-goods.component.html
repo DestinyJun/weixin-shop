@@ -1,0 +1,39 @@
+<div class="moyao-goods">
+  <div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd" style="font-size: 0.85rem;color: #969696;">商品信息</div>
+    <div class="weui-panel__bd">
+      <ng-container *ngFor="let item of goodsList; let i = index">
+        <div class="weui-cell" >
+          <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+            <img class="weui-media-box__thumb" style="width: auto;height:10vh;display: block" [src]="item.mainImage"
+                 alt="暂无">
+          </div>
+          <div class="weui-cell__bd">
+            <p style="font-size: 1rem;">{{item.title}}</p>
+            <p
+              style="
+                  width: 60vw;
+                  font-size: 0.8rem;
+                  color: #888888;
+                  overflow: hidden;
+                  text-overflow:ellipsis;
+                  white-space: nowrap;">{{item.info}}</p>
+            <p style="font-size: 1rem;color: #FF2D2D;margin-top: 1vh">￥{{item.originalPrice}}</p>
+          </div>
+          <div class="weui-cell__ft"></div>
+        </div>
+        <div class="weui-stepper-s">
+          <span style="font-size: 0.8rem;color:#8B8B8B;">购买数量</span>
+          <div class="pull-right">
+            <app-stepper
+              [max]="10000"
+              (blurChange)="onBlurChange()"
+              (numChange)="numsChange($event, i)">
+            </app-stepper>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+

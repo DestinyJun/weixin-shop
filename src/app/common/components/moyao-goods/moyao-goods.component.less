@@ -1,0 +1,66 @@
+.moyao-goods{
+  .weui-panel.weui-panel_access{
+    margin-top: 10px;
+    .weui-panel__hd{
+      &:after{
+        right: 15px;
+      }
+    }
+    .weui-panel__bd{
+      .weui-cell{
+        &:before{
+          content: unset;
+        }
+      }
+      .weui-stepper-s{
+        padding: 0 15px;
+        .pull-right{
+          .disabled{
+            opacity: 1;
+          }
+          span{
+            border: none;
+            height: 20px;
+            width: 20px;
+            line-height: 20px;
+            display: inline-block;
+            border-radius: 50%;
+          }
+          .minus{
+            background-color: #E9E9E9;
+            em{
+              color: #CDCDCD;
+              font-style:normal;
+              font-size: 20px;
+            }
+          }
+          .input{
+            em{
+              font-style:normal;
+              font-size: 16px;
+              line-height: 16px;
+            }
+
+          }
+          .plus{
+            background: linear-gradient(to right, #F18F74,#F47B9B);
+            line-height: 20px;
+            position: relative;
+            em{
+              color: #FFFFFF;
+              font-style:normal;
+              font-size: 12px;
+              display: inline-block;
+              height: 20px;
+              width: 20px;
+              line-height: 20px;
+              position: absolute;
+              top: 0;
+              left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

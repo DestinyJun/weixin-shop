@@ -4,7 +4,7 @@ import {InfiniteLoaderConfig, ToastComponent} from 'ngx-weui';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {OrderService} from '../../common/services/order.service';
 import {GlobalService} from '../../common/services/global.service';
-import {timer} from 'rxjs';
+import {is_ios} from '../../common/tools/is_ios';
 
 @Component({
   selector: 'app-tab-order',
@@ -113,12 +113,12 @@ export class TabOrderComponent implements OnInit, OnDestroy {
     );
   }
  // goods count
-  public goodsTotalCount(event, i): void {
+  public goodsTotalCount(event): void {
     this.orderPlaceInfo.goodsItem = [];
     this.totalPrice = 0;
     this.orderAmount = 0;
-    this.globalService.wxSessionSetObject(`goods${i}`, event);
-    this.goodsInfo[i].amount = event;
+    this.globalService.wxSessionSetObject(`goods${event.i}`, event.num);
+    this.goodsInfo[event.i].amount = event.num;
     this.goodsInfo.map((item) => {
       if (item.amount) {
         this.orderPlaceInfo.goodsItem.push({
@@ -166,6 +166,12 @@ export class TabOrderComponent implements OnInit, OnDestroy {
   // toast
   public onToastShow(type: 'success' | 'loading') {
     (<ToastComponent>this[`${type}Toast`]).onShow();
+  }
+  // onblur
+  public tabOrderBlur(): void {
+    if (is_ios()) {
+      window.scroll(0, 0);
+    }
   }
   ngOnDestroy(): void {
     this.orderStatus = false;

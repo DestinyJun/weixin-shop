@@ -1,0 +1,12 @@
+<div class="stepper">
+   <span class="minus" (click)="minusNums()">
+    <i class="fa fa-minus" aria-hidden="true"></i>
+  </span>
+  <input
+    class="number" type="number"
+    [(ngModel)]="num"
+    (blur)="blueNums()">
+  <span class="plus" (click)="plusNums()">
+    <i class="fa fa-plus"></i>
+  </span>
+</div>
