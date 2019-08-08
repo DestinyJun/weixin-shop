@@ -13,7 +13,7 @@ const routes: Routes = [
   {path: 'order', canActivate: [LoginGuard], loadChildren: './order/order.module#OrderModule'},
   {path: 'pay', canActivate: [LoginGuard], loadChildren: './pay/pay.module#PayModule'},
   {path: 'mine', canActivate: [LoginGuard], loadChildren: './mine/mine.module#MineModule'},
-  {path: 'client', canActivate: [LoginGuard], loadChildren: './client/client.module#ClientModule'},
+  {path: 'address', canActivate: [LoginGuard], loadChildren: './address/address.module#AddressModule'},
   {path: 'error', component: ErrorRemindComponent},
   {path: '**', component: ErrorRemindComponent, data: {status: '404'}},
 ];

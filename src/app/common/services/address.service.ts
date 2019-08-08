@@ -5,12 +5,12 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ClientService {
+export class AddressService {
 
   constructor(
     public http: HttpClient
   ) { }
-  // add client
+  // add
   public clientAdd(params): Observable<any> {
     return this.http.post(`/contacts/add`, params);
   }

@@ -10,7 +10,7 @@ import {
 } from 'ngx-weui';
 import {ActivatedRoute, Router} from '@angular/router';
 import {GlobalService} from '../../common/services/global.service';
-import {ClientService} from '../../common/services/client.service';
+import {AddressService} from '../../common/services/address.service';
 
 @Component({
   selector: 'app-client-address',
@@ -52,7 +52,7 @@ export class AddressListComponent implements OnInit {
   };
   constructor(
     private router: Router,
-    private clientSrv: ClientService,
+    private clientSrv: AddressService,
     private globalService: GlobalService,
     private routerInfo: ActivatedRoute,
     private srv: ToastService,
@@ -87,7 +87,7 @@ export class AddressListComponent implements OnInit {
   }
   // header
   public onHeaderRightClick(): void {
-    this.router.navigate(['/client/addition'], {queryParams: {id: null, status: 'add'}});
+    this.router.navigate(['/address/addition'], {queryParams: {id: null, status: 'add'}});
   }
   // scroll
   public clientLoadMore(comp: InfiniteLoaderComponent): void {
@@ -122,13 +122,13 @@ export class AddressListComponent implements OnInit {
       }
     }
   }
-  // client
+  //
   public clientDeleteClick (id, event): void {
     event.stopPropagation();
     this.dialogDelShow('ios', {id: id, msg: '你确定删除当前客户吗？'});
   }
   public clientNameClick(id) {
-    this.router.navigate(['/client/addition'], {queryParams: {id: id, status: 'update'}});
+    this.router.navigate(['/address/addition'], {queryParams: {id: id, status: 'update'}});
   }
   // remind
   public dialogDelShow(type: SkinType, item: any) {

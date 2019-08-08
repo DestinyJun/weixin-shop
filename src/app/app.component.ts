@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     }
     // order status
     this.globalSrv.wxSessionSetObject('orderSelectStatus', 'all');
-    // Judge client
+    // Judge
     if (window.navigator.userAgent.indexOf('MicroMessenger') === -1) {
       if (environment.production) {
         this.router.navigate(['/error']);

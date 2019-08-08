@@ -141,7 +141,7 @@ export class MineOrderComponent implements OnInit {
   public mOrderLoadMore(comp: InfiniteLoaderComponent): void {
     comp.setFinished();
   }
-  // client Serialization
+  // Serialization
   public mOrderSerialization(params): void {
     this.mOrderList = [];
     const a = [];

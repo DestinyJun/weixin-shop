@@ -6,7 +6,7 @@ import {
   ToastComponent,
   ToastService
 } from 'ngx-weui';
-import {ClientService} from '../../common/services/client.service';
+import {AddressService} from '../../common/services/address.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {parse} from '../../common/tools/is_address';
 import {timer} from 'rxjs';
@@ -50,7 +50,7 @@ export class AddressAddComponent implements OnInit {
     }
   };
   constructor(
-    private clientSrv: ClientService,
+    private clientSrv: AddressService,
     private srv: ToastService,
     private routerInfo: ActivatedRoute,
     private router: Router,
